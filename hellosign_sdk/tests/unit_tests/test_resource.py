@@ -30,8 +30,7 @@ class TestException(TestCase):
         self.assertEquals(account.quotas['api_signature_requests_left'], 0)
         self.assertEquals(account.role_code, 'a')
         self.assertEquals(account.is_paid_hs, False)
-        self.assertEquals(account.callback_url,
-                          'http://www.example.com/callback')
+        self.assertEquals(account.callback_url, 'http://www.example.com/callback')
         self.assertEquals(account.email_address, 'user@example.com')
 
     def test_embedded(self):
@@ -123,10 +122,8 @@ class TestException(TestCase):
         self.assertEquals(sn.files_url, 'http://files.example.com/file.pdf')
         self.assertEquals(sn.signing_url, 'http://example.com/sign_url')
         self.assertEquals(sn.details_url, 'http://example.com/details_url')
-        self.assertEquals(sn.cc_email_addresses,
-                          ['user_1@example.com', 'user_2@example.com'])
-        self.assertEquals(sn.signing_redirect_url,
-                          'http://example.com/signing_redirect_url')
+        self.assertEquals(sn.cc_email_addresses, ['user_1@example.com', 'user_2@example.com'])
+        self.assertEquals(sn.signing_redirect_url, 'http://example.com/signing_redirect_url')
         self.assertEquals(sn.custom_fields, [
             {'name': 'custom_attribute_1', 'type': 'text'},
             {'name': 'custom_attribute_2', 'type': 'text'}])
@@ -171,6 +168,5 @@ class TestException(TestCase):
              'signing_redirect_url': 'http://example.com/signing_redirect_url',
              'test_mode': '0'})
         self.assertEquals(ud.claim_url, 'http://example.com/claim_url')
-        self.assertEquals(
-            ud.signing_redirect_url, 'http://example.com/signing_redirect_url')
+        self.assertEquals(ud.signing_redirect_url, 'http://example.com/signing_redirect_url')
         self.assertEquals(ud.test_mode, '0')

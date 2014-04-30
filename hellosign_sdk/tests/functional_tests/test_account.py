@@ -31,6 +31,12 @@ class TestAccount(TestCase):
         account = self.client.update_account_info()
         self.assertEquals(account, False)
 
+    def test_account_verify(self):
+        self.client.get_account_info()
+        acct = self.client.account
+        self.assertTrue(self.client.verify_account(email=acct.email_address))
+        self.assertFalse(self.client.verify_account(email='not-an-account@example.com'))
+
     def test_create_account_with_invalid_info(self):
         try:
             self.client.create_account("not valid email@example.com",
