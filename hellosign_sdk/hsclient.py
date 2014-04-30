@@ -25,6 +25,7 @@ class HSClient(object):
     ACCOUNT_CREATE_URL = ''
     ACCOUNT_INFO_URL = ''
     ACCOUNT_UPDATE_URL = ''
+    ACCOUNT_VERIFY_URL = ''
 
     SIGNATURE_REQUEST_INFO_URL = ''
     SIGNATURE_REQUEST_LIST_URL = ''
@@ -56,9 +57,7 @@ class HSClient(object):
 
     OAUTH_TOKEN_URL = ''
 
-    def __init__(self, email=None, password=None, api_key=None,
-                 access_token=None, access_token_type="Bearer",
-                 env='production'):
+    def __init__(self, email=None, password=None, api_key=None, access_token=None, access_token_type="Bearer", env='production'):
         """Initialize the client object with authentication information to send
         requests
 
@@ -88,7 +87,7 @@ class HSClient(object):
 
         OAUTH_TOKEN_PRODUCTION_URL = "https://www.hellosign.com/oauth/token"
         OAUTH_TOKEN_DEV_URL = "https://www.my.hellosign.com/webapp_dev.php/oauth/token"
-        OAUTH_TOKEN_STAGING = "https://staging.hellosign.com/webapp_dev.php/oauth/token"
+        OAUTH_TOKEN_STAGING_URL = "https://staging.hellosign.com/webapp_dev.php/oauth/token"
 
         if env == "production":
             self.API_URL = API_PRODUCTION_URL + '/' + self.API_VERSION
@@ -98,43 +97,43 @@ class HSClient(object):
             self.OAUTH_TOKEN_URL = OAUTH_TOKEN_DEV_URL
         elif env == "staging":
             self.API_URL = API_STAGING_URL + '/' + self.API_VERSION
-            self.OAUTH_TOKEN_URL = API_STAGING_URL
+            self.OAUTH_TOKEN_URL = OAUTH_TOKEN_STAGING_URL
 
         self.ACCOUNT_CREATE_URL = self.API_URL + '/account/create'
         self.ACCOUNT_INFO_URL = self.API_URL + '/account'
         self.ACCOUNT_UPDATE_URL = self.API_URL + '/account'
+        self.ACCOUNT_VERIFY_URL = self.API_URL + '/account/verify'
 
         self.SIGNATURE_REQUEST_INFO_URL = self.API_URL + '/signature_request/'
         self.SIGNATURE_REQUEST_LIST_URL = self.API_URL + '/signature_request/list'
         self.SIGNATURE_REQUEST_DOWNLOAD_PDF_URL = self.API_URL + '/signature_request/files/'
-        self.SIGNATURE_REQUEST_DOWNLOAD_FINAL_COPY_URL = self.API_URL + \
-            '/signature_request/files/'
+        self.SIGNATURE_REQUEST_DOWNLOAD_FINAL_COPY_URL = self.API_URL + '/signature_request/files/'
         self.SIGNATURE_REQUEST_CREATE_URL = self.API_URL + '/signature_request/send'
-        self.SIGNATURE_REQUEST_CREATE_WITH_RF_URL = self.API_URL + \
-            '/signature_request/send_with_reusable_form'
+        self.SIGNATURE_REQUEST_CREATE_WITH_RF_URL = self.API_URL + '/signature_request/send_with_reusable_form'
         self.SIGNATURE_REQUEST_REMIND_URL = self.API_URL + '/signature_request/remind/'
         self.SIGNATURE_REQUEST_CANCEL_URL = self.API_URL + '/signature_request/cancel/'
-        self.SIGNATURE_REQUEST_CREATE_EMBEDDED_URL = self.API_URL + \
-            '/signature_request/create_embedded'
-        self.SIGNATURE_REQUEST_CREATE_EMBEDDED_WITH_RF_URL = self.API_URL + \
-            '/signature_request/create_embedded_with_reusable_form'
+        self.SIGNATURE_REQUEST_CREATE_EMBEDDED_URL = self.API_URL + '/signature_request/create_embedded'
+        self.SIGNATURE_REQUEST_CREATE_EMBEDDED_WITH_RF_URL = self.API_URL + '/signature_request/create_embedded_with_reusable_form'
 
         self.EMBEDDED_OBJECT_GET_URL = self.API_URL + '/embedded/sign_url/'
 
         self.UNCLAIMED_DRAFT_CREATE_URL = self.API_URL + '/unclaimed_draft/create'
-        self.UNCLAIMED_DRAFT_CREATE_EMBEDDED_URL = self.API_URL + \
-            '/unclaimed_draft/create_embedded'
+        self.UNCLAIMED_DRAFT_CREATE_EMBEDDED_URL = self.API_URL + '/unclaimed_draft/create_embedded'
 
         self.REUSABLE_FORM_GET_URL = self.API_URL + '/reusable_form/'
         self.REUSABLE_FORM_GET_LIST_URL = self.API_URL + '/reusable_form/list'
         self.REUSABLE_FORM_ADD_USER_URL = self.API_URL + '/reusable_form/add_user/'
         self.REUSABLE_FORM_REMOVE_USER_URL = self.API_URL + '/reusable_form/remove_user/'
 
-        self.TEAM_INFO_URL = self.TEAM_UPDATE_URL = self.API_URL + '/team'
+        self.TEAM_INFO_URL = self.API_URL + '/team'
+        self.TEAM_UPDATE_URL = self.TEAM_INFO_URL
         self.TEAM_CREATE_URL = self.API_URL + '/team/create'
         self.TEAM_DESTROY_URL = self.API_URL + '/team/destroy'
         self.TEAM_ADD_MEMBER_URL = self.API_URL + '/team/add_member'
         self.TEAM_REMOVE_MEMBER_URL = self.API_URL + '/team/remove_member'
+
+
+    #####  ACCOUNT METHODS  ###############################
 
     def create_account(self, email, password):
         """Create a new account
@@ -150,7 +149,9 @@ class HSClient(object):
 
         request = HSRequest(self.auth)
         response = request.post(self.ACCOUNT_CREATE_URL, {
-                                'email_address': email, 'password': password})
+            'email_address': email, 
+            'password': password
+        })
         return Account(response["account"])
 
     # Get account info and put in self.account so that further access to the
@@ -195,6 +196,20 @@ class HSClient(object):
         except HTTPError:
             return False
         return True
+
+    def verify_account(self, email):
+        ''' Verify whether a HelloSign Account exists '''
+        request = HSRequest(self.auth)
+        try:
+            resp = request.post(self.ACCOUNT_VERIFY_URL, {
+                'email_address': email
+            })
+            return ('account' in resp)
+        except HTTPError:
+            return False
+
+
+    #####  SIGNATURE REQUEST METHODS  #####################
 
     # Get a signature request
     # param @signature_request_id
@@ -588,6 +603,9 @@ class HSClient(object):
             message=message, signing_redirect_url=signing_redirect_url,
             signers=signers, ccs=ccs, custom_fields=custom_fields)
 
+
+    #####  REUSABLE FORM METHODS  #########################
+
     def get_reusable_form(self, reusable_form_id):
         """Gets a ReusableForm which includes a list of Accounts that can access
         it
@@ -672,6 +690,9 @@ class HSClient(object):
         return self._add_remove_user_reusable_form(
             self.REUSABLE_FORM_REMOVE_USER_URL, reusable_form_id, account_id,
             email_address)
+
+
+    #####  TEAM METHODS  ##################################
 
     def get_team_info(self):
         """Gets your Team and a list of its members
@@ -780,6 +801,9 @@ class HSClient(object):
         return self._add_remove_team_member(self.TEAM_REMOVE_MEMBER_URL,
                                             email_address, account_id)
 
+
+    #####  EMBEDDED METHODS  ##############################
+
     def get_embeded_object(self, signature_id):
         """Retrieves a embedded signing object
 
@@ -798,6 +822,9 @@ class HSClient(object):
         request = HSRequest(self.auth)
         response = request.get(self.EMBEDDED_OBJECT_GET_URL + signature_id)
         return Embedded(response["embedded"])
+
+
+    #####  UNCLAIMED DRAFT METHODS  #######################
 
     def create_unclaimed_draft(
             self, test_mode="0", client_id=None, is_for_embedded_signing="0",
@@ -917,6 +944,9 @@ class HSClient(object):
             files=files_payload)
         return UnclaimedDraft(response["unclaimed_draft"])
 
+
+    #####  OAUTH METHODS  #################################
+
     def get_oauth_data(self, code, client_id, secret, state):
         """Get Oauth data from HelloSign
 
@@ -939,6 +969,9 @@ class HSClient(object):
             response['token_type'], response['refresh_token'],
             response['expires_in'], response['state'])
         return oauth
+
+
+    #####  HELPERS  #######################################
 
     def _authenticate(self, email=None, password=None, api_key=None,
                       access_token=None, access_token_type=None):
