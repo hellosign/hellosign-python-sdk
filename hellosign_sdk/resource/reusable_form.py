@@ -66,3 +66,7 @@ class ReusableForm(Resource):
             by the owner (always true if that's you).
 
     """
+
+    def __str__(self):
+        ''' Return a string representation of this reusable form '''
+        return 'ReusableForm %s' % self.reusable_form_id

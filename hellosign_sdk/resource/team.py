@@ -25,3 +25,7 @@ class Team(Resource):
             email_address (str): The email address associated with the Account
 
     """
+
+    def __str__(self):
+        ''' Return a string representation of this Team '''
+        return 'Team %s' % self.name

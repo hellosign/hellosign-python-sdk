@@ -12,3 +12,7 @@ class Embedded(Resource):
         expires_at (str): When the link expires
 
     """
+
+    def __str__(self):
+        ''' Return a string representation of this Embedded object '''
+        return 'Embedded %s' % self.sign_url

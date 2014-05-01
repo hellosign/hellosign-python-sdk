@@ -20,3 +20,7 @@ class UnclaimedDraft(Resource):
             made from test drafts have no legal value. Defaults to 0.
 
     """
+
+    def __str__(self):
+        ''' Return a string representation of this unclaimed draft '''
+        return 'UnclaimedDraft %s' % self.claim_url

@@ -50,15 +50,3 @@ class Resource(object):
                 raise AttributeError('%s has no attribute "%s"' % (self.__class__.__name__, name))
         else:
             self.__dict__["json_data"] = value
-
-    def __str__(self):
-        ''' Return a string representation of this object '''
-        
-        if 'id' in self.json_data:
-            obj_id = self.id
-        elif 'name' in self.json_data:
-            obj_id = self.name
-        else:
-            obj_id = ''
-
-        return "%s %s" % (self.__class__.__name__, obj_id)

@@ -34,3 +34,7 @@ class Account(Resource):
         >>> print account.account_id
 
     """
+
+    def __str__(self):
+        ''' Return a string representation of this Account '''
+        return 'Account %s (%s)' % (self.account_id, self.email_address)

@@ -19,3 +19,7 @@ class Signature(Resource):
 
 
     """
+
+    def __str__(self):
+        ''' Return a string representation of this Signature '''
+        return 'Signature %s' % self.signature_id

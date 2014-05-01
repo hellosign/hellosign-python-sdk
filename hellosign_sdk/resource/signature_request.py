@@ -107,3 +107,7 @@ class SignatureRequest(Resource):
             for signature in self.signatures:
                 signature_list.append(Signature(signature))
             self.signatures = signature_list
+
+    def __str__(self):
+        ''' Return a string representation of this Account '''
+        return 'SignatureRequest %s' % self.signature_request_id
