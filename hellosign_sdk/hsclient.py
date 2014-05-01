@@ -183,7 +183,7 @@ class HSClient(object):
         """
         request = self._get_request()
         resp = request.post(self.ACCOUNT_UPDATE_URL, { 'callback_url': self.account.callback_url })
-        return resp['account']
+        return Account(resp['account'])
 
     def verify_account(self, email):
         ''' Verify whether a HelloSign Account exists 
