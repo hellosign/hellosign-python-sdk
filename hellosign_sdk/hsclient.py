@@ -1017,7 +1017,7 @@ class HSClient(object):
         if either_fields is not None:
             for field in either_fields:
                 if not any(field.values()):
-                    raise HSException("One of the fields in " + ", ".join(field.keys()) + " is required.")
+                    raise HSException("One of the following fields is required: %s" % ", ".join(field.keys()))
 
     def _send_signature_request(self, test_mode="0", client_id=None, files=None, file_urls=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, cc_email_addresses=None, form_fields_per_document=None):
         """
