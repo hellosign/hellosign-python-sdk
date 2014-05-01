@@ -12,10 +12,11 @@ from requests.auth import HTTPBasicAuth
 
 class HSClient(object):
 
-    """Client object to interact with the API urls
+    """ Client object to interact with the API urls
 
     Most of the operations of the SDK is made through this object. Please refer
     to the README.rst file for more details on how to use the client object.
+    
     """
 
     API_VERSION = 'v3'
@@ -279,7 +280,7 @@ class HSClient(object):
         return request.get_file(self.SIGNATURE_REQUEST_DOWNLOAD_FINAL_COPY_URL + signature_request_id, filename)
 
     # Use files instead of file to avoid python keyword
-    def send_signature_request(self, test_mode="0", files=None, file_urls=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, cc_email_addresses=None, form_fields_per_document=None):
+    def send_signature_request(self, test_mode=False, files=None, file_urls=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, cc_email_addresses=None, form_fields_per_document=None):
         """ Creates and sends a new SignatureRequest with the submitted documents
 
         Creates and sends a new SignatureRequest with the submitted documents.
@@ -288,8 +289,8 @@ class HSClient(object):
         signifying their agreement to all contained documents.
 
         Args:
-            test_mode (str, optional): Whether this is a test, the signature
-                request will not be legally binding if set to 1. Defaults to 0.
+            test_mode (bool, optional): Whether this is a test, the signature
+                request will not be legally binding if set to True. Defaults to False.
             files (list of str): the uploaded file(s) to send for signature
             file_urls (list of str): urls of the file for HelloSign to download
                 to send for signature. Use either `files` or `file_urls`
@@ -327,7 +328,7 @@ class HSClient(object):
         self._check_required_fields({ "signers": signers }, [{ "files": files, "file_urls": file_urls }])
         
         params = {
-            'test_mode': test_mode, 
+            'test_mode': self._boolean(test_mode), 
             'files': files, 
             'file_urls':file_urls, 
             'title': title,
@@ -341,15 +342,15 @@ class HSClient(object):
 
         return self._send_signature_request(**params)
 
-    def send_signature_request_with_rf(self, test_mode="0", reusable_form_id=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, ccs=None, custom_fields=None):
+    def send_signature_request_with_rf(self, test_mode=False, reusable_form_id=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, ccs=None, custom_fields=None):
         """ Creates and sends a new SignatureRequest based off of a ReusableForm
 
         Creates and sends a new SignatureRequest based off of the ReusableForm
         specified with the reusable_form_id parameter.
 
         Args:
-            test_mode (str, optional): Whether this is a test, the signature
-                request will not be legally binding if set to 1. Defaults to 0.
+            test_mode (bool, optional): Whether this is a test, the signature
+                request will not be legally binding if set to True. Defaults to False.
             reusable_form_id (str): The id of the ReusableForm to use when
                 creating the SignatureRequest.
             title (str, optional): The title you want to assign to the
@@ -387,7 +388,7 @@ class HSClient(object):
         self._check_required_fields({ "signers": signers, "reusable_form_id": reusable_form_id })
 
         params = {
-            'test_mode': test_mode, 
+            'test_mode': self._boolean(test_mode), 
             'reusable_form_id': reusable_form_id,
             'title': title, 
             'subject': subject, 
@@ -439,7 +440,7 @@ class HSClient(object):
         request = self._get_request()
         request.post(url=self.SIGNATURE_REQUEST_CANCEL_URL + signature_request_id, get_json=False)
 
-    def send_signature_request_embedded(self, test_mode="0", client_id=None, files=None, file_urls=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, cc_email_addresses=None, form_fields_per_document=None):
+    def send_signature_request_embedded(self, test_mode=False, client_id=None, files=None, file_urls=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, cc_email_addresses=None, form_fields_per_document=None):
         """ Creates and sends a new SignatureRequest with the submitted documents
 
         Creates a new SignatureRequest with the submitted documents to be signed
@@ -451,8 +452,8 @@ class HSClient(object):
         HelloSign.
 
         Args:
-            test_mode (str, optional): Whether this is a test, the signature
-                request will not be legally binding if set to 1. Defaults to 0.
+            test_mode (bool, optional): Whether this is a test, the signature
+                request will not be legally binding if set to True. Defaults to False.
 
             client_id (str): Client id of the app you're using to create this
                 embedded signature request. Visit the embedded page to learn
@@ -504,7 +505,7 @@ class HSClient(object):
         self._check_required_fields({ "signers": signers, "client_id": client_id }, [{ "files": files, "file_urls": file_urls }])
 
         params = {
-            'test_mode': test_mode, 
+            'test_mode': self._boolean(test_mode), 
             'client_id': client_id, 
             'files': files,
             'file_urls': file_urls, 
@@ -519,7 +520,7 @@ class HSClient(object):
 
         return self._send_signature_request(**params)
 
-    def send_signature_request_embedded_with_rf(self, test_mode="0", client_id=None, reusable_form_id=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, ccs=None, custom_fields=None):
+    def send_signature_request_embedded_with_rf(self, test_mode=False, client_id=None, reusable_form_id=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, ccs=None, custom_fields=None):
         """ Creates and sends a new SignatureRequest based off of a ReusableForm
 
         Creates a new SignatureRequest based on the given ReusableForm to be
@@ -528,8 +529,8 @@ class HSClient(object):
         only be signed on HelloSign.
 
         Args:
-            test_mode (str, optional): Whether this is a test, the signature
-                request will not be legally binding if set to 1. Defaults to 0.
+            test_mode (bool, optional): Whether this is a test, the signature
+                request will not be legally binding if set to True. Defaults to False.
 
             client_id (str): Client id of the app you're using to create this
                 embedded signature request. Visit the embedded page to learn
@@ -583,7 +584,7 @@ class HSClient(object):
         })
 
         params = {
-            'test_mode': test_mode, 
+            'test_mode': self._boolean(test_mode), 
             'client_id': client_id,
             'reusable_form_id': reusable_form_id, 
             'title': title, 
@@ -797,7 +798,7 @@ class HSClient(object):
 
     #####  UNCLAIMED DRAFT METHODS  #######################
 
-    def create_unclaimed_draft(self, test_mode="0", client_id=None, is_for_embedded_signing="0", requester_email_address=None, files=None, file_urls=None, draft_type=None, subject=None, message=None, signers=None, cc_email_addresses=None, signing_redirect_url=None, form_fields_per_document=None):
+    def create_unclaimed_draft(self, test_mode=False, client_id=None, is_for_embedded_signing=False, requester_email_address=None, files=None, file_urls=None, draft_type=None, subject=None, message=None, signers=None, cc_email_addresses=None, signing_redirect_url=None, form_fields_per_document=None):
         """ Creates a new Draft that can be claimed using the claim URL
 
         Creates a new Draft that can be claimed using the claim URL. The first
@@ -810,16 +811,16 @@ class HSClient(object):
         also required.
 
         Args:
-            test_mode (str, optional): Whether this is a test, the signature
+            test_mode (bool, optional): Whether this is a test, the signature
                 request created from this draft will not be legally binding if
-                set to 1. Defaults to 0.
+                set to True. Defaults to False.
 
             client_id (str): Client id of the app you're using to create this
                 embedded signature request. Visit the embedded page to learn
                 more about this parameter. Used for embedded unclaimed draft
                 (https://www.hellosign.com/api/embedded)
 
-            is_for_embedded_signing (str): Used for embedded unclaimed draft
+            is_for_embedded_signing (bool): Used for embedded unclaimed draft
             requester_email_address (str):
 
             files (list of str): the uploaded file(s) to send for signature
@@ -892,7 +893,7 @@ class HSClient(object):
             cc_email_addresses_payload["cc_email_addresses[%s]" % idx] = cc_email_address
         
         payload = {
-            "test_mode": test_mode, 
+            "test_mode": self._boolean(test_mode), 
             "type": draft_type,
             "subject": subject, 
             "message": message,
@@ -901,6 +902,7 @@ class HSClient(object):
         }
 
         url = self.UNCLAIMED_DRAFT_CREATE_URL
+        is_for_embedded_signing = self._boolean(is_for_embedded_signing)
 
         if is_for_embedded_signing == '1':
             payload.update({
@@ -954,6 +956,10 @@ class HSClient(object):
 
     #####  HELPERS  #######################################
 
+    def _boolean(self, v):
+        ''' Convert a value to a boolean '''
+        return '1' if (v in (True, 'true', 'True', '1', 1)) else '0'
+
     def _get_request(self, auth=None):
         ''' Return an http request object 
 
@@ -965,7 +971,7 @@ class HSClient(object):
         return HSRequest(auth or self.auth, self.env)
 
     def _authenticate(self, email=None, password=None, api_key=None, access_token=None, access_token_type=None):
-        """Create authentication object to send requests
+        """ Create authentication object to send requests
 
         Args:
             email (str): E-mail of the account to make the requests
@@ -995,7 +1001,7 @@ class HSClient(object):
             raise NoAuthMethod("No authentication information found!")
 
     def _check_required_fields(self, fields=None, either_fields=None):
-        """Check the values of the fields
+        """ Check the values of the fields
 
         If no value found in `fields`, an exception will be raised.
         `either_fields` are the fields that one of them must have a value
@@ -1019,14 +1025,13 @@ class HSClient(object):
                 if not any(field.values()):
                     raise HSException("One of the following fields is required: %s" % ", ".join(field.keys()))
 
-    def _send_signature_request(self, test_mode="0", client_id=None, files=None, file_urls=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, cc_email_addresses=None, form_fields_per_document=None):
-        """
-            To share the same logic between send_signature_request &
+    def _send_signature_request(self, test_mode=False, client_id=None, files=None, file_urls=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, cc_email_addresses=None, form_fields_per_document=None):
+        """ To share the same logic between send_signature_request &
             send_signature_request_embedded functions
 
         Args:
-            test_mode (str, optional): Whether this is a test, the signature
-                request will not be legally binding if set to 1. Defaults to 0.
+            test_mode (bool, optional): Whether this is a test, the signature
+                request will not be legally binding if set to True. Defaults to False.
 
             client_id (str): Client id of the app you're using to create this
                 embedded signature request. Visit the embedded page to learn
@@ -1105,7 +1110,7 @@ class HSClient(object):
                 "cc_email_addresses[" + str(idx) + "]"] = cc_email_address
         
         payload = {
-            "test_mode": test_mode, 
+            "test_mode": self._boolean(test_mode), 
             "client_id": client_id, 
             "title": title,
             "subject": subject, 
@@ -1128,13 +1133,13 @@ class HSClient(object):
 
         return SignatureRequest(response["signature_request"])
 
-    def _send_signature_request_with_rf(self, test_mode="0", client_id=None, reusable_form_id=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, ccs=None, custom_fields=None):
-        """To share the same logic between send_signature_request_with_rf and
-        send_signature_request_embedded_with_rf
+    def _send_signature_request_with_rf(self, test_mode=False, client_id=None, reusable_form_id=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, ccs=None, custom_fields=None):
+        """ To share the same logic between send_signature_request_with_rf and
+            send_signature_request_embedded_with_rf
 
         Args:
-            test_mode (str, optional): Whether this is a test, the signature
-                request will not be legally binding if set to 1. Defaults to 0.
+            test_mode (bool, optional): Whether this is a test, the signature
+                request will not be legally binding if set to True. Defaults to False.
 
             client_id (str): Client id of the app you're using to create this
                 embedded signature request. Visit the embedded page to learn
@@ -1208,7 +1213,7 @@ class HSClient(object):
                 custom_fields_payload["custom_fields[" + key + "]"] = value
 
         payload = {
-            "test_mode": test_mode, 
+            "test_mode": self._boolean(test_mode), 
             "client_id": client_id,
             "reusable_form_id": reusable_form_id, 
             "title": title,
@@ -1232,7 +1237,7 @@ class HSClient(object):
         return SignatureRequest(response["signature_request"])
 
     def _add_remove_user_reusable_form(self, url, reusable_form_id, account_id=None, email_address=None):
-        """Add or Remove user from a ReusableForm
+        """ Add or Remove user from a ReusableForm
 
         We use this function for two tasks because they have the same API call
 
@@ -1267,7 +1272,7 @@ class HSClient(object):
         return ReusableForm(response["reusable_form"])
 
     def _add_remove_team_member(self, url, email_address=None, account_id=None):
-        """Add or Remove a team member
+        """ Add or Remove a team member
 
         We use this function for two different tasks because they have the same
         API call
