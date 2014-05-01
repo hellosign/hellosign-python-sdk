@@ -63,7 +63,7 @@ class TestSignatureRequest(TestCase):
         self.assertTrue(isinstance(sig_req, SignatureRequest))
 
     def test_signature_request_reminder(self):
-        ''' Send a reminder for a given signature request '''
+        ''' Test sending a reminder for a signature request '''
 
         sig_req = self._get_one_signature_request()
         signer = sig_req.signatures[0].signer_email_address

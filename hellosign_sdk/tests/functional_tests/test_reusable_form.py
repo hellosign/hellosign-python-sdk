@@ -11,7 +11,8 @@ class TestReusableForm(TestCase):
     def setUp(self):
         self.client = HSClient(api_key=api_key)
 
-    def test_resuable_form(self):
+    def test_reusable_form(self):
+        ''' Test reusable form methods '''
         # Get reusable form list, if there's any:
         # Add a user to our team, get the first one
         # if no team exist, create team
