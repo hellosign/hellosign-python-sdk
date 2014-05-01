@@ -12,11 +12,14 @@ class TestSignatureRequest(TestCase):
     def setUp(self):
         self.client = HSClient(api_key=api_key)
 
-    def _send_test_signature_request(self, embedded=False):
+    def _send_test_signature_request(self, embedded=False, text_tags=False):
         ''' Send a test signature request '''
 
         files = [os.path.dirname(os.path.realpath(__file__)) + "/docs/nda.pdf"]
-        signers = [{"name": "Signer Name", "email_address": "demo@example.com"}]
+        signers = [{
+            "name": "Signer Name", 
+            "email_address": "demo@example.com"
+        }]
         cc_email_addresses = ["demo1@example.com", "demo2@example.com"]
         
         title = 'A test signature request'
@@ -24,9 +27,16 @@ class TestSignatureRequest(TestCase):
         message = 'This is a test message'
 
         if not embedded:
-            sig_req = self.client.send_signature_request("1", files, [], title, subject, message, "", signers, cc_email_addresses)
+            sig_req = self.client.send_signature_request(True, files, [], title, subject, message, "", signers, cc_email_addresses)
+        elif text_tags:
+            files[0] = os.path.dirname(os.path.realpath(__file__)) + "/docs/nda-text-tags.pdf"
+            signers.append({
+                'name': 'Other Signer Name',
+                'email_address': 'demo+2@example.com'
+            })
+            sig_req = self.client.send_signature_request_embedded(True, client_id, files, [], title, subject, message, "", signers, cc_email_addresses, use_text_tags=True)
         else:
-            sig_req = self.client.send_signature_request_embedded("1", client_id, files, [], title, subject, message, "", signers, cc_email_addresses)
+            sig_req = self.client.send_signature_request_embedded(True, client_id, files, [], title, subject, message, "", signers, cc_email_addresses)
 
         self.assertEquals(isinstance(sig_req, SignatureRequest), True)
         self.assertEquals(sig_req.title, title)
@@ -106,14 +116,25 @@ class TestSignatureRequest(TestCase):
             'email_address': sig_req.signatures[0].signer_email_address
         }]
 
+        # Invalid - no files
         try:
             self.client.send_signature_request("1", None, [], "Test create signature request", "Ky giay no", "Ky vao giay no di, le di", "", signers, cc_email_addresses) # Error
             self.fail("HSException was excepted")
         except HSException, e:
             self.assertTrue(e.message.find('One of the following fields is required') >= 0)
 
+        # Cancel signature request
         try:
             self.client.cancel_signature_request(sig_req.signature_request_id)
+        except HSException, e:
+            self.fail(e.message)
+
+        # Try with text tags
+        sig_req2 = self._send_test_signature_request(text_tags=True)
+
+        # Cancel signature request
+        try:
+            self.client.cancel_signature_request(sig_req2.signature_request_id)
         except HSException, e:
             self.fail(e.message)
 

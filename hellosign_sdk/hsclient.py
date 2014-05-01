@@ -1030,7 +1030,7 @@ class HSClient(object):
                 if not any(field.values()):
                     raise HSException("One of the following fields is required: %s" % ", ".join(field.keys()))
 
-    def _send_signature_request(self, test_mode=False, client_id=None, files=None, file_urls=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, cc_email_addresses=None, form_fields_per_document=None):
+    def _send_signature_request(self, test_mode=False, client_id=None, files=None, file_urls=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, cc_email_addresses=None, form_fields_per_document=None, use_text_tags=False, hide_text_tags=False):
         """ To share the same logic between send_signature_request &
             send_signature_request_embedded functions
 
@@ -1079,6 +1079,10 @@ class HSClient(object):
                 a list of lists of the form fields. Please refer to the API
                 reference of HelloSign for more details
                 (https://www.hellosign.com/api/reference#SignatureRequest)
+
+            use_text_tags (bool, optional): Use text tags in the provided file(s) to create form fields
+            
+            hide_text_tags (bool, optional): Hide text tag areas
 
         Retruns:
             A SignatureRequest object of the newly created Signature Request
