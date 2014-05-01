@@ -281,7 +281,7 @@ class HSClient(object):
         return request.get_file(self.SIGNATURE_REQUEST_DOWNLOAD_FINAL_COPY_URL + signature_request_id, filename)
 
     # Use files instead of file to avoid python keyword
-    def send_signature_request(self, test_mode=False, files=None, file_urls=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, cc_email_addresses=None, form_fields_per_document=None):
+    def send_signature_request(self, test_mode=False, files=None, file_urls=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, cc_email_addresses=None, form_fields_per_document=None, use_text_tags=False, hide_text_tags=False):
         """ Creates and sends a new SignatureRequest with the submitted documents
 
         Creates and sends a new SignatureRequest with the submitted documents.
@@ -320,6 +320,8 @@ class HSClient(object):
                 a list of lists of the form fields. Please refer to the API
                 reference of HelloSign for more details
                 (https://www.hellosign.com/api/reference#SignatureRequest)
+            use_text_tags (bool, optional): Use text tags in the provided file(s) to create form fields
+            hide_text_tags (bool, optional): Hide text tag areas
 
         Retruns:
             A SignatureRequest object of the newly created Signature Request
@@ -338,7 +340,9 @@ class HSClient(object):
             'signing_redirect_url': signing_redirect_url, 
             'signers': signers,
             'cc_email_addresses': cc_email_addresses,
-            'form_fields_per_document': form_fields_per_document
+            'form_fields_per_document': form_fields_per_document,
+            'use_text_tags': self._boolean(use_text_tags),
+            'hide_text_tags': self._boolean(hide_text_tags)
         }
 
         return self._send_signature_request(**params)
@@ -498,7 +502,7 @@ class HSClient(object):
                 reference of HelloSign for more details
                 (https://www.hellosign.com/api/reference#SignatureRequest)
 
-        Retruns:
+        Returns:
             A SignatureRequest object of the newly created Signature Request
 
         """
