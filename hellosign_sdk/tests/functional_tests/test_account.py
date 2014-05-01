@@ -34,8 +34,11 @@ class TestAccount(TestCase):
     def test_account_verify(self):
         self.client.get_account_info()
         acct = self.client.account
-        self.assertTrue(self.client.verify_account(email=acct.email_address))
-        self.assertFalse(self.client.verify_account(email='not-an-account@example.com'))
+        if acct.is_paid_hs:
+            self.assertTrue(self.client.verify_account(email=acct.email_address))
+            self.assertFalse(self.client.verify_account(email='not-an-account@example.com'))
+        else:
+            print "WARNING: Skipping test_account_verify because it requires a paid API plan"
 
     def test_create_account_with_invalid_info(self):
         try:
