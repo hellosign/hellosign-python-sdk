@@ -1,6 +1,5 @@
 from hellosign_sdk.utils.request import HSRequest
 from hellosign_sdk.utils.exception import HSException, NoAuthMethod
-from hellosign_sdk.utils.exception import HTTPError
 from hellosign_sdk.resource.account import Account
 from hellosign_sdk.resource.signature_request import SignatureRequest
 from hellosign_sdk.resource.reusable_form import ReusableForm
@@ -72,14 +71,12 @@ class HSClient(object):
         """
 
         super(HSClient, self).__init__()
-        self.auth = self._authenticate(
-            email, password, api_key, access_token,
-            access_token_type)
+        self.auth = self._authenticate(email, password, api_key, access_token, access_token_type)
         self.account = Account()
-        # self.get_account_info()
-        self._init_endpoints(env)
+        self.env = env
+        self._init_endpoints()
 
-    def _init_endpoints(self, env="production"):
+    def _init_endpoints(self):
 
         API_PRODUCTION_URL = "https://api.hellosign.com"
         API_DEV_URL = "https://www.my.hellosign.com/apiapp_dev.php"
@@ -89,13 +86,13 @@ class HSClient(object):
         OAUTH_TOKEN_DEV_URL = "https://www.my.hellosign.com/webapp_dev.php/oauth/token"
         OAUTH_TOKEN_STAGING_URL = "https://staging.hellosign.com/webapp_dev.php/oauth/token"
 
-        if env == "production":
+        if self.env == "production":
             self.API_URL = API_PRODUCTION_URL + '/' + self.API_VERSION
             self.OAUTH_TOKEN_URL = OAUTH_TOKEN_PRODUCTION_URL
-        elif env == "dev":
+        elif self.env == "dev":
             self.API_URL = API_DEV_URL + '/' + self.API_VERSION
             self.OAUTH_TOKEN_URL = OAUTH_TOKEN_DEV_URL
-        elif env == "staging":
+        elif self.env == "staging":
             self.API_URL = API_STAGING_URL + '/' + self.API_VERSION
             self.OAUTH_TOKEN_URL = OAUTH_TOKEN_STAGING_URL
 
@@ -136,18 +133,17 @@ class HSClient(object):
     #####  ACCOUNT METHODS  ###############################
 
     def create_account(self, email, password):
-        """Create a new account
+        """ Create a new account
 
         Args:
             email (str): Email address of the new account to create
             password (str): Password of the new account
 
         Returns:
-            New Account object if successful
+            The new Account object
 
         """
-
-        request = HSRequest(self.auth)
+        request = self._get_request()
         response = request.post(self.ACCOUNT_CREATE_URL, {
             'email_address': email, 
             'password': password
@@ -157,82 +153,70 @@ class HSClient(object):
     # Get account info and put in self.account so that further access to the
     # info can be made by using self.account.attribute
     def get_account_info(self):
-        """Get current account information
+        """ Get current account information
 
         The information then will be saved in `self.account` so that you can
         access the information like this:
 
         >>> hsclient = HSClient()
-        >>> hsclient.get_account_info()
-        >>> print hsclient.account.email_address
+        >>> acct = hsclient.get_account_info()
+        >>> print acct.email_address
 
         Returns:
-            True if the information fetched successfully, False otherwise
+            An Account object
 
         """
-
-        request = HSRequest(self.auth)
-        try:
-            response = request.get(self.ACCOUNT_INFO_URL)
-            self.account.json_data = response["account"]
-        except HTTPError:
-            return False
-        return True
+        request = self._get_request()
+        response = request.get(self.ACCOUNT_INFO_URL)
+        self.account.json_data = response["account"]
+        return self.account
 
     # At the moment you can only update your callback_url only
     def update_account_info(self):
-        """Update current account information
+        """ Update current account information
 
         At the moment you can only update your callback_url.
 
         Returns:
-            True if the account is updated successfully, False otherwise
+            An Account object
 
         """
-        request = HSRequest(self.auth)
-        try:
-            request.post(self.ACCOUNT_UPDATE_URL, {
-                'callback_url': self.account.callback_url})
-        except HTTPError:
-            return False
-        return True
+        request = self._get_request()
+        resp = request.post(self.ACCOUNT_UPDATE_URL, { 'callback_url': self.account.callback_url })
+        return resp['account']
 
     def verify_account(self, email):
-        ''' Verify whether a HelloSign Account exists '''
-        request = HSRequest(self.auth)
-        try:
-            resp = request.post(self.ACCOUNT_VERIFY_URL, {
-                'email_address': email
-            })
-            return ('account' in resp)
-        except HTTPError:
-            return False
+        ''' Verify whether a HelloSign Account exists 
+
+            Returns:
+                True or False
+        '''
+        request = self._get_request()
+        resp = request.post(self.ACCOUNT_VERIFY_URL, {
+            'email_address': email
+        })
+        return ('account' in resp)
 
 
     #####  SIGNATURE REQUEST METHODS  #####################
 
-    # Get a signature request
-    # param @signature_request_id
     def get_signature_request(self, signature_request_id):
-        """Get a signature request by its ID
+        """ Get a signature request by its ID
 
         Args:
-            signature_request_id (str): The id of the SignatureRequest to
-                retrieve
+            signature_request_id (str): The id of the SignatureRequest to retrieve
 
         Returns:
             A SignatureRequest object
 
         """
-
-        request = HSRequest(self.auth)
-        response = request.get(
-            self.SIGNATURE_REQUEST_INFO_URL + signature_request_id)
+        request = self._get_request()
+        response = request.get(self.SIGNATURE_REQUEST_INFO_URL + signature_request_id)
         return SignatureRequest(response["signature_request"])
 
     # TODO: return list info besides signature request list
     def get_signature_request_list(self):
-        """Get a list of SignatureRequest that you can access
+        """ Get a list of SignatureRequest that you can access
 
         This includes SignatureRequests you have sent as well as received, but
         not ones that you have been CCed on.
@@ -241,38 +225,40 @@ class HSClient(object):
             A list of SignatureRequest objects
 
         """
-
         sr_list = []
-        request = HSRequest(self.auth)
+        request = self._get_request()
         response = request.get(self.SIGNATURE_REQUEST_LIST_URL)
         if 'signature_requests' in response:
             for signature_request in response["signature_requests"]:
                 sr_list.append(SignatureRequest(signature_request))
         return sr_list
 
-    def get_signature_request_file(self, signature_request_id, filename):
-        """Download the PDF copy of the current documents
+    def get_signature_request_file(self, signature_request_id, filename, file_type=None):
+        """ Download the PDF copy of the current documents
 
         Args:
             signature_request_id (str): ID of the Signature Request
 
             filename (str): Filename to save the PDF file to. This should be a
-                full path.
+                            full path.
+
+            file_type (str): Type of file to return. Either "pdf" for a single merged document 
+                             or "zip" for a collection of individual documents.
 
         Returns:
             True if file is downloaded and written successfully, False
             otherwise.
 
         """
+        request = self._get_request()
+        url = self.SIGNATURE_REQUEST_DOWNLOAD_PDF_URL + signature_request_id
+        if file_type:
+            url += '?file_type=%s' + file_type
+        return request.get_file(url, filename)
 
-        request = HSRequest(self.auth)
-        return request.get_file(
-            self.SIGNATURE_REQUEST_DOWNLOAD_PDF_URL + signature_request_id,
-            filename)
-
+    # This api call is DEPRECATED
     def get_signature_request_final_copy(self, signature_request_id, filename):
-        # This api call is DEPRECATED
-        """Download the PDF copy of the finalized documents
+        """ Download the PDF copy of the finalized documents
 
         Download the PDF copy of the finalized documents specified by the
         `signature_request_id` parameter
@@ -289,20 +275,12 @@ class HSClient(object):
             otherwise.
 
         """
-
-        request = HSRequest(self.auth)
-        return request.get_file(
-            self.SIGNATURE_REQUEST_DOWNLOAD_FINAL_COPY_URL +
-            signature_request_id, filename)
+        request = self._get_request()
+        return request.get_file(self.SIGNATURE_REQUEST_DOWNLOAD_FINAL_COPY_URL + signature_request_id, filename)
 
     # Use files instead of file to avoid python keyword
-    def send_signature_request(
-            self, test_mode="0", files=None, file_urls=None, title=None,
-            subject=None, message=None,
-            signing_redirect_url=None, signers=None,
-            cc_email_addresses=None,
-            form_fields_per_document=None):
-        """Creates and sends a new SignatureRequest with the submitted documents
+    def send_signature_request(self, test_mode="0", files=None, file_urls=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, cc_email_addresses=None, form_fields_per_document=None):
+        """ Creates and sends a new SignatureRequest with the submitted documents
 
         Creates and sends a new SignatureRequest with the submitted documents.
         If form_fields_per_document is not specified, a signature page will be
@@ -346,20 +324,25 @@ class HSClient(object):
 
         """
 
-        self._check_required_fields(
-            {"signers": signers}, [{"files": files, "file_urls": file_urls}])
-        return self._send_signature_request(
-            test_mode=test_mode, files=files, file_urls=file_urls, title=title,
-            subject=subject, message=message,
-            signing_redirect_url=signing_redirect_url, signers=signers,
-            cc_email_addresses=cc_email_addresses,
-            form_fields_per_document=form_fields_per_document)
+        self._check_required_fields({ "signers": signers }, [{ "files": files, "file_urls": file_urls }])
+        
+        params = {
+            'test_mode': test_mode, 
+            'files': files, 
+            'file_urls':file_urls, 
+            'title': title,
+            'subject': subject, 
+            'message': message,
+            'signing_redirect_url': signing_redirect_url, 
+            'signers': signers,
+            'cc_email_addresses': cc_email_addresses,
+            'form_fields_per_document': form_fields_per_document
+        }
 
-    def send_signature_request_with_rf(
-            self, test_mode="0", reusable_form_id=None, title=None,
-            subject=None, message=None, signing_redirect_url=None,
-            signers=None, ccs=None, custom_fields=None):
-        """Creates and sends a new SignatureRequest based off of a ReusableForm
+        return self._send_signature_request(**params)
+
+    def send_signature_request_with_rf(self, test_mode="0", reusable_form_id=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, ccs=None, custom_fields=None):
+        """ Creates and sends a new SignatureRequest based off of a ReusableForm
 
         Creates and sends a new SignatureRequest based off of the ReusableForm
         specified with the reusable_form_id parameter.
@@ -401,16 +384,24 @@ class HSClient(object):
 
         """
 
-        self._check_required_fields(
-            {"signers": signers, "reusable_form_id": reusable_form_id})
-        return self._send_signature_request_with_rf(
-            test_mode=test_mode, reusable_form_id=reusable_form_id,
-            title=title, subject=subject, message=message,
-            signing_redirect_url=signing_redirect_url, signers=signers,
-            ccs=ccs, custom_fields=custom_fields)
+        self._check_required_fields({ "signers": signers, "reusable_form_id": reusable_form_id })
+
+        params = {
+            'test_mode': test_mode, 
+            'reusable_form_id': reusable_form_id,
+            'title': title, 
+            'subject': subject, 
+            'message': message,
+            'signing_redirect_url': signing_redirect_url, 
+            'signers': signers,
+            'ccs': ccs, 
+            'custom_fields': custom_fields
+        }
+
+        return self._send_signature_request_with_rf(**params)
 
     def remind_signature_request(self, signature_request_id, email_address):
-        """Sends an email to the signer reminding them to sign the signature
+        """ Sends an email to the signer reminding them to sign the signature
         request
 
         Sends an email to the signer reminding them to sign the signature
@@ -427,15 +418,12 @@ class HSClient(object):
             A SignatureRequest object of the requested signature_request_id
 
         """
-
-        request = HSRequest(self.auth)
-        response = request.post(self.SIGNATURE_REQUEST_REMIND_URL +
-                                signature_request_id,
-                                data={"email_address": email_address})
+        request = self._get_request()
+        response = request.post(self.SIGNATURE_REQUEST_REMIND_URL + signature_request_id, data={ "email_address": email_address })
         return SignatureRequest(response["signature_request"])
 
     def cancel_signature_request(self, signature_request_id):
-        """Cancels a SignatureRequest
+        """ Cancels a SignatureRequest
 
         Cancels a SignatureRequest. After canceling, no one will be able to sign
         or access the SignatureRequest or its documents. Only the requester can
@@ -445,25 +433,14 @@ class HSClient(object):
             signing_request_id (str): The id of the SignatureRequest to cancel
 
         Returns:
-            True if the cancellation is successful, False otherwise
+            Nothing
 
         """
+        request = self._get_request()
+        request.post(url=self.SIGNATURE_REQUEST_CANCEL_URL + signature_request_id, get_json=False)
 
-        request = HSRequest(self.auth)
-        try:
-            request.post(
-                url=self.SIGNATURE_REQUEST_CANCEL_URL + signature_request_id,
-                get_json=False)
-        except HTTPError:
-            return False
-        return True
-
-    def send_signature_request_embedded(
-            self, test_mode="0", client_id=None, files=None, file_urls=None,
-            title=None, subject=None, message=None, signing_redirect_url=None,
-            signers=None, cc_email_addresses=None,
-            form_fields_per_document=None):
-        """Creates and sends a new SignatureRequest with the submitted documents
+    def send_signature_request_embedded(self, test_mode="0", client_id=None, files=None, file_urls=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, cc_email_addresses=None, form_fields_per_document=None):
+        """ Creates and sends a new SignatureRequest with the submitted documents
 
         Creates a new SignatureRequest with the submitted documents to be signed
         in an embedded iFrame . If form_fields_per_document is not specified, a
@@ -524,21 +501,26 @@ class HSClient(object):
 
         """
 
-        self._check_required_fields(
-            {"signers": signers, "client_id": client_id},
-            [{"files": files, "file_urls": file_urls}])
-        return self._send_signature_request(
-            test_mode=test_mode, client_id=client_id, files=files,
-            file_urls=file_urls, title=title, subject=subject, message=message,
-            signing_redirect_url=signing_redirect_url, signers=signers,
-            cc_email_addresses=cc_email_addresses,
-            form_fields_per_document=form_fields_per_document)
+        self._check_required_fields({ "signers": signers, "client_id": client_id }, [{ "files": files, "file_urls": file_urls }])
 
-    def send_signature_request_embedded_with_rf(
-            self, test_mode="0", client_id=None, reusable_form_id=None,
-            title=None, subject=None, message=None, signing_redirect_url=None,
-            signers=None, ccs=None, custom_fields=None):
-        """Creates and sends a new SignatureRequest based off of a ReusableForm
+        params = {
+            'test_mode': test_mode, 
+            'client_id': client_id, 
+            'files': files,
+            'file_urls': file_urls, 
+            'title': title, 
+            'subject': subject, 
+            'message': message,
+            'signing_redirect_url': signing_redirect_url, 
+            'signers': signers,
+            'cc_email_addresses': cc_email_addresses,
+            'form_fields_per_document': form_fields_per_document
+        }
+
+        return self._send_signature_request(**params)
+
+    def send_signature_request_embedded_with_rf(self, test_mode="0", client_id=None, reusable_form_id=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, ccs=None, custom_fields=None):
+        """ Creates and sends a new SignatureRequest based off of a ReusableForm
 
         Creates a new SignatureRequest based on the given ReusableForm to be
         signed in an embedded iFrame. Note that embedded signature requests can
@@ -594,20 +576,32 @@ class HSClient(object):
 
         """
 
-        self._check_required_fields(
-            {"signers": signers, "reusable_form_id": reusable_form_id,
-             "client_id": client_id})
-        return self._send_signature_request_with_rf(
-            test_mode=test_mode, client_id=client_id,
-            reusable_form_id=reusable_form_id, title=title, subject=subject,
-            message=message, signing_redirect_url=signing_redirect_url,
-            signers=signers, ccs=ccs, custom_fields=custom_fields)
+        self._check_required_fields({
+            "signers": signers, 
+            "reusable_form_id": reusable_form_id, 
+            "client_id": client_id
+        })
+
+        params = {
+            'test_mode': test_mode, 
+            'client_id': client_id,
+            'reusable_form_id': reusable_form_id, 
+            'title': title, 
+            'subject': subject,
+            'message': message, 
+            'signing_redirect_url': signing_redirect_url,
+            'signers': signers, 
+            'ccs': ccs, 
+            'custom_fields': custom_fields
+        }
+
+        return self._send_signature_request_with_rf(**params)
 
 
     #####  REUSABLE FORM METHODS  #########################
 
     def get_reusable_form(self, reusable_form_id):
-        """Gets a ReusableForm which includes a list of Accounts that can access
+        """ Gets a ReusableForm which includes a list of Accounts that can access
         it
 
         Args:
@@ -617,14 +611,13 @@ class HSClient(object):
             A ReusableForm object specified by the id parameter
 
         """
-
-        request = HSRequest(self.auth)
+        request = self._get_request()
         response = request.get(self.REUSABLE_FORM_GET_URL + reusable_form_id)
         return ReusableForm(response["reusable_form"])
 
     # TODO: return the total results (in another function, variable...)
     def get_reusable_form_list(self, page=1):
-        """Lists your ReusableForms
+        """ Lists your ReusableForms
 
         Args:
             page (int, optional): Which page number of the ReusableForm List to
@@ -634,19 +627,17 @@ class HSClient(object):
             A list the ReusableForms that are accessible by you
 
         """
-
         rf_list = []
-        request = HSRequest(self.auth)
-        response = request.get(
-            self.REUSABLE_FORM_GET_LIST_URL, parameters={"page": page})
-        for reusable_form in response.get("reusable_forms", []):
-            rf_list.append(ReusableForm(reusable_form))
+        request = self._get_request()
+        response = request.get(self.REUSABLE_FORM_GET_LIST_URL, parameters={ "page": page })
+        if 'reusable_forms' in response:
+            for reusable_form in response["reusable_forms"]:
+                rf_list.append(ReusableForm(reusable_form))
         return rf_list
 
     # RECOMMEND: this api does not fail if the user has been added...
-    def add_user_to_reusable_form(
-            self, reusable_form_id, account_id=None, email_address=None):
-        """Gives the specified Account access to the specified ReusableForm
+    def add_user_to_reusable_form(self, reusable_form_id, account_id=None, email_address=None):
+        """ Gives the specified Account access to the specified ReusableForm
 
         Args:
             reusable_form_id (str): The id of the ReusableForm to give the
@@ -662,14 +653,10 @@ class HSClient(object):
             An ReusableForm object specified by the reusable_form_id parameter
 
         """
+        return self._add_remove_user_reusable_form(self.REUSABLE_FORM_ADD_USER_URL, reusable_form_id, account_id, email_address)
 
-        return self._add_remove_user_reusable_form(
-            self.REUSABLE_FORM_ADD_USER_URL, reusable_form_id, account_id,
-            email_address)
-
-    def remove_user_from_reusable_form(
-            self, reusable_form_id, account_id=None, email_address=None):
-        """Removes the specified Account's access to the specified ReusableForm
+    def remove_user_from_reusable_form(self, reusable_form_id, account_id=None, email_address=None):
+        """ Removes the specified Account's access to the specified ReusableForm
 
         Args:
             reusable_form_id (str): The id of the ReusableForm to remove the
@@ -686,16 +673,13 @@ class HSClient(object):
             An ReusableForm object specified by the reusable_form_id parameter
 
         """
-
-        return self._add_remove_user_reusable_form(
-            self.REUSABLE_FORM_REMOVE_USER_URL, reusable_form_id, account_id,
-            email_address)
+        return self._add_remove_user_reusable_form(self.REUSABLE_FORM_REMOVE_USER_URL, reusable_form_id, account_id, email_address)
 
 
     #####  TEAM METHODS  ##################################
 
     def get_team_info(self):
-        """Gets your Team and a list of its members
+        """ Gets your Team and a list of its members
 
         Returns information about your Team as well as a list of its members.
         If you do not belong to a Team, a 404 error with an error_name of
@@ -705,13 +689,12 @@ class HSClient(object):
             A Team object
 
         """
-
-        request = HSRequest(self.auth)
+        request = self._get_request()
         response = request.get(self.TEAM_INFO_URL)
         return Team(response["team"])
 
     def create_team(self, name):
-        """Creates a new Team
+        """ Creates a new Team
 
         Creates a new Team and makes you a member. You must not currently belong
         to a Team to invoke.
@@ -720,50 +703,43 @@ class HSClient(object):
             name (str): The name of your Team
 
         Returns:
-            A Team object of the newly created Team
+            The new Team object
 
         """
-
-        request = HSRequest(self.auth)
-        response = request.post(self.TEAM_CREATE_URL, {"name": name})
+        request = self._get_request()
+        response = request.post(self.TEAM_CREATE_URL, { "name": name })
         return Team(response["team"])
 
     # RECOMMEND:The api event create a new team if you do not belong to any team
     def update_team_name(self, name):
-        """Updates a Team's name
+        """ Updates a Team's name
 
         Args:
             name (str): The name of your Team
 
         Returns:
-            A Team object of the updated Team
+            A Team object
 
         """
-
-        request = HSRequest(self.auth)
-        response = request.post(self.TEAM_UPDATE_URL, {"name": name})
+        request = self._get_request()
+        response = request.post(self.TEAM_UPDATE_URL, { "name": name })
         return Team(response["team"])
 
     def destroy_team(self):
-        """Delete your Team
+        """ Delete your Team
 
         Deletes your Team. Can only be invoked when you have a Team with only
         one member (yourself).
 
         Returns:
-            True if the Team is deleted successfully, False otherwise
+            Nothing
 
         """
-
-        request = HSRequest(self.auth)
-        try:
-            request.post(url=self.TEAM_DESTROY_URL, get_json=False)
-        except HTTPError:
-            return False
-        return True
+        request = self._get_request()
+        request.post(url=self.TEAM_DESTROY_URL, get_json=False)
 
     def add_team_member(self, email_address=None, account_id=None):
-        """Add or invite a user to your Team
+        """ Add or invite a user to your Team
 
         Args:
             email_address (str): email address of the Account of the user to
@@ -774,16 +750,14 @@ class HSClient(object):
                 your Team.
 
         Returns:
-            A Team ojbect of the Team you belong to
+            A Team ojbect
 
         """
-
-        return self._add_remove_team_member(self.TEAM_ADD_MEMBER_URL,
-                                            email_address, account_id)
+        return self._add_remove_team_member(self.TEAM_ADD_MEMBER_URL, email_address, account_id)
 
     # RECOMMEND: does not fail if user has been removed
     def remove_team_member(self, email_address=None, account_id=None):
-        """Remove a user from your Team
+        """ Remove a user from your Team
 
         Args:
             email_address (str): email address of the Account of the user to
@@ -794,18 +768,16 @@ class HSClient(object):
                 your Team.
 
         Returns:
-            A Team ojbect of the Team you belong to
+            A Team ojbect
 
         """
-
-        return self._add_remove_team_member(self.TEAM_REMOVE_MEMBER_URL,
-                                            email_address, account_id)
+        return self._add_remove_team_member(self.TEAM_REMOVE_MEMBER_URL, email_address, account_id)
 
 
     #####  EMBEDDED METHODS  ##############################
 
     def get_embeded_object(self, signature_id):
-        """Retrieves a embedded signing object
+        """ Retrieves a embedded signing object
 
         Retrieves an embedded object containing a signature url that can be
         opened in an iFrame
@@ -815,24 +787,18 @@ class HSClient(object):
                 for
 
         Returns:
-            An Embedded object specified by signature_id
+            An Embedded object for the given signature
 
         """
-
-        request = HSRequest(self.auth)
+        request = self._get_request()
         response = request.get(self.EMBEDDED_OBJECT_GET_URL + signature_id)
         return Embedded(response["embedded"])
 
 
     #####  UNCLAIMED DRAFT METHODS  #######################
 
-    def create_unclaimed_draft(
-            self, test_mode="0", client_id=None, is_for_embedded_signing="0",
-            requester_email_address=None,
-            files=None, file_urls=None, draft_type=None, subject=None,
-            message=None, signers=None, cc_email_addresses=None,
-            signing_redirect_url=None, form_fields_per_document=None):
-        """Creates a new Draft that can be claimed using the claim URL
+    def create_unclaimed_draft(self, test_mode="0", client_id=None, is_for_embedded_signing="0", requester_email_address=None, files=None, file_urls=None, draft_type=None, subject=None, message=None, signers=None, cc_email_addresses=None, signing_redirect_url=None, form_fields_per_document=None):
+        """ Creates a new Draft that can be claimed using the claim URL
 
         Creates a new Draft that can be claimed using the claim URL. The first
         authenticated user to access the URL will claim the Draft and will be
@@ -894,61 +860,71 @@ class HSClient(object):
                 (https://www.hellosign.com/api/reference#SignatureRequest)
 
         Retruns:
-            A UnclaimedDraft object of the newly created Draft
+            The new UnclaimedDraft object
 
         """
 
+        # Files
         files_payload = {}
         for idx, filename in enumerate(files):
-            files_payload["file[" + str(idx) + "]"] = open(filename, 'rb')
+            files_payload["file[%s]" % idx] = open(filename, 'rb')
+
+        # Files URLs
         file_urls_payload = {}
         for idx, fileurl in enumerate(file_urls):
-            file_urls_payload["file_url[" + str(idx) + "]"] = fileurl
+            file_urls_payload["file_url[%s]" % idx] = fileurl
+        
+        # Signers
         signers_payload = {}
         for idx, signer in enumerate(signers):
             if draft_type == UnclaimedDraft.UNCLAIMED_DRAFT_REQUEST_SIGNATURE_TYPE:
                 if "name" not in signer and "email_address" not in signer:
                     raise HSException("Signer's name and email are required")
                 else:
-                    signers_payload[
-                        "signers[" + str(idx) + "][name]"] = signer["name"]
-                    signers_payload["signers[" + str(idx) + "][email_address]"] = signer[
-                        "email_address"]
+                    signers_payload["signers[%s][name]" % idx] = signer["name"]
+                    signers_payload["signers[%s][email_address]" % idx] = signer["email_address"]
             if "order" in signer:
-                signers_payload[
-                    "signers[" + str(idx) + "][order]"] = signer["order"]
+                signers_payload["signers[%s][order]" % idx] = signer["order"]
+
+        # CCs
         cc_email_addresses_payload = {}
         for idx, cc_email_address in enumerate(cc_email_addresses):
-            cc_email_addresses_payload[
-                "cc_email_addresses[" + str(idx) + "]"] = cc_email_address
+            cc_email_addresses_payload["cc_email_addresses[%s]" % idx] = cc_email_address
+        
         payload = {
-            "test_mode": test_mode, "type": draft_type,
-            "subject": subject, "message": message,
+            "test_mode": test_mode, 
+            "type": draft_type,
+            "subject": subject, 
+            "message": message,
             "signing_redirect_url": signing_redirect_url,
-            "form_fields_per_document": form_fields_per_document}
-        url = self.UNCLAIMED_DRAFT_CREATE_URL
-        if is_for_embedded_signing == '1':
-            payload['is_for_embedded_signing'] = '1'
-            payload['client_id'] = client_id
-            payload['requester_email_address'] = requester_email_address
-            url = self.UNCLAIMED_DRAFT_CREATE_EMBEDDED_URL
-        # remove attributes with none value
-        payload = dict((key, value)
-                       for key, value in payload.iteritems() if value)
+            "form_fields_per_document": form_fields_per_document
+        }
 
-        request = HSRequest(self.auth)
-        response = request.post(
-            url, data=dict(
-                payload.items() + signers_payload.items() +
-                cc_email_addresses_payload.items() + file_urls_payload.items()),
-            files=files_payload)
+        url = self.UNCLAIMED_DRAFT_CREATE_URL
+
+        if is_for_embedded_signing == '1':
+            payload.update({
+                'is_for_embedded_signing': '1',
+                'client_id': client_id,
+                'requester_email_address': requester_email_address
+            })
+            url = self.UNCLAIMED_DRAFT_CREATE_EMBEDDED_URL
+
+        # remove attributes with none value
+        payload = dict((key, value) for key, value in payload.iteritems() if value)
+
+        data = dict(payload.items() + signers_payload.items() + cc_email_addresses_payload.items() + file_urls_payload.items())
+
+        request = self._get_request()
+        response = request.post(url, data=data, files=files_payload)
+
         return UnclaimedDraft(response["unclaimed_draft"])
 
 
     #####  OAUTH METHODS  #################################
 
     def get_oauth_data(self, code, client_id, secret, state):
-        """Get Oauth data from HelloSign
+        """ Get Oauth data from HelloSign
 
         Args:
             code (str): Code returned by HelloSign for our callback url
@@ -956,25 +932,39 @@ class HSClient(object):
             secret (str):
 
         Returns:
-            An HSAccessTokenAuth object
+            A HSAccessTokenAuth object
 
         """
-        request = HSRequest(self.auth)
-        response = request.post(self.OAUTH_TOKEN_URL, {"state": state,
-                                "code": code,
-                                "grant_type": "authorization_code",
-                                "client_id": client_id, "secret": secret})
-        oauth = HSAccessTokenAuth(
+        request = self._get_request()
+        response = request.post(self.OAUTH_TOKEN_URL, {
+            "state": state,
+            "code": code,
+            "grant_type": "authorization_code",
+            "client_id": client_id, 
+            "secret": secret
+        })
+        return HSAccessTokenAuth(
             response['access_token'],
-            response['token_type'], response['refresh_token'],
-            response['expires_in'], response['state'])
-        return oauth
+            response['token_type'], 
+            response['refresh_token'],
+            response['expires_in'], 
+            response['state']
+        )
 
 
     #####  HELPERS  #######################################
 
-    def _authenticate(self, email=None, password=None, api_key=None,
-                      access_token=None, access_token_type=None):
+    def _get_request(self, auth=None):
+        ''' Return an http request object 
+
+            auth: Auth data to use
+
+            Returns:
+                A HSRequest object
+        '''
+        return HSRequest(auth or self.auth, self.env)
+
+    def _authenticate(self, email=None, password=None, api_key=None, access_token=None, access_token_type=None):
         """Create authentication object to send requests
 
         Args:
@@ -1019,25 +1009,20 @@ class HSClient(object):
 
         """
 
-        for key, value in fields.iteritems():
+        for (key, value) in fields.iteritems():
             # If value is a dict, one of the fields in the dict is required ->
             # exception if all are None
             if not value:
-                raise HSException("Field " + key + " is required.")
+                raise HSException("Field '%s' is required." % key)
         if either_fields is not None:
             for field in either_fields:
                 if not any(field.values()):
-                    raise HSException(
-                        "One of the fields in " + ", ".join(field.keys()) +
-                        " is required.")
+                    raise HSException("One of the fields in " + ", ".join(field.keys()) + " is required.")
 
-    def _send_signature_request(self, test_mode="0", client_id=None, files=None,
-                                file_urls=None, title=None, subject=None,
-                                message=None, signing_redirect_url=None,
-                                signers=None, cc_email_addresses=None,
-                                form_fields_per_document=None):
-        """To share the same logic between send_signature_request &
-        send_signature_request_embedded functions
+    def _send_signature_request(self, test_mode="0", client_id=None, files=None, file_urls=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, cc_email_addresses=None, form_fields_per_document=None):
+        """
+            To share the same logic between send_signature_request &
+            send_signature_request_embedded functions
 
         Args:
             test_mode (str, optional): Whether this is a test, the signature
@@ -1090,12 +1075,17 @@ class HSClient(object):
 
         """
 
+        # Files
         files_payload = {}
         for idx, filename in enumerate(files):
             files_payload["file[" + str(idx) + "]"] = open(filename, 'rb')
+
+        # File URLs
         file_urls_payload = {}
         for idx, fileurl in enumerate(file_urls):
             file_urls_payload["file_url[" + str(idx) + "]"] = fileurl
+
+        # Signers
         signers_payload = {}
         for idx, signer in enumerate(signers):
             signers_payload["signers[" + str(idx) + "][name]"] = signer["name"]
@@ -1107,35 +1097,38 @@ class HSClient(object):
             if "pin" in signer:
                 signers_payload[
                     "signers[" + str(idx) + "][pin]"] = signer["pin"]
+
+        # CCs
         cc_email_addresses_payload = {}
         for idx, cc_email_address in enumerate(cc_email_addresses):
             cc_email_addresses_payload[
                 "cc_email_addresses[" + str(idx) + "]"] = cc_email_address
+        
         payload = {
-            "test_mode": test_mode, "client_id": client_id, "title": title,
-            "subject": subject, "message": message,
+            "test_mode": test_mode, 
+            "client_id": client_id, 
+            "title": title,
+            "subject": subject, 
+            "message": message,
             "signing_redirect_url": signing_redirect_url,
-            "form_fields_per_document": form_fields_per_document}
-        # remove attributes with none value
-        payload = dict((key, value)
-                       for key, value in payload.iteritems() if value)
+            "form_fields_per_document": form_fields_per_document
+        }
 
-        request = HSRequest(self.auth)
+        # remove attributes with none value
+        payload = dict((key, value) for key, value in payload.iteritems() if value)
+
         url = self.SIGNATURE_REQUEST_CREATE_URL
         if client_id:
             url = self.SIGNATURE_REQUEST_CREATE_EMBEDDED_URL
-        response = request.post(
-            url, data=dict(
-                payload.items() + signers_payload.items() +
-                cc_email_addresses_payload.items() + file_urls_payload.items()),
-            files=files_payload)
+        
+        data = dict(payload.items() + signers_payload.items() + cc_email_addresses_payload.items() + file_urls_payload.items())
+
+        request = self._get_request()
+        response = request.post(url, data=data, files=files_payload)
+
         return SignatureRequest(response["signature_request"])
 
-    def _send_signature_request_with_rf(self, test_mode="0", client_id=None,
-                                        reusable_form_id=None, title=None,
-                                        subject=None, message=None,
-                                        signing_redirect_url=None, signers=None,
-                                        ccs=None, custom_fields=None):
+    def _send_signature_request_with_rf(self, test_mode="0", client_id=None, reusable_form_id=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, ccs=None, custom_fields=None):
         """To share the same logic between send_signature_request_with_rf and
         send_signature_request_embedded_with_rf
 
@@ -1188,6 +1181,7 @@ class HSClient(object):
 
         """
 
+        # Signers
         signers_payload = {}
         for signer in signers:
             signers_payload[
@@ -1198,12 +1192,15 @@ class HSClient(object):
                 signers_payload[
                     "signers[" + signer["role_name"] + "][pin]"] = signer["pin"]
 
+        # CCs
         ccs_payload = {}
         for cc in ccs:
             # cc_emaiL_address: {"email_address": "email@email.email",
             # "role_name": "Role Name"}
             ccs_payload[
                 "ccs[" + cc["role_name"] + "][email_address]"] = cc["email_address"]
+
+        # Custom fields
         custom_fields_payload = {}
         # custom_field: {"name": value}
         for custom_field in custom_fields:
@@ -1211,25 +1208,30 @@ class HSClient(object):
                 custom_fields_payload["custom_fields[" + key + "]"] = value
 
         payload = {
-            "test_mode": test_mode, "client_id": client_id,
-            "reusable_form_id": reusable_form_id, "title": title,
-            "subject": subject, "message": message,
-            "signing_redirect_url": signing_redirect_url}
+            "test_mode": test_mode, 
+            "client_id": client_id,
+            "reusable_form_id": reusable_form_id, 
+            "title": title,
+            "subject": subject, 
+            "message": message,
+            "signing_redirect_url": signing_redirect_url
+        }
+
         # remove attributes with empty value
-        payload = dict((key, value)
-                       for key, value in payload.iteritems() if value)
-        request = HSRequest(self.auth)
+        payload = dict((key, value) for key, value in payload.iteritems() if value)
+
         url = self.SIGNATURE_REQUEST_CREATE_WITH_RF_URL
         if client_id:
             url = self.SIGNATURE_REQUEST_CREATE_EMBEDDED_WITH_RF_URL
-        response = request.post(
-            url, data=dict(
-                payload.items() + signers_payload.items() +
-                ccs_payload.items() + custom_fields_payload.items()))
+
+        data = dict(payload.items() + signers_payload.items() + ccs_payload.items() + custom_fields_payload.items())
+
+        request = self._get_request()
+        response = request.post(url, data=data)
+
         return SignatureRequest(response["signature_request"])
 
-    def _add_remove_user_reusable_form(self, url, reusable_form_id,
-                                       account_id=None, email_address=None):
+    def _add_remove_user_reusable_form(self, url, reusable_form_id, account_id=None, email_address=None):
         """Add or Remove user from a ReusableForm
 
         We use this function for two tasks because they have the same API call
@@ -1253,14 +1255,15 @@ class HSClient(object):
         if not email_address and not account_id:
             raise HSException("No email address or account_id specified")
 
-        request = HSRequest(self.auth)
         data = {}
         if account_id is not None:
-            data = {"account_id": account_id}
+            data = { "account_id": account_id }
         else:
-            data = {"email_address": email_address}
-        request = HSRequest(self.auth)
+            data = { "email_address": email_address }
+
+        request = self._get_request()
         response = request.post(url + reusable_form_id, data)
+
         return ReusableForm(response["reusable_form"])
 
     def _add_remove_team_member(self, url, email_address=None, account_id=None):
@@ -1275,19 +1278,20 @@ class HSClient(object):
             account_id (str): ID of the Account to add/remove
 
         Returns:
-            True if Account is added/removed successfully, False otherwise
+            A Team object
 
         """
 
         if not email_address and not account_id:
             raise HSException("No email address or account_id specified")
 
-        request = HSRequest(self.auth)
         data = {}
         if account_id is not None:
-            data = {"account_id": account_id}
+            data = { "account_id": account_id }
         else:
-            data = {"email_address": email_address}
+            data = { "email_address": email_address }
 
+        request = self._get_request()
         response = request.post(url, data)
+
         return Team(response["team"])
