@@ -12,58 +12,110 @@ class TestSignatureRequest(TestCase):
     def setUp(self):
         self.client = HSClient(api_key=api_key)
 
-    def test_signature_request_get_and_list(self):
-        srl = self.client.get_signature_request_list()
-        self.assertTrue(isinstance(srl, list))
-        if len(srl) > 0:
-            self.assertTrue(isinstance(srl[0], SignatureRequest))
-            sr = self.client.get_signature_request(srl[0].signature_request_id)
-            self.assertTrue(isinstance(sr, SignatureRequest))
-            
-            # Remind
-            signer = srl[0].signatures[0].signer_email_address
-            try:
-                new_sr = self.client.remind_signature_request(srl[0].signature_request_id, signer)
-                self.assertEquals(isinstance(new_sr, SignatureRequest), True)
-            except Forbidden:
-                pass
-            
-            # Download
-            f = tempfile.NamedTemporaryFile(delete=True)
-            temp_filename = f.name
-            f.close()
-            result = self.client.get_signature_request_file(srl[0].signature_request_id, temp_filename)
-            self.assertTrue(result)
+    def _send_test_signature_request(self, embedded=False):
+        ''' Send a test signature request '''
 
-            # Final copy
-            result = self.client.get_signature_request_final_copy(srl[0].signature_request_id, temp_filename)
-            self.assertTrue(result)
-
-    def test_signature_request_send(self):
         files = [os.path.dirname(os.path.realpath(__file__)) + "/docs/nda.pdf"]
         signers = [{"name": "Signer Name", "email_address": "demo@example.com"}]
         cc_email_addresses = ["demo1@example.com", "demo2@example.com"]
+        
+        title = 'A test signature request'
+        subject = 'Test %srequest' % ('embedded ' if embedded else '')
+        message = 'This is a test message'
 
-        sr = self.client.send_signature_request("1", files, [], "A test signature request", "Test request", "This is a demo message", "", signers, cc_email_addresses)
-        self.assertEquals(isinstance(sr, SignatureRequest), True)
-        self.assertEquals(sr.title, "A test signature request")
-        self.assertEquals(sr.subject, "Test request")
-        self.assertEquals(sr.message, "This is a demo message")
+        if not embedded:
+            sig_req = self.client.send_signature_request("1", files, [], title, subject, message, "", signers, cc_email_addresses)
+        else:
+            sig_req = self.client.send_signature_request_embedded("1", client_id, files, [], title, subject, message, "", signers, cc_email_addresses)
+
+        self.assertEquals(isinstance(sig_req, SignatureRequest), True)
+        self.assertEquals(sig_req.title, title)
+        self.assertEquals(sig_req.subject, subject)
+        self.assertEquals(sig_req.message, message)
+        self.assertEquals(len(sig_req.signatures), 1)
+        self.assertEquals(len(sig_req.cc_email_addresses), 2)
+
+        return sig_req
+
+    def _get_one_signature_request(self):
+        ''' Retrieve one signature request from the current account '''
+        sig_req_list = self.client.get_signature_request_list()
+        if len(sig_req_list) == 0:
+            sig_req = self._send_test_signature_request()
+        else:
+            sig_req = sig_req_list[0]
+        return sig_req
+
+    def test_signature_request_get_and_list(self):
+        ''' Test get signature requests '''
+
+        self._send_test_signature_request()
+
+        # Listing
+        sig_req_list = self.client.get_signature_request_list()
+        self.assertTrue(isinstance(sig_req_list, list))
+        self.assertTrue(len(sig_req_list) > 0)
+        for sig_req in sig_req_list:
+            self.assertTrue(isinstance(sig_req, SignatureRequest))    
+        
+        # Get a signature request
+        sig_req = self.client.get_signature_request(sig_req_list[0].signature_request_id)
+        self.assertTrue(isinstance(sig_req, SignatureRequest))
+
+    def test_signature_request_reminder(self):
+        ''' Send a reminder for a given signature request '''
+
+        sig_req = self._get_one_signature_request()
+        signer = sig_req.signatures[0].signer_email_address
+
+        # Sent reminder
+        try:
+            self.client.remind_signature_request(sig_req.signature_request_id, signer)
+        except Forbidden, e:
+            self.fail(e.message)
+
+    def test_signature_request_file(self):
+        ''' Test retrieving signature request files '''
+        
+        sig_req = self._get_one_signature_request()
+
+        # Download file
+        f = tempfile.NamedTemporaryFile(delete=True)
+        temp_filename = f.name
+        f.close()
+        result = self.client.get_signature_request_file(sig_req.signature_request_id, temp_filename)
+        self.assertTrue(result)
+
+        # Final copy (DEPRECATED)
+        result = self.client.get_signature_request_final_copy(sig_req.signature_request_id, temp_filename)
+        self.assertTrue(result)
+
+    def test_signature_request_send(self):
+        ''' Test sending signature requests '''
+
+        sig_req = self._send_test_signature_request()
+
+        cc_email_addresses = sig_req.cc_email_addresses
+        signers = [{
+            'name': sig_req.signatures[0].signer_name,
+            'email_address': sig_req.signatures[0].signer_email_address
+        }]
 
         try:
             self.client.send_signature_request("1", None, [], "Test create signature request", "Ky giay no", "Ky vao giay no di, le di", "", signers, cc_email_addresses) # Error
-        except HSException:
-            pass
-        result = self.client.cancel_signature_request(sr.signature_request_id)
-        self.assertTrue(result)
+            self.fail("HSException was excepted")
+        except HSException, e:
+            self.assertTrue(e.message.find('One of the following fields is required') >= 0)
 
-        # create embedded
-        sr = self.client.send_signature_request_embedded("1", client_id, files, [], "A test signature request", "Test request", "This is a demo message", "", signers, cc_email_addresses)
+        try:
+            self.client.cancel_signature_request(sig_req.signature_request_id)
+        except HSException, e:
+            self.fail(e.message)
 
-        self.assertEquals(isinstance(sr, SignatureRequest), True)
-        self.assertEquals(sr.title, "A test signature request")
-        self.assertEquals(sr.subject, "Test request")
-        self.assertEquals(sr.message, "This is a demo message")
-
-        result = self.client.cancel_signature_request(sr.signature_request_id)
-        self.assertTrue(result)
+    def test_embedded_signature_request_send(self):
+        ''' Test sending embedded signature requests '''
+        sig_req = self._send_test_signature_request(embedded=True)
+        try:
+            self.client.cancel_signature_request(sig_req.signature_request_id)
+        except HSException, e:
+            self.fail(e.message)
