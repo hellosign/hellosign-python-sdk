@@ -40,18 +40,25 @@ class Resource(object):
         if name != "json_data":
             if name in self.json_data:
                 return self.json_data[name]
-            else:
-                raise AttributeError
+            raise AttributeError('%s has no attribute "%s"' % (self.__class__.__name__, name))
 
     def __setattr__(self, name, value):
         if name != "json_data":
             if name in self.json_data:
                 self.json_data[name] = value
             else:
-                raise AttributeError
+                raise AttributeError('%s has no attribute "%s"' % (self.__class__.__name__, name))
         else:
             self.__dict__["json_data"] = value
 
-    # @abstractmethod
-    # def say_something(self):
-    #   raise NotImplementedError()
+    def __str__(self):
+        ''' Return a string representation of this object '''
+        
+        if 'id' in self.json_data:
+            obj_id = self.id
+        elif 'name' in self.json_data:
+            obj_id = self.name
+        else:
+            obj_id = ''
+
+        return "%s %s" % (self.__class__.__name__, obj_id)
