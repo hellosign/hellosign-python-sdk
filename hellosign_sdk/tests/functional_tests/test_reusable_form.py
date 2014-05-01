@@ -36,7 +36,7 @@ class TestReusableForm(TestCase):
                 self.assertTrue(isinstance(new_team, Team))
                 team = new_team
                 # self.assertTrue("demo@example.com" in [account["email_address"].encode('UTF8') for account in team.accounts])
-            except Forbidden, e:
+            except Forbidden:
                 pass
             rf = self.client.get_reusable_form(rfl[0].reusable_form_id)
             self.assertTrue(isinstance(rf, ReusableForm))

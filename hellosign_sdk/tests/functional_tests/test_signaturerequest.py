@@ -19,6 +19,7 @@ class TestSignatureRequest(TestCase):
             self.assertTrue(isinstance(srl[0], SignatureRequest))
             sr = self.client.get_signature_request(srl[0].signature_request_id)
             self.assertTrue(isinstance(sr, SignatureRequest))
+            
             # Remind
             signer = srl[0].signatures[0].signer_email_address
             try:
@@ -26,6 +27,7 @@ class TestSignatureRequest(TestCase):
                 self.assertEquals(isinstance(new_sr, SignatureRequest), True)
             except Forbidden:
                 pass
+            
             # Download
             f = tempfile.NamedTemporaryFile(delete=True)
             temp_filename = f.name
@@ -33,6 +35,7 @@ class TestSignatureRequest(TestCase):
             result = self.client.get_signature_request_file(srl[0].signature_request_id, temp_filename)
             self.assertTrue(result)
 
+            # Final copy
             result = self.client.get_signature_request_final_copy(srl[0].signature_request_id, temp_filename)
             self.assertTrue(result)
 
