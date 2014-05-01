@@ -29,7 +29,7 @@ class HSRequest(object):
 
     def __init__(self, auth, env="production"):
         self.auth = auth
-        if env == "dev" or env == "staging":
+        if env in ("dev", "staging"):
             self.verify_ssl = False
 
     def get(self, url, headers=None, parameters=None, get_json=True):
@@ -84,8 +84,9 @@ class HSRequest(object):
         get_headers = self.headers
         if headers is not None:
             get_headers.update(headers)
-        response = requests.get(url, headers=get_headers, auth=self.auth,
-                                verify=self.verify_ssl)
+
+        response = requests.get(url, headers=get_headers, auth=self.auth, verify=self.verify_ssl)
+        
         self.http_status_code = response.status_code
         try:
             self._check_error(response)
@@ -94,6 +95,7 @@ class HSRequest(object):
                 f.write(response.content)
         except:
             return False
+        
         return True
 
     def post(self, url, data=None, files=None, headers=None, get_json=True):
