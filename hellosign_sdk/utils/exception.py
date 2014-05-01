@@ -1,10 +1,10 @@
 class HSException(Exception):
-    """General exception class
+    ''' General HelloSign exception
 
     We use this object to raise exceptions when none of its child classes is
     suitable for use.
 
-    """
+    '''
 
     def __init__(self, message):
         self.message = message
@@ -15,84 +15,65 @@ class HSException(Exception):
 
 
 class NoAuthMethod(HSException):
-    """Exception when no authentication information found"""
-
+    ''' No authentication data '''
 
 class HTTPError(HSException):
-    """Exception when an HTTP error found"""
+    ''' General HTTP error '''
 
     def __init__(self, message, http_code=None):
         super(HTTPError, self).__init__(message)
         self.http_code = http_code
 
-
 class BadRequest(HTTPError):
-    """docstring for BadRequest"""
-
+    ''' Bad request data '''
 
 class Unauthorized(HTTPError):
-    """docstring for Unthorized"""
-
+    ''' Bad authentication data '''
 
 class PaymentRequired(HTTPError):
-    """docstring for PaymentRequired"""
-
+    ''' Payment/upgrade required to proceed '''
 
 class Forbidden(HTTPError):
-    """docstring for Forbidden"""
-
+    ''' Not authorized to proceed '''
 
 class NotFound(HTTPError):
-    """docstring for NotFound"""
-
+    ''' Resource not found '''
 
 class MethodNotAllowed(HTTPError):
-    """docstring for MethodNotAllowed"""
-
+    ''' HTTP method not supported '''
 
 class NotAcceptable(HTTPError):
-    """docstring for NotAcceptable"""
-
+    ''' Accept header conflicts with the returned resource type '''
 
 class RequestTimeout(HTTPError):
-    """docstring for RequestTimeout"""
-
+    ''' Request timeout '''
 
 class Conflict(HTTPError):
-    """docstring for Conflict"""
-
+    ''' Request correctly formulated but unable to proceed due to a conflict '''
 
 class Gone(HTTPError):
-    """docstring for Gone"""
-
+    ''' Resource deleted '''
 
 class RequestURITooLong(HTTPError):
-    """docstring for RequestURITooLong"""
-
+    ''' Request URI too long '''
 
 class UnsupportedMediaType(HTTPError):
-    """docstring for UnsupportedMediaType"""
-
+    ''' Unsupported media type '''
 
 class RequestedRangeNotSatisfiable(HTTPError):
-    """docstring for RequestedRangeNotSatisfiable"""
-
+    ''' Invalid resource data chunk requested '''
 
 class InternalServerError(HTTPError):
-    """docstring for InternalServerError"""
-
+    ''' Server error '''
 
 class MethodNotImplemented(HTTPError):
-    """docstring for NotImplemented"""
-
+    ''' Not implemented '''
 
 class BadGateway(HTTPError):
-    """docstring for BadGateway"""
-
+    ''' Bad gateway '''
 
 class ServiceUnavailable(HTTPError):
-    """docstring for ServiceUnavailable"""
-
+    ''' Service unavailable '''
 
 class GatewayTimeout(HTTPError):
-    """docstring for GatewayTimeout"""
+    ''' Gateway timeout '''
