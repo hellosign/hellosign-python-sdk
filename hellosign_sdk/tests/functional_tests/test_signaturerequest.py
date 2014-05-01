@@ -79,12 +79,17 @@ class TestSignatureRequest(TestCase):
         
         sig_req = self._get_one_signature_request()
 
-        # Download file
+        # Download PDF file
         f = tempfile.NamedTemporaryFile(delete=True)
         temp_filename = f.name
         f.close()
-        result = self.client.get_signature_request_file(sig_req.signature_request_id, temp_filename)
-        self.assertTrue(result)
+        self.assertTrue(self.client.get_signature_request_file(sig_req.signature_request_id, temp_filename))
+
+        # Download ZIP file
+        f = tempfile.NamedTemporaryFile(delete=True)
+        temp_filename = f.name
+        f.close()
+        self.assertTrue(self.client.get_signature_request_file(sig_req.signature_request_id, temp_filename, file_type='zip'))
 
         # Final copy (DEPRECATED)
         result = self.client.get_signature_request_final_copy(sig_req.signature_request_id, temp_filename)
