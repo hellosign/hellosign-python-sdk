@@ -16,7 +16,7 @@ class HSClient(object):
 
     Most of the operations of the SDK is made through this object. Please refer
     to the README.rst file for more details on how to use the client object.
-    
+
     """
 
     API_VERSION = 'v3'
@@ -244,7 +244,8 @@ class HSClient(object):
                             full path.
 
             file_type (str): Type of file to return. Either "pdf" for a single merged document 
-                             or "zip" for a collection of individual documents.
+                             or "zip" for a collection of individual documents. Defaults to "pdf" 
+                             if not specified.
 
         Returns:
             True if file is downloaded and written successfully, False
@@ -254,7 +255,7 @@ class HSClient(object):
         request = self._get_request()
         url = self.SIGNATURE_REQUEST_DOWNLOAD_PDF_URL + signature_request_id
         if file_type:
-            url += '?file_type=%s' + file_type
+            url += '?file_type=%s' % file_type
         return request.get_file(url, filename)
 
     # This api call is DEPRECATED
