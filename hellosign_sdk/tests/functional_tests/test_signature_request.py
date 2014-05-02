@@ -1,6 +1,7 @@
 from unittest import TestCase
 from hellosign_sdk.tests.test_helper import api_key, client_id
 from hellosign_sdk.hsclient import HSClient
+from hellosign_sdk.resource.resource_list import ResourceList
 from hellosign_sdk.resource.signature_request import SignatureRequest
 from hellosign_sdk.utils.exception import Forbidden, HSException
 import tempfile
@@ -85,7 +86,7 @@ class TestSignatureRequest(TestCase):
 
         # Listing
         sig_req_list = self.client.get_signature_request_list()
-        self.assertTrue(isinstance(sig_req_list, list))
+        self.assertTrue(isinstance(sig_req_list, ResourceList))
         self.assertTrue(len(sig_req_list) > 0)
         for sig_req in sig_req_list:
             self.assertTrue(isinstance(sig_req, SignatureRequest))    

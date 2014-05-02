@@ -1,6 +1,7 @@
 from hellosign_sdk.utils.request import HSRequest
 from hellosign_sdk.utils.exception import HSException, NoAuthMethod
 from hellosign_sdk.resource.account import Account
+from hellosign_sdk.resource.resource_list import ResourceList
 from hellosign_sdk.resource.signature_request import SignatureRequest
 from hellosign_sdk.resource.reusable_form import ReusableForm
 from hellosign_sdk.resource.team import Team
@@ -215,7 +216,6 @@ class HSClient(object):
         response = request.get(self.SIGNATURE_REQUEST_INFO_URL + signature_request_id)
         return SignatureRequest(response["signature_request"])
 
-    # TODO: return list info besides signature request list
     def get_signature_request_list(self):
         """ Get a list of SignatureRequest that you can access
 
@@ -223,16 +223,12 @@ class HSClient(object):
         not ones that you have been CCed on.
 
         Returns:
-            A list of SignatureRequest objects
+            A resource list object
 
         """
-        sr_list = []
         request = self._get_request()
         response = request.get(self.SIGNATURE_REQUEST_LIST_URL)
-        if 'signature_requests' in response:
-            for signature_request in response["signature_requests"]:
-                sr_list.append(SignatureRequest(signature_request))
-        return sr_list
+        return ResourceList(SignatureRequest, response)
 
     def get_signature_request_file(self, signature_request_id, filename, file_type=None):
         """ Download the PDF copy of the current documents
@@ -621,7 +617,6 @@ class HSClient(object):
         response = request.get(self.REUSABLE_FORM_GET_URL + reusable_form_id)
         return ReusableForm(response["reusable_form"])
 
-    # TODO: return the total results (in another function, variable...)
     def get_reusable_form_list(self, page=1):
         """ Lists your ReusableForms
 
@@ -630,16 +625,12 @@ class HSClient(object):
                 return. Defaults to 1.
 
         Returns:
-            A list the ReusableForms that are accessible by you
+            A resource list object
 
         """
-        rf_list = []
         request = self._get_request()
         response = request.get(self.REUSABLE_FORM_GET_LIST_URL, parameters={ "page": page })
-        if 'reusable_forms' in response:
-            for reusable_form in response["reusable_forms"]:
-                rf_list.append(ReusableForm(reusable_form))
-        return rf_list
+        return ResourceList(ReusableForm, response)
 
     # RECOMMEND: this api does not fail if the user has been added...
     def add_user_to_reusable_form(self, reusable_form_id, account_id=None, email_address=None):

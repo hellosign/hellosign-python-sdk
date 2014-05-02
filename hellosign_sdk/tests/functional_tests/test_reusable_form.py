@@ -2,6 +2,7 @@ from unittest import TestCase
 from hellosign_sdk.tests.test_helper import api_key
 from hellosign_sdk.hsclient import HSClient
 from hellosign_sdk.resource.team import Team
+from hellosign_sdk.resource.resource_list import ResourceList
 from hellosign_sdk.resource.reusable_form import ReusableForm
 from hellosign_sdk.utils.exception import Forbidden, NotFound
 from time import time
@@ -35,7 +36,7 @@ class TestReusableForm(TestCase):
         ''' Return one reusable form '''
 
         reusable_forms = self.client.get_reusable_form_list()
-        self.assertTrue(isinstance(reusable_forms, list))
+        self.assertTrue(isinstance(reusable_forms, ResourceList))
         self.assertTrue(len(reusable_forms) > 0, "CREATE A TEMPLATE BEFORE RUNNING THIS TEST")
 
         for reusable_form in reusable_forms:
