@@ -56,7 +56,7 @@ class TestReusableForm(TestCase):
         team = self._get_team()
         reusable_form = self._get_one_reusable_form()
         rf_id = reusable_form.reusable_form_id
-        email = team.accounts[-1]['email_address']
+        email = team.accounts[-1].email_address
 
         try:
             r = self.client.add_user_to_reusable_form(rf_id, None, email)

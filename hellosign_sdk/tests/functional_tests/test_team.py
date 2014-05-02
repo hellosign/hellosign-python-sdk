@@ -20,9 +20,9 @@ class TestTeam(TestCase):
 
         # Remove non-admins
         for acct in team.accounts:
-            if acct['role_code'].lower() != 'a':
+            if acct.role_code.lower() != 'a':
                 try:
-                    self.client.remove_team_member(email_address=acct['email_address'])
+                    self.client.remove_team_member(email_address=acct.email_address)
                 except HSException, e:
                     self.fail('Could not remove team member: %s' % e.message)
 
@@ -66,8 +66,8 @@ class TestTeam(TestCase):
         team = self.client.get_team_info()
         email_address = None
         for acct in team.accounts:
-            if acct['role_code'].lower() != 'a':
-                email_address = acct['email_address']
+            if acct.role_code.lower() != 'a':
+                email_address = acct.email_address
                 break
 
         if email_address:
@@ -124,7 +124,7 @@ class TestTeam(TestCase):
         num_members = 0
         if team:
             for acct in team.accounts:
-                if acct['role_code'].lower() != 'a':
+                if acct.role_code.lower() != 'a':
                     num_members += 1
 
         if num_members > 0:

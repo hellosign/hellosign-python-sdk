@@ -139,34 +139,33 @@ class TestException(TestCase):
             ])
 
     def test_team(self):
-        team = Team({
+        data = {
             'name': 'Test team',
             'accounts': [
-                {'account_id': 123456789, 'email_address': 'user_1@example.com',
-                 'role_code': 'O'},
-                {'account_id': 123456799, 'email_address': 'user_2@example.com',
-                 'role_code': 'M'}],
+                {'account_id': 123456789, 'email_address': 'user_1@example.com', 'role_code': 'O'},
+                {'account_id': 123456799, 'email_address': 'user_2@example.com', 'role_code': 'M'}],
             'invited_accounts': [
                 {'account_id': 1234570, 'email_address': 'user_3@example.com'},
                 {'account_id': 1234571, 'email_address': 'user_4@example.com'}
-            ]})
+            ]}
+        team = Team(data)
         self.assertEquals(team.name, 'Test team')
-        self.assertEquals(
-            team.accounts, [
-                {'account_id': 123456789, 'email_address': 'user_1@example.com',
-                 'role_code': 'O'},
-                {'account_id': 123456799, 'email_address': 'user_2@example.com',
-                 'role_code': 'M'}])
-        self.assertEquals(
-            team.invited_accounts, [
-                {'account_id': 1234570, 'email_address': 'user_3@example.com'},
-                {'account_id': 1234571, 'email_address': 'user_4@example.com'}])
+        self.assertEquals(len(team.accounts), 2)
+        for i in range(len(team.accounts)):
+          a = team.accounts[i]
+          self.assertTrue(isinstance(a, Account))
+          self.assertEquals(a.account_id, data['accounts'][i]['account_id'])
+        for i in range(len(team.invited_accounts)):
+          a = team.invited_accounts[i]
+          self.assertTrue(isinstance(a, Account))
+          self.assertEquals(a.account_id, data['invited_accounts'][i]['account_id'])
 
     def test_unclaimed_draft(self):
-        ud = UnclaimedDraft(
-            {'claim_url': 'http://example.com/claim_url',
+        ud = UnclaimedDraft({
+             'claim_url': 'http://example.com/claim_url',
              'signing_redirect_url': 'http://example.com/signing_redirect_url',
-             'test_mode': '0'})
+             'test_mode': '0'
+            })
         self.assertEquals(ud.claim_url, 'http://example.com/claim_url')
         self.assertEquals(ud.signing_redirect_url, 'http://example.com/signing_redirect_url')
         self.assertEquals(ud.test_mode, '0')
