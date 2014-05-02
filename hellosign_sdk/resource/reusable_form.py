@@ -1,5 +1,5 @@
 from resource import Resource
-
+from account import Account
 
 class ReusableForm(Resource):
     """Contains information about the templates you and your team have created
@@ -66,6 +66,24 @@ class ReusableForm(Resource):
             by the owner (always true if that's you).
 
     """
+
+    def __init__(self, jsonstr=None, key=None):
+        ''' Initialization of the object
+
+        Args:
+            jsonstr (str): a raw JSON string that is returned by a request.
+                We store all the data in `self.json_data` and use `__getattr__`
+                and `__setattr__` to make the data accessible like attributes
+                of the object
+            key (str): Optional key to use with jsonstr. If `key` exists, we'll
+                load the data of `jsonstr[key]` instead of the whole `jsonstr`
+        '''
+        super(ReusableForm, self).__init__(jsonstr, key)
+        if 'accounts' in self.json_data:
+            acct_list = []
+            for acct in self.accounts:
+                acct_list.append(Account(acct))
+            self.accounts = acct_list
 
     def __str__(self):
         ''' Return a string representation of this reusable form '''
