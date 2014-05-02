@@ -19,10 +19,10 @@ class TestUnclaimedDraft(TestCase):
         cc_email_addresses = ["receiver@example.com"]
 
         try:
-            self.client.create_unclaimed_draft("1", client_id, "1", "user@example.com", [], [], UnclaimedDraft.UNCLAIMED_DRAFT_REQUEST_SIGNATURE_TYPE, "Test unclaimed draft", "Please do not reply to the messages", signers, cc_email_addresses)
+            self.client.create_unclaimed_draft(True, client_id, True, "user@example.com", [], [], UnclaimedDraft.UNCLAIMED_DRAFT_REQUEST_SIGNATURE_TYPE, "Test unclaimed draft", "Please do not reply to the messages", signers, cc_email_addresses)
             self.fail('BadRequest was expected')
         except BadRequest:
             pass
 
-        result = self.client.create_unclaimed_draft("1", client_id, "1", "user@example.com", files, [], UnclaimedDraft.UNCLAIMED_DRAFT_REQUEST_SIGNATURE_TYPE, "Test unclaimed draft", "Please do not reply to the messages", signers, cc_email_addresses)
+        result = self.client.create_unclaimed_draft(True, client_id, True, "user@example.com", files, [], UnclaimedDraft.UNCLAIMED_DRAFT_REQUEST_SIGNATURE_TYPE, "Test unclaimed draft", "Please do not reply to the messages", signers, cc_email_addresses)
         self.assertEquals(isinstance(result, UnclaimedDraft), True)
