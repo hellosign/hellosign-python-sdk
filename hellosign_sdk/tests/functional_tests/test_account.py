@@ -80,7 +80,6 @@ class TestAccount(TestCase):
         new_callback_url = 'http://www.example.com/mycallback'
         self.client.account.callback_url = new_callback_url
         result = self.client.update_account_info()
-        print "RESULT = %s" % result
         self.assertEquals(isinstance(result, Account), True)
         self.assertEquals(result.callback_url, new_callback_url)
 
