@@ -872,30 +872,34 @@ class HSClient(object):
 
         # Files
         files_payload = {}
-        for idx, filename in enumerate(files):
-            files_payload["file[%s]" % idx] = open(filename, 'rb')
+        if files:
+            for (idx, filename) in enumerate(files):
+                files_payload["file[%s]" % idx] = open(filename, 'rb')
 
         # Files URLs
         file_urls_payload = {}
-        for idx, fileurl in enumerate(file_urls):
-            file_urls_payload["file_url[%s]" % idx] = fileurl
+        if file_urls:
+            for (idx, fileurl) in enumerate(file_urls):
+                file_urls_payload["file_url[%s]" % idx] = fileurl
         
         # Signers
         signers_payload = {}
-        for idx, signer in enumerate(signers):
-            if draft_type == UnclaimedDraft.UNCLAIMED_DRAFT_REQUEST_SIGNATURE_TYPE:
-                if "name" not in signer and "email_address" not in signer:
-                    raise HSException("Signer's name and email are required")
-                else:
-                    signers_payload["signers[%s][name]" % idx] = signer["name"]
-                    signers_payload["signers[%s][email_address]" % idx] = signer["email_address"]
-            if "order" in signer:
-                signers_payload["signers[%s][order]" % idx] = signer["order"]
+        if signers:
+            for (idx, signer) in enumerate(signers):
+                if draft_type == UnclaimedDraft.UNCLAIMED_DRAFT_REQUEST_SIGNATURE_TYPE:
+                    if "name" not in signer and "email_address" not in signer:
+                        raise HSException("Signer's name and email are required")
+                    else:
+                        signers_payload["signers[%s][name]" % idx] = signer["name"]
+                        signers_payload["signers[%s][email_address]" % idx] = signer["email_address"]
+                if "order" in signer:
+                    signers_payload["signers[%s][order]" % idx] = signer["order"]
 
         # CCs
         cc_email_addresses_payload = {}
-        for idx, cc_email_address in enumerate(cc_email_addresses):
-            cc_email_addresses_payload["cc_email_addresses[%s]" % idx] = cc_email_address
+        if cc_email_addresses:
+            for (idx, cc_email_address) in enumerate(cc_email_addresses):
+                cc_email_addresses_payload["cc_email_addresses[%s]" % idx] = cc_email_address
         
         payload = {
             "test_mode": self._boolean(test_mode), 
@@ -1081,7 +1085,7 @@ class HSClient(object):
                 (https://www.hellosign.com/api/reference#SignatureRequest)
 
             use_text_tags (bool, optional): Use text tags in the provided file(s) to create form fields
-            
+
             hide_text_tags (bool, optional): Hide text tag areas
 
         Retruns:
@@ -1091,13 +1095,15 @@ class HSClient(object):
 
         # Files
         files_payload = {}
-        for idx, filename in enumerate(files):
-            files_payload["file[" + str(idx) + "]"] = open(filename, 'rb')
+        if files:
+            for idx, filename in enumerate(files):
+                files_payload["file[" + str(idx) + "]"] = open(filename, 'rb')
 
         # File URLs
         file_urls_payload = {}
-        for idx, fileurl in enumerate(file_urls):
-            file_urls_payload["file_url[" + str(idx) + "]"] = fileurl
+        if file_urls:
+            for idx, fileurl in enumerate(file_urls):
+                file_urls_payload["file_url[" + str(idx) + "]"] = fileurl
 
         # Signers
         signers_payload = {}
@@ -1114,9 +1120,10 @@ class HSClient(object):
 
         # CCs
         cc_email_addresses_payload = {}
-        for idx, cc_email_address in enumerate(cc_email_addresses):
-            cc_email_addresses_payload[
-                "cc_email_addresses[" + str(idx) + "]"] = cc_email_address
+        if cc_email_addresses:
+            for idx, cc_email_address in enumerate(cc_email_addresses):
+                cc_email_addresses_payload[
+                    "cc_email_addresses[" + str(idx) + "]"] = cc_email_address
         
         payload = {
             "test_mode": self._boolean(test_mode), 
@@ -1173,6 +1180,7 @@ class HSClient(object):
             signers (list of dict): A list of signers, which each has the
                 following attributes:
 
+                role_name (str): Role the signer is assigned to
                 name (str): The name of the signer
                 email_address (str): email address of the signer
                 pin (str, optional): The 4-digit code that will secure this
@@ -1191,15 +1199,14 @@ class HSClient(object):
                 of the list should look like this: `{'name: value'}`
 
         Retruns:
-            A SignatureRequest object of the newly created Signature Request
+            A SignatureRequest object
 
         """
 
         # Signers
         signers_payload = {}
         for signer in signers:
-            signers_payload[
-                "signers[" + signer["role_name"] + "][name]"] = signer["name"]
+            signers_payload["signers[" + signer["role_name"] + "][name]"] = signer["name"]
             signers_payload["signers[" + signer["role_name"] + "][email_address]"] = signer[
                 "email_address"]
             if "pin" in signer:
@@ -1208,18 +1215,20 @@ class HSClient(object):
 
         # CCs
         ccs_payload = {}
-        for cc in ccs:
-            # cc_emaiL_address: {"email_address": "email@email.email",
-            # "role_name": "Role Name"}
-            ccs_payload[
-                "ccs[" + cc["role_name"] + "][email_address]"] = cc["email_address"]
+        if ccs:
+            for cc in ccs:
+                # cc_emaiL_address: {"email_address": "email@email.email",
+                # "role_name": "Role Name"}
+                ccs_payload[
+                    "ccs[" + cc["role_name"] + "][email_address]"] = cc["email_address"]
 
         # Custom fields
         custom_fields_payload = {}
-        # custom_field: {"name": value}
-        for custom_field in custom_fields:
-            for key, value in custom_field.iteritems():
-                custom_fields_payload["custom_fields[" + key + "]"] = value
+        if custom_fields:
+            # custom_field: {"name": value}
+            for custom_field in custom_fields:
+                for key, value in custom_field.iteritems():
+                    custom_fields_payload["custom_fields[" + key + "]"] = value
 
         payload = {
             "test_mode": self._boolean(test_mode), 
