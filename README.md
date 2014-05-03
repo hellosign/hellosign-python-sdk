@@ -79,9 +79,9 @@ new_account = client.create_account("new_user@example.com", "aL0ngL0ngPa55w0rd")
 #### Get a Signature Request
 
 ````python
-sr = client.get_signature_request("fa5c8a0b0f492d768749333ad6fcc214c111e967")
-print sr.requester_email_address
-print sr.signature_request_id
+signature_request = client.get_signature_request("fa5c8a0b0f492d768749333ad6fcc214c111e967")
+print signature_request.requester_email_address
+print signature_request.signature_request_id
 ````
 
 #### Get a list of your Signature Requests
