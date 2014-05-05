@@ -23,10 +23,6 @@ class SignatureRequest(Resource):
 
         has_error (bool): Whether or not an error occurred (either during the creation of the SignatureRequest or during one of the signings)
 
-        final_copy_uri (DEPRECATED): The relative URI where the PDF copy of the
-            finalized documents can be downloaded. Only present when
-            `is_complete = true`. This will be removed at some point; use the `files_url` instead
-
         files_url (str): The URL where a copy of the request's documents can be downloaded
 
         signing_url (str): The URL where a signer, after authenticating, can sign the documents

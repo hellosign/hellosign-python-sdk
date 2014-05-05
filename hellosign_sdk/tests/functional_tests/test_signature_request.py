@@ -124,10 +124,6 @@ class TestSignatureRequest(TestCase):
         f.close()
         self.assertTrue(self.client.get_signature_request_file(sig_req.signature_request_id, temp_filename, file_type='zip'))
 
-        # Final copy (DEPRECATED)
-        result = self.client.get_signature_request_final_copy(sig_req.signature_request_id, temp_filename)
-        self.assertTrue(result)
-
     def test_signature_request_send(self):
         ''' Test sending signature requests '''
 
