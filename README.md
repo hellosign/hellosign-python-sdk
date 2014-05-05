@@ -19,6 +19,13 @@ Install using `pip`:
 pip install hellosign-python-sdk
 ````
 
+Install from code:
+````sh
+git clone https://github.com/HelloFax/hellosign-python-sdk.git
+cd hellosign-python-sdk
+python setup.py install
+````
+
 ## Configuration
 
 In your application, import `HSClient`:
