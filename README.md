@@ -50,10 +50,10 @@ For more information about the API, please refer to this [link](http://hellosign
 #### Get current account information
 
 ````python
-client.get_account_info()
+account = client.get_account_info()
 ````
 
-The account information is then stored in `client.account`. For example, to print the `email_address` of your account:
+The account information is also stored in `client.account`. For example, to print the `email_address` of your account:
 
 ````python
 print client.account.email_address
@@ -79,44 +79,55 @@ new_account = client.create_account("new_user@example.com", "aL0ngL0ngPa55w0rd")
 #### Get a Signature Request
 
 ````python
-sr = client.get_signature_request("fa5c8a0b0f492d768749333ad6fcc214c111e967")
-print sr.requester_email_address
-print sr.signature_request_id
+signature_request = client.get_signature_request("fa5c8a0b0f492d768749333ad6fcc214c111e967")
+print signature_request.requester_email_address
+print signature_request.signature_request_id
 ````
 
 #### Get a list of your Signature Requests
 
 ````python
-sr_list = client.get_signature_request_list()
+signature_request_list = client.get_signature_request_list()
 
 # Print out the name of the signers in every signature request
-for sr in sr_list:
-    print sr.signatures[0]['signer_name']
+for signature_request in signature_request_list:
+    print signature_request.signatures[0].signer_name
 ````
 
 #### Send a Signature Request
 
 ````python
 files = ["NDA.pdf", "AppendixA.pdf"]
-signers = [{"name": "Jack", "email_address": "jack@example.com"}, {"name": "Jill", "email_address": "jill@example.com"}]
+signers = [
+    {"name": "Jack", "email_address": "jack@example.com"}, 
+    {"name": "Jill", "email_address": "jill@example.com"}
+]
 cc_email_addresses = ["lawyer@hellosign.com", "lawler@example.com"]
 
 # Send a signature request with uploaded files
-signature_request = client.send_signature_request(test_mode="1", files=None, file_urls=["http://www.example.com/download/sample.pdf"], title="NDA with Acme Co.", subject="The NDA we talked about", message="Please sign this NDA and then we can discuss more. Let me know if you have any questions.", signing_redirect_url="", signers=signers, cc_email_addresses=cc_email_addresses)
+signature_request = client.send_signature_request(test_mode=True, files=None, file_urls=["http://www.example.com/download/sample.pdf"], title="NDA with Acme Co.", subject="The NDA we talked about", message="Please sign this NDA and then we can discuss more. Let me know if you have any questions.", signing_redirect_url=None, signers=signers, cc_email_addresses=cc_email_addresses)
 
 # Send a signature request with remote files
-signature_request = client.send_signature_request(test_mode="1", files=files, file_urls=None, title="NDA with Acme Co.", subject="The NDA we talked about", message="Please sign this NDA and then we can discuss more. Let me know if you have any questions.", signing_redirect_url="", signers=signers, cc_email_addresses=cc_email_addresses)
+signature_request = client.send_signature_request(test_mode=True, files=files, file_urls=None, title="NDA with Acme Co.", subject="The NDA we talked about", message="Please sign this NDA and then we can discuss more. Let me know if you have any questions.", signing_redirect_url=None, signers=signers, cc_email_addresses=cc_email_addresses)
 ````
 
 #### Send a Signature Request with Reusable Form
 
 ````python
-signers = [{"name": "Jack", "email_address": "jack@example.com"}, {"name": "Jill", "email_address": "jill@example.com"}]
+signers = [
+    {"name": "Jack", "email_address": "jack@example.com"}, 
+    {"name": "Jill", "email_address": "jill@example.com"}
+]
 cc_email_addresses = ["lawyer@hellosign.com", "lawler@example.com"]
-ccs = [{'email_address': 'lawler@hellosign.com', 'role_name': 'Lawyer 1'},
- {'email_address': 'lawler@example.com', 'role_name': 'Lawyer 2'}]
-custom_fields = [{"Field 1": 'Value 1'}, {'Field 2': 'Value 2'}]
+ccs = [
+    {'email_address': 'lawler@hellosign.com', 'role_name': 'Lawyer 1'},
+    {'email_address': 'lawler@example.com', 'role_name': 'Lawyer 2'}
+]
+custom_fields = [
+    {"Field 1": 'Value 1'}, 
+    {'Field 2': 'Value 2'}
+]
 
 # Send a signature request with uploaded files
-signature_request = client.send_signature_request_with_rf(test_mode="1", reusable_form_id="fa5c8a0b0f492d768749333ad6fcc214c111e967", title="NDA with Acme Co.", subject="The NDA we talked about", message="Please sign this NDA and then we can discuss more. Let me know if you have any questions.", signing_redirect_url="", signers=signers, ccs=ccs, custom_fields=custom_fields)
+signature_request = client.send_signature_request_with_rf(test_mode=True, reusable_form_id="fa5c8a0b0f492d768749333ad6fcc214c111e967", title="NDA with Acme Co.", subject="The NDA we talked about", message="Please sign this NDA and then we can discuss more. Let me know if you have any questions.", signing_redirect_url=None, signers=signers, ccs=ccs, custom_fields=custom_fields)
 ````
