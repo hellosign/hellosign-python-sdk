@@ -109,7 +109,7 @@ signers = [
     {"name": "Jack", "email_address": "jack@example.com"}, 
     {"name": "Jill", "email_address": "jill@example.com"}
 ]
-cc_email_addresses = ["lawyer@hellosign.com", "lawler@example.com"]
+cc_email_addresses = ["lawyer@hellosign.com", "lawyer@example.com"]
 
 # Send a signature request with uploaded files
 signature_request = client.send_signature_request(test_mode=True, files=None, file_urls=["http://www.example.com/download/sample.pdf"], title="NDA with Acme Co.", subject="The NDA we talked about", message="Please sign this NDA and then we can discuss more. Let me know if you have any questions.", signing_redirect_url=None, signers=signers, cc_email_addresses=cc_email_addresses)
@@ -125,10 +125,10 @@ signers = [
     {"name": "Jack", "email_address": "jack@example.com"}, 
     {"name": "Jill", "email_address": "jill@example.com"}
 ]
-cc_email_addresses = ["lawyer@hellosign.com", "lawler@example.com"]
+cc_email_addresses = ["lawyer@hellosign.com", "lawyer@example.com"]
 ccs = [
-    {'email_address': 'lawler@hellosign.com', 'role_name': 'Lawyer 1'},
-    {'email_address': 'lawler@example.com', 'role_name': 'Lawyer 2'}
+    {'email_address': 'lawyer@hellosign.com', 'role_name': 'Lawyer 1'},
+    {'email_address': 'lawyer@example.com', 'role_name': 'Lawyer 2'}
 ]
 custom_fields = [
     {"Field 1": 'Value 1'}, 
