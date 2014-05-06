@@ -25,14 +25,16 @@ class ResourceList(list):
 
             data = json.loads(data) if type(data) is not dict else data
             paging = data['list_info']
-            raw_items = data[self.items_keys[item_cls.__name__]]
+            raw_items = data.get(self.items_keys[item_cls.__name__])
 
-            # Wrap raw items in object containers
-            for raw_item in raw_items:
-                self.append(item_cls(raw_item))
+            if raw_items:
 
-            # Paging info
-            self.page = paging['page']
-            self.num_pages = paging['num_pages']
-            self.num_results = paging['num_results']
-            self.page_size = paging['page_size']
+                # Wrap raw items in object containers
+                for raw_item in raw_items:
+                    self.append(item_cls(raw_item))
+
+                # Paging info
+                self.page = paging['page']
+                self.num_pages = paging['num_pages']
+                self.num_results = paging['num_results']
+                self.page_size = paging['page_size']
