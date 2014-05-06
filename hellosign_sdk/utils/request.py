@@ -22,15 +22,17 @@ class HSRequest(object):
 
     DEFAULT_ENCODING = "UTF-8"
     USER_AGENT = "HelloSign Python SDK"
+    
     parameters = None
-    headers = {'User-Agent': USER_AGENT}
+    headers = { 'User-Agent': USER_AGENT }
     http_status_code = 0
     verify_ssl = True
 
     def __init__(self, auth, env="production"):
         self.auth = auth
-        if env in ("dev", "staging"):
-            self.verify_ssl = False
+        self.env = env
+        self.debug = (self.env != 'production')
+        self.verify_ssl = (not self.debug)
 
     def get(self, url, headers=None, parameters=None, get_json=True):
         """Send a GET request with custome headers and parameters
@@ -46,6 +48,9 @@ class HSRequest(object):
 
         """
 
+        if self.debug:
+            print "GET: %s, headers=%s" % (url, headers)
+
         get_headers = self.headers
         get_parameters = self.parameters
         if get_parameters is None:
@@ -56,8 +61,7 @@ class HSRequest(object):
         if parameters is not None:
             get_parameters.update(parameters)
 
-        response = requests.get(url, headers=get_headers, params=get_parameters,
-                                auth=self.auth, verify=self.verify_ssl)
+        response = requests.get(url, headers=get_headers, params=get_parameters, auth=self.auth, verify=self.verify_ssl)
         self.http_status_code = response.status_code
         self._check_error(response)
         if get_json is True:
@@ -80,6 +84,9 @@ class HSRequest(object):
             otherwise.
 
         """
+
+        if self.debug:
+            print "GET FILE: %s, headers=%s" % (url, headers)
 
         get_headers = self.headers
         if headers is not None:
@@ -113,12 +120,13 @@ class HSRequest(object):
 
         """
 
+        if self.debug:
+            print "POST: %s, headers=%s" % (url, headers)
+
         post_headers = self.headers
         if headers is not None:
             post_headers.update(headers)
-        response = requests.post(url, headers=post_headers, data=data,
-                                 auth=self.auth, files=files,
-                                 verify=self.verify_ssl)
+        response = requests.post(url, headers=post_headers, data=data, auth=self.auth, files=files, verify=self.verify_ssl)
         self.http_status_code = response.status_code
         self._check_error(response)
         if get_json is True:
