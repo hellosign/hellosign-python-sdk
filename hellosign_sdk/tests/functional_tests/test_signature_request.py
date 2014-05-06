@@ -1,6 +1,4 @@
-from unittest import TestCase
-from hellosign_sdk.tests.test_helper import api_key, client_id
-from hellosign_sdk.hsclient import HSClient
+from hellosign_sdk.tests.functional_tests import BaseTestCase
 from hellosign_sdk.resource.resource_list import ResourceList
 from hellosign_sdk.resource.signature_request import SignatureRequest
 from hellosign_sdk.utils.exception import Forbidden, HSException
@@ -8,10 +6,7 @@ import tempfile
 import os
 
 
-class TestSignatureRequest(TestCase):
-
-    def setUp(self):
-        self.client = HSClient(api_key=api_key)
+class TestSignatureRequest(BaseTestCase):
 
     def _send_test_signature_request(self, embedded=False, use_text_tags=False, use_template=False):
         ''' Send a test signature request '''
@@ -50,9 +45,9 @@ class TestSignatureRequest(TestCase):
                 'name': 'Other Signer Name',
                 'email_address': 'demo+2@example.com'
             })
-            sig_req = self.client.send_signature_request_embedded(True, client_id, files, None, title, subject, message, None, signers, cc_email_addresses, use_text_tags=True)
+            sig_req = self.client.send_signature_request_embedded(True, self.client_id, files, None, title, subject, message, None, signers, cc_email_addresses, use_text_tags=True)
         else:
-            sig_req = self.client.send_signature_request_embedded(True, client_id, files, None, title, subject, message, None, signers, cc_email_addresses)
+            sig_req = self.client.send_signature_request_embedded(True, self.client_id, files, None, title, subject, message, None, signers, cc_email_addresses)
 
         self.assertEquals(isinstance(sig_req, SignatureRequest), True)
         self.assertEquals(sig_req.title, title)

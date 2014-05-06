@@ -1,14 +1,10 @@
-from unittest import TestCase
-from hellosign_sdk.tests.test_helper import api_key
+from hellosign_sdk.tests.functional_tests import BaseTestCase
 from hellosign_sdk.hsclient import HSClient
 from hellosign_sdk.resource.account import Account
 from hellosign_sdk.utils.exception import BadRequest, Unauthorized
 from time import time
 
-class TestAccount(TestCase):
-
-    def setUp(self):
-        self.client = HSClient(api_key=api_key)
+class TestAccount(BaseTestCase):
 
     def test_create_account(self):
         ''' Test creating new accounts '''

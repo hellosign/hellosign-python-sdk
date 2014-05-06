@@ -1,6 +1,4 @@
-from unittest import TestCase
-from hellosign_sdk.tests.test_helper import api_key
-from hellosign_sdk.hsclient import HSClient
+from hellosign_sdk.tests.functional_tests import BaseTestCase
 from hellosign_sdk.resource.team import Team
 from hellosign_sdk.resource.resource_list import ResourceList
 from hellosign_sdk.resource.template import Template
@@ -8,10 +6,7 @@ from hellosign_sdk.utils.exception import Forbidden, NotFound
 from time import time
 
 
-class TestTemplate(TestCase):
-
-    def setUp(self):
-        self.client = HSClient(api_key=api_key)
+class TestTemplate(BaseTestCase):
 
     def _get_team(self):
         ''' Get or create the current team '''
