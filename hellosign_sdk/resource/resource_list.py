@@ -5,7 +5,7 @@ class ResourceList(list):
 
     items_keys = {
         'SignatureRequest': 'signature_requests',
-        'Template': 'reusable_forms'
+        'Template': 'templates'
     }
 
     page = 0

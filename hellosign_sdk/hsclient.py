@@ -99,21 +99,21 @@ class HSClient(object):
         self.SIGNATURE_REQUEST_LIST_URL = self.API_URL + '/signature_request/list'
         self.SIGNATURE_REQUEST_DOWNLOAD_PDF_URL = self.API_URL + '/signature_request/files/'
         self.SIGNATURE_REQUEST_CREATE_URL = self.API_URL + '/signature_request/send'
-        self.SIGNATURE_REQUEST_CREATE_WITH_TEMPLATE_URL = self.API_URL + '/signature_request/send_with_reusable_form'
+        self.SIGNATURE_REQUEST_CREATE_WITH_TEMPLATE_URL = self.API_URL + '/signature_request/send_with_template'
         self.SIGNATURE_REQUEST_REMIND_URL = self.API_URL + '/signature_request/remind/'
         self.SIGNATURE_REQUEST_CANCEL_URL = self.API_URL + '/signature_request/cancel/'
         self.SIGNATURE_REQUEST_CREATE_EMBEDDED_URL = self.API_URL + '/signature_request/create_embedded'
-        self.SIGNATURE_REQUEST_CREATE_EMBEDDED_WITH_TEMPLATE_URL = self.API_URL + '/signature_request/create_embedded_with_reusable_form'
+        self.SIGNATURE_REQUEST_CREATE_EMBEDDED_WITH_TEMPLATE_URL = self.API_URL + '/signature_request/create_embedded_with_template'
 
         self.EMBEDDED_OBJECT_GET_URL = self.API_URL + '/embedded/sign_url/'
 
         self.UNCLAIMED_DRAFT_CREATE_URL = self.API_URL + '/unclaimed_draft/create'
         self.UNCLAIMED_DRAFT_CREATE_EMBEDDED_URL = self.API_URL + '/unclaimed_draft/create_embedded'
 
-        self.TEMPLATE_GET_URL = self.API_URL + '/reusable_form/'
-        self.TEMPLATE_GET_LIST_URL = self.API_URL + '/reusable_form/list'
-        self.TEMPLATE_ADD_USER_URL = self.API_URL + '/reusable_form/add_user/'
-        self.TEMPLATE_REMOVE_USER_URL = self.API_URL + '/reusable_form/remove_user/'
+        self.TEMPLATE_GET_URL = self.API_URL + '/template/'
+        self.TEMPLATE_GET_LIST_URL = self.API_URL + '/template/list'
+        self.TEMPLATE_ADD_USER_URL = self.API_URL + '/template/add_user/'
+        self.TEMPLATE_REMOVE_USER_URL = self.API_URL + '/template/remove_user/'
 
         self.TEAM_INFO_URL = self.API_URL + '/team'
         self.TEAM_UPDATE_URL = self.TEAM_INFO_URL
@@ -576,7 +576,7 @@ class HSClient(object):
         '''
         request = self._get_request()
         response = request.get(self.TEMPLATE_GET_URL + template_id)
-        return Template(response["reusable_form"])
+        return Template(response["template"])
 
     def get_template_list(self, page=1):
         ''' Lists your Templates
@@ -1203,7 +1203,7 @@ class HSClient(object):
         payload = {
             "test_mode": self._boolean(test_mode), 
             "client_id": client_id,
-            "reusable_form_id": template_id, 
+            "template_id": template_id, 
             "title": title,
             "subject": subject, 
             "message": message,
@@ -1369,7 +1369,7 @@ class HSClient(object):
         request = self._get_request()
         response = request.post(url + template_id, data)
 
-        return Template(response["reusable_form"])
+        return Template(response["template"])
 
     def _add_remove_team_member(self, url, email_address=None, account_id=None):
         ''' Add or Remove a team member

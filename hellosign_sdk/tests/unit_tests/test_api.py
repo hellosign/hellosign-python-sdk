@@ -34,11 +34,11 @@ class Api(TestCase):
         self.assertEqual(self.client.SIGNATURE_REQUEST_LIST_URL, base_url + "/signature_request/list")
         self.assertEqual(self.client.SIGNATURE_REQUEST_DOWNLOAD_PDF_URL, base_url + "/signature_request/files/")
         self.assertEqual(self.client.SIGNATURE_REQUEST_CREATE_URL, base_url + "/signature_request/send")
-        self.assertEqual(self.client.SIGNATURE_REQUEST_CREATE_WITH_TEMPLATE_URL, base_url + "/signature_request/send_with_reusable_form")
+        self.assertEqual(self.client.SIGNATURE_REQUEST_CREATE_WITH_TEMPLATE_URL, base_url + "/signature_request/send_with_template")
         self.assertEqual(self.client.SIGNATURE_REQUEST_REMIND_URL, base_url + "/signature_request/remind/")
         self.assertEqual(self.client.SIGNATURE_REQUEST_CANCEL_URL, base_url + "/signature_request/cancel/")
         self.assertEqual(self.client.SIGNATURE_REQUEST_CREATE_EMBEDDED_URL, base_url + "/signature_request/create_embedded")
-        self.assertEqual(self.client.SIGNATURE_REQUEST_CREATE_EMBEDDED_WITH_TEMPLATE_URL, base_url + "/signature_request/create_embedded_with_reusable_form")
+        self.assertEqual(self.client.SIGNATURE_REQUEST_CREATE_EMBEDDED_WITH_TEMPLATE_URL, base_url + "/signature_request/create_embedded_with_template")
 
         # Embedded
         self.assertEqual(self.client.EMBEDDED_OBJECT_GET_URL, base_url + "/embedded/sign_url/")
@@ -47,10 +47,10 @@ class Api(TestCase):
         self.assertEqual(self.client.UNCLAIMED_DRAFT_CREATE_URL, base_url + "/unclaimed_draft/create")
 
         # Template
-        self.assertEqual(self.client.TEMPLATE_GET_URL, base_url + "/reusable_form/")
-        self.assertEqual(self.client.TEMPLATE_GET_LIST_URL, base_url + "/reusable_form/list")
-        self.assertEqual(self.client.TEMPLATE_ADD_USER_URL, base_url + "/reusable_form/add_user/")
-        self.assertEqual(self.client.TEMPLATE_REMOVE_USER_URL, base_url + "/reusable_form/remove_user/")
+        self.assertEqual(self.client.TEMPLATE_GET_URL, base_url + "/template/")
+        self.assertEqual(self.client.TEMPLATE_GET_LIST_URL, base_url + "/template/list")
+        self.assertEqual(self.client.TEMPLATE_ADD_USER_URL, base_url + "/template/add_user/")
+        self.assertEqual(self.client.TEMPLATE_REMOVE_USER_URL, base_url + "/template/remove_user/")
 
         # Team
         self.assertEqual(self.client.TEAM_INFO_URL, base_url + "/team")
