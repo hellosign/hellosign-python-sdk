@@ -1,7 +1,6 @@
 from hellosign_sdk.tests.functional_tests import BaseTestCase
-from hellosign_sdk.resource.resource_list import ResourceList
-from hellosign_sdk.resource.signature_request import SignatureRequest
-from hellosign_sdk.utils.exception import Forbidden, HSException
+from hellosign_sdk.resource import ResourceList, SignatureRequest
+from hellosign_sdk.utils import Forbidden, HSException
 import tempfile
 import os
 

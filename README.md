@@ -31,7 +31,7 @@ python setup.py install
 In your application, import `HSClient`:
 
 ````python
-from hellosign_sdk.hsclient import HSClient
+from hellosign_sdk import HSClient
 ````
 
 Then create a HSClient object and pass authentication information to initialize it:
@@ -136,5 +136,5 @@ custom_fields = [
 ]
 
 # Send a signature request with uploaded files
-signature_request = client.send_signature_request_with_rf(test_mode=True, reusable_form_id="fa5c8a0b0f492d768749333ad6fcc214c111e967", title="NDA with Acme Co.", subject="The NDA we talked about", message="Please sign this NDA and then we can discuss more. Let me know if you have any questions.", signing_redirect_url=None, signers=signers, ccs=ccs, custom_fields=custom_fields)
+signature_request = client.send_signature_request_with_template(test_mode=True, template_id="fa5c8a0b0f492d768749333ad6fcc214c111e967", title="NDA with Acme Co.", subject="The NDA we talked about", message="Please sign this NDA and then we can discuss more. Let me know if you have any questions.", signing_redirect_url=None, signers=signers, ccs=ccs, custom_fields=custom_fields)
 ````

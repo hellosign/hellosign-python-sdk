@@ -1,6 +1,6 @@
 from hellosign_sdk.tests.functional_tests import BaseTestCase
-from hellosign_sdk.resource.team import Team
-from hellosign_sdk.utils.exception import NotFound, HSException, BadRequest
+from hellosign_sdk.resource import Team
+from hellosign_sdk.utils import NotFound, HSException, BadRequest
 from time import time
 
 class TestTeam(BaseTestCase):

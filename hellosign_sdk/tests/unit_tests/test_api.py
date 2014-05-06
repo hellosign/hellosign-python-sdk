@@ -1,8 +1,7 @@
 from unittest import TestCase
 from hellosign_sdk.tests.test_helper import api_key
-from hellosign_sdk.hsclient import HSClient
-from hellosign_sdk.utils.request import HSRequest
-from hellosign_sdk.utils.exception import BadRequest, NotFound, Unauthorized
+from hellosign_sdk import HSClient
+from hellosign_sdk.utils import HSRequest, BadRequest, NotFound, Unauthorized
 from requests.auth import HTTPBasicAuth
 
 

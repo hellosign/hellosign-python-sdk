@@ -1,13 +1,5 @@
-from hellosign_sdk.utils.request import HSRequest
-from hellosign_sdk.utils.exception import HSException, NoAuthMethod
-from hellosign_sdk.resource.account import Account
-from hellosign_sdk.resource.resource_list import ResourceList
-from hellosign_sdk.resource.signature_request import SignatureRequest
-from hellosign_sdk.resource.template import Template
-from hellosign_sdk.resource.team import Team
-from hellosign_sdk.resource.embedded import Embedded
-from hellosign_sdk.resource.unclaimed_draft import UnclaimedDraft
-from hellosign_sdk.utils.hsaccesstokenauth import HSAccessTokenAuth
+from hellosign_sdk.utils import HSRequest, HSException, NoAuthMethod, HSAccessTokenAuth
+from hellosign_sdk.resource import Account, ResourceList, SignatureRequest, Template, Team, Embedded, UnclaimedDraft
 from requests.auth import HTTPBasicAuth
 
 

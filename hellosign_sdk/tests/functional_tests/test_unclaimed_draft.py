@@ -1,6 +1,6 @@
 from hellosign_sdk.tests.functional_tests import BaseTestCase
-from hellosign_sdk.resource.unclaimed_draft import UnclaimedDraft
-from hellosign_sdk.utils.exception import HSException
+from hellosign_sdk.resource import UnclaimedDraft
+from hellosign_sdk.utils import HSException
 import os
 
 

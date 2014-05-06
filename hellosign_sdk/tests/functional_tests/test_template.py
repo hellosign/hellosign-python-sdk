@@ -1,8 +1,6 @@
 from hellosign_sdk.tests.functional_tests import BaseTestCase
-from hellosign_sdk.resource.team import Team
-from hellosign_sdk.resource.resource_list import ResourceList
-from hellosign_sdk.resource.template import Template
-from hellosign_sdk.utils.exception import Forbidden, NotFound
+from hellosign_sdk.resource import Team, ResourceList, Template
+from hellosign_sdk.utils import Forbidden, NotFound
 from time import time
 
 

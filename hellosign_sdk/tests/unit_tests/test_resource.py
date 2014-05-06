@@ -1,14 +1,8 @@
 from unittest import TestCase
 from hellosign_sdk.tests.test_helper import api_key
-from hellosign_sdk.hsclient import HSClient
+from hellosign_sdk import HSClient
+from hellosign_sdk.resource import Resource, Account, Embedded, Template, SignatureRequest, Team, UnclaimedDraft
 from hellosign_sdk.utils.exception import *
-from hellosign_sdk.resource.resource import Resource
-from hellosign_sdk.resource.account import Account
-from hellosign_sdk.resource.embedded import Embedded
-from hellosign_sdk.resource.template import Template
-from hellosign_sdk.resource.signature_request import SignatureRequest
-from hellosign_sdk.resource.team import Team
-from hellosign_sdk.resource.unclaimed_draft import UnclaimedDraft
 
 
 class TestException(TestCase):
