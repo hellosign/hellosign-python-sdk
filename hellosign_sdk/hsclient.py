@@ -756,7 +756,7 @@ class HSClient(object):
 
     #####  UNCLAIMED DRAFT METHODS  #######################
 
-    def create_unclaimed_draft(self, test_mode=False, client_id=None, is_for_embedded_signing=False, requester_email_address=None, files=None, file_urls=None, draft_type=None, subject=None, message=None, signers=None, cc_email_addresses=None, signing_redirect_url=None, form_fields_per_document=None):
+    def create_unclaimed_draft(self, test_mode=False, files=None, file_urls=None, draft_type=None, subject=None, message=None, signers=None, cc_email_addresses=None, signing_redirect_url=None, form_fields_per_document=None):
         ''' Creates a new Draft that can be claimed using the claim URL
 
         Creates a new Draft that can be claimed using the claim URL. The first
@@ -773,20 +773,12 @@ class HSClient(object):
                 request created from this draft will not be legally binding if
                 set to True. Defaults to False.
 
-            client_id (str): Client id of the app you're using to create this
-                embedded signature request. Visit the embedded page to learn
-                more about this parameter. Used for embedded unclaimed draft
-                (https://www.hellosign.com/api/embedded)
-
-            is_for_embedded_signing (bool): Used for embedded unclaimed draft
-            requester_email_address (str):
-
             files (list of str): the uploaded file(s) to send for signature
 
             file_urls (list of str): urls of the file for HelloSign to download
                 to send for signature. Use either `files` or `file_urls`
 
-            type (str): The type of unclaimed draft to create. Use
+            draft_type (str): The type of unclaimed draft to create. Use
                 "send_document" to create a claimable file, and
                 "request_signature" for a claimable signature request. If the
                 type is "request_signature" then signers name and email_address
@@ -812,77 +804,112 @@ class HSClient(object):
             signing_redirect_url (str, optional): The URL you want the signer
                 redirected to after they successfully sign.
 
-            form_fields_per_document (str): The fields that should appear on the
+            form_fields_per_document (str, optional): The fields that should appear on the
                 document, expressed as a serialized JSON data structure which is
                 a list of lists of the form fields. Please refer to the API
                 reference of HelloSign for more details
                 (https://www.hellosign.com/api/reference#SignatureRequest)
 
         Returns:
-            The new UnclaimedDraft object
+            An UnclaimedDraft object
 
         '''
 
-        # Files
-        files_payload = {}
-        if files:
-            for (idx, filename) in enumerate(files):
-                files_payload["file[%s]" % idx] = open(filename, 'rb')
+        self._check_required_fields({ 'draft_type': draft_type }, [{ "files": files, "file_urls": file_urls }])
 
-        # Files URLs
-        file_urls_payload = {}
-        if file_urls:
-            for (idx, fileurl) in enumerate(file_urls):
-                file_urls_payload["file_url[%s]" % idx] = fileurl
-        
-        # Signers
-        signers_payload = {}
-        if signers:
-            for (idx, signer) in enumerate(signers):
-                if draft_type == UnclaimedDraft.UNCLAIMED_DRAFT_REQUEST_SIGNATURE_TYPE:
-                    if "name" not in signer and "email_address" not in signer:
-                        raise HSException("Signer's name and email are required")
-                    else:
-                        signers_payload["signers[%s][name]" % idx] = signer["name"]
-                        signers_payload["signers[%s][email_address]" % idx] = signer["email_address"]
-                if "order" in signer:
-                    signers_payload["signers[%s][order]" % idx] = signer["order"]
-
-        # CCs
-        cc_email_addresses_payload = {}
-        if cc_email_addresses:
-            for (idx, cc_email_address) in enumerate(cc_email_addresses):
-                cc_email_addresses_payload["cc_email_addresses[%s]" % idx] = cc_email_address
-        
-        payload = {
-            "test_mode": self._boolean(test_mode), 
-            "type": draft_type,
-            "subject": subject, 
-            "message": message,
-            "signing_redirect_url": signing_redirect_url,
-            "form_fields_per_document": form_fields_per_document
+        params = {
+            'test_mode': self._boolean(test_mode), 
+            'files': files,
+            'file_urls': file_urls, 
+            'draft_type': draft_type,
+            'subject': subject, 
+            'message': message,
+            'signing_redirect_url': signing_redirect_url, 
+            'signers': signers,
+            'cc_email_addresses': cc_email_addresses,
+            'form_fields_per_document': form_fields_per_document
         }
 
-        url = self.UNCLAIMED_DRAFT_CREATE_URL
-        is_for_embedded_signing = self._boolean(is_for_embedded_signing)
+        return self._create_unclaimed_draft(**params)
 
-        if is_for_embedded_signing == '1':
-            payload.update({
-                'is_for_embedded_signing': '1',
-                'client_id': client_id,
-                'requester_email_address': requester_email_address
-            })
-            url = self.UNCLAIMED_DRAFT_CREATE_EMBEDDED_URL
+    def create_embedded_unclaimed_draft(self, test_mode=False, client_id=None, is_for_embedded_signing=False, requester_email_address=None, files=None, file_urls=None, draft_type=None, subject=None, message=None, signers=None, cc_email_addresses=None, signing_redirect_url=None, requesting_redirect_url=None, form_fields_per_document=None):
+        ''' Creates a new Draft to be used for embedded requesting
 
-        # remove attributes with none value
-        payload = dict((key, value) for key, value in payload.iteritems() if value)
+        Args:
+            test_mode (bool, optional): Whether this is a test, the signature
+                request created from this draft will not be legally binding if
+                set to True. Defaults to False.
 
-        data = dict(payload.items() + signers_payload.items() + cc_email_addresses_payload.items() + file_urls_payload.items())
+            client_id (str): Client id of the app used to create the embedded draft.
 
-        request = self._get_request()
-        response = request.post(url, data=data, files=files_payload)
+            is_for_embedded_signing (bool, optional): Whether this is also for embedded signing. Defaults to False.
 
-        return UnclaimedDraft(response["unclaimed_draft"])
+            requester_email_address (str): Email address of the requester.
+
+            files (list of str): the uploaded file(s) to send for signature.
+
+            file_urls (list of str): urls of the file for HelloSign to download to send for signature. Use either `files` or `file_urls`
+
+            draft_type (str): The type of unclaimed draft to create. Use
+                "send_document" to create a claimable file, and
+                "request_signature" for a claimable signature request. If the
+                type is "request_signature" then signers name and email_address
+                are not optional.
+
+            subject (str, optional): The subject in the email that will be sent to the signers
+
+            message (str, optional): The custom message in the email that will be sent to the signers
+
+            signers (list of dict): A list of signers, which each has the following attributes:
+
+                name (str): The name of the signer
+                email_address (str): email address of the signer
+                order (str, optional): The order the signer is required to sign in
+
+            cc_email_addresses (list of str, optional): A list of email addresses that should be CC'd
+
+            signing_redirect_url (str, optional): The URL you want the signer redirected to after they successfully sign.
+
+            requesting_redirect_url (str, optional): The URL you want the signer to be redirected to after the request has been sent.
+
+            form_fields_per_document (str, optional): The fields that should appear on the
+                document, expressed as a serialized JSON data structure which is
+                a list of lists of the form fields. Please refer to the API
+                reference of HelloSign for more details
+                (https://www.hellosign.com/api/reference#SignatureRequest)
+
+        Returns:
+            An UnclaimedDraft object
+
+        '''
+
+        self._check_required_fields({ 
+            'client_id': client_id, 
+            'requester_email_address': requester_email_address, 
+            'draft_type': draft_type
+        }, [{ 
+            "files": files, 
+            "file_urls": file_urls 
+        }])
+
+        params = {
+            'test_mode': self._boolean(test_mode), 
+            'client_id': client_id, 
+            'requester_email_address': requester_email_address,
+            'is_for_embedded_signing': self._boolean(is_for_embedded_signing),
+            'files': files,
+            'file_urls': file_urls, 
+            'draft_type': draft_type,
+            'subject': subject, 
+            'message': message,
+            'signing_redirect_url': signing_redirect_url, 
+            'requesting_redirect_url': requesting_redirect_url, 
+            'signers': signers,
+            'cc_email_addresses': cc_email_addresses,
+            'form_fields_per_document': form_fields_per_document
+        }
+
+        return self._create_unclaimed_draft(**params)
 
 
     #####  OAUTH METHODS  #################################
@@ -1204,6 +1231,118 @@ class HSClient(object):
         response = request.post(url, data=data)
 
         return SignatureRequest(response["signature_request"])
+
+    def _create_unclaimed_draft(self, test_mode=False, client_id=None, is_for_embedded_signing=False, requester_email_address=None, files=None, file_urls=None, draft_type=None, subject=None, message=None, signers=None, cc_email_addresses=None, signing_redirect_url=None, requesting_redirect_url=None, form_fields_per_document=None):
+        ''' Creates a new Draft that can be claimed using the claim URL
+
+        Args:
+            test_mode (bool, optional): Whether this is a test, the signature
+                request created from this draft will not be legally binding if
+                set to True. Defaults to False.
+
+            client_id (str): Client id of the app used to create the embedded draft.
+
+            is_for_embedded_signing (bool): Whether this is for embedded signing on top of being for embedded requesting.
+
+            requester_email_address (str): Email address of the requester when creating a draft for embedded requesting.
+
+            files (list of str): the uploaded file(s) to send for signature.
+
+            file_urls (list of str): urls of the file for HelloSign to download to send for signature. Use either `files` or `file_urls`
+
+            draft_type (str): The type of unclaimed draft to create. Use
+                "send_document" to create a claimable file, and
+                "request_signature" for a claimable signature request. If the
+                type is "request_signature" then signers name and email_address
+                are not optional.
+
+            subject (str, optional): The subject in the email that will be sent to the signers
+
+            message (str, optional): The custom message in the email that will be sent to the signers
+
+            signers (list of dict): A list of signers, which each has the following attributes:
+
+                name (str): The name of the signer
+                email_address (str): email address of the signer
+                order (str, optional): The order the signer is required to sign in
+
+            cc_email_addresses (list of str, optional): A list of email addresses that should be CC'd
+
+            signing_redirect_url (str, optional): The URL you want the signer redirected to after they successfully sign.
+
+            requesting_redirect_url (str, optional): The URL you want the signer to be redirected to after the request has been sent.
+
+            form_fields_per_document (str): The fields that should appear on the
+                document, expressed as a serialized JSON data structure which is
+                a list of lists of the form fields. Please refer to the API
+                reference of HelloSign for more details
+                (https://www.hellosign.com/api/reference#SignatureRequest)
+
+        Returns:
+            An UnclaimedDraft object
+
+        '''
+
+        # Files
+        files_payload = {}
+        if files:
+            for (idx, filename) in enumerate(files):
+                files_payload["file[%s]" % idx] = open(filename, 'rb')
+
+        # Files URLs
+        file_urls_payload = {}
+        if file_urls:
+            for (idx, fileurl) in enumerate(file_urls):
+                file_urls_payload["file_url[%s]" % idx] = fileurl
+        
+        # Signers
+        signers_payload = {}
+        if signers:
+            for (idx, signer) in enumerate(signers):
+                if draft_type == UnclaimedDraft.UNCLAIMED_DRAFT_REQUEST_SIGNATURE_TYPE:
+                    if "name" not in signer and "email_address" not in signer:
+                        raise HSException("Signer's name and email are required")
+                    else:
+                        signers_payload["signers[%s][name]" % idx] = signer["name"]
+                        signers_payload["signers[%s][email_address]" % idx] = signer["email_address"]
+                if "order" in signer:
+                    signers_payload["signers[%s][order]" % idx] = signer["order"]
+
+        # CCs
+        cc_email_addresses_payload = {}
+        if cc_email_addresses:
+            for (idx, cc_email_address) in enumerate(cc_email_addresses):
+                cc_email_addresses_payload["cc_email_addresses[%s]" % idx] = cc_email_address
+        
+        payload = {
+            "test_mode": self._boolean(test_mode), 
+            "type": draft_type,
+            "subject": subject, 
+            "message": message,
+            "signing_redirect_url": signing_redirect_url,
+            "form_fields_per_document": form_fields_per_document
+        }
+
+        url = self.UNCLAIMED_DRAFT_CREATE_URL
+
+        if client_id is not None:
+            payload.update({
+                'client_id': client_id,
+                'is_for_embedded_signing': '1' if is_for_embedded_signing else '0',
+                'requester_email_address': requester_email_address,
+                'requesting_redirect_url': requesting_redirect_url
+            })
+            url = self.UNCLAIMED_DRAFT_CREATE_EMBEDDED_URL
+
+        # remove attributes with none value
+        payload = dict((key, value) for key, value in payload.iteritems() if value)
+
+        data = dict(payload.items() + signers_payload.items() + cc_email_addresses_payload.items() + file_urls_payload.items())
+
+        request = self._get_request()
+        response = request.post(url, data=data, files=files_payload)
+
+        return UnclaimedDraft(response["unclaimed_draft"])
 
     def _add_remove_user_template(self, url, template_id, account_id=None, email_address=None):
         ''' Add or Remove user from a Template

@@ -76,7 +76,7 @@ class TestEmbedded(TestCase):
         message = "This is the message"
 
         try:
-            draft = self.client.create_unclaimed_draft(True, client_id, True, requester_email_address, files, None, UnclaimedDraft.UNCLAIMED_DRAFT_REQUEST_SIGNATURE_TYPE, subject, message, signers)
+            draft = self.client.create_embedded_unclaimed_draft(True, client_id, True, requester_email_address, files, None, UnclaimedDraft.UNCLAIMED_DRAFT_REQUEST_SIGNATURE_TYPE, subject, message, signers)
             self.assertTrue(isinstance(draft, UnclaimedDraft))
             self.assertTrue(draft.claim_url is not None)
         except HSException, e:
@@ -92,7 +92,7 @@ class TestEmbedded(TestCase):
         message = "This is the message"
 
         try:
-            draft = self.client.create_unclaimed_draft(True, client_id, True, requester_email_address, files, None, UnclaimedDraft.UNCLAIMED_DRAFT_REQUEST_SIGNATURE_TYPE, subject, message, signers)
+            draft = self.client.create_embedded_unclaimed_draft(True, client_id, True, requester_email_address, files, None, UnclaimedDraft.UNCLAIMED_DRAFT_REQUEST_SIGNATURE_TYPE, subject, message, signers)
             self.assertTrue(isinstance(draft, UnclaimedDraft))
             self.assertTrue(draft.claim_url is not None)
         except HSException, e:
