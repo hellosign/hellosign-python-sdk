@@ -5,7 +5,7 @@ import json
 class Resource(object):
 
     """An abstract class to represent some objects used by our SDK such as
-    Account, ReusableForm, SignatureRequest, Team, UnclaimedDraft, Embedded.
+    Account, SignatureRequest, Template, Team, UnclaimedDraft, Embedded.
     These objects share the same way of storing data.
 
     Information and settings are stored physically in `self.json_data`, and

@@ -21,20 +21,20 @@ class Api(TestCase):
         self.assertEqual(self.client.SIGNATURE_REQUEST_LIST_URL, "https://api.hellosign.com/v3/signature_request/list")
         self.assertEqual(self.client.SIGNATURE_REQUEST_DOWNLOAD_PDF_URL, "https://api.hellosign.com/v3/signature_request/files/")
         self.assertEqual(self.client.SIGNATURE_REQUEST_CREATE_URL, "https://api.hellosign.com/v3/signature_request/send")
-        self.assertEqual(self.client.SIGNATURE_REQUEST_CREATE_WITH_RF_URL, "https://api.hellosign.com/v3/signature_request/send_with_reusable_form")
+        self.assertEqual(self.client.SIGNATURE_REQUEST_CREATE_WITH_TEMPLATE_URL, "https://api.hellosign.com/v3/signature_request/send_with_reusable_form")
         self.assertEqual(self.client.SIGNATURE_REQUEST_REMIND_URL, "https://api.hellosign.com/v3/signature_request/remind/")
         self.assertEqual(self.client.SIGNATURE_REQUEST_CANCEL_URL, "https://api.hellosign.com/v3/signature_request/cancel/")
         self.assertEqual(self.client.SIGNATURE_REQUEST_CREATE_EMBEDDED_URL, "https://api.hellosign.com/v3/signature_request/create_embedded")
-        self.assertEqual(self.client.SIGNATURE_REQUEST_CREATE_EMBEDDED_WITH_RF_URL, "https://api.hellosign.com/v3/signature_request/create_embedded_with_reusable_form")
+        self.assertEqual(self.client.SIGNATURE_REQUEST_CREATE_EMBEDDED_WITH_TEMPLATE_URL, "https://api.hellosign.com/v3/signature_request/create_embedded_with_reusable_form")
 
         self.assertEqual(self.client.EMBEDDED_OBJECT_GET_URL, "https://api.hellosign.com/v3/embedded/sign_url/")
 
         self.assertEqual(self.client.UNCLAIMED_DRAFT_CREATE_URL, "https://api.hellosign.com/v3/unclaimed_draft/create")
 
-        self.assertEqual(self.client.REUSABLE_FORM_GET_URL, "https://api.hellosign.com/v3/reusable_form/")
-        self.assertEqual(self.client.REUSABLE_FORM_GET_LIST_URL, "https://api.hellosign.com/v3/reusable_form/list")
-        self.assertEqual(self.client.REUSABLE_FORM_ADD_USER_URL, "https://api.hellosign.com/v3/reusable_form/add_user/")
-        self.assertEqual(self.client.REUSABLE_FORM_REMOVE_USER_URL, "https://api.hellosign.com/v3/reusable_form/remove_user/")
+        self.assertEqual(self.client.TEMPLATE_GET_URL, "https://api.hellosign.com/v3/reusable_form/")
+        self.assertEqual(self.client.TEMPLATE_GET_LIST_URL, "https://api.hellosign.com/v3/reusable_form/list")
+        self.assertEqual(self.client.TEMPLATE_ADD_USER_URL, "https://api.hellosign.com/v3/reusable_form/add_user/")
+        self.assertEqual(self.client.TEMPLATE_REMOVE_USER_URL, "https://api.hellosign.com/v3/reusable_form/remove_user/")
 
         self.assertEqual(self.client.TEAM_INFO_URL, "https://api.hellosign.com/v3/team")
         self.assertEqual(self.client.TEAM_CREATE_URL, "https://api.hellosign.com/v3/team/create")

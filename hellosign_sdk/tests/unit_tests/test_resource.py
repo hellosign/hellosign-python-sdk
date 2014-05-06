@@ -5,7 +5,7 @@ from hellosign_sdk.utils.exception import *
 from hellosign_sdk.resource.resource import Resource
 from hellosign_sdk.resource.account import Account
 from hellosign_sdk.resource.embedded import Embedded
-from hellosign_sdk.resource.reusable_form import ReusableForm
+from hellosign_sdk.resource.template import Template
 from hellosign_sdk.resource.signature_request import SignatureRequest
 from hellosign_sdk.resource.team import Team
 from hellosign_sdk.resource.unclaimed_draft import UnclaimedDraft
@@ -17,12 +17,19 @@ class TestException(TestCase):
         self.client = HSClient(api_key=api_key)
 
     def test_account(self):
-        account = Account({'account_id': '123456790', 'is_paid_hf': False,
-                          'quotas': {'documents_left': 3, 'templates_left': 0,
-                          'api_signature_requests_left': 0},
-                          'role_code': 'a', 'is_paid_hs': False, 'callback_url':
-                          'http://www.example.com/callback',
-                          'email_address': 'user@example.com'})
+        account = Account({
+          'account_id': '123456790', 
+          'quotas': {
+            'documents_left': 3, 
+            'templates_left': 0,
+            'api_signature_requests_left': 0
+          },
+          'role_code': 'a', 
+          'is_paid_hf': False,
+          'is_paid_hs': False, 
+          'callback_url': 'http://www.example.com/callback',
+          'email_address': 'user@example.com'
+        })
         self.assertEquals(account.account_id, '123456790')
         self.assertEquals(account.is_paid_hf, False)
         self.assertEquals(account.quotas['documents_left'], 3)
@@ -34,25 +41,21 @@ class TestException(TestCase):
         self.assertEquals(account.email_address, 'user@example.com')
 
     def test_embedded(self):
-        embedded = Embedded({'sign_url': 'https://example.com/test/',
-                            'expires_at': 1394859405})
+        embedded = Embedded({'sign_url': 'https://example.com/test/', 'expires_at': 1394859405})
         self.assertEquals(embedded.sign_url, 'https://example.com/test/')
         self.assertEquals(embedded.expires_at, 1394859405)
 
     def test_resource(self):
-        resource = Resource({'custom_attribute_1': 'Value',
-                            'custom_attribute_2': False})
+        resource = Resource({'custom_attribute_1': 'Value', 'custom_attribute_2': False})
         self.assertEquals(resource.custom_attribute_1, 'Value')
         self.assertEquals(resource.custom_attribute_2, False)
 
-        resource = Resource({'custom_key': {'custom_attribute_1': 'Value',
-                            'custom_attribute_2': False}}, 'custom_key')
+        resource = Resource({'custom_key': {'custom_attribute_1': 'Value', 'custom_attribute_2': False}}, 'custom_key')
         self.assertEquals(resource.custom_attribute_1, 'Value')
         self.assertEquals(resource.custom_attribute_2, False)
 
         try:
-            resource = Resource({'custom_key': {'custom_attribute_1': 'Value',
-                                'custom_attribute_2': False}}, 'no_key')
+            resource = Resource({'custom_key': {'custom_attribute_1': 'Value', 'custom_attribute_2': False}}, 'no_key')
         except KeyError:
             pass
         try:
@@ -60,8 +63,7 @@ class TestException(TestCase):
         except AttributeError:
             pass
         try:
-            resource = Resource({'custom_attribute_1': 'Value',
-                                'custom_attribute_2': False})
+            resource = Resource({'custom_attribute_1': 'Value', 'custom_attribute_2': False})
             resource.custom_attribute_1 = 'New Value'
             resource.not_existed_key = 'Value'
         except AttributeError:
@@ -71,22 +73,27 @@ class TestException(TestCase):
         json_data = resource.json_data
         self.assertEquals(json_data, {'key': 'value'})
 
-    # TODO: fulfill all the attributes of Reusable Form
-    def test_reusable_form(self):
-        reusable_form = ReusableForm(
-            {'reusable_form_id': 123456789,
-             'title': 'Test', 'message': 'Test Message',
-             'signer_roles': [{'name': 'signer_1', 'order': 1},
-                              {'name': 'signer_2', 'order': 2}],
-             'cc_roles': [{'name': 'role_1'}, {'name': 'role_2'}]})
-        self.assertEquals(reusable_form.reusable_form_id, 123456789)
-        self.assertEquals(reusable_form.title, 'Test')
-        self.assertEquals(reusable_form.message, 'Test Message')
-        self.assertEquals(
-            reusable_form.signer_roles, [{'name': 'signer_1', 'order': 1},
-                                         {'name': 'signer_2', 'order': 2}])
-        self.assertEquals(reusable_form.cc_roles,
-                          [{'name': 'role_1'}, {'name': 'role_2'}])
+    # TODO: fulfill all the attributes of Template
+    def test_template(self):
+        template = Template({
+          'template_id': 123456789,
+          'title': 'Test', 'message': 'Test Message',
+          'signer_roles': [
+            {'name': 'signer_1', 'order': 1},
+            {'name': 'signer_2', 'order': 2}
+          ],
+          'cc_roles': [
+            {'name': 'role_1'}, 
+            {'name': 'role_2'}
+          ]})
+        self.assertEquals(template.template_id, 123456789)
+        self.assertEquals(template.title, 'Test')
+        self.assertEquals(template.message, 'Test Message')
+        self.assertEquals(template.signer_roles, [
+          {'name': 'signer_1', 'order': 1},
+          {'name': 'signer_2', 'order': 2}
+        ])
+        self.assertEquals(template.cc_roles, [{'name': 'role_1'}, {'name': 'role_2'}])
 
     # TODO: fulfill attributes
     def test_signature_request(self):

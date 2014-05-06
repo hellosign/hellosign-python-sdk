@@ -1,8 +1,6 @@
 import logging
 import os
 
-logging.basicConfig(level=logging.INFO)
-
 # Logging
 logging.basicConfig(level=logging.INFO)
 

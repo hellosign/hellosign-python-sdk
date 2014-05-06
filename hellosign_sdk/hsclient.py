@@ -3,7 +3,7 @@ from hellosign_sdk.utils.exception import HSException, NoAuthMethod
 from hellosign_sdk.resource.account import Account
 from hellosign_sdk.resource.resource_list import ResourceList
 from hellosign_sdk.resource.signature_request import SignatureRequest
-from hellosign_sdk.resource.reusable_form import ReusableForm
+from hellosign_sdk.resource.template import Template
 from hellosign_sdk.resource.team import Team
 from hellosign_sdk.resource.embedded import Embedded
 from hellosign_sdk.resource.unclaimed_draft import UnclaimedDraft
@@ -33,21 +33,21 @@ class HSClient(object):
     SIGNATURE_REQUEST_LIST_URL = ''
     SIGNATURE_REQUEST_DOWNLOAD_PDF_URL = ''
     SIGNATURE_REQUEST_CREATE_URL = ''
-    SIGNATURE_REQUEST_CREATE_WITH_RF_URL = ''
+    SIGNATURE_REQUEST_CREATE_WITH_TEMPLATE_URL = ''
     SIGNATURE_REQUEST_REMIND_URL = ''
     SIGNATURE_REQUEST_CANCEL_URL = ''
     SIGNATURE_REQUEST_CREATE_EMBEDDED_URL = ''
-    SIGNATURE_REQUEST_CREATE_EMBEDDED_WITH_RF_URL = ''
+    SIGNATURE_REQUEST_CREATE_EMBEDDED_WITH_TEMPLATE_URL = ''
 
     EMBEDDED_OBJECT_GET_URL = ''
 
     UNCLAIMED_DRAFT_CREATE_URL = ''
     UNCLAIMED_DRAFT_CREATE_EMBEDDED_URL = ''
 
-    REUSABLE_FORM_GET_URL = ''
-    REUSABLE_FORM_GET_LIST_URL = ''
-    REUSABLE_FORM_ADD_USER_URL = ''
-    REUSABLE_FORM_REMOVE_USER_URL = ''
+    TEMPLATE_GET_URL = ''
+    TEMPLATE_GET_LIST_URL = ''
+    TEMPLATE_ADD_USER_URL = ''
+    TEMPLATE_REMOVE_USER_URL = ''
 
     TEAM_INFO_URL = ''
     TEAM_UPDATE_URL = ''
@@ -107,21 +107,21 @@ class HSClient(object):
         self.SIGNATURE_REQUEST_LIST_URL = self.API_URL + '/signature_request/list'
         self.SIGNATURE_REQUEST_DOWNLOAD_PDF_URL = self.API_URL + '/signature_request/files/'
         self.SIGNATURE_REQUEST_CREATE_URL = self.API_URL + '/signature_request/send'
-        self.SIGNATURE_REQUEST_CREATE_WITH_RF_URL = self.API_URL + '/signature_request/send_with_reusable_form'
+        self.SIGNATURE_REQUEST_CREATE_WITH_TEMPLATE_URL = self.API_URL + '/signature_request/send_with_reusable_form'
         self.SIGNATURE_REQUEST_REMIND_URL = self.API_URL + '/signature_request/remind/'
         self.SIGNATURE_REQUEST_CANCEL_URL = self.API_URL + '/signature_request/cancel/'
         self.SIGNATURE_REQUEST_CREATE_EMBEDDED_URL = self.API_URL + '/signature_request/create_embedded'
-        self.SIGNATURE_REQUEST_CREATE_EMBEDDED_WITH_RF_URL = self.API_URL + '/signature_request/create_embedded_with_reusable_form'
+        self.SIGNATURE_REQUEST_CREATE_EMBEDDED_WITH_TEMPLATE_URL = self.API_URL + '/signature_request/create_embedded_with_reusable_form'
 
         self.EMBEDDED_OBJECT_GET_URL = self.API_URL + '/embedded/sign_url/'
 
         self.UNCLAIMED_DRAFT_CREATE_URL = self.API_URL + '/unclaimed_draft/create'
         self.UNCLAIMED_DRAFT_CREATE_EMBEDDED_URL = self.API_URL + '/unclaimed_draft/create_embedded'
 
-        self.REUSABLE_FORM_GET_URL = self.API_URL + '/reusable_form/'
-        self.REUSABLE_FORM_GET_LIST_URL = self.API_URL + '/reusable_form/list'
-        self.REUSABLE_FORM_ADD_USER_URL = self.API_URL + '/reusable_form/add_user/'
-        self.REUSABLE_FORM_REMOVE_USER_URL = self.API_URL + '/reusable_form/remove_user/'
+        self.TEMPLATE_GET_URL = self.API_URL + '/reusable_form/'
+        self.TEMPLATE_GET_LIST_URL = self.API_URL + '/reusable_form/list'
+        self.TEMPLATE_ADD_USER_URL = self.API_URL + '/reusable_form/add_user/'
+        self.TEMPLATE_REMOVE_USER_URL = self.API_URL + '/reusable_form/remove_user/'
 
         self.TEAM_INFO_URL = self.API_URL + '/team'
         self.TEAM_UPDATE_URL = self.TEAM_INFO_URL
@@ -295,7 +295,7 @@ class HSClient(object):
             use_text_tags (bool, optional): Use text tags in the provided file(s) to create form fields
             hide_text_tags (bool, optional): Hide text tag areas
 
-        Retruns:
+        Returns:
             A SignatureRequest object of the newly created Signature Request
 
         '''
@@ -319,27 +319,27 @@ class HSClient(object):
 
         return self._send_signature_request(**params)
 
-    def send_signature_request_with_rf(self, test_mode=False, reusable_form_id=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, ccs=None, custom_fields=None):
-        ''' Creates and sends a new SignatureRequest based off of a ReusableForm
+    def send_signature_request_with_template(self, test_mode=False, template_id=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, ccs=None, custom_fields=None):
+        ''' Creates and sends a new SignatureRequest based off of a Template
 
-        Creates and sends a new SignatureRequest based off of the ReusableForm
-        specified with the reusable_form_id parameter.
+        Creates and sends a new SignatureRequest based off of the Template
+        specified with the template_id parameter.
 
         Args:
             test_mode (bool, optional): Whether this is a test, the signature
                 request will not be legally binding if set to True. Defaults to False.
-            reusable_form_id (str): The id of the ReusableForm to use when
-                creating the SignatureRequest.
-            title (str, optional): The title you want to assign to the
-                SignatureRequest
-            subject (str, optional): The subject in the email that will be sent
-                to the signers
-            message (str, optional): The custom message in the email that will
-                be sent to the signers
-            signing_redirect_url (str, optional): The URL you want the signer
-                redirected to after they successfully sign.
-            signers (list of dict): A list of signers, which each has the
-                following attributes:
+            
+            template_id (str): The id of the Template  to use when creating the SignatureRequest.
+            
+            title (str, optional): The title you want to assign to the SignatureRequest
+            
+            subject (str, optional): The subject in the email that will be sent to the signers
+            
+            message (str, optional): The custom message in the email that will be sent to the signers
+            
+            signing_redirect_url (str, optional): The URL you want the signer redirected to after they successfully sign.
+            
+            signers (list of dict): A list of signers, which each has the following attributes:
 
                 name (str): The name of the signer
                 email_address (str): email address of the signer
@@ -348,25 +348,25 @@ class HSClient(object):
                     use this feature
             ccs (list of str, optional): The email address of the CC filling the
                 role of RoleName. Required when a CC role exists for the
-                ReusableForm. Each dict has the following attributes:
+                Template. Each dict has the following attributes:
 
                 role_name (str):
                 email_address (str):
 
             custom_fields (list of dict, optional): A list of custom fields.
-                Required when a CustomField exists in the ReusableForm. An item
+                Required when a CustomField exists in the Template. An item
                 of the list should look like this: `{'name: value'}`
 
-        Retruns:
+        Returns:
             A SignatureRequest object of the newly created Signature Request
 
         '''
 
-        self._check_required_fields({ "signers": signers, "reusable_form_id": reusable_form_id })
+        self._check_required_fields({ "signers": signers, "template_id": template_id })
 
         params = {
             'test_mode': self._boolean(test_mode), 
-            'reusable_form_id': reusable_form_id,
+            'template_id': template_id,
             'title': title, 
             'subject': subject, 
             'message': message,
@@ -376,7 +376,7 @@ class HSClient(object):
             'custom_fields': custom_fields
         }
 
-        return self._send_signature_request_with_rf(**params)
+        return self._send_signature_request_with_template(**params)
 
     def remind_signature_request(self, signature_request_id, email_address):
         ''' Sends an email to the signer reminding them to sign the signature
@@ -475,7 +475,7 @@ class HSClient(object):
                 (https://www.hellosign.com/api/reference#SignatureRequest)
 
         Returns:
-            A SignatureRequest object of the newly created Signature Request
+            A SignatureRequest object
 
         '''
 
@@ -497,10 +497,10 @@ class HSClient(object):
 
         return self._send_signature_request(**params)
 
-    def send_signature_request_embedded_with_rf(self, test_mode=False, client_id=None, reusable_form_id=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, ccs=None, custom_fields=None):
-        ''' Creates and sends a new SignatureRequest based off of a ReusableForm
+    def send_signature_request_embedded_with_template(self, test_mode=False, client_id=None, template_id=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, ccs=None, custom_fields=None):
+        ''' Creates and sends a new SignatureRequest based off of a Template
 
-        Creates a new SignatureRequest based on the given ReusableForm to be
+        Creates a new SignatureRequest based on the given Template to be
         signed in an embedded iFrame. Note that embedded signature requests can
         only be signed in embedded iFrames whereas normal signature requests can
         only be signed on HelloSign.
@@ -514,23 +514,17 @@ class HSClient(object):
                 more about this parameter
                 (https://www.hellosign.com/api/embedded)
 
-            reusable_form_id (str): The id of the ReusableForm to use when
-                creating the SignatureRequest.
+            template_id (str): The id of the Template to use when creating the SignatureRequest.
 
-            title (str, optional): The title you want to assign to the
-                SignatureRequest
+            title (str, optional): The title you want to assign to the SignatureRequest
 
-            subject (str, optional): The subject in the email that will be sent
-                to the signers
+            subject (str, optional): The subject in the email that will be sent to the signers
 
-            message (str, optional): The custom message in the email that will
-                be sent to the signers
+            message (str, optional): The custom message in the email that will be sent to the signers
 
-            signing_redirect_url (str, optional): The URL you want the signer
-                redirected to after they successfully sign.
+            signing_redirect_url (str, optional): The URL you want the signer redirected to after they successfully sign.
 
-            signers (list of dict): A list of signers, which each has the
-                following attributes:
+            signers (list of dict): A list of signers, which each has the following attributes:
 
                 name (str): The name of the signer
                 email_address (str): email address of the signer
@@ -540,30 +534,30 @@ class HSClient(object):
 
             ccs (list of str, optional): The email address of the CC filling the
                 role of RoleName. Required when a CC role exists for the
-                ReusableForm. Each dict has the following attributes:
+                Template. Each dict has the following attributes:
 
                 role_name (str):
                 email_address (str):
 
             custom_fields (list of dict, optional): A list of custom fields.
-                Required when a CustomField exists in the ReusableForm. An item
+                Required when a CustomField exists in the Template. An item
                 of the list should look like this: `{'name: value'}`
 
-        Retruns:
+        Returns:
             A SignatureRequest object of the newly created Signature Request
 
         '''
 
         self._check_required_fields({
             "signers": signers, 
-            "reusable_form_id": reusable_form_id, 
+            "template_id": template_id, 
             "client_id": client_id
         })
 
         params = {
             'test_mode': self._boolean(test_mode), 
             'client_id': client_id,
-            'reusable_form_id': reusable_form_id, 
+            'template_id': template_id, 
             'title': title, 
             'subject': subject,
             'message': message, 
@@ -573,31 +567,30 @@ class HSClient(object):
             'custom_fields': custom_fields
         }
 
-        return self._send_signature_request_with_rf(**params)
+        return self._send_signature_request_with_template(**params)
 
 
     #####  REUSABLE FORM METHODS  #########################
 
-    def get_reusable_form(self, reusable_form_id):
-        ''' Gets a ReusableForm which includes a list of Accounts that can access
-        it
+    def get_template(self, template_id):
+        ''' Gets a Template which includes a list of Accounts that can access it
 
         Args:
-            reusable_form_id (str): The id of the ReusableForm to retrieve
+            template_id (str): The id of the Template to retrieve
 
         Returns:
-            A ReusableForm object specified by the id parameter
+            A Template object specified by the id parameter
 
         '''
         request = self._get_request()
-        response = request.get(self.REUSABLE_FORM_GET_URL + reusable_form_id)
-        return ReusableForm(response["reusable_form"])
+        response = request.get(self.TEMPLATE_GET_URL + template_id)
+        return Template(response["reusable_form"])
 
-    def get_reusable_form_list(self, page=1):
-        ''' Lists your ReusableForms
+    def get_template_list(self, page=1):
+        ''' Lists your Templates
 
         Args:
-            page (int, optional): Which page number of the ReusableForm List to
+            page (int, optional): Which page number of the Template List to
                 return. Defaults to 1.
 
         Returns:
@@ -605,48 +598,41 @@ class HSClient(object):
 
         '''
         request = self._get_request()
-        response = request.get(self.REUSABLE_FORM_GET_LIST_URL, parameters={ "page": page })
-        return ResourceList(ReusableForm, response)
+        response = request.get(self.TEMPLATE_GET_LIST_URL, parameters={ "page": page })
+        return ResourceList(Template, response)
 
     # RECOMMEND: this api does not fail if the user has been added...
-    def add_user_to_reusable_form(self, reusable_form_id, account_id=None, email_address=None):
-        ''' Gives the specified Account access to the specified ReusableForm
+    def add_user_to_template(self, template_id, account_id=None, email_address=None):
+        ''' Gives the specified Account access to the specified Template
 
         Args:
-            reusable_form_id (str): The id of the ReusableForm to give the
-                Account access to
+            template_id (str): The id of the Template to give the Account access to
 
-            account_id (str): The id of the Account to give access to the
-                ReusableForm. The account id prevails if both are provided.
+            account_id (str): The id of the Account to give access to the Template. The account id prevails if both are provided.
 
-            email_address (str): The email address of the Account to give access
-                to
+            email_address (str): The email address of the Account to give access to.
 
         Returns:
-            An ReusableForm object specified by the reusable_form_id parameter
+            A Template object
 
         '''
-        return self._add_remove_user_reusable_form(self.REUSABLE_FORM_ADD_USER_URL, reusable_form_id, account_id, email_address)
+        return self._add_remove_user_template(self.TEMPLATE_ADD_USER_URL, template_id, account_id, email_address)
 
-    def remove_user_from_reusable_form(self, reusable_form_id, account_id=None, email_address=None):
-        ''' Removes the specified Account's access to the specified ReusableForm
+    def remove_user_from_template(self, template_id, account_id=None, email_address=None):
+        ''' Removes the specified Account's access to the specified Template
 
         Args:
-            reusable_form_id (str): The id of the ReusableForm to remove the
-                Account's access from.
+            template_id (str): The id of the Template to remove the Account's access from.
 
-            account_id (str): The id of the Account to remove
-                access from the ReusableForm. The account id prevails if both
-                are provided.
+            account_id (str): The id of the Account to remove access from the Template. The account id prevails if both are provided.
 
-            email_address (str): The email address of the Account to remove
-                access from
+            email_address (str): The email address of the Account to remove access from.
 
         Returns:
-            An ReusableForm object specified by the reusable_form_id parameter
+            An Template object specified by the template_id parameter
 
         '''
-        return self._add_remove_user_reusable_form(self.REUSABLE_FORM_REMOVE_USER_URL, reusable_form_id, account_id, email_address)
+        return self._add_remove_user_template(self.TEMPLATE_REMOVE_USER_URL, template_id, account_id, email_address)
 
 
     #####  TEAM METHODS  ##################################
@@ -832,7 +818,7 @@ class HSClient(object):
                 reference of HelloSign for more details
                 (https://www.hellosign.com/api/reference#SignatureRequest)
 
-        Retruns:
+        Returns:
             The new UnclaimedDraft object
 
         '''
@@ -1055,7 +1041,7 @@ class HSClient(object):
 
             hide_text_tags (bool, optional): Hide text tag areas
 
-        Retruns:
+        Returns:
             A SignatureRequest object of the newly created Signature Request
 
         '''
@@ -1116,9 +1102,9 @@ class HSClient(object):
 
         return SignatureRequest(response["signature_request"])
 
-    def _send_signature_request_with_rf(self, test_mode=False, client_id=None, reusable_form_id=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, ccs=None, custom_fields=None):
-        ''' To share the same logic between send_signature_request_with_rf and
-            send_signature_request_embedded_with_rf
+    def _send_signature_request_with_template(self, test_mode=False, client_id=None, template_id=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, ccs=None, custom_fields=None):
+        ''' To share the same logic between send_signature_request_with_template 
+            and send_signature_request_embedded_with_template
 
         Args:
             test_mode (bool, optional): Whether this is a test, the signature
@@ -1129,8 +1115,7 @@ class HSClient(object):
                 more about this parameter
                 (https://www.hellosign.com/api/embedded)
 
-            reusable_form_id (str): The id of the ReusableForm to use when
-                creating the SignatureRequest.
+            template_id (str): The id of the Template to use when creating the SignatureRequest.
 
             title (str, optional): The title you want to assign to the
                 SignatureRequest
@@ -1156,16 +1141,16 @@ class HSClient(object):
 
             ccs (list of str, optional): The email address of the CC filling the
                 role of RoleName. Required when a CC role exists for the
-                ReusableForm. Each dict has the following attributes:
+                Template. Each dict has the following attributes:
 
                 role_name (str):
                 email_address (str):
 
             custom_fields (list of dict, optional): A list of custom fields.
-                Required when a CustomField exists in the ReusableForm. An item
+                Required when a CustomField exists in the Template. An item
                 of the list should look like this: `{'name: value'}`
 
-        Retruns:
+        Returns:
             A SignatureRequest object
 
         '''
@@ -1174,8 +1159,7 @@ class HSClient(object):
         signers_payload = {}
         for signer in signers:
             signers_payload["signers[" + signer["role_name"] + "][name]"] = signer["name"]
-            signers_payload["signers[" + signer["role_name"] + "][email_address]"] = signer[
-                "email_address"]
+            signers_payload["signers[" + signer["role_name"] + "][email_address]"] = signer["email_address"]
             if "pin" in signer:
                 signers_payload[
                     "signers[" + signer["role_name"] + "][pin]"] = signer["pin"]
@@ -1200,7 +1184,7 @@ class HSClient(object):
         payload = {
             "test_mode": self._boolean(test_mode), 
             "client_id": client_id,
-            "reusable_form_id": reusable_form_id, 
+            "reusable_form_id": template_id, 
             "title": title,
             "subject": subject, 
             "message": message,
@@ -1210,9 +1194,9 @@ class HSClient(object):
         # remove attributes with empty value
         payload = dict((key, value) for key, value in payload.iteritems() if value)
 
-        url = self.SIGNATURE_REQUEST_CREATE_WITH_RF_URL
+        url = self.SIGNATURE_REQUEST_CREATE_WITH_TEMPLATE_URL
         if client_id:
-            url = self.SIGNATURE_REQUEST_CREATE_EMBEDDED_WITH_RF_URL
+            url = self.SIGNATURE_REQUEST_CREATE_EMBEDDED_WITH_TEMPLATE_URL
 
         data = dict(payload.items() + signers_payload.items() + ccs_payload.items() + custom_fields_payload.items())
 
@@ -1221,13 +1205,13 @@ class HSClient(object):
 
         return SignatureRequest(response["signature_request"])
 
-    def _add_remove_user_reusable_form(self, url, reusable_form_id, account_id=None, email_address=None):
-        ''' Add or Remove user from a ReusableForm
+    def _add_remove_user_template(self, url, template_id, account_id=None, email_address=None):
+        ''' Add or Remove user from a Template
 
         We use this function for two tasks because they have the same API call
 
         Args:
-            reusable_form_id (str): The id of the ReusableForm
+            template_id (str): The id of the Template
 
             account_id (str): ID of the Account to add/remove access to/from
 
@@ -1238,7 +1222,7 @@ class HSClient(object):
             HSException: If no email address or account_id specified
 
         Returns:
-            A ReusableForm object specified by reusable_form_id parameter
+            A Template object
 
         '''
 
@@ -1252,9 +1236,9 @@ class HSClient(object):
             data = { "email_address": email_address }
 
         request = self._get_request()
-        response = request.post(url + reusable_form_id, data)
+        response = request.post(url + template_id, data)
 
-        return ReusableForm(response["reusable_form"])
+        return Template(response["reusable_form"])
 
     def _add_remove_team_member(self, url, email_address=None, account_id=None):
         ''' Add or Remove a team member

@@ -34,25 +34,25 @@ class TestEmbedded(TestCase):
         self.assertTrue(isinstance(emb, Embedded))
         self.assertTrue(emb.sign_url is not None)
 
-    def test_embedded_signing_with_reusable_form(self):
-        ''' Test embedded signing with a reusable form '''
+    def test_embedded_signing_with_template(self):
+        ''' Test embedded signing with a template '''
 
-        rf_list = self.client.get_reusable_form_list()
-        if not rf_list or len(rf_list) == 0:
+        template_list = self.client.get_template_list()
+        if not template_list or len(template_list) == 0:
             self.fail('CREATE A TEMPLATE BEFORE RUNNING THIS TEST (one role: Signer)')
         
-        rf_id = rf_list[0].reusable_form_id
+        template_id = template_list[0].template_id
         signers = [{
             'role_name': 'Signer',
             'name': 'Signer Name', 
             'email_address': 'signer@example.com'
         }]
-        subject = "Test embedded signature request from reusable form"
+        subject = "Test embedded signature request from template"
         message = "This is the message"
 
         # Create request
         try:
-            emb_sig_req = self.client.send_signature_request_embedded_with_rf(True, client_id, rf_id, subject, subject, message, None, signers)
+            emb_sig_req = self.client.send_signature_request_embedded_with_template(True, client_id, template_id, subject, subject, message, None, signers)
             self.assertTrue(isinstance(emb_sig_req, SignatureRequest))
             self.assertEquals(len(emb_sig_req.signatures), 1)
         except HSException, e:

@@ -13,13 +13,13 @@ class TestSignatureRequest(TestCase):
     def setUp(self):
         self.client = HSClient(api_key=api_key)
 
-    def _send_test_signature_request(self, embedded=False, text_tags=False, reusable_form=False):
+    def _send_test_signature_request(self, embedded=False, use_text_tags=False, use_template=False):
         ''' Send a test signature request '''
 
-        if reusable_form:
+        if use_template:
             files = None
-            reusable_form = self._get_on_reusable_form()
-            reusable_form_id = reusable_form.reusable_form_id
+            template = self._get_on_template()
+            template_id = template.template_id
             signers = [{
                 "role_name": "Signer",
                 "name": "Signer Name", 
@@ -28,7 +28,7 @@ class TestSignatureRequest(TestCase):
             cc_email_addresses = None
         else:
             files = [os.path.dirname(os.path.realpath(__file__)) + "/docs/nda.pdf"]
-            reusable_form_id = None
+            template_id = None
             signers = [{
                 "name": "Signer Name", 
                 "email_address": "demo@example.com"
@@ -36,39 +36,39 @@ class TestSignatureRequest(TestCase):
             cc_email_addresses = ["demo1@example.com", "demo2@example.com"]
         
         title = 'A test signature request'
-        subject = 'Test %srequest%s' % ('embedded ' if embedded else '', ' with reusable form' if reusable_form else '')
+        subject = 'Test %srequest%s' % ('embedded ' if embedded else '', ' with template' if use_template else '')
         message = 'This is a test message'
 
         if not embedded:
-            if reusable_form:
-                sig_req = self.client.send_signature_request_with_rf(True, reusable_form_id, title, subject, message, None, signers, cc_email_addresses)
+            if use_template:
+                sig_req = self.client.send_signature_request_with_template(True, template_id, title, subject, message, None, signers, cc_email_addresses)
             else:
-                sig_req = self.client.send_signature_request(True, files, [], title, subject, message, None, signers, cc_email_addresses)
-        elif text_tags:
+                sig_req = self.client.send_signature_request(True, files, None, title, subject, message, None, signers, cc_email_addresses)
+        elif use_text_tags:
             files[0] = os.path.dirname(os.path.realpath(__file__)) + "/docs/nda-text-tags.pdf"
             signers.append({
                 'name': 'Other Signer Name',
                 'email_address': 'demo+2@example.com'
             })
-            sig_req = self.client.send_signature_request_embedded(True, client_id, files, [], title, subject, message, None, signers, cc_email_addresses, use_text_tags=True)
+            sig_req = self.client.send_signature_request_embedded(True, client_id, files, None, title, subject, message, None, signers, cc_email_addresses, use_text_tags=True)
         else:
-            sig_req = self.client.send_signature_request_embedded(True, client_id, files, [], title, subject, message, None, signers, cc_email_addresses)
+            sig_req = self.client.send_signature_request_embedded(True, client_id, files, None, title, subject, message, None, signers, cc_email_addresses)
 
         self.assertEquals(isinstance(sig_req, SignatureRequest), True)
         self.assertEquals(sig_req.title, title)
         self.assertEquals(sig_req.subject, subject)
         self.assertEquals(sig_req.message, message)
         self.assertEquals(len(sig_req.signatures), 1)
-        self.assertEquals(len(sig_req.cc_email_addresses), 0 if reusable_form else 2)
+        self.assertEquals(len(sig_req.cc_email_addresses), 0 if use_template else 2)
 
         return sig_req
 
-    def _get_on_reusable_form(self):
-        ''' Get one reusable form from the current account '''
-        rf_list = self.client.get_reusable_form_list()
-        if not rf_list or len(rf_list) == 0:
+    def _get_on_template(self):
+        ''' Get one template from the current account '''
+        template_list = self.client.get_template_list()
+        if not template_list or len(template_list) == 0:
             self.fail('CREATE A TEMPLATE BEFORE RUNNING THIS TEST')
-        return rf_list[0]
+        return template_list[0]
 
     def _get_one_signature_request(self):
         ''' Retrieve one signature request from the current account '''
@@ -150,7 +150,7 @@ class TestSignatureRequest(TestCase):
             self.fail(e.message)
 
         # Try with text tags
-        sig_req2 = self._send_test_signature_request(text_tags=True)
+        sig_req2 = self._send_test_signature_request(use_text_tags=True)
 
         # Cancel signature request
         try:
@@ -158,11 +158,11 @@ class TestSignatureRequest(TestCase):
         except HSException, e:
             self.fail(e.message)
 
-    def test_signature_request_send_with_reusable_form(self):
-        ''' Test sending signature requests from reusable forms '''
+    def test_signature_request_send_with_template(self):
+        ''' Test sending signature requests from templates '''
 
         # Send signature request
-        sig_req = self._send_test_signature_request(reusable_form=True)
+        sig_req = self._send_test_signature_request(use_template=True)
 
         # Cancel signature request
         try:

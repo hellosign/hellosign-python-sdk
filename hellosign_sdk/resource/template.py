@@ -1,33 +1,33 @@
 from resource import Resource
 from account import Account
 
-class ReusableForm(Resource):
-    """Contains information about the templates you and your team have created
+class Template(Resource):
+    ''' Contains information about the templates you and your team have created
 
     Attributes:
-        reusable_form_id (str): The id of the ReusableForm
+        template_id (str): The id of the Template
 
-        title (str): The title of the ReusableForm which will also be the
+        title (str): The title of the Template which will also be the
         default subject of the message sent to signers when using this
-        ReusableForm to send a SignatureRequest.
+        Template to send a SignatureRequest.
 
         message (str): The default message that will be sent to signers when
-        using this ReusableForm to send a SignatureRequest.
+        using this Template to send a SignatureRequest.
 
         signer_roles (list of dict): An array of the designated signer roles
         that must be specified when sending a SignatureRequest using this
-        ReusableForm.
+        Template.
             name (str): The name of the Role
             order (int): If signer order is assigned this is the 0-based index
             for this role
 
         cc_roles (list of dict): An array of the designated CC roles that must
         be specified when sending a SignatureRequest using this
-        ReusableForm.
+        Template.
             name (str): The name of the Role
 
         documents (list of dict): An array describing each document associated
-        with this ReusableForm. Includes form field data for each document.
+        with this Template. Includes form field data for each document.
             name (str): Name of the associated file
             index (int): Document ordering, the lowest index is diplayed first
                 and the highest last
@@ -53,8 +53,7 @@ class ReusableForm(Resource):
             named_form_fields (DEPRECATED): Use "form_fields" under the
                 "documents" array instead.
 
-        accounts (list of dict): An array of the Accounts that can use this
-            ReusableForm
+        accounts (list of dict): An array of the Accounts that can use this Template.
 
             account_id (str): The id of the Account
             email_address (str): The email address associated with the Account
@@ -65,7 +64,7 @@ class ReusableForm(Resource):
         can_edit (bool): Indicates whether edit rights have been granted to you
             by the owner (always true if that's you).
 
-    """
+    '''
 
     def __init__(self, jsonstr=None, key=None):
         ''' Initialization of the object
@@ -78,7 +77,10 @@ class ReusableForm(Resource):
             key (str): Optional key to use with jsonstr. If `key` exists, we'll
                 load the data of `jsonstr[key]` instead of the whole `jsonstr`
         '''
-        super(ReusableForm, self).__init__(jsonstr, key)
+        super(Template, self).__init__(jsonstr, key)
+        if 'reusable_form_id' in self.json_data:
+            self.json_data['template_id'] = self.json_data['reusable_form_id']
+            del self.json_data['reusable_form_id']
         if 'accounts' in self.json_data:
             acct_list = []
             for acct in self.accounts:
@@ -86,5 +88,5 @@ class ReusableForm(Resource):
             self.accounts = acct_list
 
     def __str__(self):
-        ''' Return a string representation of this reusable form '''
-        return 'ReusableForm %s' % self.reusable_form_id
+        ''' Return a string representation of this template '''
+        return 'Template %s' % self.template_id

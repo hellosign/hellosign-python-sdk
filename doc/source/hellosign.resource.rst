@@ -28,10 +28,10 @@ hellosign.resource.resource module
     :undoc-members:
     :show-inheritance:
 
-hellosign.resource.reusable_form module
+hellosign.resource.template module
 ---------------------------------------
 
-.. automodule:: hellosign.resource.reusable_form
+.. automodule:: hellosign.resource.template
     :members:
     :undoc-members:
     :show-inheritance:
