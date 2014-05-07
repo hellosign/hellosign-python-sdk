@@ -18,7 +18,7 @@ class TestHSAccessTokenAuth(TestCase):
         self.assertEquals(auth.state, "demo")
 
     def test_call(self):
-        auth = HSAccessTokenAuth(access_token="at_test", access_token_type="att_test")
+        auth = HSAccessTokenAuth(access_token="thetoken", access_token_type="thetokentype")
         request = HSRequest(auth)
         response = request.get(url='http://httpbin.org/headers')
-        self.assertEquals(response['headers']['Authorization'], 'at_test att_test')
+        self.assertEquals(response['headers']['Authorization'], 'thetokentype thetoken')
