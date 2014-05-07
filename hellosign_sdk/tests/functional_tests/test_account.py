@@ -47,6 +47,7 @@ class TestAccount(BaseTestCase):
         try:
             acct = self.client.create_account(email, pwd, self.client_id, self.client_secret)
             self.assertTrue(acct is not None)
+            self.assertEquals(acct.email_address, email)
             self.assertTrue(hasattr(acct, 'oauth'))
             self.assertTrue(acct.oauth is not None)
             self.assertTrue(isinstance(acct.oauth, HSAccessTokenAuth))
