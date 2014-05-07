@@ -23,7 +23,7 @@ class BaseTestCase(TestCase):
             BaseTestCase.warned = True
             print "\n\n"
             print " =================================================================="
-            print " = WARNING: We advice against running those tests against your    ="
+            print " = WARNING: We advise against running those tests against your    ="
             print " = personal account as it performs destructive actions            ="
             print " =================================================================="
             while True:
