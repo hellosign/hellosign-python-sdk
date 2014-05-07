@@ -1,13 +1,13 @@
-hellosign.tests package
+hellosign_sdk.tests package
 =======================
 
 Submodules
 ----------
 
-hellosign.tests.test_helper module
+hellosign_sdk.tests.test_helper module
 ----------------------------------
 
-.. automodule:: hellosign.tests.test_helper
+.. automodule:: hellosign_sdk.tests.test_helper
     :members:
     :undoc-members:
     :show-inheritance:
@@ -16,7 +16,7 @@ hellosign.tests.test_helper module
 Module contents
 ---------------
 
-.. automodule:: hellosign.tests
+.. automodule:: hellosign_sdk.tests
     :members:
     :undoc-members:
     :show-inheritance:

@@ -1,61 +1,61 @@
-hellosign.resource package
+hellosign_sdk.resource package
 ==========================
 
 Submodules
 ----------
 
-hellosign.resource.account module
+hellosign_sdk.resource.account module
 ---------------------------------
 
-.. automodule:: hellosign.resource.account
+.. automodule:: hellosign_sdk.resource.account
     :members:
     :undoc-members:
     :show-inheritance:
 
-hellosign.resource.embedded module
+hellosign_sdk.resource.embedded module
 ----------------------------------
 
-.. automodule:: hellosign.resource.embedded
+.. automodule:: hellosign_sdk.resource.embedded
     :members:
     :undoc-members:
     :show-inheritance:
 
-hellosign.resource.resource module
+hellosign_sdk.resource.resource module
 ----------------------------------
 
-.. automodule:: hellosign.resource.resource
+.. automodule:: hellosign_sdk.resource.resource
     :members:
     :undoc-members:
     :show-inheritance:
 
-hellosign.resource.template module
+hellosign_sdk.resource.template module
 ---------------------------------------
 
-.. automodule:: hellosign.resource.template
+.. automodule:: hellosign_sdk.resource.template
     :members:
     :undoc-members:
     :show-inheritance:
 
-hellosign.resource.signature_request module
+hellosign_sdk.resource.signature_request module
 -------------------------------------------
 
-.. automodule:: hellosign.resource.signature_request
+.. automodule:: hellosign_sdk.resource.signature_request
     :members:
     :undoc-members:
     :show-inheritance:
 
-hellosign.resource.team module
+hellosign_sdk.resource.team module
 ------------------------------
 
-.. automodule:: hellosign.resource.team
+.. automodule:: hellosign_sdk.resource.team
     :members:
     :undoc-members:
     :show-inheritance:
 
-hellosign.resource.unclaimed_draft module
+hellosign_sdk.resource.unclaimed_draft module
 -----------------------------------------
 
-.. automodule:: hellosign.resource.unclaimed_draft
+.. automodule:: hellosign_sdk.resource.unclaimed_draft
     :members:
     :undoc-members:
     :show-inheritance:
@@ -64,7 +64,7 @@ hellosign.resource.unclaimed_draft module
 Module contents
 ---------------
 
-.. automodule:: hellosign.resource
+.. automodule:: hellosign_sdk.resource
     :members:
     :undoc-members:
     :show-inheritance:

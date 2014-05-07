@@ -1,37 +1,37 @@
-hellosign.utils package
+hellosign_sdk.utils package
 =======================
 
 Submodules
 ----------
 
-hellosign.utils.exception module
+hellosign_sdk.utils.exception module
 --------------------------------
 
-.. automodule:: hellosign.utils.exception
+.. automodule:: hellosign_sdk.utils.exception
     :members:
     :undoc-members:
     :show-inheritance:
 
-hellosign.utils.hsaccesstokenauth module
+hellosign_sdk.utils.hsaccesstokenauth module
 ----------------------------------------
 
-.. automodule:: hellosign.utils.hsaccesstokenauth
+.. automodule:: hellosign_sdk.utils.hsaccesstokenauth
     :members:
     :undoc-members:
     :show-inheritance:
 
-hellosign.utils.request module
+hellosign_sdk.utils.request module
 ------------------------------
 
-.. automodule:: hellosign.utils.request
+.. automodule:: hellosign_sdk.utils.request
     :members:
     :undoc-members:
     :show-inheritance:
 
-hellosign.utils.utils module
+hellosign_sdk.utils.utils module
 ----------------------------
 
-.. automodule:: hellosign.utils.utils
+.. automodule:: hellosign_sdk.utils.utils
     :members:
     :undoc-members:
     :show-inheritance:
@@ -40,7 +40,7 @@ hellosign.utils.utils module
 Module contents
 ---------------
 
-.. automodule:: hellosign.utils
+.. automodule:: hellosign_sdk.utils
     :members:
     :undoc-members:
     :show-inheritance:

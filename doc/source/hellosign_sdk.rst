@@ -1,4 +1,4 @@
-hellosign package
+hellosign_sdk package
 =================
 
 Subpackages
@@ -6,25 +6,25 @@ Subpackages
 
 .. toctree::
 
-    hellosign.resource
-    hellosign.tests
-    hellosign.utils
+    hellosign_sdk.resource
+    hellosign_sdk.tests
+    hellosign_sdk.utils
 
 Submodules
 ----------
 
-hellosign.hsclient module
+hellosign_sdk.hsclient module
 -------------------------
 
-.. automodule:: hellosign.hsclient
+.. automodule:: hellosign_sdk.hsclient
     :members:
     :undoc-members:
     :show-inheritance:
 
-hellosign.test_hsclient module
+hellosign_sdk.test_hsclient module
 ------------------------------
 
-.. automodule:: hellosign.test_hsclient
+.. automodule:: hellosign_sdk.test_hsclient
     :members:
     :undoc-members:
     :show-inheritance:
@@ -33,7 +33,7 @@ hellosign.test_hsclient module
 Module contents
 ---------------
 
-.. automodule:: hellosign
+.. automodule:: hellosign_sdk
     :members:
     :undoc-members:
     :show-inheritance:
