@@ -85,3 +85,45 @@ class SignatureRequest(Resource):
     def __str__(self):
         ''' Return a string representation of this Account '''
         return 'SignatureRequest %s' % self.signature_request_id
+
+    def find_response_component(self, api_id=None, signature_id=None):
+        ''' Find one or many repsonse components.
+
+            Args:
+
+                api_id (str):           Api id associated with the component(s) to be retrieved.
+
+                signature_id (str):     Signature id associated with the component(s) to be retrieved.
+
+            Returns:
+                A list of dictionaries containing component data
+
+        '''
+        if not api_id and not signature_id:
+            raise ValueError('At least one of api_id and signature_id is required')
+
+        components = list()
+        
+        if self.response_data:
+            for component in self.response_data:
+                if (api_id and component['api_id']) == api_id or (signature_id and component['signature_id'] == signature_id):
+                    components.append(component)
+
+        return components
+
+    def find_signature(self, signature_id=None, signer_email_address=None):
+        ''' Return a signature for the given parameters
+
+            Args:
+
+                signature_id (str):             Id of the signature to retrieve.
+                signer_email_address (str):     Email address of the associated signer for the signature to retrieve.
+
+            Returns:
+                A Signature object or None
+
+        '''
+        if self.signatures:
+            for signature in self.signatures:
+                if signature.signature_id == signature_id:
+                    return signature
