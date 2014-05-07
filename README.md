@@ -138,3 +138,24 @@ custom_fields = [
 # Send a signature request with uploaded files
 signature_request = client.send_signature_request_with_template(test_mode=True, template_id="fa5c8a0b0f492d768749333ad6fcc214c111e967", title="NDA with Acme Co.", subject="The NDA we talked about", message="Please sign this NDA and then we can discuss more. Let me know if you have any questions.", signing_redirect_url=None, signers=signers, ccs=ccs, custom_fields=custom_fields)
 ````
+
+## Tests
+
+You can run the test suite by executing the following commands after you cloned the repo:
+Note that it requires to have a HelloSign account, with at least one template et one api app.
+
+```
+cd hellosign_sdk
+cp tests/test_helper.sample.py tests/test_helper.py
+HELLOSIGN_API_KEY='YOUR API KEY'
+HELLOSIGN_API_CLIENT_ID='YOUR APP CLIENT ID'
+HELLOSIGN_API_CLIENT_SECRET='YOUR APP CLIENT SECRET'
+nosetests --with-coverage --cover-package=hellosign_sdk --include=hellosign_sdk/tests/unit_tests/* --include=hellosign_sdk/tests/functional_tests/*
+```
+
+WARNING: We advise against running those tests against you personal account as it performs destructive actions.
+
+## Additional notes
+
+### Local callbacks
+We do not allow app callbacks (event or OAuth) to be set to localhost. However it is still possible to test callbacks against a local server. Tunneling services such as ngrok (http://ngrok.com) can help you set this up.
