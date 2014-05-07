@@ -44,13 +44,13 @@ client = HSClient(email="api_user@example.com", password="your_password")
 client = HSClient(api_key="your_api_key")
 
 # Initialize HSClient using api token
-client = HSClient(access_token="your_api_access_token", access_token_type="Bearer")
+client = HSClient(access_token="your_api_access_token")
 ````
 Note: In case you initialize the HSClient with all the above credentials, the priority order is as follow: access_token & access_token_type, api_key, then email and password.
 
 ## Usage
 
-For more information about the API, please refer to this [link](http://hellosign-python-sdk.readthedocs.org/en/latest/)
+For more information about the API, please refer to this [link](http://hellosign-python-sdk.readthedocs.org/en/v3/)
 
 ### Account
 
@@ -111,14 +111,32 @@ signers = [
 ]
 cc_email_addresses = ["lawyer@hellosign.com", "lawyer@example.com"]
 
-# Send a signature request with uploaded files
-signature_request = client.send_signature_request(test_mode=True, files=None, file_urls=["http://www.example.com/download/sample.pdf"], title="NDA with Acme Co.", subject="The NDA we talked about", message="Please sign this NDA and then we can discuss more. Let me know if you have any questions.", signing_redirect_url=None, signers=signers, cc_email_addresses=cc_email_addresses)
-
 # Send a signature request with remote files
-signature_request = client.send_signature_request(test_mode=True, files=files, file_urls=None, title="NDA with Acme Co.", subject="The NDA we talked about", message="Please sign this NDA and then we can discuss more. Let me know if you have any questions.", signing_redirect_url=None, signers=signers, cc_email_addresses=cc_email_addresses)
+signature_request = client.send_signature_request(
+                                test_mode=True, 
+                                files=None, 
+                                file_urls=["http://www.example.com/download/sample.pdf"], 
+                                title="NDA with Acme Co.", 
+                                subject="The NDA we talked about", 
+                                message="Please sign this NDA and then we can discuss more. Let me know if you have any questions.", 
+                                signing_redirect_url=None, 
+                                signers=signers, 
+                                cc_email_addresses=cc_email_addresses)
+
+# Send a signature request with uploaded files
+signature_request = client.send_signature_request(
+                                test_mode=True, 
+                                files=files, 
+                                file_urls=None, 
+                                title="NDA with Acme Co.", 
+                                subject="The NDA we talked about", 
+                                message="Please sign this NDA and then we can discuss more. Let me know if you have any questions.", 
+                                signing_redirect_url=None, 
+                                signers=signers, 
+                                cc_email_addresses=cc_email_addresses)
 ````
 
-#### Send a Signature Request with Reusable Form
+#### Send a Signature Request with Template
 
 ````python
 signers = [
@@ -136,13 +154,22 @@ custom_fields = [
 ]
 
 # Send a signature request with uploaded files
-signature_request = client.send_signature_request_with_template(test_mode=True, template_id="fa5c8a0b0f492d768749333ad6fcc214c111e967", title="NDA with Acme Co.", subject="The NDA we talked about", message="Please sign this NDA and then we can discuss more. Let me know if you have any questions.", signing_redirect_url=None, signers=signers, ccs=ccs, custom_fields=custom_fields)
+signature_request = client.send_signature_request_with_template(
+                                        test_mode=True, 
+                                        template_id="fa5c8a0b0f492d768749333ad6fcc214c111e967", 
+                                        title="NDA with Acme Co.", 
+                                        subject="The NDA we talked about", 
+                                        message="Please sign this NDA and then we can discuss more. Let me know if you have any questions.", 
+                                        signing_redirect_url=None, 
+                                        signers=signers, 
+                                        ccs=ccs, 
+                                        custom_fields=custom_fields)
 ````
 
 ## Tests
 
 You can run the test suite by executing the following commands after you cloned the repo:
-Note that it requires to have a HelloSign account, with at least one template et one api app.
+Note that it requires to have a HelloSign account, with at least one template and one api app.
 
 ```
 cd hellosign_sdk
