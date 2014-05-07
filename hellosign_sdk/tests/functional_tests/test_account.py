@@ -1,7 +1,7 @@
 from hellosign_sdk.tests.functional_tests import BaseTestCase
 from hellosign_sdk import HSClient
 from hellosign_sdk.resource import Account
-from hellosign_sdk.utils import BadRequest, Unauthorized
+from hellosign_sdk.utils import BadRequest, Unauthorized, HSException, HSAccessTokenAuth
 from time import time
 
 class TestAccount(BaseTestCase):
@@ -32,8 +32,8 @@ class TestAccount(BaseTestCase):
         try:
             result = self.client.create_account(email, pwd)
             self.assertEquals(isinstance(result, Account), True)
-        except:
-            self.fail()
+        except HSException, e:
+            self.fail(e.message)
 
         # Already exists
         try:
@@ -41,6 +41,18 @@ class TestAccount(BaseTestCase):
             self.fail()
         except BadRequest, e:
             self.assertTrue(e.message.find('account already exists') > 0)
+
+        # Created via app
+        email = "py-sdk-test-%s@example.com" % time()
+        try:
+            acct = self.client.create_account(email, pwd, self.client_id, self.client_secret)
+            self.assertTrue(acct is not None)
+            self.assertTrue(hasattr(acct, 'oauth'))
+            self.assertTrue(acct.oauth is not None)
+            self.assertTrue(isinstance(acct.oauth, HSAccessTokenAuth))
+        except HSException, e:
+            self.fail(e.message)
+
 
     def test_get_account_info(self):
         ''' Test retrieving account information '''

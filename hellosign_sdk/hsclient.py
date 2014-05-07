@@ -78,19 +78,21 @@ class HSClient(object):
         API_DEV_URL = "https://www.my.hellosign.com/apiapp_dev.php"
         API_STAGING_URL = "https://staging.hellosign.com/apiapp_dev.php"
 
-        OAUTH_TOKEN_PRODUCTION_URL = "https://www.hellosign.com/oauth/token"
-        OAUTH_TOKEN_DEV_URL = "https://www.my.hellosign.com/webapp_dev.php/oauth/token"
-        OAUTH_TOKEN_STAGING_URL = "https://staging.hellosign.com/webapp_dev.php/oauth/token"
+        WEB_PRODUCTION_URL = "https://www.hellosign.com"
+        WEB_DEV_URL = "https://www.my.hellosign.com/webapp_dev.php"
+        WEB_STAGING_URL = "https://staging.hellosign.com/webapp_dev.php"
 
         if self.env == "production":
             self.API_URL = API_PRODUCTION_URL + '/' + self.API_VERSION
-            self.OAUTH_TOKEN_URL = OAUTH_TOKEN_PRODUCTION_URL
+            self.OAUTH_TOKEN_URL = WEB_PRODUCTION_URL + '/oauth/token'
         elif self.env == "dev":
             self.API_URL = API_DEV_URL + '/' + self.API_VERSION
-            self.OAUTH_TOKEN_URL = OAUTH_TOKEN_DEV_URL
+            self.OAUTH_TOKEN_URL = WEB_DEV_URL + '/oauth/token'
+            print "WARNING: Using dev api endpoint %s" % self.API_URL
         elif self.env == "staging":
             self.API_URL = API_STAGING_URL + '/' + self.API_VERSION
-            self.OAUTH_TOKEN_URL = OAUTH_TOKEN_STAGING_URL
+            self.OAUTH_TOKEN_URL = WEB_STAGING_URL + '/oauth/token'
+            print "WARNING: Using staging api endpoint %s" % self.API_URL
 
         self.ACCOUNT_CREATE_URL = self.API_URL + '/account/create'
         self.ACCOUNT_INFO_URL = self.API_URL + '/account'
@@ -127,22 +129,37 @@ class HSClient(object):
 
     #####  ACCOUNT METHODS  ###############################
 
-    def create_account(self, email, password):
-        ''' Create a new account
+    def create_account(self, email, password, client_id=None, client_secret=None):
+        ''' Create a new account.
+
+        If the account is created via an app, then Account.oauth will contain the 
+        OAuth data that can be used to execute actions on behalf of the newly created account.
 
         Args:
             email (str): Email address of the new account to create
             password (str): Password of the new account
+            client_id (str, optional): Client of the app to use to create this account
+            client_secret (str, optional): Secret of the app to use to create this account
 
         Returns:
             The new Account object
 
         '''
         request = self._get_request()
-        response = request.post(self.ACCOUNT_CREATE_URL, {
+        
+        params = {
             'email_address': email, 
             'password': password
-        })
+        }
+        if client_id:
+            params['client_id'] = client_id
+            params['client_secret'] = client_secret
+
+        response = request.post(self.ACCOUNT_CREATE_URL, params)
+
+        if 'oauth_data' in response:
+            response["account"]["oauth"] = response['oauth_data']
+
         return Account(response["account"])
 
     # Get account info and put in self.account so that further access to the
@@ -634,7 +651,7 @@ class HSClient(object):
         response = request.post(self.TEAM_CREATE_URL, { "name": name })
         return Team(response["team"])
 
-    # RECOMMEND:The api event create a new team if you do not belong to any team
+    # RECOMMEND: The api event create a new team if you do not belong to any team
     def update_team_name(self, name):
         ''' Updates a Team's name
 
@@ -675,7 +692,7 @@ class HSClient(object):
         '''
         return self._add_remove_team_member(self.TEAM_ADD_MEMBER_URL, email_address, account_id)
 
-    # RECOMMEND: does not fail if user has been removed
+    # RECOMMEND: Does not fail if user has been removed
     def remove_team_member(self, email_address=None, account_id=None):
         ''' Remove a user from your Team
 
@@ -874,13 +891,26 @@ class HSClient(object):
             "client_id": client_id, 
             "secret": secret
         })
-        return HSAccessTokenAuth(
-            response['access_token'],
-            response['token_type'], 
-            response['refresh_token'],
-            response['expires_in'], 
-            response['state']
-        )
+        return HSAccessTokenAuth.from_response(response)
+
+    def refresh_access_token(self, refresh_token):
+        ''' Refreshes the current access token.
+
+            Gets a new access token, updates client auth and returns it.
+
+        Args:
+            refresh_token (str): Refresh token to use
+
+        Returns:
+            The new access token
+        '''
+        request = self._get_request()
+        response = request.post(self.OAUTH_TOKEN_URL, {
+            "grant_type": "refresh_token",
+            "refresh_token": refresh_token
+        })
+        self.auth = HSAccessTokenAuth.from_response(response)
+        return self.auth.access_token
 
 
     #####  HELPERS  #######################################
@@ -920,7 +950,7 @@ class HSClient(object):
         '''
 
         if access_token_type and access_token:
-            return HSAccessTokenAuth(access_token_type, access_token)
+            return HSAccessTokenAuth(access_token, access_token_type)
         elif api_key:
             return HTTPBasicAuth(api_key, '')
         elif email and password:

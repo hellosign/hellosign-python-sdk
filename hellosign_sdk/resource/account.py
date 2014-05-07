@@ -1,9 +1,9 @@
 from resource import Resource
-
+from hellosign_sdk.utils import HSAccessTokenAuth
 
 class Account(Resource):
 
-    """Contains information about an account and its settings.
+    ''' Contains information about an account and its settings.
 
     Attributes:
         account_id (str): The id of the Account
@@ -33,7 +33,23 @@ class Account(Resource):
         >>> account = client.get_account_info()
         >>> print account.account_id
 
-    """
+    '''
+
+    def __init__(self, jsonstr=None, key=None):
+        ''' Initialization of the object
+
+        Args:
+            jsonstr (str): a raw JSON string that is returned by a request.
+                We store all the data in `self.json_data` and use `__getattr__`
+                and `__setattr__` to make the data accessible like attributes
+                of the object
+            key (str): Optional key to use with jsonstr. If `key` exists, we'll
+                load the data of `jsonstr[key]` instead of the whole `jsonstr`
+        '''
+        super(Account, self).__init__(jsonstr, key)
+        if self.json_data and 'oauth' in self.json_data:
+            oauth = HSAccessTokenAuth.from_response(self.json_data['oauth'])
+            self.json_data['oauth'] = oauth
 
     def __str__(self):
         ''' Return a string representation of this Account '''

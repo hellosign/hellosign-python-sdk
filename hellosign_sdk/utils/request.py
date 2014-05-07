@@ -4,7 +4,7 @@ from exception import *
 
 
 class HSRequest(object):
-    """Object to handle HTTP requests
+    ''' Object to handle HTTP requests
 
     Although we have greate requests package which can handle the HTTP request
     beautifully, we need this class to fit better our need like sending the
@@ -18,7 +18,7 @@ class HSRequest(object):
         headers (dict): Custome headers for every requests
         http_status_code (int): HTTP status code returned of requests
 
-    """
+    '''
 
     DEFAULT_ENCODING = "UTF-8"
     USER_AGENT = "HelloSign Python SDK"
@@ -35,7 +35,7 @@ class HSRequest(object):
         self.verify_ssl = (not self.debug)
 
     def get(self, url, headers=None, parameters=None, get_json=True):
-        """Send a GET request with custome headers and parameters
+        ''' Send a GET request with custome headers and parameters
 
         Args:
             url (str): URL to send the request to
@@ -46,7 +46,7 @@ class HSRequest(object):
             A JSON object of the returned response if `get_json` is True,
             Requests' response object otherwise
 
-        """
+        '''
 
         if self.debug:
             print "GET: %s, headers=%s" % (url, headers)
@@ -69,7 +69,7 @@ class HSRequest(object):
         return response
 
     def get_file(self, url, filename, headers=None):
-        """Get a file from a url and save it as `filename`
+        ''' Get a file from a url and save it as `filename`
 
         Args:
             url (str): URL to send the request to
@@ -83,7 +83,7 @@ class HSRequest(object):
             True if file is downloaded and written successfully, False
             otherwise.
 
-        """
+        '''
 
         if self.debug:
             print "GET FILE: %s, headers=%s" % (url, headers)
@@ -106,7 +106,7 @@ class HSRequest(object):
         return True
 
     def post(self, url, data=None, files=None, headers=None, get_json=True):
-        """Make POST request to a url
+        ''' Make POST request to a url
 
         Args:
             url (str): URL to send the request to
@@ -118,7 +118,7 @@ class HSRequest(object):
             A JSON object of the returned response if `get_json` is True,
             Requests' response object otherwise
 
-        """
+        '''
 
         if self.debug:
             print "POST: %s, headers=%s" % (url, headers)
@@ -133,10 +133,9 @@ class HSRequest(object):
             return response.json()
         return response
 
-    # TODO: use a expected key in returned json, if the returned key does not
-    # match, return false...
+    # TODO: use a expected key in returned json, if the returned key does not match, return false...
     def _check_error(self, response):
-        """Check for HTTP error code from the response, raise exception if
+        ''' Check for HTTP error code from the response, raise exception if
         there's any
 
         Args:
@@ -148,7 +147,8 @@ class HSRequest(object):
 
         Returns:
             True if status code is not error code
-        """
+        
+        '''
 
         # If status code is 4xx or 5xx, that should be an error
         if response.status_code >= 400:

@@ -4,20 +4,20 @@ import json
 
 class Resource(object):
 
-    """An abstract class to represent some objects used by our SDK such as
+    ''' An abstract class to represent some objects used by our SDK such as
     Account, SignatureRequest, Template, Team, UnclaimedDraft, Embedded.
     These objects share the same way of storing data.
 
     Information and settings are stored physically in `self.json_data`, and
     can be retrieved by using the OOP way.
 
-    """
+    '''
 
     # __metaclass__ = ABCMeta
     json_data = None
 
     def __init__(self, jsonstr=None, key=None):
-        """Initialization of the object
+        ''' Initialization of the object
 
         Args:
             jsonstr (str): a raw JSON string that is returned by a request.
@@ -26,7 +26,7 @@ class Resource(object):
                 of the object
             key (str): Optional key to use with jsonstr. If `key` exists, we'll
                 load the data of `jsonstr[key]` instead of the whole `jsonstr`
-        """
+        '''
         super(Resource, self).__init__()
         if jsonstr is not None:
             if key is not None:
