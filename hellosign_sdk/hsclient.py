@@ -51,14 +51,12 @@ class HSClient(object):
     OAUTH_TOKEN_URL = ''
 
     def __init__(self, email=None, password=None, api_key=None, access_token=None, access_token_type="Bearer", env='production'):
-        '''Initialize the client object with authentication information to send
-        requests
+        '''Initialize the client object with authentication information to send requests
 
         Args:
             email (str): E-mail of the account to make the requests
             password (str): Password of the account used with email address
-            api_key (str): API Key. You can find your API key in
-             https://www.hellosign.com/home/myAccount/current_tab/integrations
+            api_key (str): API Key. You can find your API key in https://www.hellosign.com/home/myAccount/current_tab/integrations
             access_token (str):
             access_token_type (str):
 
@@ -69,6 +67,10 @@ class HSClient(object):
         self.account = Account()
         self.env = env
         self._init_endpoints()
+
+    def __str__(self):
+        ''' Return a string description of this object '''
+        return "HelloSign Client %s" % self.version
 
     def _init_endpoints(self):
 
@@ -905,10 +907,9 @@ class HSClient(object):
 
             password (str): Password of the account used with email address
 
-            api_key (str): API Key. You can find your API key in
-             https://www.hellosign.com/home/myAccount/current_tab/integrations
-            access_token (str):
-            access_token_type (str):
+            api_key (str): API Key. You can find your API key in https://www.hellosign.com/home/myAccount/current_tab/integrations
+            access_token (str): Access token
+            access_token_type (str): Type of access token
 
         Raises:
             NoAuthMethod: If no authentication information found

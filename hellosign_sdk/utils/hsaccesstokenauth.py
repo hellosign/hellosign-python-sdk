@@ -2,13 +2,13 @@ from requests.auth import AuthBase
 
 
 class HSAccessTokenAuth(AuthBase):
-    """Authentication object using HelloSign's access token
+    ''' Authentication object using HelloSign's access token
 
-    """
+    '''
 
     def __init__(self, access_token, access_token_type, refresh_token=None,
                  expires_in=None, state=None):
-        """Initialziation of the object
+        ''' Initialziation of the object
 
         Args:
             access_token (str): Access token
@@ -17,7 +17,7 @@ class HSAccessTokenAuth(AuthBase):
             expires_in (int): Seconds after which the token will expire
             state (str):
 
-        """
+        '''
 
         self.access_token = access_token
         self.access_token_type = access_token_type
@@ -26,6 +26,5 @@ class HSAccessTokenAuth(AuthBase):
         self.state = state
 
     def __call__(self, r):
-        r.headers['Authorization'] = self.access_token + \
-            ' ' + self.access_token_type
+        r.headers['Authorization'] = "%s %s" % (self.access_token_type, self.access_token)
         return r
