@@ -125,5 +125,5 @@ class SignatureRequest(Resource):
         '''
         if self.signatures:
             for signature in self.signatures:
-                if signature.signature_id == signature_id:
+                if signature.signature_id == signature_id or signature.signer_email_address == signer_email_address: 
                     return signature

@@ -1,5 +1,5 @@
 from hellosign_sdk.tests.functional_tests import BaseTestCase
-from hellosign_sdk.resource import ResourceList, SignatureRequest
+from hellosign_sdk.resource import ResourceList, SignatureRequest, Signature
 from hellosign_sdk.utils import Forbidden, HSException
 import tempfile
 import os
@@ -171,3 +171,84 @@ class TestSignatureRequest(BaseTestCase):
             self.client.cancel_signature_request(sig_req.signature_request_id)
         except HSException, e:
             self.fail(e.message)
+
+    def test_signature_request_helpers(self):
+        ''' Test signature request helpers '''
+
+        comp1 = {
+            "signature_id": "78caf2a1d01cd39cea2bc1cbb340dac3",
+            "api_id": "80c678_1",
+            "name": "Needs Express Shipping",
+            "value": True,
+            "type": "checkbox"
+        }
+        comp2 = {
+            "signature_id": "78caf2a1d01cd39cea2bc1cbb340dac3",
+            "api_id": "80c678_2",
+            "name": "Shipping Address",
+            "value": "1212 Park Avenuee",
+            "type": "text"
+        }
+        comp3 = {
+            "signature_id": "78caf2a1d01cd39cea2bc1cbb340dac3",
+            "api_id": "80c678_3",
+            "name": "DateSigned",
+            "value": "09\/01\/2012",
+            "type": "text"
+        }
+
+        sig_data = {
+            "signature_id": "78caf2a1d01cd39cea2bc1cbb340dac3",
+            "signer_email_address": "john@example.com",
+            "signer_name": "John Doe",
+            "order": None,
+            "status_code": "signed",
+            "signed_at": 1346521550,
+            "last_viewed_at": 1346521483,
+            "last_reminded_at": None,
+            "has_pin" : False
+        }
+
+        sig_req_data = {
+            "signature_request_id": "fa5c8a0b0f492d768749333ad6fcc214c111e967",
+            "title": "Purchase Agreement",
+            "subject": "Purchase Agreement",
+            "message": "Please sign and return.",
+            "is_complete": True,
+            "has_error": False,
+            "custom_fields": [],
+            "response_data": [comp1, comp2, comp3],
+            "signing_url": None,
+            "signing_redirect_url": None,
+            "details_url": "https:\/\/staging.hellosign.com\/home\/manage?locate=fa5c8a0b0f492d768749333ad6fcc214c111e967",
+            "requester_email_address": "me@hellosign.com",
+            "signatures": [sig_data],
+            "cc_email_addresses": []
+        }
+        sig_req = SignatureRequest(sig_req_data)
+
+        comps = sig_req.find_response_component(api_id=comp1['api_id'])
+        self.assertEquals(len(comps), 1)
+        self.assertEquals(comps[0], comp1)
+
+        comps = sig_req.find_response_component(signature_id=comp1['signature_id'])
+        self.assertEquals(len(comps), 3)
+        self.assertEquals(comps[0], comp1)
+        self.assertEquals(comps[1], comp2)
+        self.assertEquals(comps[2], comp3)
+
+        comps = sig_req.find_response_component(api_id='3j2k3j21k32')
+        self.assertEquals(len(comps), 0)
+
+        s = sig_req.find_signature(signature_id=sig_data['signature_id'])
+        self.assertTrue(s is not None)
+        self.assertTrue(isinstance(s, Signature), "Expected Signature but got %s" % s.__class__.__name__)
+        self.assertEquals(s.json_data, sig_data)
+
+        s = sig_req.find_signature(signer_email_address=sig_data['signer_email_address'])
+        self.assertTrue(s is not None)
+        self.assertTrue(isinstance(s, Signature), "Expected Signature but got %s" % s.__class__.__name__)
+        self.assertEquals(s.json_data, sig_data)
+
+        s = sig_req.find_signature(signature_id='j32kj32k13j')
+        self.assertEquals(s, None)
