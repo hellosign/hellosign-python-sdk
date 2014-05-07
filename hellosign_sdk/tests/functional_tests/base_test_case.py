@@ -14,7 +14,7 @@ class BaseTestCase(TestCase):
         try:
             params['env'] = test_helper.env
         except AttributeError:
-            pass
+            params['env'] = 'production'
         self.client = HSClient(**params)
         self.client_id = test_helper.client_id
         self.client_secret = test_helper.secret
