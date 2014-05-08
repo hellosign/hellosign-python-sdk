@@ -2,7 +2,7 @@ Hellosign Python SDK
 -------------------
 
 
-An API wrapper written in Python to interact with HelloSign's API (http://www.hellosign.com/api)
+A Python wrapper for the HelloSign API (http://www.hellosign.com/api)
 
 
 ## Installation
@@ -46,7 +46,7 @@ client = HSClient(api_key="your_api_key")
 # Initialize HSClient using api token
 client = HSClient(access_token="your_api_access_token")
 ````
-Note: In case you initialize the HSClient with all the above credentials, the priority order is as follow: access_token & access_token_type, api_key, then email and password.
+Note: In case you initialize the HSClient with all the above credentials, the priority order is as follow: access_token, api_key, then email and password.
 
 ## Usage
 
@@ -145,12 +145,12 @@ signers = [
 ]
 cc_email_addresses = ["lawyer@hellosign.com", "lawyer@example.com"]
 ccs = [
-    {'email_address': 'lawyer@hellosign.com', 'role_name': 'Lawyer 1'},
-    {'email_address': 'lawyer@example.com', 'role_name': 'Lawyer 2'}
+    { "email_address": "lawyer@hellosign.com", "role_name": "Lawyer 1" },
+    { "email_address": "lawyer@example.com", "role_name": "Lawyer 2" }
 ]
 custom_fields = [
-    {"Field 1": 'Value 1'}, 
-    {'Field 2': 'Value 2'}
+    { "Field 1": "Value 1" }, 
+    { "Field 2": "Value 2" }
 ]
 
 # Send a signature request with uploaded files
