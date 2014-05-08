@@ -11,7 +11,7 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
-   hellosign_python_sdk
+   hellosign_sdk
    modules
 
 
