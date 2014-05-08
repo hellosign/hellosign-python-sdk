@@ -10,10 +10,10 @@ def readme():
 
 setup(name='hellosign-python-sdk',
       version='3.0',
-      description="An API wrapper written in Python to interact with HelloSign's API (http://www.hellosign.com)",
+      description="A Python wrapper for the HelloSign API (http://www.hellosign.com/api)",
       long_description=readme(),
       classifiers=[
-        'Development Status :: 1',
+        'Development Status :: 5 - Production/Stable',
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python :: 2.7',
       ],
