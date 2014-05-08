@@ -50,7 +50,7 @@ Note: In case you initialize the HSClient with all the above credentials, the pr
 
 ## Usage
 
-For more information about the wrapper, its methods and parameters visit our detailed API documentation on  [readthedocs](http://hellosign-python-sdk.readthedocs.org/en/v3/).
+For more information about the wrapper, its methods and parameters visit our detailed API documentation on  [readthedocs](http://hellosign-python-sdk.readthedocs.org/en/v3/py-modindex.html).
 
 ### Account
 
