@@ -50,20 +50,20 @@ class HSClient(object):
 
     OAUTH_TOKEN_URL = ''
 
-    def __init__(self, email=None, password=None, api_key=None, access_token=None, access_token_type="Bearer", env='production'):
+    def __init__(self, email_address=None, password=None, api_key=None, access_token=None, access_token_type="Bearer", env='production'):
         '''Initialize the client object with authentication information to send requests
 
         Args:
-            email (str): E-mail of the account to make the requests
+            email_address (str): E-mail of the account to make the requests
             password (str): Password of the account used with email address
             api_key (str): API Key. You can find your API key in https://www.hellosign.com/home/myAccount/current_tab/integrations
-            access_token (str):
-            access_token_type (str):
+            access_token (str): OAuth access token to use
+            access_token_type (str): Type of OAuth token (defaults to Bearer, which is the only value supported for now)
 
         '''
 
         super(HSClient, self).__init__()
-        self.auth = self._authenticate(email, password, api_key, access_token, access_token_type)
+        self.auth = self._authenticate(email_address, password, api_key, access_token, access_token_type)
         self.account = Account()
         self.env = env
         self._init_endpoints()
@@ -129,16 +129,16 @@ class HSClient(object):
 
     #####  ACCOUNT METHODS  ###############################
 
-    def create_account(self, email, password, client_id=None, client_secret=None):
+    def create_account(self, email_address, password, client_id=None, client_secret=None):
         ''' Create a new account.
 
         If the account is created via an app, then Account.oauth will contain the 
         OAuth data that can be used to execute actions on behalf of the newly created account.
 
         Args:
-            email (str): Email address of the new account to create
+            email_address (str): Email address of the new account to create
             password (str): Password of the new account
-            client_id (str, optional): Client of the app to use to create this account
+            client_id (str, optional): Client id of the app to use to create this account
             client_secret (str, optional): Secret of the app to use to create this account
 
         Returns:
@@ -148,7 +148,7 @@ class HSClient(object):
         request = self._get_request()
         
         params = {
-            'email_address': email, 
+            'email_address': email_address, 
             'password': password
         }
         if client_id:
@@ -197,15 +197,17 @@ class HSClient(object):
         resp = request.post(self.ACCOUNT_UPDATE_URL, { 'callback_url': self.account.callback_url })
         return Account(resp['account'])
 
-    def verify_account(self, email):
+    def verify_account(self, email_address):
         ''' Verify whether a HelloSign Account exists 
+
+            email_address (str): Email address for the account to verify
 
             Returns:
                 True or False
         '''
         request = self._get_request()
         resp = request.post(self.ACCOUNT_VERIFY_URL, {
-            'email_address': email
+            'email_address': email_address
         })
         return ('account' in resp)
 
@@ -226,25 +228,29 @@ class HSClient(object):
         response = request.get(self.SIGNATURE_REQUEST_INFO_URL + signature_request_id)
         return SignatureRequest(response["signature_request"])
 
-    def get_signature_request_list(self):
+    def get_signature_request_list(self, page=1):
         ''' Get a list of SignatureRequest that you can access
 
         This includes SignatureRequests you have sent as well as received, but
         not ones that you have been CCed on.
+
+        Args:
+            page (int, optional): Which page number of the SignatureRequest list to
+                return. Defaults to 1.
 
         Returns:
             A ResourceList object
 
         '''
         request = self._get_request()
-        response = request.get(self.SIGNATURE_REQUEST_LIST_URL)
+        response = request.get(self.SIGNATURE_REQUEST_LIST_URL, parameters={ "page": page })
         return ResourceList(SignatureRequest, response)
 
     def get_signature_request_file(self, signature_request_id, filename, file_type=None):
         ''' Download the PDF copy of the current documents
 
         Args:
-            signature_request_id (str): Id of the Signature Request
+            signature_request_id (str): Id of the signature request
 
             filename (str): Filename to save the PDF file to. This should be a full path.
 
@@ -347,6 +353,7 @@ class HSClient(object):
             
             signers (list of dict): A list of signers, which each has the following attributes:
 
+                role_name (str): Signer role
                 name (str): The name of the signer
                 email_address (str): email address of the signer
                 pin (str, optional): The 4- to 12-character access code that will secure this signer's signature page
@@ -409,7 +416,7 @@ class HSClient(object):
         cancel and only before everyone has signed.
 
         Args:
-            signing_request_id (str): The id of the SignatureRequest to cancel
+            signing_request_id (str): The id of the signature request to cancel
 
         Returns:
             None
@@ -559,7 +566,7 @@ class HSClient(object):
         ''' Gets a Template which includes a list of Accounts that can access it
 
         Args:
-            template_id (str): The id of the Template to retrieve
+            template_id (str): The id of the template to retrieve
 
         Returns:
             A Template object
@@ -573,8 +580,7 @@ class HSClient(object):
         ''' Lists your Templates
 
         Args:
-            page (int, optional): Which page number of the Template List to
-                return. Defaults to 1.
+            page (int, optional): Page number of the template List to return. Defaults to 1.
 
         Returns:
             A ResourceList object
@@ -589,11 +595,12 @@ class HSClient(object):
         ''' Gives the specified Account access to the specified Template
 
         Args:
-            template_id (str): The id of the Template to give the Account access to
+            template_id (str): The id of the template to give the account access to
 
-            account_id (str): The id of the Account to give access to the Template. The account id prevails if both are provided.
+            account_id (str): The id of the account to give access to the template. 
+                The account id prevails if both account_id and email_address are provided.
 
-            email_address (str): The email address of the Account to give access to.
+            email_address (str): The email address of the account to give access to.
 
         Returns:
             A Template object
@@ -605,11 +612,12 @@ class HSClient(object):
         ''' Removes the specified Account's access to the specified Template
 
         Args:
-            template_id (str): The id of the Template to remove the Account's access from.
+            template_id (str): The id of the template to remove the account's access from.
 
-            account_id (str): The id of the Account to remove access from the Template. The account id prevails if both are provided.
+            account_id (str): The id of the account to remove access from the template. 
+                The account id prevails if both account_id and email_address are provided.
 
-            email_address (str): The email address of the Account to remove access from.
+            email_address (str): The email address of the account to remove access from.
 
         Returns:
             An Template object
@@ -623,8 +631,8 @@ class HSClient(object):
     def get_team_info(self):
         ''' Gets your Team and a list of its members
 
-        Returns information about your Team as well as a list of its members.
-        If you do not belong to a Team, a 404 error with an error_name of
+        Returns information about your team as well as a list of its members.
+        If you do not belong to a team, a 404 error with an error_name of
         "not_found" will be returned.
 
         Returns:
@@ -638,10 +646,10 @@ class HSClient(object):
     def create_team(self, name):
         ''' Creates a new Team
 
-        Creates a new Team and makes you a member. You must not currently belong to a Team to invoke.
+        Creates a new Team and makes you a member. You must not currently belong to a team to invoke.
 
         Args:
-            name (str): The name of your Team
+            name (str): The name of your team
 
         Returns:
             A Team object
@@ -656,7 +664,7 @@ class HSClient(object):
         ''' Updates a Team's name
 
         Args:
-            name (str): The name of your Team
+            name (str): The new name of your team
 
         Returns:
             A Team object
@@ -669,7 +677,7 @@ class HSClient(object):
     def destroy_team(self):
         ''' Delete your Team
 
-        Deletes your Team. Can only be invoked when you have a Team with only one member (yourself).
+        Deletes your Team. Can only be invoked when you have a team with only one member left (yourself).
 
         Returns:
             None
@@ -678,13 +686,14 @@ class HSClient(object):
         request = self._get_request()
         request.post(url=self.TEAM_DESTROY_URL, get_json=False)
 
-    def add_team_member(self, email_address=None, account_id=None):
+    def add_team_member(self, account_id=None, email_address=None):
         ''' Add or invite a user to your Team
 
         Args:
-            email_address (str): email address of the Account of the user to invite to your Team. The account id prevails if both are provided.
+            account_id (str): The id of the account of the user to invite to your team.
 
-            account_id (str): The id of the Account of the user to invite to your Team.
+            email_address (str): The email address of the account to invite to your team. 
+                The account id prevails if both account_id and email_address are provided.
 
         Returns:
             A Team object
@@ -693,13 +702,14 @@ class HSClient(object):
         return self._add_remove_team_member(self.TEAM_ADD_MEMBER_URL, email_address, account_id)
 
     # RECOMMEND: Does not fail if user has been removed
-    def remove_team_member(self, email_address=None, account_id=None):
+    def remove_team_member(self, account_id=None, email_address=None):
         ''' Remove a user from your Team
 
         Args:
-            email_address (str): email address of the Account of the user to remove from your Team. The account id prevails if both are provided.
+            account_id (str): The id of the account of the user to remove from your team.
 
-            account_id (str): The id of the Account of the user to remove from your Team.
+            email_address (str): The email address of the account to remove from your team. 
+                The account id prevails if both account_id and email_address are provided.
 
         Returns:
             A Team object
@@ -871,13 +881,13 @@ class HSClient(object):
 
     #####  OAUTH METHODS  #################################
 
-    def get_oauth_data(self, code, client_id, secret, state):
+    def get_oauth_data(self, code, client_id, client_secret, state):
         ''' Get Oauth data from HelloSign
 
         Args:
             code (str): Code returned by HelloSign for our callback url
-            client_id (str):
-            secret (str):
+            client_id (str): Client id of the associated app
+            client_secret (str): Secret token of the associated app
 
         Returns:
             A HSAccessTokenAuth object
@@ -889,7 +899,7 @@ class HSClient(object):
             "code": code,
             "grant_type": "authorization_code",
             "client_id": client_id, 
-            "secret": secret
+            "client_secret": client_secret
         })
         return HSAccessTokenAuth.from_response(response)
 
@@ -929,17 +939,17 @@ class HSClient(object):
         '''
         return HSRequest(auth or self.auth, self.env)
 
-    def _authenticate(self, email=None, password=None, api_key=None, access_token=None, access_token_type=None):
+    def _authenticate(self, email_address=None, password=None, api_key=None, access_token=None, access_token_type=None):
         ''' Create authentication object to send requests
 
         Args:
-            email (str): E-mail of the account to make the requests
+            email_address (str): Email address of the account to make the requests
 
             password (str): Password of the account used with email address
 
             api_key (str): API Key. You can find your API key in https://www.hellosign.com/home/myAccount/current_tab/integrations
-            access_token (str): Access token
-            access_token_type (str): Type of access token
+            access_token (str): OAuth access token
+            access_token_type (str): Type of OAuth access token
 
         Raises:
             NoAuthMethod: If no authentication information found
@@ -953,8 +963,8 @@ class HSClient(object):
             return HSAccessTokenAuth(access_token, access_token_type)
         elif api_key:
             return HTTPBasicAuth(api_key, '')
-        elif email and password:
-            return HTTPBasicAuth(email, password)
+        elif email_address and password:
+            return HTTPBasicAuth(email_address, password)
         else:
             raise NoAuthMethod("No authentication information found!")
 
@@ -1298,12 +1308,11 @@ class HSClient(object):
         We use this function for two tasks because they have the same API call
 
         Args:
-            template_id (str): The id of the Template
+            template_id (str): The id of the template
 
-            account_id (str): ID of the Account to add/remove access to/from
+            account_id (str): ID of the account to add/remove access to/from
 
-            email_address (str): email_address of the Account to add/remove
-                access to/from
+            email_address (str): The email_address of the account to add/remove access to/from
 
         Raises:
             HSException: If no email address or account_id specified

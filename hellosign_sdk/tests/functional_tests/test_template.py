@@ -18,7 +18,7 @@ class TestTemplate(BaseTestCase):
 
         if len(team.accounts) < 2:
             try:
-                team = self.client.add_team_member("demo+%s@example.com" % time())
+                team = self.client.add_team_member(email_address="demo+%s@example.com" % time())
                 self.assertTrue(isinstance(team, Team))
             except Forbidden:
                 pass

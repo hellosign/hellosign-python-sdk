@@ -8,4 +8,4 @@ logging.basicConfig(level=logging.INFO)
 api_key = os.environ.get('HELLOSIGN_API_KEY')
 
 client_id = os.environ.get('HELLOSIGN_API_CLIENT_ID')
-secret = os.environ.get('HELLOSIGN_API_CLIENT_SECRET')
+client_secret = os.environ.get('HELLOSIGN_API_CLIENT_SECRET')

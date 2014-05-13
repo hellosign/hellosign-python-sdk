@@ -1,6 +1,7 @@
 from hellosign_sdk.tests.functional_tests import BaseTestCase
 from hellosign_sdk.resource import ResourceList, SignatureRequest, Signature
 from hellosign_sdk.utils import Forbidden, HSException
+from time import sleep
 import tempfile
 import os
 
@@ -78,6 +79,9 @@ class TestSignatureRequest(BaseTestCase):
 
         self._send_test_signature_request()
 
+        # Wait a little bit for the file to be ready
+        sleep(5) 
+
         # Listing
         sig_req_list = self.client.get_signature_request_list()
         self.assertTrue(isinstance(sig_req_list, ResourceList))
@@ -95,6 +99,9 @@ class TestSignatureRequest(BaseTestCase):
         sig_req = self._get_one_signature_request()
         signer = sig_req.signatures[0].signer_email_address
 
+        # Wait a little bit for the file to be ready
+        sleep(5)
+
         # Sent reminder
         try:
             self.client.remind_signature_request(sig_req.signature_request_id, signer)
@@ -105,6 +112,9 @@ class TestSignatureRequest(BaseTestCase):
         ''' Test retrieving signature request files '''
         
         sig_req = self._get_one_signature_request()
+
+        # Wait a little bit for the file to be ready
+        sleep(10) 
 
         # Download PDF file
         f = tempfile.NamedTemporaryFile(delete=True)

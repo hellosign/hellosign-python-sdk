@@ -17,7 +17,7 @@ class BaseTestCase(TestCase):
             params['env'] = 'production'
         self.client = HSClient(**params)
         self.client_id = test_helper.client_id
-        self.client_secret = test_helper.secret
+        self.client_secret = test_helper.client_secret
 
         if params['env'] == 'production' and not BaseTestCase.warned:
             BaseTestCase.warned = True

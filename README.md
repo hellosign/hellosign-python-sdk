@@ -38,7 +38,7 @@ Then create a HSClient object and pass authentication information to initialize 
 
 ````python
 # Initialize HSClient using email and password
-client = HSClient(email="api_user@example.com", password="your_password")
+client = HSClient(email_address="api_user@example.com", password="your_password")
 
 # Initialize HSClient using api key
 client = HSClient(api_key="your_api_key")
@@ -94,7 +94,7 @@ print signature_request.signature_request_id
 #### Get a list of your Signature Requests
 
 ````python
-signature_request_list = client.get_signature_request_list()
+signature_request_list = client.get_signature_request_list(page=1)
 
 # Print out the name of the signers in every signature request
 for signature_request in signature_request_list:
