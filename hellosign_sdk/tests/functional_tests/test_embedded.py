@@ -23,7 +23,7 @@ class TestEmbedded(BaseTestCase):
             self.fail(e.message)
 
         # Get sign url
-        emb = self.client.get_embeded_object(emb_sig_req.signatures[0].signature_id)
+        emb = self.client.get_embedded_object(emb_sig_req.signatures[0].signature_id)
         self.assertTrue(isinstance(emb, Embedded))
         self.assertTrue(emb.sign_url is not None)
 
@@ -52,7 +52,7 @@ class TestEmbedded(BaseTestCase):
             self.fail(e.message)
 
         # Get sign url
-        emb = self.client.get_embeded_object(emb_sig_req.signatures[0].signature_id)
+        emb = self.client.get_embedded_object(emb_sig_req.signatures[0].signature_id)
         self.assertTrue(isinstance(emb, Embedded))
         self.assertTrue(emb.sign_url is not None)
 
