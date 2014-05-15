@@ -720,7 +720,7 @@ class HSClient(object):
 
     #####  EMBEDDED METHODS  ##############################
 
-    def get_embeded_object(self, signature_id):
+    def get_embedded_object(self, signature_id):
         ''' Retrieves a embedded signing object
 
         Retrieves an embedded object containing a signature url that can be opened in an iFrame.
