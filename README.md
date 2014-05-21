@@ -166,6 +166,69 @@ signature_request = client.send_signature_request_with_template(
                                         custom_fields=custom_fields)
 ````
 
+### Embedded
+
+#### Embedded signing
+
+````python
+signers = [
+    {"name": "Jack", "email_address": "jack@example.com"}, 
+    {"name": "Jill", "email_address": "jill@example.com"}
+]
+signature_request = client.send_signature_request_embedded(
+                                test_mode=True,
+                                client_id="YOUR CLIENT ID",
+                                files=["path/to/NDA.pdf"],
+                                title="NDA with Acme Co.",
+                                subject="The NDA we talked about",
+                                message="Please sign this NDA and then we can discuss more. Let me know if you have any questions.",
+                                signing_redirect_url=None
+                                signers=signers,
+                                cc_email_addresses=None,
+                                form_fields_per_document=None)
+
+# Retrieve the signature url to pass to the embedded iFrame
+for signature in signature_request.signatures:
+    embedded_obj = client.get_embedded_object(signature.signature_id)
+    sign_url = embedded_obj.sign_url
+                                
+````
+
+More information about the asscociated front-end code can be found [here](https://www.hellosign.com/api/embeddedSigningWalkthrough#ClientSide)
+
+#### Embedded requesting
+
+````python
+
+# Create a draft and retrieve the claim url
+draft = client.create_embedded_unclaimed_draft(
+                    test_mode=True,
+                    client_id="YOUR CLIENT ID",
+                    requester_email_address="requester@example.com",
+                    files=["path/to/NDA.pdf"],
+                    draft_type="signature_request",
+                    subject="The NDA we talked about",
+                    message="Please sign this NDA and then we can discuss more. Let me know if you have any questions.",
+                    is_for_embedded_signing=False)
+claim_url = draft.claim_url
+````
+
+More information about the asscociated front-end code can be found [here](https://www.hellosign.com/api/embeddedRequestingWalkthrough#ClientSideRequesting)
+
+Once the user edits the draft in the embedded iFrame and sends the signature request your app callback will receive and `signature_request_sent` event containing a `SignatureRequest` object. If we had used `is_for_embedded_signing=True`, we would want to get the signature ids out of the `SignatureRequest` from that event and fetch the signature urls at this point. In your event callback handler, you will need to do something like this:
+
+````python
+client = HSClient(api_key='your_api_key')
+event_data = json.loads(request.POST.get('json'))
+if event_data['event']['event_type'] == 'signature_request_sent':
+    sig_req = event_data['signature_request']
+    for sig in sig_req['signature_request']['signatures']
+        embedded_obj = client.get_embedded_object(sig['signature_id'])
+        sign_url = embedded_obj.sign_url
+        # Save sign_url somewhere
+````
+
+
 ## Tests
 
 You can run the test suite by executing the following commands after you cloned the repo:
