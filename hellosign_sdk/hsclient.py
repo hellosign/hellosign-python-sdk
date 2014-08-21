@@ -1080,7 +1080,9 @@ class HSClient(object):
             "subject": subject, 
             "message": message,
             "signing_redirect_url": signing_redirect_url,
-            "form_fields_per_document": form_fields_per_document
+            "form_fields_per_document": form_fields_per_document,
+            "use_text_tags": self._boolean(use_text_tags),
+            "hide_text_tags": self._boolean(hide_text_tags)
         }
 
         # remove attributes with none value
