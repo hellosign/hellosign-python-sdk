@@ -16,7 +16,14 @@ class TestEmbedded(BaseTestCase):
 
         # Create request
         try:
-            emb_sig_req = self.client.send_signature_request_embedded(True, self.client_id, files, None, subject, subject, message, None, signers, cc_email_addresses)
+            emb_sig_req = self.client.send_signature_request_embedded(test_mode=True,  
+                                                                        client_id=self.client_id, 
+                                                                        files=files, 
+                                                                        subject=subject, 
+                                                                        title=subject, 
+                                                                        message=message, 
+                                                                        signers=signers, 
+                                                                        cc_email_addresses=cc_email_addresses)
             self.assertTrue(isinstance(emb_sig_req, SignatureRequest))
             self.assertEquals(len(emb_sig_req.signatures), 1)
         except HSException, e:
@@ -45,7 +52,13 @@ class TestEmbedded(BaseTestCase):
 
         # Create request
         try:
-            emb_sig_req = self.client.send_signature_request_embedded_with_template(True, self.client_id, template_id, subject, subject, message, None, signers)
+            emb_sig_req = self.client.send_signature_request_embedded_with_template(test_mode=True, 
+                                                                                    client_id=self.client_id, 
+                                                                                    template_id=template_id, 
+                                                                                    subject=subject, 
+                                                                                    title=subject, 
+                                                                                    message=message, 
+                                                                                    signers=signers)
             self.assertTrue(isinstance(emb_sig_req, SignatureRequest))
             self.assertEquals(len(emb_sig_req.signatures), 1)
         except HSException, e:
@@ -69,7 +82,15 @@ class TestEmbedded(BaseTestCase):
         message = "This is the message"
 
         try:
-            draft = self.client.create_embedded_unclaimed_draft(True, self.client_id, True, requester_email_address, files, None, UnclaimedDraft.UNCLAIMED_DRAFT_REQUEST_SIGNATURE_TYPE, subject, message, signers)
+            draft = self.client.create_embedded_unclaimed_draft(test_mode=True, 
+                                                                client_id=self.client_id, 
+                                                                is_for_embedded_signing=True, 
+                                                                requester_email_address=requester_email_address, 
+                                                                files=files, 
+                                                                draft_type=UnclaimedDraft.UNCLAIMED_DRAFT_REQUEST_SIGNATURE_TYPE, 
+                                                                subject=subject, 
+                                                                message=message, 
+                                                                signers=signers)
             self.assertTrue(isinstance(draft, UnclaimedDraft))
             self.assertTrue(draft.claim_url is not None)
         except HSException, e:
@@ -85,7 +106,15 @@ class TestEmbedded(BaseTestCase):
         message = "This is the message"
 
         try:
-            draft = self.client.create_embedded_unclaimed_draft(True, self.client_id, True, requester_email_address, files, None, UnclaimedDraft.UNCLAIMED_DRAFT_REQUEST_SIGNATURE_TYPE, subject, message, signers)
+            draft = self.client.create_embedded_unclaimed_draft(test_mode=True, 
+                                                                client_id=self.client_id, 
+                                                                is_for_embedded_signing=True, 
+                                                                requester_email_address=requester_email_address, 
+                                                                files=files, 
+                                                                draft_type=UnclaimedDraft.UNCLAIMED_DRAFT_REQUEST_SIGNATURE_TYPE, 
+                                                                subject=subject, 
+                                                                message=message, 
+                                                                signers=signers)
             self.assertTrue(isinstance(draft, UnclaimedDraft))
             self.assertTrue(draft.claim_url is not None)
         except HSException, e:

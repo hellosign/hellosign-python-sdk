@@ -8,13 +8,26 @@ import os
 
 class TestSignatureRequest(BaseTestCase):
 
-    def _send_test_signature_request(self, embedded=False, use_text_tags=False, use_template=False):
+    def _send_test_signature_request(self, embedded=False, use_text_tags=False, use_template=False, use_multi_templates=False):
         ''' Send a test signature request '''
 
+        files = None
+        template_id = None
+        template_ids = None
+
         if use_template:
-            files = None
-            template = self._get_on_template()
+            template = self._get_one_template()
             template_id = template.template_id
+            signers = [{
+                "role_name": "Signer",
+                "name": "Signer Name", 
+                "email_address": "demo@example.com"
+            }]
+            cc_email_addresses = None
+        elif use_multi_templates:
+            t1 = self._get_one_template()
+            t2 = self._get_one_template(exclude=t1)
+            template_ids[t1.template_id, t2.template_id]
             signers = [{
                 "role_name": "Signer",
                 "name": "Signer Name", 
@@ -23,7 +36,6 @@ class TestSignatureRequest(BaseTestCase):
             cc_email_addresses = None
         else:
             files = [os.path.dirname(os.path.realpath(__file__)) + "/docs/nda.pdf"]
-            template_id = None
             signers = [{
                 "name": "Signer Name", 
                 "email_address": "demo@example.com"
@@ -35,19 +47,47 @@ class TestSignatureRequest(BaseTestCase):
         message = 'This is a test message'
 
         if not embedded:
-            if use_template:
-                sig_req = self.client.send_signature_request_with_template(True, template_id, title, subject, message, None, signers, cc_email_addresses)
+            if use_template or use_multi_templates:
+                sig_req = self.client.send_signature_request_with_template(test_mode=True, 
+                                                                            template_id=template_id, 
+                                                                            template_ids=template_ids,
+                                                                            title=title, 
+                                                                            subject=subject, 
+                                                                            message=message, 
+                                                                            signers=signers, 
+                                                                            ccs=cc_email_addresses)
             else:
-                sig_req = self.client.send_signature_request(True, files, None, title, subject, message, None, signers, cc_email_addresses)
+                sig_req = self.client.send_signature_request(test_mode=True, 
+                                                                files=files, 
+                                                                title=title, 
+                                                                subject=subject, 
+                                                                message=message, 
+                                                                signers=signers, 
+                                                                cc_email_addresses=cc_email_addresses)
         elif use_text_tags:
             files[0] = os.path.dirname(os.path.realpath(__file__)) + "/docs/nda-text-tags.pdf"
             signers.append({
                 'name': 'Other Signer Name',
                 'email_address': 'demo+2@example.com'
             })
-            sig_req = self.client.send_signature_request_embedded(True, self.client_id, files, None, title, subject, message, None, signers, cc_email_addresses, use_text_tags=True)
+            sig_req = self.client.send_signature_request_embedded(test_mode=True, 
+                                                                    client_id=self.client_id, 
+                                                                    files=files, 
+                                                                    title=title, 
+                                                                    subject=subject, 
+                                                                    message=message, 
+                                                                    signers=signers, 
+                                                                    cc_email_addresses=cc_email_addresses, 
+                                                                    use_text_tags=True)
         else:
-            sig_req = self.client.send_signature_request_embedded(True, self.client_id, files, None, title, subject, message, None, signers, cc_email_addresses)
+            sig_req = self.client.send_signature_request_embedded(test_mode=True, 
+                                                                    client_id=self.client_id, 
+                                                                    files=files, 
+                                                                    title=title, 
+                                                                    subject=subject, 
+                                                                    message=message, 
+                                                                    signers=signers, 
+                                                                    cc_email_addresses=cc_email_addresses)
 
         self.assertEquals(isinstance(sig_req, SignatureRequest), True)
         self.assertEquals(sig_req.title, title)
@@ -58,12 +98,18 @@ class TestSignatureRequest(BaseTestCase):
 
         return sig_req
 
-    def _get_on_template(self):
+    def _get_one_template(self, exclude=None):
         ''' Get one template from the current account '''
         template_list = self.client.get_template_list()
         if not template_list or len(template_list) == 0:
             self.fail('CREATE A TEMPLATE BEFORE RUNNING THIS TEST')
-        return template_list[0]
+        if exclude is None:
+            return template_list[0]
+        else:
+            for t in template_list:
+                if t.template_id != exclude.template_id:
+                    return t
+            self.fail('CREATE A SECOND TEMPLATE BEFORE RUNNING THIS TEST')
 
     def _get_one_signature_request(self):
         ''' Retrieve one signature request from the current account '''
@@ -142,7 +188,13 @@ class TestSignatureRequest(BaseTestCase):
 
         # Invalid - no files
         try:
-            self.client.send_signature_request("1", None, [], "Test create signature request", "Ky giay no", "Ky vao giay no di, le di", "", signers, cc_email_addresses) # Error
+            self.client.send_signature_request(test_mode=True, 
+                                                files=[], 
+                                                title="Test create signature request", 
+                                                subject="Ky giay no", 
+                                                message="Ky vao giay no di, le di", 
+                                                signers=signers, 
+                                                cc_email_addresses=cc_email_addresses)
             self.fail("HSException was excepted")
         except HSException, e:
             self.assertTrue(e.message.find('One of the following fields is required') >= 0)
