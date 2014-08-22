@@ -217,12 +217,16 @@ class TestSignatureRequest(BaseTestCase):
     def test_signature_request_send_with_template(self):
         ''' Test sending signature requests from templates '''
 
-        # Send signature request
-        sig_req = self._send_test_signature_request(use_template=True)
+        # Send signature request with one template
+        sig_req1 = self._send_test_signature_request(use_template=True)
 
-        # Cancel signature request
+        # Send signature request with two templates
+        sig_req2 = self._send_test_signature_request(use_multi_templates=True)
+
+        # Cancel signature requests
         try:
-            self.client.cancel_signature_request(sig_req.signature_request_id)
+            self.client.cancel_signature_request(sig_req1.signature_request_id)
+            self.client.cancel_signature_request(sig_req2.signature_request_id)
         except HSException, e:
             self.fail(e.message)
 
