@@ -331,7 +331,7 @@ class HSClient(object):
 
         return self._send_signature_request(**params)
 
-    def send_signature_request_with_template(self, test_mode=False, template_id=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, ccs=None, custom_fields=None):
+    def send_signature_request_with_template(self, test_mode=False, template_id=None, template_ids=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, ccs=None, custom_fields=None):
         ''' Creates and sends a new SignatureRequest based off of a Template
 
         Creates and sends a new SignatureRequest based off of the Template
@@ -341,7 +341,11 @@ class HSClient(object):
             test_mode (bool, optional): Whether this is a test, the signature
                 request will not be legally binding if set to True. Defaults to False.
             
-            template_id (str): The id of the Template  to use when creating the SignatureRequest.
+            template_id (str): The id of the Template to use when creating the SignatureRequest.
+                               Mutually exclusive with template_ids.
+
+            template_ids (list): The ids of the Templates to use when creating the SignatureRequest. 
+                                 Mutually exclusive with template_id.
             
             title (str, optional): The title you want to assign to the SignatureRequest
             
@@ -372,11 +376,12 @@ class HSClient(object):
 
         '''
 
-        self._check_required_fields({ "signers": signers, "template_id": template_id })
+        self._check_required_fields({ "signers": signers }, [{ "template_id": template_id, "template_ids": template_ids }])
 
         params = {
-            'test_mode': self._boolean(test_mode), 
+            'test_mode': self._boolean(test_mode),
             'template_id': template_id,
+            'template_ids': template_ids,
             'title': title, 
             'subject': subject, 
             'message': message,
@@ -492,7 +497,7 @@ class HSClient(object):
 
         return self._send_signature_request(**params)
 
-    def send_signature_request_embedded_with_template(self, test_mode=False, client_id=None, template_id=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, ccs=None, custom_fields=None):
+    def send_signature_request_embedded_with_template(self, test_mode=False, client_id=None, template_id=None, template_ids=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, ccs=None, custom_fields=None):
         ''' Creates and sends a new SignatureRequest based off of a Template
 
         Creates a new SignatureRequest based on the given Template to be
@@ -508,6 +513,10 @@ class HSClient(object):
                 Visit the embedded page to learn more about this parameter (https://www.hellosign.com/api/embedded)
 
             template_id (str): The id of the Template to use when creating the SignatureRequest.
+                               Mutually exclusive with template_ids.
+
+            template_ids (list): The ids of the Templates to use when creating the SignatureRequest. 
+                                 Mutually exclusive with template_id.
 
             title (str, optional): The title you want to assign to the SignatureRequest
 
@@ -538,16 +547,13 @@ class HSClient(object):
 
         '''
 
-        self._check_required_fields({
-            "signers": signers, 
-            "template_id": template_id, 
-            "client_id": client_id
-        })
+        self._check_required_fields({ "signers": signers, "client_id": client_id }, [{ "template_id": template_id, "template_ids": template_ids }])
 
         params = {
             'test_mode': self._boolean(test_mode), 
             'client_id': client_id,
             'template_id': template_id, 
+            'template_ids': template_ids,
             'title': title, 
             'subject': subject,
             'message': message, 
@@ -1099,7 +1105,7 @@ class HSClient(object):
 
         return SignatureRequest(response["signature_request"])
 
-    def _send_signature_request_with_template(self, test_mode=False, client_id=None, template_id=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, ccs=None, custom_fields=None):
+    def _send_signature_request_with_template(self, test_mode=False, client_id=None, template_id=None, template_ids=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, ccs=None, custom_fields=None):
         ''' To share the same logic between send_signature_request_with_template 
             and send_signature_request_embedded_with_template
 
@@ -1111,6 +1117,10 @@ class HSClient(object):
                 Visit the embedded page to learn more about this parameter (https://www.hellosign.com/api/embedded)
 
             template_id (str): The id of the Template to use when creating the SignatureRequest.
+                               Mutually exclusive with template_ids.
+
+            template_ids (list): The ids of the Templates to use when creating the SignatureRequest. 
+                                 Mutually exclusive with template_id.
 
             title (str, optional): The title you want to assign to the SignatureRequest
 
@@ -1172,6 +1182,7 @@ class HSClient(object):
             "test_mode": self._boolean(test_mode), 
             "client_id": client_id,
             "template_id": template_id, 
+            "template_ids": template_ids,
             "title": title,
             "subject": subject, 
             "message": message,
@@ -1179,7 +1190,7 @@ class HSClient(object):
         }
 
         # remove attributes with empty value
-        payload = dict((key, value) for key, value in payload.iteritems() if value)
+        payload = dict((key, value) for (key, value) in payload.iteritems() if value)
 
         url = self.SIGNATURE_REQUEST_CREATE_WITH_TEMPLATE_URL
         if client_id:
