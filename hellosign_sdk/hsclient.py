@@ -448,7 +448,7 @@ class HSClient(object):
             client_id (str): Client id of the app you're using to create this
                 embedded signature request. Visit the embedded page to learn
                 more about this parameter
-                (https://www.hellosign.com/api/embedded)
+                (https://www.hellosign.com/api/embeddedSigningWalkthrough)
 
             files (list of str): the uploaded file(s) to send for signature
 
@@ -510,7 +510,7 @@ class HSClient(object):
                 request will not be legally binding if set to True. Defaults to False.
 
             client_id (str): Client id of the app you're using to create this embedded signature request. 
-                Visit the embedded page to learn more about this parameter (https://www.hellosign.com/api/embedded)
+                Visit the embedded page to learn more about this parameter (https://www.hellosign.com/api/embeddedSigningWalkthrough)
 
             template_id (str): The id of the Template to use when creating the SignatureRequest.
                                Mutually exclusive with template_ids.
@@ -1008,7 +1008,7 @@ class HSClient(object):
                 request will not be legally binding if set to True. Defaults to False.
 
             client_id (str): Client id of the app you're using to create this embedded signature request. 
-                Visit the embedded page to learn more about this parameter (https://www.hellosign.com/api/embedded)
+                Visit the embedded page to learn more about this parameter (https://www.hellosign.com/api/embeddedSigningWalkthrough)
 
             files (list of str): the uploaded file(s) to send for signature
 
@@ -1114,7 +1114,7 @@ class HSClient(object):
                 request will not be legally binding if set to True. Defaults to False.
 
             client_id (str): Client id of the app you're using to create this embedded signature request. 
-                Visit the embedded page to learn more about this parameter (https://www.hellosign.com/api/embedded)
+                Visit the embedded page to learn more about this parameter (https://www.hellosign.com/api/embeddedSigningWalkthrough)
 
             template_id (str): The id of the Template to use when creating the SignatureRequest.
                                Mutually exclusive with template_ids.
