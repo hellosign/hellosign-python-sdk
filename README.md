@@ -222,7 +222,7 @@ client = HSClient(api_key='your_api_key')
 event_data = json.loads(request.POST.get('json'))
 if event_data['event']['event_type'] == 'signature_request_sent':
     sig_req = event_data['signature_request']
-    for sig in sig_req['signature_request']['signatures']
+    for sig in sig_req['signature_request']['signatures']:
         embedded_obj = client.get_embedded_object(sig['signature_id'])
         sign_url = embedded_obj.sign_url
         # Save sign_url somewhere
