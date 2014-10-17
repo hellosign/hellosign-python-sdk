@@ -13,6 +13,10 @@ class TestUnclaimedDraft(BaseTestCase):
         signers = [{"name": "Signer Name", "email_address": "signer@example.com"}]
         cc_email_addresses = ["receiver@example.com"]
         draft_type = UnclaimedDraft.UNCLAIMED_DRAFT_REQUEST_SIGNATURE_TYPE
+        metadata = {
+            'account_id': '123',
+            'company_name': 'Acme Co.'
+        }
 
         try:
             self.client.create_unclaimed_draft(
@@ -36,7 +40,8 @@ class TestUnclaimedDraft(BaseTestCase):
                 subject="Test unclaimed draft", 
                 message="Please do not reply to the messages", 
                 signers=signers, 
-                cc_email_addresses=cc_email_addresses)
+                cc_email_addresses=cc_email_addresses,
+                metadata=metadata)
 
         self.assertEquals(isinstance(result, UnclaimedDraft), True)
 
@@ -47,6 +52,10 @@ class TestUnclaimedDraft(BaseTestCase):
         signers = [{"name": "Signer Name", "email_address": "signer@example.com"}]
         cc_email_addresses = ["receiver@example.com"]
         draft_type = UnclaimedDraft.UNCLAIMED_DRAFT_REQUEST_SIGNATURE_TYPE
+        metadata = {
+            'account_id': '123',
+            'company_name': 'Acme Co.'
+        }
 
         try:
             # Missing required parameter
@@ -79,5 +88,6 @@ class TestUnclaimedDraft(BaseTestCase):
                 subject="Test unclaimed draft", 
                 message="Please do not reply to the messages", 
                 signers=signers, 
-                cc_email_addresses=cc_email_addresses)
+                cc_email_addresses=cc_email_addresses,
+                metadata=metadata)
         self.assertEquals(isinstance(result, UnclaimedDraft), True)

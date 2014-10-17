@@ -757,7 +757,7 @@ class HSClient(object):
 
     #####  UNCLAIMED DRAFT METHODS  #######################
 
-    def create_unclaimed_draft(self, test_mode=False, files=None, file_urls=None, draft_type=None, subject=None, message=None, signers=None, cc_email_addresses=None, signing_redirect_url=None, form_fields_per_document=None):
+    def create_unclaimed_draft(self, test_mode=False, files=None, file_urls=None, draft_type=None, subject=None, message=None, signers=None, cc_email_addresses=None, signing_redirect_url=None, form_fields_per_document=None, metadata=None):
         ''' Creates a new Draft that can be claimed using the claim URL
 
         Creates a new Draft that can be claimed using the claim URL. The first
@@ -798,6 +798,8 @@ class HSClient(object):
             form_fields_per_document (str, optional): The fields that should appear on the document, expressed as a serialized JSON data structure which is
                 a list of lists of the form fields. Please refer to the API reference of HelloSign for more details (https://www.hellosign.com/api/reference#SignatureRequest)
 
+            metadata (dict, optional): Metadata to associate with the draft
+
         Returns:
             An UnclaimedDraft object
 
@@ -815,12 +817,13 @@ class HSClient(object):
             'signing_redirect_url': signing_redirect_url, 
             'signers': signers,
             'cc_email_addresses': cc_email_addresses,
-            'form_fields_per_document': form_fields_per_document
+            'form_fields_per_document': form_fields_per_document,
+            'metadata': metadata
         }
 
         return self._create_unclaimed_draft(**params)
 
-    def create_embedded_unclaimed_draft(self, test_mode=False, client_id=None, is_for_embedded_signing=False, requester_email_address=None, files=None, file_urls=None, draft_type=None, subject=None, message=None, signers=None, cc_email_addresses=None, signing_redirect_url=None, requesting_redirect_url=None, form_fields_per_document=None):
+    def create_embedded_unclaimed_draft(self, test_mode=False, client_id=None, is_for_embedded_signing=False, requester_email_address=None, files=None, file_urls=None, draft_type=None, subject=None, message=None, signers=None, cc_email_addresses=None, signing_redirect_url=None, requesting_redirect_url=None, form_fields_per_document=None, metadata=None):
         ''' Creates a new Draft to be used for embedded requesting
 
         Args:
@@ -863,6 +866,8 @@ class HSClient(object):
             form_fields_per_document (str, optional): The fields that should appear on the document, expressed as a serialized JSON data structure which is
                 a list of lists of the form fields. Please refer to the API reference of HelloSign for more details (https://www.hellosign.com/api/reference#SignatureRequest)
 
+            metadata (dict, optional): Metadata to associate with the draft
+
         Returns:
             An UnclaimedDraft object
 
@@ -891,7 +896,8 @@ class HSClient(object):
             'requesting_redirect_url': requesting_redirect_url, 
             'signers': signers,
             'cc_email_addresses': cc_email_addresses,
-            'form_fields_per_document': form_fields_per_document
+            'form_fields_per_document': form_fields_per_document,
+            'metadata': metadata
         }
 
         return self._create_unclaimed_draft(**params)
@@ -1235,7 +1241,7 @@ class HSClient(object):
 
         return SignatureRequest(response["signature_request"])
 
-    def _create_unclaimed_draft(self, test_mode=False, client_id=None, is_for_embedded_signing=False, requester_email_address=None, files=None, file_urls=None, draft_type=None, subject=None, message=None, signers=None, cc_email_addresses=None, signing_redirect_url=None, requesting_redirect_url=None, form_fields_per_document=None):
+    def _create_unclaimed_draft(self, test_mode=False, client_id=None, is_for_embedded_signing=False, requester_email_address=None, files=None, file_urls=None, draft_type=None, subject=None, message=None, signers=None, cc_email_addresses=None, signing_redirect_url=None, requesting_redirect_url=None, form_fields_per_document=None, metadata=None):
         ''' Creates a new Draft that can be claimed using the claim URL
 
         Args:
@@ -1281,6 +1287,8 @@ class HSClient(object):
                 reference of HelloSign for more details
                 (https://www.hellosign.com/api/reference#SignatureRequest)
 
+            metadata (dict, optional): Metadata to associate with the draft
+
         Returns:
             An UnclaimedDraft object
 
@@ -1316,7 +1324,13 @@ class HSClient(object):
         if cc_email_addresses:
             for (idx, cc_email_address) in enumerate(cc_email_addresses):
                 cc_email_addresses_payload["cc_email_addresses[%s]" % idx] = cc_email_address
-        
+
+        # Metadata
+        metadata_payload = {}
+        if metadata:
+            for (k, v) in metadata.items():
+                metadata_payload["metadata[%s]" % k] = v
+
         payload = {
             "test_mode": self._boolean(test_mode), 
             "type": draft_type,
@@ -1340,7 +1354,7 @@ class HSClient(object):
         # remove attributes with none value
         payload = dict((key, value) for key, value in payload.iteritems() if value)
 
-        data = dict(payload.items() + signers_payload.items() + cc_email_addresses_payload.items() + file_urls_payload.items())
+        data = dict(payload.items() + signers_payload.items() + cc_email_addresses_payload.items() + file_urls_payload.items() + metadata_payload.items())
 
         request = self._get_request()
         response = request.post(url, data=data, files=files_payload)
