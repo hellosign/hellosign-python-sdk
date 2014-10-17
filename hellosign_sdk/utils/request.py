@@ -1,5 +1,6 @@
 import os
 import requests
+import json
 from exception import *
 
 
@@ -34,6 +35,11 @@ class HSRequest(object):
         self.debug = (self.env != 'production')
         self.verify_ssl = (not self.debug)
 
+    def _get_json_response(self, resp):
+        ''' Parse a JSON response '''
+        if resp is not None and resp.text is not None:
+            return json.loads(resp.text)
+
     def get(self, url, headers=None, parameters=None, get_json=True):
         ''' Send a GET request with custome headers and parameters
 
@@ -65,7 +71,7 @@ class HSRequest(object):
         self.http_status_code = response.status_code
         self._check_error(response)
         if get_json is True:
-            return response.json()
+            return self._get_json_response(response)
         return response
 
     def get_file(self, url, filename, headers=None):
@@ -130,13 +136,12 @@ class HSRequest(object):
         self.http_status_code = response.status_code
         self._check_error(response)
         if get_json is True:
-            return response.json()
+            return self._get_json_response(response)
         return response
 
     # TODO: use a expected key in returned json, if the returned key does not match, return false...
     def _check_error(self, response):
-        ''' Check for HTTP error code from the response, raise exception if
-        there's any
+        ''' Check for HTTP error code from the response, raise exception if there's any
 
         Args:
             response (object): Object returned by requests' `get` and `post`
@@ -152,17 +157,15 @@ class HSRequest(object):
 
         # If status code is 4xx or 5xx, that should be an error
         if response.status_code >= 400:
+            j = self._get_json_response(response)
+            err_cls = self._check_http_error_code(response.status_code)
             # I intended to return False here but raising a meaningful exception
             # may make senses more.
             try:
-                raise self._check_http_error_code(response.status_code)(
-                    str(response.status_code) + " error: " +
-                    response.json()["error"]["error_msg"], response.status_code)
+                raise err_cls("%s error: %s" % (response.status_code, j["error"]["error_msg"]), response.status_code)
             # This is to catch error when we post get oath data
             except TypeError:
-                raise self._check_http_error_code(response.status_code)(
-                    str(response.status_code) + " error: " +
-                    response.json()["error_description"], response.status_code)
+                raise err_cls("%s error: %s" % (response.status_code, j["error_description"]), response.status_code)
         # Return True if everything looks OK
         return True
 
