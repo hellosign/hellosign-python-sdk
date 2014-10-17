@@ -238,6 +238,7 @@ class TestSignatureRequest(BaseTestCase):
         # Cancel signature requests
         try:
             self.client.cancel_signature_request(sig_req1.signature_request_id)
+            sleep(2)
             self.client.cancel_signature_request(sig_req2.signature_request_id)
         except HSException, e:
             self.fail(e.message)
