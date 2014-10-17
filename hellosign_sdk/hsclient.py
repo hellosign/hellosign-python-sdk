@@ -268,7 +268,7 @@ class HSClient(object):
             url += '?file_type=%s' % file_type
         return request.get_file(url, filename)
 
-    def send_signature_request(self, test_mode=False, files=None, file_urls=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, cc_email_addresses=None, form_fields_per_document=None, use_text_tags=False, hide_text_tags=False):
+    def send_signature_request(self, test_mode=False, files=None, file_urls=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, cc_email_addresses=None, form_fields_per_document=None, use_text_tags=False, hide_text_tags=False, metadata=None):
         ''' Creates and sends a new SignatureRequest with the submitted documents
 
         Creates and sends a new SignatureRequest with the submitted documents.
@@ -307,6 +307,8 @@ class HSClient(object):
 
             hide_text_tags (bool, optional): Hide text tag areas
 
+            metadata (dict, optional): Metadata to associate with the signature request
+
         Returns:
             A SignatureRequest object
 
@@ -326,12 +328,13 @@ class HSClient(object):
             'cc_email_addresses': cc_email_addresses,
             'form_fields_per_document': form_fields_per_document,
             'use_text_tags': self._boolean(use_text_tags),
-            'hide_text_tags': self._boolean(hide_text_tags)
+            'hide_text_tags': self._boolean(hide_text_tags),
+            'metadata': metadata
         }
 
         return self._send_signature_request(**params)
 
-    def send_signature_request_with_template(self, test_mode=False, template_id=None, template_ids=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, ccs=None, custom_fields=None):
+    def send_signature_request_with_template(self, test_mode=False, template_id=None, template_ids=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, ccs=None, custom_fields=None, metadata=None):
         ''' Creates and sends a new SignatureRequest based off of a Template
 
         Creates and sends a new SignatureRequest based off of the Template
@@ -371,6 +374,8 @@ class HSClient(object):
             custom_fields (list of dict, optional): A list of custom fields. Required when a CustomField exists in the Template. An item
                 of the list should look like this: `{'name: value'}`
 
+            metadata (dict, optional): Metadata to associate with the signature request
+
         Returns:
             A SignatureRequest object
 
@@ -388,7 +393,8 @@ class HSClient(object):
             'signing_redirect_url': signing_redirect_url, 
             'signers': signers,
             'ccs': ccs, 
-            'custom_fields': custom_fields
+            'custom_fields': custom_fields,
+            'metadata': metadata
         }
 
         return self._send_signature_request_with_template(**params)
@@ -430,7 +436,7 @@ class HSClient(object):
         request = self._get_request()
         request.post(url=self.SIGNATURE_REQUEST_CANCEL_URL + signature_request_id, get_json=False)
 
-    def send_signature_request_embedded(self, test_mode=False, client_id=None, files=None, file_urls=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, cc_email_addresses=None, form_fields_per_document=None):
+    def send_signature_request_embedded(self, test_mode=False, client_id=None, files=None, file_urls=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, cc_email_addresses=None, form_fields_per_document=None, metadata=None):
         ''' Creates and sends a new SignatureRequest with the submitted documents
 
         Creates a new SignatureRequest with the submitted documents to be signed
@@ -474,6 +480,8 @@ class HSClient(object):
             form_fields_per_document (str): The fields that should appear on the document, expressed as a serialized JSON data structure which is
                 a list of lists of the form fields. Please refer to the API reference of HelloSign for more details (https://www.hellosign.com/api/reference#SignatureRequest)
 
+            metadata (dict, optional): Metadata to associate with the signature request
+
         Returns:
             A SignatureRequest object
 
@@ -492,12 +500,13 @@ class HSClient(object):
             'signing_redirect_url': signing_redirect_url, 
             'signers': signers,
             'cc_email_addresses': cc_email_addresses,
-            'form_fields_per_document': form_fields_per_document
+            'form_fields_per_document': form_fields_per_document,
+            'metadata': metadata
         }
 
         return self._send_signature_request(**params)
 
-    def send_signature_request_embedded_with_template(self, test_mode=False, client_id=None, template_id=None, template_ids=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, ccs=None, custom_fields=None):
+    def send_signature_request_embedded_with_template(self, test_mode=False, client_id=None, template_id=None, template_ids=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, ccs=None, custom_fields=None, metadata=None):
         ''' Creates and sends a new SignatureRequest based off of a Template
 
         Creates a new SignatureRequest based on the given Template to be
@@ -542,6 +551,8 @@ class HSClient(object):
             custom_fields (list of dict, optional): A list of custom fields. Required when a CustomField exists in the Template. An item
                 of the list should look like this: `{'name: value'}`
 
+            metadata (dict, optional): Metadata to associate with the signature request
+
         Returns:
             A SignatureRequest object of the newly created Signature Request
 
@@ -560,7 +571,8 @@ class HSClient(object):
             'signing_redirect_url': signing_redirect_url,
             'signers': signers, 
             'ccs': ccs, 
-            'custom_fields': custom_fields
+            'custom_fields': custom_fields,
+            'metadata': metadata
         }
 
         return self._send_signature_request_with_template(**params)
@@ -999,7 +1011,7 @@ class HSClient(object):
                 if not any(field.values()):
                     raise HSException("One of the following fields is required: %s" % ", ".join(field.keys()))
 
-    def _send_signature_request(self, test_mode=False, client_id=None, files=None, file_urls=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, cc_email_addresses=None, form_fields_per_document=None, use_text_tags=False, hide_text_tags=False):
+    def _send_signature_request(self, test_mode=False, client_id=None, files=None, file_urls=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, cc_email_addresses=None, form_fields_per_document=None, use_text_tags=False, hide_text_tags=False, metadata=None):
         ''' To share the same logic between send_signature_request &
             send_signature_request_embedded functions
 
@@ -1042,6 +1054,8 @@ class HSClient(object):
 
             hide_text_tags (bool, optional): Hide text tag areas
 
+            metadata (dict, optional): Metadata to associate with the signature request
+
         Returns:
             A SignatureRequest object
 
@@ -1076,8 +1090,13 @@ class HSClient(object):
         cc_email_addresses_payload = {}
         if cc_email_addresses:
             for idx, cc_email_address in enumerate(cc_email_addresses):
-                cc_email_addresses_payload[
-                    "cc_email_addresses[" + str(idx) + "]"] = cc_email_address
+                cc_email_addresses_payload["cc_email_addresses[" + str(idx) + "]"] = cc_email_address
+
+        # Metadata
+        metadata_payload = {}
+        if metadata:
+            for (k, v) in metadata.items():
+                metadata_payload["metadata[%s]" % k] = v
         
         payload = {
             "test_mode": self._boolean(test_mode), 
@@ -1092,20 +1111,20 @@ class HSClient(object):
         }
 
         # remove attributes with none value
-        payload = dict((key, value) for key, value in payload.iteritems() if value)
+        payload = dict((key, value) for (key, value) in payload.iteritems() if value)
 
         url = self.SIGNATURE_REQUEST_CREATE_URL
         if client_id:
             url = self.SIGNATURE_REQUEST_CREATE_EMBEDDED_URL
         
-        data = dict(payload.items() + signers_payload.items() + cc_email_addresses_payload.items() + file_urls_payload.items())
+        data = dict(payload.items() + signers_payload.items() + cc_email_addresses_payload.items() + file_urls_payload.items() + metadata_payload.items())
 
         request = self._get_request()
         response = request.post(url, data=data, files=files_payload)
 
         return SignatureRequest(response["signature_request"])
 
-    def _send_signature_request_with_template(self, test_mode=False, client_id=None, template_id=None, template_ids=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, ccs=None, custom_fields=None):
+    def _send_signature_request_with_template(self, test_mode=False, client_id=None, template_id=None, template_ids=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, ccs=None, custom_fields=None, metadata=None):
         ''' To share the same logic between send_signature_request_with_template 
             and send_signature_request_embedded_with_template
 
@@ -1147,6 +1166,8 @@ class HSClient(object):
             custom_fields (list of dict, optional): A list of custom fields. Required when a CustomField exists in the Template. An item
                 of the list should look like this: `{'name: value'}`
 
+            metadata (dict, optional): Metadata to associate with the signature request
+
         Returns:
             A SignatureRequest object
 
@@ -1178,11 +1199,22 @@ class HSClient(object):
                 for key, value in custom_field.iteritems():
                     custom_fields_payload["custom_fields[" + key + "]"] = value
 
+        # Metadata
+        metadata_payload = {}
+        if metadata:
+            for (k, v) in metadata.items():
+                metadata_payload["metadata[%s]" % k] = v
+
+        # Template ids
+        template_ids_payload = {}
+        if template_ids:
+            for i in range(len(template_ids)):
+                template_ids_payload["template_ids[%s]" % i] = template_ids[i]
+
         payload = {
             "test_mode": self._boolean(test_mode), 
             "client_id": client_id,
             "template_id": template_id, 
-            "template_ids": template_ids,
             "title": title,
             "subject": subject, 
             "message": message,
@@ -1196,7 +1228,7 @@ class HSClient(object):
         if client_id:
             url = self.SIGNATURE_REQUEST_CREATE_EMBEDDED_WITH_TEMPLATE_URL
 
-        data = dict(payload.items() + signers_payload.items() + ccs_payload.items() + custom_fields_payload.items())
+        data = dict(payload.items() + signers_payload.items() + ccs_payload.items() + custom_fields_payload.items() + metadata_payload.items() + template_ids_payload.items())
 
         request = self._get_request()
         response = request.post(url, data=data)

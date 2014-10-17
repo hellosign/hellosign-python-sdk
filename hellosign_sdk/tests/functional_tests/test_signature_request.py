@@ -27,7 +27,7 @@ class TestSignatureRequest(BaseTestCase):
         elif use_multi_templates:
             t1 = self._get_one_template()
             t2 = self._get_one_template(exclude=t1)
-            template_ids[t1.template_id, t2.template_id]
+            template_ids = [t1.template_id, t2.template_id]
             signers = [{
                 "role_name": "Signer",
                 "name": "Signer Name", 
@@ -45,6 +45,10 @@ class TestSignatureRequest(BaseTestCase):
         title = 'A test signature request'
         subject = 'Test %srequest%s' % ('embedded ' if embedded else '', ' with template' if use_template else '')
         message = 'This is a test message'
+        metadata = {
+            'account_id': '123',
+            'company_name': 'Acme Co.'
+        }
 
         if not embedded:
             if use_template or use_multi_templates:
@@ -55,7 +59,8 @@ class TestSignatureRequest(BaseTestCase):
                                                                             subject=subject, 
                                                                             message=message, 
                                                                             signers=signers, 
-                                                                            ccs=cc_email_addresses)
+                                                                            ccs=cc_email_addresses,
+                                                                            metadata=metadata)
             else:
                 sig_req = self.client.send_signature_request(test_mode=True, 
                                                                 files=files, 
@@ -63,7 +68,8 @@ class TestSignatureRequest(BaseTestCase):
                                                                 subject=subject, 
                                                                 message=message, 
                                                                 signers=signers, 
-                                                                cc_email_addresses=cc_email_addresses)
+                                                                cc_email_addresses=cc_email_addresses,
+                                                                metadata=metadata)
         elif use_text_tags:
             files[0] = os.path.dirname(os.path.realpath(__file__)) + "/docs/nda-text-tags.pdf"
             signers.append({
@@ -78,7 +84,8 @@ class TestSignatureRequest(BaseTestCase):
                                                                     message=message, 
                                                                     signers=signers, 
                                                                     cc_email_addresses=cc_email_addresses, 
-                                                                    use_text_tags=True)
+                                                                    use_text_tags=True,
+                                                                    metadata=metadata)
         else:
             sig_req = self.client.send_signature_request_embedded(test_mode=True, 
                                                                     client_id=self.client_id, 
@@ -87,14 +94,19 @@ class TestSignatureRequest(BaseTestCase):
                                                                     subject=subject, 
                                                                     message=message, 
                                                                     signers=signers, 
-                                                                    cc_email_addresses=cc_email_addresses)
+                                                                    cc_email_addresses=cc_email_addresses,
+                                                                    metadata=metadata)
 
         self.assertEquals(isinstance(sig_req, SignatureRequest), True)
         self.assertEquals(sig_req.title, title)
         self.assertEquals(sig_req.subject, subject)
         self.assertEquals(sig_req.message, message)
         self.assertEquals(len(sig_req.signatures), 1)
-        self.assertEquals(len(sig_req.cc_email_addresses), 0 if use_template else 2)
+        self.assertEquals(len(sig_req.cc_email_addresses), 0 if use_template or use_multi_templates else 2)
+        self.assertEquals(sig_req.metadata is not None, True)
+        self.assertEquals(len(sig_req.metadata), len(metadata))
+        for (k, v) in metadata.items():
+            self.assertEquals(sig_req.metadata[k], v)
 
         return sig_req
 
