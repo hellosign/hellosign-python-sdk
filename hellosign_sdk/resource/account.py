@@ -1,4 +1,4 @@
-from resource import Resource
+from .resource import Resource
 from hellosign_sdk.utils import HSAccessTokenAuth
 
 class Account(Resource):

@@ -1,7 +1,7 @@
 import os
 import requests
 import json
-from exception import *
+from .exception import *
 
 
 class HSRequest(object):
@@ -55,7 +55,7 @@ class HSRequest(object):
         '''
 
         if self.debug:
-            print "GET: %s, headers=%s" % (url, headers)
+            print("GET: %s, headers=%s" % (url, headers))
 
         get_headers = self.headers
         get_parameters = self.parameters
@@ -92,7 +92,7 @@ class HSRequest(object):
         '''
 
         if self.debug:
-            print "GET FILE: %s, headers=%s" % (url, headers)
+            print("GET FILE: %s, headers=%s" % (url, headers))
 
         get_headers = self.headers
         if headers is not None:
@@ -127,7 +127,7 @@ class HSRequest(object):
         '''
 
         if self.debug:
-            print "POST: %s, headers=%s" % (url, headers)
+            print("POST: %s, headers=%s" % (url, headers))
 
         post_headers = self.headers
         if headers is not None:

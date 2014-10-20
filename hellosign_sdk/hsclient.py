@@ -88,11 +88,11 @@ class HSClient(object):
         elif self.env == "dev":
             self.API_URL = API_DEV_URL + '/' + self.API_VERSION
             self.OAUTH_TOKEN_URL = WEB_DEV_URL + '/oauth/token'
-            print "WARNING: Using dev api endpoint %s" % self.API_URL
+            print("WARNING: Using dev api endpoint %s" % self.API_URL)
         elif self.env == "staging":
             self.API_URL = API_STAGING_URL + '/' + self.API_VERSION
             self.OAUTH_TOKEN_URL = WEB_STAGING_URL + '/oauth/token'
-            print "WARNING: Using staging api endpoint %s" % self.API_URL
+            print("WARNING: Using staging api endpoint %s" % self.API_URL)
 
         self.ACCOUNT_CREATE_URL = self.API_URL + '/account/create'
         self.ACCOUNT_INFO_URL = self.API_URL + '/account'
