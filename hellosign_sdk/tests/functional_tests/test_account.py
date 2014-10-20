@@ -32,14 +32,14 @@ class TestAccount(BaseTestCase):
         try:
             result = self.client.create_account(email, pwd)
             self.assertEquals(isinstance(result, Account), True)
-        except HSException, e:
+        except HSException as e:
             self.fail(e.message)
 
         # Already exists
         try:
             self.client.create_account(email, pwd)
             self.fail()
-        except BadRequest, e:
+        except BadRequest as e:
             self.assertTrue(e.message.find('account already exists') > 0)
 
         # Created via app
@@ -51,7 +51,7 @@ class TestAccount(BaseTestCase):
             self.assertTrue(hasattr(acct, 'oauth'))
             self.assertTrue(acct.oauth is not None)
             self.assertTrue(isinstance(acct.oauth, HSAccessTokenAuth))
-        except HSException, e:
+        except HSException as e:
             self.fail(e.message)
 
 

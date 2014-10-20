@@ -21,13 +21,13 @@ class TestTeam(BaseTestCase):
             if acct.role_code.lower() != 'a':
                 try:
                     self.client.remove_team_member(email_address=acct.email_address)
-                except HSException, e:
+                except HSException as e:
                     self.fail('Could not remove team member: %s' % e.message)
 
         # Destroy team
         try:
             self.client.destroy_team()
-        except HSException, e:
+        except HSException as e:
             self.fail(e.message)
 
     def test_add_team_member(self):
@@ -71,7 +71,7 @@ class TestTeam(BaseTestCase):
         if email_address:
             try:
                 self.client.remove_team_member(email_address=email_address)
-            except HSException, e:
+            except HSException as e:
                 self.fail(e.message)
         else:
             pass # Nothing to do, already tested as part of test_team_destroy
@@ -86,7 +86,7 @@ class TestTeam(BaseTestCase):
             try:
                 self.client.create_team(team_name)
                 self.fail('BadRequest was expected')
-            except BadRequest, e:
+            except BadRequest as e:
                 self.assertTrue(e.message.lower().find('already have a team') > 0, "'%s' does not contain 'already have a team" % e.message)
                 self._destroy_team()
         except NotFound:
@@ -96,7 +96,7 @@ class TestTeam(BaseTestCase):
             result = self.client.create_team(team_name)
             self.assertTrue(isinstance(result, Team))
             self.assertEquals(result.name, team_name)
-        except HSException, e:
+        except HSException as e:
             self.fail('Could not destroy team: %s' % e.message)
 
     def test_get_team(self):
@@ -111,7 +111,7 @@ class TestTeam(BaseTestCase):
             result = self.client.update_team_name(new_name)
             self.assertTrue(isinstance(result, Team))
             self.assertEquals(result.name, new_name)
-        except HSException, e:
+        except HSException as e:
             self.fail(e.message)
 
     def test_team_destroy(self):

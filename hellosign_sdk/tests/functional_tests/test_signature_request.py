@@ -163,7 +163,7 @@ class TestSignatureRequest(BaseTestCase):
         # Sent reminder
         try:
             self.client.remind_signature_request(sig_req.signature_request_id, signer)
-        except Forbidden, e:
+        except Forbidden as e:
             self.fail(e.message)
 
     def test_signature_request_file(self):
@@ -208,13 +208,13 @@ class TestSignatureRequest(BaseTestCase):
                                                 signers=signers, 
                                                 cc_email_addresses=cc_email_addresses)
             self.fail("HSException was excepted")
-        except HSException, e:
+        except HSException as e:
             self.assertTrue(e.message.find('One of the following fields is required') >= 0)
 
         # Cancel signature request
         try:
             self.client.cancel_signature_request(sig_req.signature_request_id)
-        except HSException, e:
+        except HSException as e:
             self.fail(e.message)
 
         # Try with text tags
@@ -223,7 +223,7 @@ class TestSignatureRequest(BaseTestCase):
         # Cancel signature request
         try:
             self.client.cancel_signature_request(sig_req2.signature_request_id)
-        except HSException, e:
+        except HSException as e:
             self.fail(e.message)
 
     def test_signature_request_send_with_template(self):
@@ -240,7 +240,7 @@ class TestSignatureRequest(BaseTestCase):
             self.client.cancel_signature_request(sig_req1.signature_request_id)
             sleep(2)
             self.client.cancel_signature_request(sig_req2.signature_request_id)
-        except HSException, e:
+        except HSException as e:
             self.fail(e.message)
 
     def test_embedded_signature_request_send(self):
@@ -248,7 +248,7 @@ class TestSignatureRequest(BaseTestCase):
         sig_req = self._send_test_signature_request(embedded=True)
         try:
             self.client.cancel_signature_request(sig_req.signature_request_id)
-        except HSException, e:
+        except HSException as e:
             self.fail(e.message)
 
     def test_signature_request_helpers(self):
