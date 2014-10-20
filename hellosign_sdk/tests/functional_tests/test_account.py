@@ -100,4 +100,4 @@ class TestAccount(BaseTestCase):
             self.assertTrue(self.client.verify_account(email_address=acct.email_address))
             self.assertFalse(self.client.verify_account(email_address='not-an-account@example.com'))
         else:
-            print "WARNING: Skipping test_account_verify because it requires a paid API plan"
+            print("WARNING: Skipping test_account_verify because it requires a paid API plan")
