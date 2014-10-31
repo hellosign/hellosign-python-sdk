@@ -1,4 +1,4 @@
-from resource import Resource
+from .resource import Resource
 
 
 class Signature(Resource):

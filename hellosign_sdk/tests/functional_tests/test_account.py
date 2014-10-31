@@ -32,14 +32,14 @@ class TestAccount(BaseTestCase):
         try:
             result = self.client.create_account(email, pwd)
             self.assertEquals(isinstance(result, Account), True)
-        except HSException, e:
+        except HSException as e:
             self.fail(e.message)
 
         # Already exists
         try:
             self.client.create_account(email, pwd)
             self.fail()
-        except BadRequest, e:
+        except BadRequest as e:
             self.assertTrue(e.message.find('account already exists') > 0)
 
         # Created via app
@@ -51,7 +51,7 @@ class TestAccount(BaseTestCase):
             self.assertTrue(hasattr(acct, 'oauth'))
             self.assertTrue(acct.oauth is not None)
             self.assertTrue(isinstance(acct.oauth, HSAccessTokenAuth))
-        except HSException, e:
+        except HSException as e:
             self.fail(e.message)
 
 
@@ -100,4 +100,4 @@ class TestAccount(BaseTestCase):
             self.assertTrue(self.client.verify_account(email_address=acct.email_address))
             self.assertFalse(self.client.verify_account(email_address='not-an-account@example.com'))
         else:
-            print "WARNING: Skipping test_account_verify because it requires a paid API plan"
+            print("WARNING: Skipping test_account_verify because it requires a paid API plan")

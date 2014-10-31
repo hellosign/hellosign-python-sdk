@@ -1,5 +1,5 @@
-from resource import Resource
-from account import Account
+from .resource import Resource
+from .account import Account
 
 class Team(Resource):
     ''' Contains information about your team and its members

@@ -88,11 +88,11 @@ class HSClient(object):
         elif self.env == "dev":
             self.API_URL = API_DEV_URL + '/' + self.API_VERSION
             self.OAUTH_TOKEN_URL = WEB_DEV_URL + '/oauth/token'
-            print "WARNING: Using dev api endpoint %s" % self.API_URL
+            print("WARNING: Using dev api endpoint %s" % self.API_URL)
         elif self.env == "staging":
             self.API_URL = API_STAGING_URL + '/' + self.API_VERSION
             self.OAUTH_TOKEN_URL = WEB_STAGING_URL + '/oauth/token'
-            print "WARNING: Using staging api endpoint %s" % self.API_URL
+            print("WARNING: Using staging api endpoint %s" % self.API_URL)
 
         self.ACCOUNT_CREATE_URL = self.API_URL + '/account/create'
         self.ACCOUNT_INFO_URL = self.API_URL + '/account'
@@ -1007,7 +1007,7 @@ class HSClient(object):
 
         '''
 
-        for (key, value) in fields.iteritems():
+        for (key, value) in fields.items():
             # If value is a dict, one of the fields in the dict is required ->
             # exception if all are None
             if not value:
@@ -1117,17 +1117,22 @@ class HSClient(object):
         }
 
         # remove attributes with none value
-        payload = dict((key, value) for (key, value) in payload.iteritems() if value)
+        payload = dict((key, value) for (key, value) in payload.items() if value)
 
         url = self.SIGNATURE_REQUEST_CREATE_URL
         if client_id:
             url = self.SIGNATURE_REQUEST_CREATE_EMBEDDED_URL
-        
-        data = dict(payload.items() + signers_payload.items() + cc_email_addresses_payload.items() + file_urls_payload.items() + metadata_payload.items())
+
+        data = {}
+        data.update(payload)
+        data.update(signers_payload)
+        data.update(cc_email_addresses_payload)
+        data.update(file_urls_payload)
+        data.update(metadata_payload)
+        # data = dict(payload.items() + signers_payload.items() + cc_email_addresses_payload.items() + file_urls_payload.items() + metadata_payload.items())
 
         request = self._get_request()
         response = request.post(url, data=data, files=files_payload)
-
         return SignatureRequest(response["signature_request"])
 
     def _send_signature_request_with_template(self, test_mode=False, client_id=None, template_id=None, template_ids=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, ccs=None, custom_fields=None, metadata=None):
@@ -1202,7 +1207,7 @@ class HSClient(object):
         if custom_fields:
             # custom_field: {"name": value}
             for custom_field in custom_fields:
-                for key, value in custom_field.iteritems():
+                for key, value in custom_field.items():
                     custom_fields_payload["custom_fields[" + key + "]"] = value
 
         # Metadata
@@ -1228,7 +1233,7 @@ class HSClient(object):
         }
 
         # remove attributes with empty value
-        payload = dict((key, value) for (key, value) in payload.iteritems() if value)
+        payload = dict((key, value) for (key, value) in payload.items() if value)
 
         url = self.SIGNATURE_REQUEST_CREATE_WITH_TEMPLATE_URL
         if client_id:
@@ -1352,7 +1357,7 @@ class HSClient(object):
             url = self.UNCLAIMED_DRAFT_CREATE_EMBEDDED_URL
 
         # remove attributes with none value
-        payload = dict((key, value) for key, value in payload.iteritems() if value)
+        payload = dict((key, value) for key, value in payload.items() if value)
 
         data = dict(payload.items() + signers_payload.items() + cc_email_addresses_payload.items() + file_urls_payload.items() + metadata_payload.items())
 

@@ -1,5 +1,5 @@
-from resource import Resource
-from signature import Signature
+from .resource import Resource
+from .signature import Signature
 
 
 class SignatureRequest(Resource):

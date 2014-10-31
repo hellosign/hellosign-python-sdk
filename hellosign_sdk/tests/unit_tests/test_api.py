@@ -67,7 +67,7 @@ class Api(TestCase):
             self.fail("BadRequest was expected")
         except BadRequest:
             pass
-        except BaseException, e:
+        except BaseException as e:
             self.fail("BadRequest was expected but got %s instead" % e.__class__.__name__)
 
     def test_not_authorized(self):
@@ -77,7 +77,7 @@ class Api(TestCase):
             self.fail("Unauthorized was expected")
         except Unauthorized:
             pass
-        except BaseException, e:
+        except BaseException as e:
             self.fail("BadRequest was expected but got %s instead" % e.__class__.__name__)
 
     def test_not_found(self):
@@ -87,5 +87,5 @@ class Api(TestCase):
             self.fail("NotFound was expected")
         except NotFound:
             pass
-        except BaseException, e:
+        except BaseException as e:
             self.fail("BadRequest was expected but got %s instead" % e.__class__.__name__)

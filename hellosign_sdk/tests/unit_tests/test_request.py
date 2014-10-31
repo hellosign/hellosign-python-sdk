@@ -36,7 +36,7 @@ class Request(TestCase):
         try:
             response = request.get(url='https://www.hellosign.com/oauth/token',
                                    get_json=True)
-        except BadRequest, e:
+        except BadRequest as e:
             self.assertEquals('400 error' in str(e), True)
 
     def test_post(self):

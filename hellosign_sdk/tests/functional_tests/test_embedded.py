@@ -26,7 +26,7 @@ class TestEmbedded(BaseTestCase):
                                                                         cc_email_addresses=cc_email_addresses)
             self.assertTrue(isinstance(emb_sig_req, SignatureRequest))
             self.assertEquals(len(emb_sig_req.signatures), 1)
-        except HSException, e:
+        except HSException as e:
             self.fail(e.message)
 
         # Get sign url
@@ -61,7 +61,7 @@ class TestEmbedded(BaseTestCase):
                                                                                     signers=signers)
             self.assertTrue(isinstance(emb_sig_req, SignatureRequest))
             self.assertEquals(len(emb_sig_req.signatures), 1)
-        except HSException, e:
+        except HSException as e:
             self.fail(e.message)
 
         # Get sign url
@@ -93,7 +93,7 @@ class TestEmbedded(BaseTestCase):
                                                                 signers=signers)
             self.assertTrue(isinstance(draft, UnclaimedDraft))
             self.assertTrue(draft.claim_url is not None)
-        except HSException, e:
+        except HSException as e:
             self.fail(e.message)
 
     def test_embedded_requesting_without_signers(self):
@@ -117,5 +117,5 @@ class TestEmbedded(BaseTestCase):
                                                                 signers=signers)
             self.assertTrue(isinstance(draft, UnclaimedDraft))
             self.assertTrue(draft.claim_url is not None)
-        except HSException, e:
+        except HSException as e:
             self.fail(e.message)

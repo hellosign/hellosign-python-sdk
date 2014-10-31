@@ -1,5 +1,5 @@
-from resource import Resource
-from account import Account
+from .resource import Resource
+from .account import Account
 
 class Template(Resource):
     ''' Contains information about the templates you and your team have created
