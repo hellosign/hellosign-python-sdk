@@ -76,7 +76,7 @@ class HSClient(object):
 
         API_PRODUCTION_URL = "https://api.hellosign.com"
         API_DEV_URL = "https://www.my.hellosign.com/apiapp_dev.php"
-        API_STAGING_URL = "https://staging.hellosign.com/apiapp_dev.php"
+        API_STAGING_URL = "https://staging.hellosign.com/apiapp.php"
 
         WEB_PRODUCTION_URL = "https://www.hellosign.com"
         WEB_DEV_URL = "https://www.my.hellosign.com/webapp_dev.php"
