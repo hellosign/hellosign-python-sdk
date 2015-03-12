@@ -234,6 +234,8 @@ if event_data['event']['event_type'] == 'signature_request_sent':
 You can run the test suite by executing the following commands after you cloned the repo:
 Note that it requires to have a HelloSign account, with at least one template and one api app.
 
+**WARNING:** We advise against running those tests against you personal account as it performs destructive actions.
+
 ```
 cd hellosign_sdk
 cp tests/test_helper.sample.py tests/test_helper.py
@@ -242,8 +244,6 @@ HELLOSIGN_API_CLIENT_ID='YOUR APP CLIENT ID'
 HELLOSIGN_API_CLIENT_SECRET='YOUR APP CLIENT SECRET'
 nosetests --with-coverage --cover-package=hellosign_sdk --include=hellosign_sdk/tests/unit_tests/* --include=hellosign_sdk/tests/functional_tests/*
 ```
-
-WARNING: We advise against running those tests against you personal account as it performs destructive actions.
 
 ## Additional notes
 
