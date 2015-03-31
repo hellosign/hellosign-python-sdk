@@ -32,14 +32,18 @@ class HSClient(object):
     SIGNATURE_REQUEST_CREATE_EMBEDDED_WITH_TEMPLATE_URL = ''
 
     EMBEDDED_OBJECT_GET_URL = ''
+    EMBEDDED_TEMPLATE_EDIT_URL = '' #new
 
     UNCLAIMED_DRAFT_CREATE_URL = ''
     UNCLAIMED_DRAFT_CREATE_EMBEDDED_URL = ''
+    UNCLAIMED_DRAFT_CREATE_EMBEDDED_WITH_TEMPLATE_URL = '' #new
 
     TEMPLATE_GET_URL = ''
     TEMPLATE_GET_LIST_URL = ''
+    TEMPLATE_DELETE_URL = '' #new
     TEMPLATE_ADD_USER_URL = ''
     TEMPLATE_REMOVE_USER_URL = ''
+    TEMPLATE_CREATE_EMBEDDED_DRAFT_URL = '' #new
 
     TEAM_INFO_URL = ''
     TEAM_UPDATE_URL = ''
@@ -110,14 +114,18 @@ class HSClient(object):
         self.SIGNATURE_REQUEST_CREATE_EMBEDDED_WITH_TEMPLATE_URL = self.API_URL + '/signature_request/create_embedded_with_template'
 
         self.EMBEDDED_OBJECT_GET_URL = self.API_URL + '/embedded/sign_url/'
+        self.EMBEDDED_TEMPLATE_EDIT_URL = self.API_URL + '/embedded/edit_url/'
 
         self.UNCLAIMED_DRAFT_CREATE_URL = self.API_URL + '/unclaimed_draft/create'
         self.UNCLAIMED_DRAFT_CREATE_EMBEDDED_URL = self.API_URL + '/unclaimed_draft/create_embedded'
+        self.UNCLAIMED_DRAFT_CREATE_EMBEDDED_WITH_TEMPLATE_URL = self.API_URL + '/unclaimed_draft/create_embedded_with_template'
 
         self.TEMPLATE_GET_URL = self.API_URL + '/template/'
         self.TEMPLATE_GET_LIST_URL = self.API_URL + '/template/list'
+        self.TEMPLATE_DELETE_URL = self.API_URL + '/template/delete/'
         self.TEMPLATE_ADD_USER_URL = self.API_URL + '/template/add_user/'
         self.TEMPLATE_REMOVE_USER_URL = self.API_URL + '/template/remove_user/'
+        self.TEMPLATE_CREATE_EMBEDDED_DRAFT_URL = self.API_URL + '/template/create_embedded_draft'
 
         self.TEAM_INFO_URL = self.API_URL + '/team'
         self.TEAM_UPDATE_URL = self.TEAM_INFO_URL
