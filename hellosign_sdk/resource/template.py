@@ -64,6 +64,9 @@ class Template(Resource):
         can_edit (bool): Indicates whether edit rights have been granted to you
             by the owner (always true if that's you).
 
+        edit_url (str): Returned when creating a new embedded draft
+
+        expires_at (int): Date when the edit_url expires
     '''
 
     def __init__(self, jsonstr=None, key=None):

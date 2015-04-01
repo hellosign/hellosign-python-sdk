@@ -651,6 +651,52 @@ class HSClient(object):
         '''
         return self._add_remove_user_template(self.TEMPLATE_REMOVE_USER_URL, template_id, account_id, email_address)
 
+    def create_embedded_draft(self, client_id, signer_roles, test_mode=False, file=None, file_url=None, title=None, subject=None, message=None, cc_roles=None, merge_fields=None):
+        ''' Creates and embedded Template draft for further editing.
+
+        Args:
+            test_mode (bool, optional): Whether this is a test, the signature request created from this draft will not be legally binding if set to 1. Defaults to 0.
+
+            client_id (str): Client id of the app you're using to create this draft.
+
+            file[] OR file_url[]: Use file[] to indicate the uploaded file(s) to use for the template. Use file_url[] to have HelloSign download the file(s) to use for the template. Currently we only support use of either the file[] parameter or file_url[] parameter, not both.
+
+            title (str, optional): The template title
+
+            subject (str, optional): The default template email subject
+
+            message (str, optional): The default template email message
+
+            signer_roles (list of dict): A list of signer roles, each of which has the following attributes:
+
+                name (str): The role name of the signer that will be displayed when the template is used to create a signature request.
+                order (str, optional): The order in which this signer role is required to sign. 
+
+            cc_roles (list of str, optional): The CC roles that must be assigned when using the template to send a signature request
+
+            merge_fields (list of dict, optional): The merge fields that can be placed on the template's document(s) by the user claiming the template draft. Each must have the following two parameters: 
+                
+                name (str): The name of the merge field. Must be unique.
+                type (str): Can only be "text" or "checkbox".
+
+        Returns:
+            A Template object specifying the Id of the draft
+
+        '''
+        params = {
+            'test_mode': self._boolean(test_mode), 
+            'client_id': client_id, 
+            'files': files,
+            'file_urls': file_urls, 
+            'title': title, 
+            'subject': subject, 
+            'message': message,
+            'signer_roles': signer_roles,
+            'cc_roles': cc_roles,
+            'merge_fields': merge_fields #opt
+        }
+
+        return self._create_embedded_draft(**params)
 
     #####  TEAM METHODS  ##################################
 
@@ -1437,3 +1483,118 @@ class HSClient(object):
         response = request.post(url, data)
 
         return Team(response["team"])
+
+    def _create_embedded_draft(self, client_id, signer_roles, test_mode=False, file=None, file_url=None, title=None, subject=None, message=None, cc_roles=None, merge_fields=None):
+        ''' Helper method
+
+            params = {
+                'test_mode': self._boolean(test_mode), 
+                'client_id': client_id, 
+                'files': files, #enumerate
+                'file_urls': file_urls, #enumerate
+                'title': title, 
+                'subject': subject, 
+                'message': message,
+                'signer_roles': signer_roles,
+                'cc_roles': cc_roles, #enumerate
+                'merge_fields': merge_fields #enumerate
+            }
+        '''
+
+        url = self.TEMPLATE_CREATE_EMBEDDED_DRAFT_URL
+
+
+        payload = {
+            'test_mode' : self._boolean(test_mode), 
+            'client_id' : client_id, 
+            'title'     : title, 
+            'subject'   : subject, 
+            'message'   : message
+        }
+
+        # Prep files
+        files_payload = self._format_file_params(file)
+        file_urls_payload = self._format_file_url_params(file_url)
+
+        # Prep Signer Roles
+        signer_roles_payload = self._format_dict_list(signer_roles, 'signer_roles')
+        # Prep CCs
+        ccs_payload = self._format_param_list(cc_roles, 'cc_roles')
+        # Prep Merge Fields
+        merge_fields_payload = self._format_dict_list(merge_fields, 'merge_fields')
+
+
+        # Assemble data for sending
+        data = {}
+        data.update(payload)
+        data.update(file_urls_payload)
+        data.update(signer_roles_payload)
+        data.update(ccs_payload)
+        data.update(merge_fields_payload)
+        data = self._strip_none_values(data)
+
+
+        request = self._get_request()
+        response = request.post(url, data=data, files=files_payload)
+
+        return Template(response['template'])
+
+    def _format_file_params(self, files):
+        '''
+            Utility method for formatting file parameters for transmission
+        '''
+        files_payload = {}
+        if files:
+            for idx, filename in enumerate(files):
+                files_payload["file[" + str(idx) + "]"] = open(filename, 'rb')
+        return files_payload
+
+    def _format_file_url_params(self, file):
+        '''
+            Utility method for formatting file URL parameters for transmission
+        '''
+        file_urls_payload = {}
+        if file_urls:
+            for idx, fileurl in enumerate(file_urls):
+                file_urls_payload["file_url[" + str(idx) + "]"] = fileurl
+        return file_urls_payload
+
+    def _format_param_list(self, listed_params, output_name):
+        '''
+            Utility method for formatting lists of parameters for api consumption
+            Useful for email address lists, etc
+            Args:
+                listed_params (list of values) - the list to format
+                output_name (str) - the parameter name to prepend to each key
+        '''
+        output_payload = {}
+        if listed_params:
+            for index, item in enumerate(listed_params):
+                output_payload[str(output_name) + "[" + str(index) + "]" ] = item
+        return output_payload
+
+    def _format_dict_list(self, list_of_dicts, output_name):
+        '''
+            Utility method for formatting lists of dictionaries for api consumption
+            Takes something like [{name: val1, email: val2},{name: val1, email: val2}] for signers
+            and outputs:
+            signers[0][name]  : val1
+            signers[0][email] : val2
+            ... 
+
+            Args:
+                list_of_dicts (list of dicts) - the list to format
+                output_name (str) - the parameter name to prepend to each key
+
+        '''
+        output_payload = {}
+        if list_of_dicts:
+            for index, dictionary in enumerate(list_of_dicts):
+                base_name = output_name + '[' + str(index) + ']'
+                for (key, value) in dictionary.items():
+                    output_payload[base_name + '[' + key + ']'] = value
+        return output_payload
+
+    def _strip_none_values(self, dictionary):
+        if dictionary:
+            return dict((key, value) for (key, value) in payload.items() if value)
