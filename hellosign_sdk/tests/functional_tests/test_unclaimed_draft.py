@@ -91,3 +91,67 @@ class TestUnclaimedDraft(BaseTestCase):
                 cc_email_addresses=cc_email_addresses,
                 metadata=metadata)
         self.assertEquals(isinstance(result, UnclaimedDraft), True)
+
+    def test_create_embedded_unclaimed_draft_with_template(self):
+        ''' Test creating an embedded unclaimed draft from a template '''
+
+        signers = [{
+                    "name": "Signer Name", 
+                    "email_address": "signer@example.com",
+                    "role_name": "Signer"
+                  }]
+        metadata = {
+            'account_id': '123',
+            'company_name': 'Acme Co.'
+        }
+
+        template = self._get_one_template()
+        template_id = template.template_id
+
+        try:
+            # Missing required parameter
+            self.client.create_embedded_unclaimed_draft_with_template(
+                test_mode=True, 
+                client_id=self.client_id, 
+                is_for_embedded_signing=True, 
+                #missing - template_id
+                requester_email_address='user@example.com', 
+                title='MyDraft', 
+                subject='Unclaimed Draft Email Subject', 
+                message='Email Message', 
+                signers=signers, 
+                signing_redirect_url='http://url.com', 
+                requesting_redirect_url='http://url.com', 
+                metadata=metadata)
+            self.fail('Validation error expected')
+        except HSException:
+            pass
+
+        returned = self.client.create_embedded_unclaimed_draft_with_template(
+            test_mode=True, 
+            client_id=self.client_id, 
+            is_for_embedded_signing=True, 
+            template_id=template_id, 
+            requester_email_address='user@example.com', 
+            title='MyDraft', 
+            subject='Unclaimed Draft Email Subject', 
+            message='Email Message', 
+            signers=signers, 
+            signing_redirect_url='http://url.com', 
+            requesting_redirect_url='http://url.com', 
+            metadata=metadata)
+
+        self.assertEquals(isinstance(returned, UnclaimedDraft), True)
+
+    def _get_one_template(self, exclude=None):
+        ''' Get one template from the current account '''
+        template_list = self.client.get_template_list()
+        if not template_list or len(template_list) == 0:
+            self.fail('CREATE A TEMPLATE BEFORE RUNNING THIS TEST')
+        if exclude is None:
+            return template_list[0]
+        else:
+            for t in template_list:
+                if t.template_id != exclude.template_id:
+                    return t
+            self.fail('CREATE A SECOND TEMPLATE BEFORE RUNNING THIS TEST')

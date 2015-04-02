@@ -549,7 +549,7 @@ class HSClient(object):
                 email_address (str): email address of the signer
                 pin (str, optional): The 4- to 12-character access code that will secure this signer's signature page
 
-            ccs (list of str, optional): The email address of the CC filling the
+            ccs (list of dict, optional): The email address of the CC filling the
                 role of RoleName. Required when a CC role exists for the
                 Template. Each dict has the following attributes:
 
@@ -651,6 +651,24 @@ class HSClient(object):
         '''
         return self._add_remove_user_template(self.TEMPLATE_REMOVE_USER_URL, template_id, account_id, email_address)
 
+    def delete_template(self, template_id):
+        ''' Deletes the specified template
+
+        Args:
+            template_id (str): The id of the template to delete
+
+        Returns:
+            A status code
+
+        '''
+
+        url = self.TEMPLATE_DELETE_URL
+
+        request = self._get_request()
+        response = request.post(url + template_id, get_json=False)
+
+        return response
+
     def create_embedded_draft(self, client_id, signer_roles, test_mode=False, files=None, file_urls=None, title=None, subject=None, message=None, cc_roles=None, merge_fields=None):
         ''' Creates and embedded Template draft for further editing.
 
@@ -659,7 +677,9 @@ class HSClient(object):
 
             client_id (str): Client id of the app you're using to create this draft.
 
-            file[] OR file_url[]: Use file[] to indicate the uploaded file(s) to use for the template. Use file_url[] to have HelloSign download the file(s) to use for the template. Currently we only support use of either the file[] parameter or file_url[] parameter, not both.
+            files (list of str): the file(s) to use for the template.
+
+            file_urls (list of str): urls of the file for HelloSign to use for the template. Use either `files` or `file_urls`, but not both.
 
             title (str, optional): The template title
 
@@ -806,6 +826,22 @@ class HSClient(object):
         '''
         request = self._get_request()
         response = request.get(self.EMBEDDED_OBJECT_GET_URL + signature_id)
+        return Embedded(response["embedded"])
+
+    def get_template_edit_url(self, template_id):
+        ''' Retrieves a embedded template for editing
+
+        Retrieves an embedded object containing a template url that can be opened in an iFrame.
+
+        Args:
+            template_id (str): The id of the template to get a signature url for
+
+        Returns:
+            An Embedded object
+
+        '''
+        request = self._get_request()
+        response = request.get(self.EMBEDDED_TEMPLATE_EDIT_URL + template_id)
         return Embedded(response["embedded"])
 
 
@@ -955,6 +991,80 @@ class HSClient(object):
         }
 
         return self._create_unclaimed_draft(**params)
+
+    def create_embedded_unclaimed_draft_with_template(self, test_mode=False, client_id=None, is_for_embedded_signing=False, template_id=None, template_ids=None, requester_email_address=None, title=None, subject=None, message=None, signers=None, ccs=None, signing_redirect_url=None, requesting_redirect_url=None, metadata=None, custom_fields=None):
+        ''' Creates a new Draft to be used for embedded requesting
+
+            test_mode (bool, optional): Whether this is a test, the signature
+                request created from this draft will not be legally binding if
+                set to True. Defaults to False.
+
+            client_id (str): Client id of the app you're using to create this draft. Visit our embedded page to learn more about this parameter.
+            
+            template_id (str): The id of the Template to use when creating the Unclaimed Draft.
+                               Mutually exclusive with template_ids.
+
+            template_ids (list of str): The ids of the Templates to use when creating the Unclaimed Draft. 
+                                 Mutually exclusive with template_id.
+            
+            requester_email_address (str): The email address of the user that should be designated as the requester of this draft, if the draft type is "request_signature."
+            
+            title (str, optional): The title you want to assign to the Unclaimed Draft
+            
+            subject (str, optional): The subject in the email that will be sent to the signers
+
+            message (str, optional): The custom message in the email that will be sent to the signers
+
+            signers (list of dict): A list of signers, which each has the following attributes:
+
+                name (str): The name of the signer
+                email_address (str): email address of the signer
+            
+            ccs (list of str, optional): A list of email addresses that should be CC'd
+            
+            signing_redirect_url (str, optional): The URL you want the signer redirected to after they successfully sign.
+            
+            requesting_redirect_url (str, optional): The URL you want the signer to be redirected to after the request has been sent.
+            
+            is_for_embedded_signing (bool, optional): The request created from this draft will also be signable in embedded mode if set to True. The default is False.
+            
+            metadata (dict, optional): Metadata to associate with the draft
+                Each request can include up to 10 metadata keys, with key names up to 40 characters long and values up to 500 characters long.
+
+            custom_fields (list of dict, optional): A list of custom fields. Required when a CustomField exists in the Template. An item
+                of the list should look like this: `{'name: value'}`
+
+        '''
+
+        self._check_required_fields(
+            {
+                "client_id": client_id, 
+                "requester_email_address": requester_email_address
+            }, 
+            [{ 
+                "template_id": template_id, 
+                "template_ids": template_ids 
+            }])
+
+        params = {
+            'test_mode': self._boolean(test_mode),
+            'client_id': client_id,
+            'is_for_embedded_signing': is_for_embedded_signing,
+            'template_id': template_id,
+            'template_ids': template_ids,
+            'title': title, 
+            'subject': subject, 
+            'message': message,
+            'requester_email_address': requester_email_address,
+            'signing_redirect_url': signing_redirect_url, 
+            'requesting_redirect_url': requesting_redirect_url, 
+            'signers': signers,
+            'ccs': ccs, 
+            'custom_fields': custom_fields,
+            'metadata': metadata
+        }
+
+        return self._create_embedded_unclaimed_draft_with_template(**params)
 
 
     #####  OAUTH METHODS  #################################
@@ -1223,7 +1333,7 @@ class HSClient(object):
         ccs_payload = self._format_dict_list(ccs, 'ccs', 'role_name')
 
         # Custom fields
-        custom_fields_payload = self._format_dict_list(custom_fields, 'custom_fields')
+        custom_fields_payload = self._format_custom_fields(custom_fields)
 
         # Metadata
         metadata_payload = self._format_single_dict(metadata, 'metadata')
@@ -1470,6 +1580,51 @@ class HSClient(object):
 
         return Template(response['template'])
 
+    def _create_embedded_unclaimed_draft_with_template(self, test_mode=False, client_id=None, is_for_embedded_signing=False, template_id=None, template_ids=None, requester_email_address=None, title=None, subject=None, message=None, signers=None, ccs=None, signing_redirect_url=None, requesting_redirect_url=None, metadata=None, custom_fields=None):
+        ''' Helper method for creating unclaimed drafts from templates
+            See public function for params.
+        '''
+
+        #single params
+        payload = {
+            "test_mode": self._boolean(test_mode),
+            "client_id": client_id,
+            "is_for_embedded_signing": is_for_embedded_signing,
+            "template_id": template_id,
+            "requester_email_address": requester_email_address,
+            "title": title,
+            "subject": subject, 
+            "message": message,
+            "signing_redirect_url": signing_redirect_url,
+            "requesting_redirect_url": requesting_redirect_url
+        }
+
+        #format multi params
+        template_ids_payload = self._format_param_list(template_ids, 'template_ids')
+        signers_payload = self._format_dict_list(signers, 'signers', 'role_name')
+        ccs_payload = self._format_dict_list(ccs, 'ccs', 'role_name')
+        print(ccs_payload)
+        metadata_payload = self._format_single_dict(metadata, 'metadata')
+        custom_fields_payload = self._format_custom_fields(custom_fields)
+
+        #assemble payload
+        data = {}
+        data.update(payload)
+        data.update(template_ids_payload)
+        data.update(signers_payload)
+        data.update(ccs_payload)
+        data.update(metadata_payload)
+        data.update(custom_fields_payload)
+        data = self._strip_none_values(data)
+
+        #send call
+        url = self.UNCLAIMED_DRAFT_CREATE_EMBEDDED_WITH_TEMPLATE_URL
+        request = self._get_request()
+        response = request.post(url, data=data)
+
+        return UnclaimedDraft(response['unclaimed_draft'])
+
+
     def _format_file_params(self, files):
         '''
             Utility method for formatting file parameters for transmission
@@ -1524,18 +1679,33 @@ class HSClient(object):
         output_payload = {}
         if list_of_dicts:
             for index, dictionary in enumerate(list_of_dicts):
-                index_or_key = dictionary[key] if key else index
-                base_name = output_name + '[' + str(index_or_key) + ']'
+                index_or_key = dictionary[key] if key else str(index)
+                base_name = output_name + '[' + index_or_key + ']'
                 for (param, value) in dictionary.items():
                     if param != key: #key params are stripped
                         output_payload[base_name + '[' + param + ']'] = value
         return output_payload
 
     def _format_single_dict(self, dictionary, output_name):
+        '''
+            Currently used for metadata fields
+        '''
         output_payload = {}
         if dictionary:
             for (k, v) in dictionary.items():
                 output_payload[output_name + '[' + k + ']'] = v
+        return output_payload
+
+    def _format_custom_fields(self, list_of_custom_fields):
+        '''
+            Custom fields formatting for submission
+        '''
+        output_payload = {}
+        if list_of_custom_fields:
+            # custom_field: {"name": value}
+            for custom_field in list_of_custom_fields:
+                for key, value in custom_field.items():
+                    output_payload["custom_fields[" + key + "]"] = value
         return output_payload
 
     def _strip_none_values(self, dictionary):

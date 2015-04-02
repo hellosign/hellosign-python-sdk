@@ -1,6 +1,6 @@
 from hellosign_sdk.tests.functional_tests import BaseTestCase
 from hellosign_sdk.resource import Embedded, UnclaimedDraft, SignatureRequest
-from hellosign_sdk.utils import HSException
+from hellosign_sdk.utils import HSException, NotFound
 import os
 
 class TestEmbedded(BaseTestCase):
@@ -119,3 +119,15 @@ class TestEmbedded(BaseTestCase):
             self.assertTrue(draft.claim_url is not None)
         except HSException as e:
             self.fail(e.message)
+
+    def test_embedded_template_edit_url(self):
+        ''' Tests the embedded template edit url endpoint '''
+
+        # Similar to the delete_template function, we can't actually test this for success without human interaction. Instead, we'll be checking for a 404 - Template not found status code, which means our parameters are correct
+
+        template_id = 'ax5d921d0d3ccfcd594d2b8c897ba774d89c9234' #random
+
+        try:
+            self.client.get_template_edit_url(template_id)
+        except NotFound:
+            pass

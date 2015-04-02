@@ -3,6 +3,8 @@ from hellosign_sdk.resource import Team, ResourceList, Template
 from hellosign_sdk.utils import Forbidden, NotFound
 from time import time
 
+import os
+
 
 class TestTemplate(BaseTestCase):
 
@@ -59,4 +61,41 @@ class TestTemplate(BaseTestCase):
             t = self.client.remove_user_from_template(template_id, None, email)
             self.assertTrue(isinstance(t, Template))
         except Forbidden:
+            pass
+
+    def test_create_embedded_draft(self):
+        ''' Test creating an embedded Template draft '''
+
+        files = [os.path.dirname(os.path.realpath(__file__)) + "/docs/nda.pdf"]
+        signer_roles = [
+            {'name': 'Baltar', 'order': 1},
+            {'name': 'Madame President', 'order': 2},
+            {'name': 'Lee Adama', 'order': 3},
+        ]
+        cc_roles = ['Deck Chief','Admiral','Starbuck']
+        merge_fields = [{'name':'mymerge', 'type':'text'}]
+
+        response = self.client.create_embedded_draft(
+            client_id=self.client_id, 
+            signer_roles=signer_roles, 
+            test_mode=True, 
+            files=files, 
+            title='Battlestar Test Draft', 
+            subject='There are cylons onboard', 
+            message='Halp', 
+            cc_roles=cc_roles, 
+            merge_fields=merge_fields)
+
+        self.assertTrue(isinstance(response, Template))
+
+    def test_delete_template(self):
+        '''Tests proper status code for template deletion'''
+
+        # Note that we won't be actually deleting a template, but rather checking to make sure we get a 404 - Template not found error
+
+        template_id = 'ax5d921d0d3ccfcd594d2b8c897ba774d89c9234' #random
+
+        try:
+            self.client.delete_template(template_id)
+        except NotFound:
             pass
