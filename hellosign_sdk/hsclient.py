@@ -1,7 +1,7 @@
 from hellosign_sdk.utils import HSRequest, HSException, NoAuthMethod, HSAccessTokenAuth
 from hellosign_sdk.resource import Account, ResourceList, SignatureRequest, Template, Team, Embedded, UnclaimedDraft
 from requests.auth import HTTPBasicAuth
-
+import json
 
 class HSClient(object):
 
@@ -651,7 +651,7 @@ class HSClient(object):
         '''
         return self._add_remove_user_template(self.TEMPLATE_REMOVE_USER_URL, template_id, account_id, email_address)
 
-    def create_embedded_draft(self, client_id, signer_roles, test_mode=False, file=None, file_url=None, title=None, subject=None, message=None, cc_roles=None, merge_fields=None):
+    def create_embedded_draft(self, client_id, signer_roles, test_mode=False, files=None, file_urls=None, title=None, subject=None, message=None, cc_roles=None, merge_fields=None):
         ''' Creates and embedded Template draft for further editing.
 
         Args:
@@ -1484,7 +1484,7 @@ class HSClient(object):
 
         return Team(response["team"])
 
-    def _create_embedded_draft(self, client_id, signer_roles, test_mode=False, file=None, file_url=None, title=None, subject=None, message=None, cc_roles=None, merge_fields=None):
+    def _create_embedded_draft(self, client_id, signer_roles, test_mode=False, files=None, file_urls=None, title=None, subject=None, message=None, cc_roles=None, merge_fields=None):
         ''' Helper method
 
             params = {
@@ -1513,16 +1513,17 @@ class HSClient(object):
         }
 
         # Prep files
-        files_payload = self._format_file_params(file)
-        file_urls_payload = self._format_file_url_params(file_url)
+        files_payload = self._format_file_params(files)
+        file_urls_payload = self._format_file_url_params(file_urls)
 
         # Prep Signer Roles
         signer_roles_payload = self._format_dict_list(signer_roles, 'signer_roles')
         # Prep CCs
         ccs_payload = self._format_param_list(cc_roles, 'cc_roles')
         # Prep Merge Fields
-        merge_fields_payload = self._format_dict_list(merge_fields, 'merge_fields')
-
+        merge_fields_payload = {
+            'merge_fields': json.dumps(merge_fields)
+        }
 
         # Assemble data for sending
         data = {}
@@ -1533,11 +1534,12 @@ class HSClient(object):
         data.update(merge_fields_payload)
         data = self._strip_none_values(data)
 
-
         request = self._get_request()
+        request.debug = True;
         response = request.post(url, data=data, files=files_payload)
 
-        return Template(response['template'])
+        # return Template(response['template'])
+        return response
 
     def _format_file_params(self, files):
         '''
@@ -1549,7 +1551,7 @@ class HSClient(object):
                 files_payload["file[" + str(idx) + "]"] = open(filename, 'rb')
         return files_payload
 
-    def _format_file_url_params(self, file):
+    def _format_file_url_params(self, file_urls):
         '''
             Utility method for formatting file URL parameters for transmission
         '''
@@ -1597,4 +1599,4 @@ class HSClient(object):
 
     def _strip_none_values(self, dictionary):
         if dictionary:
-            return dict((key, value) for (key, value) in payload.items() if value)
+            return dict((key, value) for (key, value) in dictionary.items() if value)
