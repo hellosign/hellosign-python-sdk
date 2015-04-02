@@ -1122,41 +1122,19 @@ class HSClient(object):
         '''
 
         # Files
-        files_payload = {}
-        if files:
-            for idx, filename in enumerate(files):
-                files_payload["file[" + str(idx) + "]"] = open(filename, 'rb')
+        files_payload = self._format_file_params(files)
 
         # File URLs
-        file_urls_payload = {}
-        if file_urls:
-            for idx, fileurl in enumerate(file_urls):
-                file_urls_payload["file_url[" + str(idx) + "]"] = fileurl
+        file_urls_payload = self._format_file_url_params(file_urls)
 
         # Signers
-        signers_payload = {}
-        for idx, signer in enumerate(signers):
-            signers_payload["signers[" + str(idx) + "][name]"] = signer["name"]
-            signers_payload["signers[" + str(idx) + "][email_address]"] = signer[
-                "email_address"]
-            if "order" in signer:
-                signers_payload[
-                    "signers[" + str(idx) + "][order]"] = signer["order"]
-            if "pin" in signer:
-                signers_payload[
-                    "signers[" + str(idx) + "][pin]"] = signer["pin"]
+        signers_payload = self._format_dict_list(signers, 'signers')
 
         # CCs
-        cc_email_addresses_payload = {}
-        if cc_email_addresses:
-            for idx, cc_email_address in enumerate(cc_email_addresses):
-                cc_email_addresses_payload["cc_email_addresses[" + str(idx) + "]"] = cc_email_address
+        cc_email_addresses_payload = self._format_param_list(cc_email_addresses, 'cc_email_addresses')
 
         # Metadata
-        metadata_payload = {}
-        if metadata:
-            for (k, v) in metadata.items():
-                metadata_payload["metadata[%s]" % k] = v
+        metadata_payload = self._format_single_dict(metadata, 'metadata')
         
         payload = {
             "test_mode": self._boolean(test_mode), 
@@ -1171,7 +1149,7 @@ class HSClient(object):
         }
 
         # remove attributes with none value
-        payload = dict((key, value) for (key, value) in payload.items() if value)
+        payload = self._strip_none_values(payload)
 
         url = self.SIGNATURE_REQUEST_CREATE_URL
         if client_id:
@@ -1222,7 +1200,7 @@ class HSClient(object):
                 email_address (str): email address of the signer
                 pin (str, optional): The 4- to 12-character access code that will secure this signer's signature page
 
-            ccs (list of str, optional): The email address of the CC filling the role of RoleName. Required when a CC role exists for the Template. 
+            ccs (list of dict, optional): The email address of the CC filling the role of RoleName. Required when a CC role exists for the Template. 
                 Each dict has the following attributes:
 
                 role_name (str):        CC role name
@@ -1239,36 +1217,16 @@ class HSClient(object):
         '''
 
         # Signers
-        signers_payload = {}
-        for signer in signers:
-            signers_payload["signers[" + signer["role_name"] + "][name]"] = signer["name"]
-            signers_payload["signers[" + signer["role_name"] + "][email_address]"] = signer["email_address"]
-            if "pin" in signer:
-                signers_payload[
-                    "signers[" + signer["role_name"] + "][pin]"] = signer["pin"]
+        signers_payload = self._format_dict_list(signers, 'signers', 'role_name')
 
         # CCs
-        ccs_payload = {}
-        if ccs:
-            for cc in ccs:
-                # cc_emaiL_address: {"email_address": "email@email.email",
-                # "role_name": "Role Name"}
-                ccs_payload[
-                    "ccs[" + cc["role_name"] + "][email_address]"] = cc["email_address"]
+        ccs_payload = self._format_dict_list(ccs, 'ccs', 'role_name')
 
         # Custom fields
-        custom_fields_payload = {}
-        if custom_fields:
-            # custom_field: {"name": value}
-            for custom_field in custom_fields:
-                for key, value in custom_field.items():
-                    custom_fields_payload["custom_fields[" + key + "]"] = value
+        custom_fields_payload = self._format_dict_list(custom_fields, 'custom_fields')
 
         # Metadata
-        metadata_payload = {}
-        if metadata:
-            for (k, v) in metadata.items():
-                metadata_payload["metadata[%s]" % k] = v
+        metadata_payload = self._format_single_dict(metadata, 'metadata')
 
         # Template ids
         template_ids_payload = {}
@@ -1287,7 +1245,7 @@ class HSClient(object):
         }
 
         # remove attributes with empty value
-        payload = dict((key, value) for (key, value) in payload.items() if value)
+        payload = self._strip_none_values(payload)
 
         url = self.SIGNATURE_REQUEST_CREATE_WITH_TEMPLATE_URL
         if client_id:
@@ -1354,16 +1312,10 @@ class HSClient(object):
         '''
 
         # Files
-        files_payload = {}
-        if files:
-            for (idx, filename) in enumerate(files):
-                files_payload["file[%s]" % idx] = open(filename, 'rb')
+        files_payload = self._format_file_params(files)
 
         # Files URLs
-        file_urls_payload = {}
-        if file_urls:
-            for (idx, fileurl) in enumerate(file_urls):
-                file_urls_payload["file_url[%s]" % idx] = fileurl
+        file_urls_payload = self._format_file_url_params(file_urls)
         
         # Signers
         signers_payload = {}
@@ -1372,23 +1324,13 @@ class HSClient(object):
                 if draft_type == UnclaimedDraft.UNCLAIMED_DRAFT_REQUEST_SIGNATURE_TYPE:
                     if "name" not in signer and "email_address" not in signer:
                         raise HSException("Signer's name and email are required")
-                    else:
-                        signers_payload["signers[%s][name]" % idx] = signer["name"]
-                        signers_payload["signers[%s][email_address]" % idx] = signer["email_address"]
-                if "order" in signer:
-                    signers_payload["signers[%s][order]" % idx] = signer["order"]
+            signers_payload = self._format_dict_list(signers, 'signers')
 
         # CCs
-        cc_email_addresses_payload = {}
-        if cc_email_addresses:
-            for (idx, cc_email_address) in enumerate(cc_email_addresses):
-                cc_email_addresses_payload["cc_email_addresses[%s]" % idx] = cc_email_address
+        cc_email_addresses_payload = self._format_param_list(cc_email_addresses, 'cc_email_addresses')
 
         # Metadata
-        metadata_payload = {}
-        if metadata:
-            for (k, v) in metadata.items():
-                metadata_payload["metadata[%s]" % k] = v
+        metadata_payload = self._format_single_dict(metadata, 'metadata')
 
         payload = {
             "test_mode": self._boolean(test_mode), 
@@ -1411,7 +1353,7 @@ class HSClient(object):
             url = self.UNCLAIMED_DRAFT_CREATE_EMBEDDED_URL
 
         # remove attributes with none value
-        payload = dict((key, value) for key, value in payload.items() if value)
+        payload = self._strip_none_values(payload)
 
         data = dict(payload.items() + signers_payload.items() + cc_email_addresses_payload.items() + file_urls_payload.items() + metadata_payload.items())
 
@@ -1485,20 +1427,8 @@ class HSClient(object):
         return Team(response["team"])
 
     def _create_embedded_draft(self, client_id, signer_roles, test_mode=False, files=None, file_urls=None, title=None, subject=None, message=None, cc_roles=None, merge_fields=None):
-        ''' Helper method
-
-            params = {
-                'test_mode': self._boolean(test_mode), 
-                'client_id': client_id, 
-                'files': files, #enumerate
-                'file_urls': file_urls, #enumerate
-                'title': title, 
-                'subject': subject, 
-                'message': message,
-                'signer_roles': signer_roles,
-                'cc_roles': cc_roles, #enumerate
-                'merge_fields': merge_fields #enumerate
-            }
+        ''' Helper method for creating embedded drafts.
+            See public function for params.
         '''
 
         url = self.TEMPLATE_CREATE_EMBEDDED_DRAFT_URL
@@ -1538,8 +1468,7 @@ class HSClient(object):
         request.debug = True;
         response = request.post(url, data=data, files=files_payload)
 
-        # return Template(response['template'])
-        return response
+        return Template(response['template'])
 
     def _format_file_params(self, files):
         '''
@@ -1575,9 +1504,9 @@ class HSClient(object):
                 output_payload[str(output_name) + "[" + str(index) + "]" ] = item
         return output_payload
 
-    def _format_dict_list(self, list_of_dicts, output_name):
+    def _format_dict_list(self, list_of_dicts, output_name, key=None):
         '''
-            Utility method for formatting lists of dictionaries for api consumption
+            Utility method for formatting lists of dictionaries for api consumption.
             Takes something like [{name: val1, email: val2},{name: val1, email: val2}] for signers
             and outputs:
             signers[0][name]  : val1
@@ -1586,15 +1515,27 @@ class HSClient(object):
 
             Args:
                 list_of_dicts (list of dicts) - the list to format
+                
                 output_name (str) - the parameter name to prepend to each key
+                
+                key (str, optional) - Used for substituting a key present in the dictionaries for the index. The above might become signers['Lawyer']['name'] instead of using a numerical index if the key "role_name" was specified.
 
         '''
         output_payload = {}
         if list_of_dicts:
             for index, dictionary in enumerate(list_of_dicts):
-                base_name = output_name + '[' + str(index) + ']'
-                for (key, value) in dictionary.items():
-                    output_payload[base_name + '[' + key + ']'] = value
+                index_or_key = dictionary[key] if key else index
+                base_name = output_name + '[' + str(index_or_key) + ']'
+                for (param, value) in dictionary.items():
+                    if param != key: #key params are stripped
+                        output_payload[base_name + '[' + param + ']'] = value
+        return output_payload
+
+    def _format_single_dict(self, dictionary, output_name):
+        output_payload = {}
+        if dictionary:
+            for (k, v) in dictionary.items():
+                output_payload[output_name + '[' + k + ']'] = v
         return output_payload
 
     def _strip_none_values(self, dictionary):
