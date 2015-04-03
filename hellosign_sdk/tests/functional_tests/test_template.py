@@ -97,5 +97,8 @@ class TestTemplate(BaseTestCase):
 
         try:
             self.client.delete_template(template_id)
+            self.fail('Expected failure, but got success')
         except NotFound:
             pass
+        except BaseException as e:
+            self.fail('Expected Not Found, but got %s' % e)

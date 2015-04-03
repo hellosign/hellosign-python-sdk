@@ -129,5 +129,8 @@ class TestEmbedded(BaseTestCase):
 
         try:
             self.client.get_template_edit_url(template_id)
+            self.fail('Expected error, got success')
         except NotFound:
             pass
+        except BaseException as e:
+            self.fail('Expected Not Found, but got %s' % e)

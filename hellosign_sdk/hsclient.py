@@ -1575,7 +1575,7 @@ class HSClient(object):
         data = self._strip_none_values(data)
 
         request = self._get_request()
-        request.debug = True;
+
         response = request.post(url, data=data, files=files_payload)
 
         return Template(response['template'])
@@ -1603,7 +1603,6 @@ class HSClient(object):
         template_ids_payload = self._format_param_list(template_ids, 'template_ids')
         signers_payload = self._format_dict_list(signers, 'signers', 'role_name')
         ccs_payload = self._format_dict_list(ccs, 'ccs', 'role_name')
-        print(ccs_payload)
         metadata_payload = self._format_single_dict(metadata, 'metadata')
         custom_fields_payload = self._format_custom_fields(custom_fields)
 
