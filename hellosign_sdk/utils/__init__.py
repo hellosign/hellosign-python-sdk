@@ -23,8 +23,10 @@ from .exception import GatewayTimeout
 from .request import HSRequest
 from .hsaccesstokenauth import HSAccessTokenAuth
 
+from .hsformat import HSFormat
+
 __all__ = [HSException, NoAuthMethod, HTTPError, BadRequest, Unauthorized, PaymentRequired, Forbidden, NotFound, MethodNotAllowed,
            NotAcceptable, RequestTimeout, Conflict, Gone, RequestURITooLong, UnsupportedMediaType, RequestedRangeNotSatisfiable, 
-           MethodNotImplemented, InternalServerError, BadGateway, ServiceUnavailable, GatewayTimeout, HSRequest, HSAccessTokenAuth]
+           MethodNotImplemented, InternalServerError, BadGateway, ServiceUnavailable, GatewayTimeout, HSRequest, HSAccessTokenAuth, HSFormat]
 
 

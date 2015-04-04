@@ -1,4 +1,4 @@
-from hellosign_sdk.utils import HSRequest, HSException, NoAuthMethod, HSAccessTokenAuth
+from hellosign_sdk.utils import HSRequest, HSException, NoAuthMethod, HSAccessTokenAuth, HSFormat
 from hellosign_sdk.resource import Account, ResourceList, SignatureRequest, Template, Team, Embedded, UnclaimedDraft
 from requests.auth import HTTPBasicAuth
 import json
@@ -1232,19 +1232,19 @@ class HSClient(object):
         '''
 
         # Files
-        files_payload = self._format_file_params(files)
+        files_payload = HSFormat.format_file_params(files)
 
         # File URLs
-        file_urls_payload = self._format_file_url_params(file_urls)
+        file_urls_payload = HSFormat.format_file_url_params(file_urls)
 
         # Signers
-        signers_payload = self._format_dict_list(signers, 'signers')
+        signers_payload = HSFormat.format_dict_list(signers, 'signers')
 
         # CCs
-        cc_email_addresses_payload = self._format_param_list(cc_email_addresses, 'cc_email_addresses')
+        cc_email_addresses_payload = HSFormat.format_param_list(cc_email_addresses, 'cc_email_addresses')
 
         # Metadata
-        metadata_payload = self._format_single_dict(metadata, 'metadata')
+        metadata_payload = HSFormat.format_single_dict(metadata, 'metadata')
         
         payload = {
             "test_mode": self._boolean(test_mode), 
@@ -1259,7 +1259,7 @@ class HSClient(object):
         }
 
         # remove attributes with none value
-        payload = self._strip_none_values(payload)
+        payload = HSFormat.strip_none_values(payload)
 
         url = self.SIGNATURE_REQUEST_CREATE_URL
         if client_id:
@@ -1327,16 +1327,16 @@ class HSClient(object):
         '''
 
         # Signers
-        signers_payload = self._format_dict_list(signers, 'signers', 'role_name')
+        signers_payload = HSFormat.format_dict_list(signers, 'signers', 'role_name')
 
         # CCs
-        ccs_payload = self._format_dict_list(ccs, 'ccs', 'role_name')
+        ccs_payload = HSFormat.format_dict_list(ccs, 'ccs', 'role_name')
 
         # Custom fields
-        custom_fields_payload = self._format_custom_fields(custom_fields)
+        custom_fields_payload = HSFormat.format_custom_fields(custom_fields)
 
         # Metadata
-        metadata_payload = self._format_single_dict(metadata, 'metadata')
+        metadata_payload = HSFormat.format_single_dict(metadata, 'metadata')
 
         # Template ids
         template_ids_payload = {}
@@ -1355,7 +1355,7 @@ class HSClient(object):
         }
 
         # remove attributes with empty value
-        payload = self._strip_none_values(payload)
+        payload = HSFormat.strip_none_values(payload)
 
         url = self.SIGNATURE_REQUEST_CREATE_WITH_TEMPLATE_URL
         if client_id:
@@ -1422,10 +1422,10 @@ class HSClient(object):
         '''
 
         # Files
-        files_payload = self._format_file_params(files)
+        files_payload = HSFormat.format_file_params(files)
 
         # Files URLs
-        file_urls_payload = self._format_file_url_params(file_urls)
+        file_urls_payload = HSFormat.format_file_url_params(file_urls)
         
         # Signers
         signers_payload = {}
@@ -1434,13 +1434,13 @@ class HSClient(object):
                 if draft_type == UnclaimedDraft.UNCLAIMED_DRAFT_REQUEST_SIGNATURE_TYPE:
                     if "name" not in signer and "email_address" not in signer:
                         raise HSException("Signer's name and email are required")
-            signers_payload = self._format_dict_list(signers, 'signers')
+            signers_payload = HSFormat.format_dict_list(signers, 'signers')
 
         # CCs
-        cc_email_addresses_payload = self._format_param_list(cc_email_addresses, 'cc_email_addresses')
+        cc_email_addresses_payload = HSFormat.format_param_list(cc_email_addresses, 'cc_email_addresses')
 
         # Metadata
-        metadata_payload = self._format_single_dict(metadata, 'metadata')
+        metadata_payload = HSFormat.format_single_dict(metadata, 'metadata')
 
         payload = {
             "test_mode": self._boolean(test_mode), 
@@ -1463,7 +1463,7 @@ class HSClient(object):
             url = self.UNCLAIMED_DRAFT_CREATE_EMBEDDED_URL
 
         # remove attributes with none value
-        payload = self._strip_none_values(payload)
+        payload = HSFormat.strip_none_values(payload)
 
         data = dict(payload.items() + signers_payload.items() + cc_email_addresses_payload.items() + file_urls_payload.items() + metadata_payload.items())
 
@@ -1553,13 +1553,13 @@ class HSClient(object):
         }
 
         # Prep files
-        files_payload = self._format_file_params(files)
-        file_urls_payload = self._format_file_url_params(file_urls)
+        files_payload = HSFormat.format_file_params(files)
+        file_urls_payload = HSFormat.format_file_url_params(file_urls)
 
         # Prep Signer Roles
-        signer_roles_payload = self._format_dict_list(signer_roles, 'signer_roles')
+        signer_roles_payload = HSFormat.format_dict_list(signer_roles, 'signer_roles')
         # Prep CCs
-        ccs_payload = self._format_param_list(cc_roles, 'cc_roles')
+        ccs_payload = HSFormat.format_param_list(cc_roles, 'cc_roles')
         # Prep Merge Fields
         merge_fields_payload = {
             'merge_fields': json.dumps(merge_fields)
@@ -1572,7 +1572,7 @@ class HSClient(object):
         data.update(signer_roles_payload)
         data.update(ccs_payload)
         data.update(merge_fields_payload)
-        data = self._strip_none_values(data)
+        data = HSFormat.strip_none_values(data)
 
         request = self._get_request()
 
@@ -1600,11 +1600,11 @@ class HSClient(object):
         }
 
         #format multi params
-        template_ids_payload = self._format_param_list(template_ids, 'template_ids')
-        signers_payload = self._format_dict_list(signers, 'signers', 'role_name')
-        ccs_payload = self._format_dict_list(ccs, 'ccs', 'role_name')
-        metadata_payload = self._format_single_dict(metadata, 'metadata')
-        custom_fields_payload = self._format_custom_fields(custom_fields)
+        template_ids_payload = HSFormat.format_param_list(template_ids, 'template_ids')
+        signers_payload = HSFormat.format_dict_list(signers, 'signers', 'role_name')
+        ccs_payload = HSFormat.format_dict_list(ccs, 'ccs', 'role_name')
+        metadata_payload = HSFormat.format_single_dict(metadata, 'metadata')
+        custom_fields_payload = HSFormat.format_custom_fields(custom_fields)
 
         #assemble payload
         data = {}
@@ -1614,7 +1614,7 @@ class HSClient(object):
         data.update(ccs_payload)
         data.update(metadata_payload)
         data.update(custom_fields_payload)
-        data = self._strip_none_values(data)
+        data = HSFormat.strip_none_values(data)
 
         #send call
         url = self.UNCLAIMED_DRAFT_CREATE_EMBEDDED_WITH_TEMPLATE_URL
@@ -1622,91 +1622,3 @@ class HSClient(object):
         response = request.post(url, data=data)
 
         return UnclaimedDraft(response['unclaimed_draft'])
-
-
-    def _format_file_params(self, files):
-        '''
-            Utility method for formatting file parameters for transmission
-        '''
-        files_payload = {}
-        if files:
-            for idx, filename in enumerate(files):
-                files_payload["file[" + str(idx) + "]"] = open(filename, 'rb')
-        return files_payload
-
-    def _format_file_url_params(self, file_urls):
-        '''
-            Utility method for formatting file URL parameters for transmission
-        '''
-        file_urls_payload = {}
-        if file_urls:
-            for idx, fileurl in enumerate(file_urls):
-                file_urls_payload["file_url[" + str(idx) + "]"] = fileurl
-        return file_urls_payload
-
-    def _format_param_list(self, listed_params, output_name):
-        '''
-            Utility method for formatting lists of parameters for api consumption
-            Useful for email address lists, etc
-            Args:
-                listed_params (list of values) - the list to format
-                output_name (str) - the parameter name to prepend to each key
-        '''
-        output_payload = {}
-        if listed_params:
-            for index, item in enumerate(listed_params):
-                output_payload[str(output_name) + "[" + str(index) + "]" ] = item
-        return output_payload
-
-    def _format_dict_list(self, list_of_dicts, output_name, key=None):
-        '''
-            Utility method for formatting lists of dictionaries for api consumption.
-            Takes something like [{name: val1, email: val2},{name: val1, email: val2}] for signers
-            and outputs:
-            signers[0][name]  : val1
-            signers[0][email] : val2
-            ... 
-
-            Args:
-                list_of_dicts (list of dicts) - the list to format
-                
-                output_name (str) - the parameter name to prepend to each key
-                
-                key (str, optional) - Used for substituting a key present in the dictionaries for the index. The above might become signers['Lawyer']['name'] instead of using a numerical index if the key "role_name" was specified.
-
-        '''
-        output_payload = {}
-        if list_of_dicts:
-            for index, dictionary in enumerate(list_of_dicts):
-                index_or_key = dictionary[key] if key else str(index)
-                base_name = output_name + '[' + index_or_key + ']'
-                for (param, value) in dictionary.items():
-                    if param != key: #key params are stripped
-                        output_payload[base_name + '[' + param + ']'] = value
-        return output_payload
-
-    def _format_single_dict(self, dictionary, output_name):
-        '''
-            Currently used for metadata fields
-        '''
-        output_payload = {}
-        if dictionary:
-            for (k, v) in dictionary.items():
-                output_payload[output_name + '[' + k + ']'] = v
-        return output_payload
-
-    def _format_custom_fields(self, list_of_custom_fields):
-        '''
-            Custom fields formatting for submission
-        '''
-        output_payload = {}
-        if list_of_custom_fields:
-            # custom_field: {"name": value}
-            for custom_field in list_of_custom_fields:
-                for key, value in custom_field.items():
-                    output_payload["custom_fields[" + key + "]"] = value
-        return output_payload
-
-    def _strip_none_values(self, dictionary):
-        if dictionary:
-            return dict((key, value) for (key, value) in dictionary.items() if value)
