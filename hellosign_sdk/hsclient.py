@@ -669,8 +669,8 @@ class HSClient(object):
 
         return response
 
-    def create_embedded_draft(self, client_id, signer_roles, test_mode=False, files=None, file_urls=None, title=None, subject=None, message=None, cc_roles=None, merge_fields=None):
-        ''' Creates and embedded Template draft for further editing.
+    def create_embedded_template_draft(self, client_id, signer_roles, test_mode=False, files=None, file_urls=None, title=None, subject=None, message=None, cc_roles=None, merge_fields=None):
+        ''' Creates an embedded Template draft for further editing.
 
         Args:
             test_mode (bool, optional): Whether this is a test, the signature request created from this draft will not be legally binding if set to 1. Defaults to 0.
@@ -716,7 +716,7 @@ class HSClient(object):
             'merge_fields': merge_fields #opt
         }
 
-        return self._create_embedded_draft(**params)
+        return self._create_embedded_template_draft(**params)
 
     #####  TEAM METHODS  ##################################
 
@@ -1536,8 +1536,8 @@ class HSClient(object):
 
         return Team(response["team"])
 
-    def _create_embedded_draft(self, client_id, signer_roles, test_mode=False, files=None, file_urls=None, title=None, subject=None, message=None, cc_roles=None, merge_fields=None):
-        ''' Helper method for creating embedded drafts.
+    def _create_embedded_template_draft(self, client_id, signer_roles, test_mode=False, files=None, file_urls=None, title=None, subject=None, message=None, cc_roles=None, merge_fields=None):
+        ''' Helper method for creating embedded template drafts.
             See public function for params.
         '''
 
