@@ -14,8 +14,10 @@ class Team(Resource):
 
             account_id (str): The id of the Account
             email_address (str): The email address associated with the Account
-            role_code (str): The membership role for the team. O = Owner,
-                M = Member
+            role_code (str): The membership role for the team. 
+                a = Admin,
+                m = Member
+                d = Developer
 
         invited_accounts (str): A list of all Accounts that have an outstanding
             invitation to join your Team. Note that this response is a subset

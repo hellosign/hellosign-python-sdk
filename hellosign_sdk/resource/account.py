@@ -2,7 +2,6 @@ from .resource import Resource
 from hellosign_sdk.utils import HSAccessTokenAuth
 
 class Account(Resource):
-
     ''' Contains information about an account and its settings.
 
     Attributes:
@@ -23,7 +22,10 @@ class Account(Resource):
 
         callback_url (str): The URL that HelloSign events will be POSTed to
 
-        role_code (str): The membership role for the team. O = Owner, M = Member
+        role_code (str): The membership role for the team. 
+            a = Admin, 
+            m = Member
+            d = Developer
 
     Examples:
         To print the account_id
@@ -34,6 +36,10 @@ class Account(Resource):
         >>> print account.account_id
 
     '''
+
+    ROLE_ADMIN = 'a'
+    ROLE_MEMBER = 'm'
+    ROLE_DEVELOPER = 'd'
 
     def __init__(self, jsonstr=None, key=None):
         ''' Initialization of the object
