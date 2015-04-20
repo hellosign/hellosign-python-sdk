@@ -63,7 +63,7 @@ class TestTemplate(BaseTestCase):
         except Forbidden:
             pass
 
-    def test_create_embedded_draft(self):
+    def test_create_embedded_template_draft(self):
         ''' Test creating an embedded Template draft '''
 
         files = [os.path.dirname(os.path.realpath(__file__)) + "/docs/nda.pdf"]
@@ -75,7 +75,7 @@ class TestTemplate(BaseTestCase):
         cc_roles = ['Deck Chief','Admiral','Starbuck']
         merge_fields = [{'name':'mymerge', 'type':'text'}]
 
-        response = self.client.create_embedded_draft(
+        response = self.client.create_embedded_template_draft(
             client_id=self.client_id, 
             signer_roles=signer_roles, 
             test_mode=True, 
