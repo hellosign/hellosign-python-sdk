@@ -76,7 +76,7 @@ client.update_account_info()
 #### Create a new HelloSign account
 
 ````python
-new_account = client.create_account("new_user@example.com", "aL0ngL0ngPa55w0rd")
+new_account = client.create_account("new_user@example.com")
 ````
 
 

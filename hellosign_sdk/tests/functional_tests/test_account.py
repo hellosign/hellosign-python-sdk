@@ -11,33 +11,34 @@ class TestAccount(BaseTestCase):
 
         # Bad account data
         try:
-            self.client.create_account("not valid email@example.com", "password")
+            self.client.create_account("not valid email@example.com")
             self.fail()
         except BadRequest:
             pass
         try:
-            self.client.create_account("", "password")
-            self.fail()
-        except BadRequest:
-            pass
-        try:
-            self.client.create_account("email@example.com", "")
+            self.client.create_account("")
             self.fail()
         except BadRequest:
             pass
 
         # Valid account creation
-        email = "py-sdk-test-%s@example.com" % time()
-        pwd = "somepassword"
         try:
-            result = self.client.create_account(email, pwd)
+            
+            email = "py-sdk-test-%s@example.com" % time()
+            result = self.client.create_account(email)
             self.assertEquals(isinstance(result, Account), True)
+
+            # Should work too if giving a password, even though it's not used
+            email = "py-sdk-test-%s@example.com" % time()
+            result = self.client.create_account(email, "something")
+            self.assertEquals(isinstance(result, Account), True)
+            
         except HSException as e:
             self.fail(e.message)
 
         # Already exists
         try:
-            self.client.create_account(email, pwd)
+            self.client.create_account(email)
             self.fail()
         except BadRequest as e:
             self.assertTrue(e.message.find('account already exists') > 0)
@@ -45,7 +46,7 @@ class TestAccount(BaseTestCase):
         # Created via app
         email = "py-sdk-test-%s@example.com" % time()
         try:
-            acct = self.client.create_account(email, pwd, self.client_id, self.client_secret)
+            acct = self.client.create_account(email, client_id=self.client_id, client_secret=self.client_secret)
             self.assertTrue(acct is not None)
             self.assertEquals(acct.email_address, email)
             self.assertTrue(hasattr(acct, 'oauth'))
