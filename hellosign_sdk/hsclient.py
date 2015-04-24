@@ -137,7 +137,7 @@ class HSClient(object):
 
     #####  ACCOUNT METHODS  ###############################
 
-    def create_account(self, email_address, password, client_id=None, client_secret=None):
+    def create_account(self, email_address, password=None, client_id=None, client_secret=None):
         ''' Create a new account.
 
         If the account is created via an app, then Account.oauth will contain the 
@@ -145,7 +145,7 @@ class HSClient(object):
 
         Args:
             email_address (str): Email address of the new account to create
-            password (str): Password of the new account
+            password (str): [DEPRECATED] This parameter will be ignored
             client_id (str, optional): Client id of the app to use to create this account
             client_secret (str, optional): Secret of the app to use to create this account
 
@@ -156,8 +156,7 @@ class HSClient(object):
         request = self._get_request()
         
         params = {
-            'email_address': email_address, 
-            'password': password
+            'email_address': email_address
         }
         if client_id:
             params['client_id'] = client_id
