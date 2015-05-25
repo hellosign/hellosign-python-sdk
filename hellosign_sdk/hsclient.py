@@ -1384,7 +1384,12 @@ class HSClient(object):
         if client_id:
             url = self.SIGNATURE_REQUEST_CREATE_EMBEDDED_WITH_TEMPLATE_URL
 
-        data = dict(payload.items() + signers_payload.items() + ccs_payload.items() + custom_fields_payload.items() + metadata_payload.items() + template_ids_payload.items())
+        data = payload.copy()
+        data.update(signers_payload)
+        data.update(ccs_payload)
+        data.update(custom_fields_payload)
+        data.update(metadata_payload)
+        data.update(template_ids_payload)
 
         request = self._get_request()
         response = request.post(url, data=data)
@@ -1488,7 +1493,11 @@ class HSClient(object):
         # remove attributes with none value
         payload = HSFormat.strip_none_values(payload)
 
-        data = dict(payload.items() + signers_payload.items() + cc_email_addresses_payload.items() + file_urls_payload.items() + metadata_payload.items())
+        data = payload.copy()
+        data.update(signers_payload)
+        data.update(cc_email_addresses_payload)
+        data.update(file_urls_payload)
+        data.update(metadata_payload)
 
         request = self._get_request()
         response = request.post(url, data=data, files=files_payload)
