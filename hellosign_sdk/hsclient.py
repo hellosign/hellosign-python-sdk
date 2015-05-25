@@ -851,7 +851,7 @@ class HSClient(object):
         response = request.get(self.EMBEDDED_OBJECT_GET_URL + signature_id)
         return Embedded(response["embedded"])
 
-    def get_template_edit_url(self, template_id):
+    def get_template_edit_url(self, template_id, test_mode=False):
         ''' Retrieves a embedded template for editing
 
         Retrieves an embedded object containing a template url that can be opened in an iFrame.
@@ -864,7 +864,7 @@ class HSClient(object):
 
         '''
         request = self._get_request()
-        response = request.get(self.EMBEDDED_TEMPLATE_EDIT_URL + template_id)
+        response = request.get(self.EMBEDDED_TEMPLATE_EDIT_URL + template_id, parameters={ 'test_mode': test_mode })
         return Embedded(response["embedded"])
 
 
