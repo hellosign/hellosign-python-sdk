@@ -1594,7 +1594,8 @@ class HSClient(object):
         data.update(file_urls_payload)
         data.update(signer_roles_payload)
         data.update(ccs_payload)
-        data.update(merge_fields_payload)
+        if (merge_fields is not None):
+            data.update(merge_fields_payload)
         data = HSFormat.strip_none_values(data)
 
         request = self._get_request()
