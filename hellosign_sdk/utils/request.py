@@ -52,6 +52,7 @@ class HSRequest(object):
     headers = { 'User-Agent': USER_AGENT }
     http_status_code = 0
     verify_ssl = True
+    warnings = None
 
     def __init__(self, auth, env="production"):
         self.auth = auth
@@ -64,39 +65,10 @@ class HSRequest(object):
         if resp is not None and resp.text is not None:
             return json.loads(resp.text)
 
-    def get(self, url, headers=None, parameters=None, get_json=True):
-        ''' Send a GET request with custome headers and parameters
-
-        Args:
-            url (str): URL to send the request to
-            headers (str, optional): custom headers
-            parameters (str, optional): optional parameters
-
-        Returns:
-            A JSON object of the returned response if `get_json` is True,
-            Requests' response object otherwise
-
-        '''
-
-        if self.debug:
-            print("GET: %s, headers=%s" % (url, headers))
-
-        get_headers = self.headers
-        get_parameters = self.parameters
-        if get_parameters is None:
-            # In case self.parameters is still empty
-            get_parameters = {}
-        if headers is not None:
-            get_headers.update(headers)
-        if parameters is not None:
-            get_parameters.update(parameters)
-
-        response = requests.get(url, headers=get_headers, params=get_parameters, auth=self.auth, verify=self.verify_ssl)
-        self.http_status_code = response.status_code
-        self._check_error(response)
-        if get_json is True:
-            return self._get_json_response(response)
-        return response
+    def get_warnings(self):
+        ''' Return the list of warnings associated with this request, or None if there aren't any '''
+        if self.warnings and len(self.warnings) > 0:
+            return self.warnings
 
     def get_file(self, url, filename, headers=None):
         ''' Get a file from a url and save it as `filename`
@@ -126,6 +98,7 @@ class HSRequest(object):
         
         self.http_status_code = response.status_code
         try:
+            # No need to check for warnings here
             self._check_error(response)
             fd = os.open(filename, os.O_CREAT | os.O_RDWR)
             with os.fdopen(fd, "w+b") as f:
@@ -134,6 +107,42 @@ class HSRequest(object):
             return False
         
         return True
+
+    def get(self, url, headers=None, parameters=None, get_json=True):
+        ''' Send a GET request with custome headers and parameters
+
+        Args:
+            url (str): URL to send the request to
+            headers (str, optional): custom headers
+            parameters (str, optional): optional parameters
+
+        Returns:
+            A JSON object of the returned response if `get_json` is True,
+            Requests' response object otherwise
+
+        '''
+
+        if self.debug:
+            print("GET: %s, headers=%s" % (url, headers))
+
+        get_headers = self.headers
+        get_parameters = self.parameters
+        if get_parameters is None:
+            # In case self.parameters is still empty
+            get_parameters = {}
+        if headers is not None:
+            get_headers.update(headers)
+        if parameters is not None:
+            get_parameters.update(parameters)
+
+        response = requests.get(url, headers=get_headers, params=get_parameters, auth=self.auth, verify=self.verify_ssl)
+        json_response = self._get_json_response(response)
+
+        self.http_status_code = response.status_code
+        self._check_error(response, json_response)
+        self._check_warnings(response, json_response)
+
+        return json_response if get_json is True else response
 
     def post(self, url, data=None, files=None, headers=None, get_json=True):
         ''' Make POST request to a url
@@ -156,20 +165,24 @@ class HSRequest(object):
         post_headers = self.headers
         if headers is not None:
             post_headers.update(headers)
-        response = requests.post(url, headers=post_headers, data=data, auth=self.auth, files=files, verify=self.verify_ssl)
-        self.http_status_code = response.status_code
-        self._check_error(response)
-        if get_json is True:
-            return self._get_json_response(response)
-        return response
 
-    # TODO: use a expected key in returned json, if the returned key does not match, return false...
-    def _check_error(self, response):
+        response = requests.post(url, headers=post_headers, data=data, auth=self.auth, files=files, verify=self.verify_ssl)
+        json_response = self._get_json_response(response)
+
+        self.http_status_code = response.status_code
+        self._check_error(response, json_response)
+        self._check_warnings(response, json_response)
+        
+        return json_response if get_json is True else response
+
+    def _check_error(self, response, json_response=None):
         ''' Check for HTTP error code from the response, raise exception if there's any
 
         Args:
             response (object): Object returned by requests' `get` and `post`
                 methods
+
+            json_response (dict): JSON response, if applicable
 
         Raises:
             HTTPError: If the status code of response is either 4xx or 5xx
@@ -181,17 +194,37 @@ class HSRequest(object):
 
         # If status code is 4xx or 5xx, that should be an error
         if response.status_code >= 400:
-            j = self._get_json_response(response)
+            json_response = json_response or self._get_json_response(response)
             err_cls = self._check_http_error_code(response.status_code)
-            # I intended to return False here but raising a meaningful exception
-            # may make senses more.
             try:
-                raise err_cls("%s error: %s" % (response.status_code, j["error"]["error_msg"]), response.status_code)
-            # This is to catch error when we post get oath data
+                raise err_cls("%s error: %s" % (response.status_code, json_response["error"]["error_msg"]), response.status_code)
+            # This is to catch error when we post get oauth data
             except TypeError:
-                raise err_cls("%s error: %s" % (response.status_code, j["error_description"]), response.status_code)
-        # Return True if everything looks OK
+                raise err_cls("%s error: %s" % (response.status_code, json_response["error_description"]), response.status_code)
+
+        # Return True if everything is OK
         return True
+
+    def _check_warnings(self, response, json_response=None):
+        ''' Extract warnings from the response to make them accessible
+
+        Args:
+            response (object): Object returned by requests' `get` and `post`
+                methods
+
+            json_response (dict): JSON response, if applicable
+        
+        '''
+
+        json_response = json_response or self._get_json_response(response)
+
+        self.warnings = None
+        if json_response:
+            self.warnings = json_response.get('warnings')
+
+        if self.debug and self.warnings:
+            for w in self.warnings:
+                print("WARNING: %s - %s" % (w['warning_name'], w['warning_msg']))
 
     def _check_http_error_code(self, code):
         return {
