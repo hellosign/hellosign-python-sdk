@@ -78,6 +78,8 @@ class HSClient(object):
 
     OAUTH_TOKEN_URL = ''
 
+    request = None
+
     def __init__(self, email_address=None, password=None, api_key=None, access_token=None, access_token_type="Bearer", env='production'):
         '''Initialize the client object with authentication information to send requests
 
@@ -741,6 +743,7 @@ class HSClient(object):
 
         return self._create_embedded_template_draft(**params)
 
+    
     #####  TEAM METHODS  ##################################
 
     def get_team_info(self):
@@ -1136,6 +1139,11 @@ class HSClient(object):
 
     #####  HELPERS  #######################################
 
+    def get_warnings(self):
+        ''' Return the warnings associated with the last request '''
+        if self.request:
+            return self.request.get_warnings()
+
     def _boolean(self, v):
         ''' Convert a value to a boolean '''
         return '1' if (v in (True, 'true', 'True', '1', 1)) else '0'
@@ -1148,7 +1156,8 @@ class HSClient(object):
             Returns:
                 A HSRequest object
         '''
-        return HSRequest(auth or self.auth, self.env)
+        self.request = HSRequest(auth or self.auth, self.env)
+        return self.request
 
     def _authenticate(self, email_address=None, password=None, api_key=None, access_token=None, access_token_type=None):
         ''' Create authentication object to send requests
