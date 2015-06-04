@@ -1139,7 +1139,7 @@ class HSClient(object):
 
     #####  HELPERS  #######################################
 
-    def get_warnings(self):
+    def get_last_warnings(self):
         ''' Return the warnings associated with the last request '''
         if self.request:
             return self.request.get_warnings()

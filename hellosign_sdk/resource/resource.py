@@ -24,8 +24,6 @@ import json
 # SOFTWARE.
 #
 
-# from abc import ABCMeta, abstractmethod
-
 class Resource(object):
 
     ''' An abstract class to represent some objects used by our SDK such as
@@ -37,7 +35,6 @@ class Resource(object):
 
     '''
 
-    # __metaclass__ = ABCMeta
     json_data = None
 
     def __init__(self, jsonstr=None, key=None):
@@ -53,12 +50,11 @@ class Resource(object):
         '''
         super(Resource, self).__init__()
         if jsonstr is not None:
+            data = json.loads(json.dumps(jsonstr))
             if key is not None:
-                object.__setattr__(
-                    self, 'json_data', json.loads(json.dumps(jsonstr))[key])
+                object.__setattr__(self, 'json_data', data[key])
             else:
-                object.__setattr__(
-                    self, 'json_data', json.loads(json.dumps(jsonstr)))
+                object.__setattr__(self, 'json_data', data)
 
     def __getattr__(self, name):
         if name != "json_data":
@@ -74,3 +70,8 @@ class Resource(object):
                 raise AttributeError('%s has no attribute "%s"' % (self.__class__.__name__, name))
         else:
             self.__dict__["json_data"] = value
+
+    def get_warnings(self):
+        ''' Return the list of warnings associated with this object, or None if there aren't any '''
+        if self.json_data:
+            return self.json_data.get('warnings')
