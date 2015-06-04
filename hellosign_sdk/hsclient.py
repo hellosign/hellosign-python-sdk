@@ -105,11 +105,11 @@ class HSClient(object):
     def _init_endpoints(self):
 
         API_PRODUCTION_URL = "https://api.hellosign.com"
-        API_DEV_URL = "https://www.my.hellosign.com/apiapp_dev.php"
+        API_DEV_URL = "https://www.dev-hellosign.com/apiapp_dev.php"
         API_STAGING_URL = "https://staging.hellosign.com/apiapp.php"
 
         WEB_PRODUCTION_URL = "https://www.hellosign.com"
-        WEB_DEV_URL = "https://www.my.hellosign.com/webapp_dev.php"
+        WEB_DEV_URL = "https://www.dev-hellosign.com/webapp_dev.php"
         WEB_STAGING_URL = "https://staging.hellosign.com/webapp_dev.php"
 
         if self.env == "production":
