@@ -63,7 +63,14 @@ class HSRequest(object):
     def _get_json_response(self, resp):
         ''' Parse a JSON response '''
         if resp is not None and resp.text is not None:
-            return json.loads(resp.text)
+            try:
+                text = resp.text.strip('\n')
+                if len(text) > 0:
+                    return json.loads(text)
+            except ValueError, e:
+                if self.debug:
+                    print("Could not decode JSON response: \"%s\"" % resp.text)
+                raise e
 
     def get_warnings(self):
         ''' Return the list of warnings associated with this request, or None if there aren't any '''

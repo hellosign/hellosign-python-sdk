@@ -66,7 +66,7 @@ class TestAccount(BaseTestCase):
             self.client.create_account(email)
             self.fail()
         except BadRequest as e:
-            self.assertTrue(e.message.find('account already exists') > 0)
+            self.assertTrue(e.message.lower().find('account already exists') > 0)
 
         # Created via app
         email = "py-sdk-test-%s@example.com" % time()

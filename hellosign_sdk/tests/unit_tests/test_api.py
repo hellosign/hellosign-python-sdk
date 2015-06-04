@@ -42,7 +42,7 @@ class Api(TestCase):
         # Base
         base_url = self.client.API_URL
         if self.env == 'dev':
-            self.assertEqual(base_url, "https://www.my.hellosign.com/apiapp_dev.php/v3")
+            self.assertEqual(base_url, "https://www.dev-hellosign.com/apiapp_dev.php/v3")
         elif self.env == 'staging':
             self.assertEqual(base_url, "https://staging.hellosign.com/apiapp_dev.php/v3")
         else:
