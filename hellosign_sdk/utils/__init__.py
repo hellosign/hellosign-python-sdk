@@ -60,7 +60,19 @@ class api_resource:
                 res += s[i].lower()
         return res
 
+class api_resource_list(api_resource):
+    ''' Decorator that transforms response data into a ResourceList '''
+
+    def __call__(self, f):
+        def make_resource_list(*args, **kwargs):
+            ''' Make a ResourceList instance '''
+            json_response = f(*args, **kwargs)
+            from hellosign_sdk.resource import ResourceList
+            return ResourceList(self.obj_cls, json_response)
+        make_resource_list.__name__ == f.__name__
+        return make_resource_list
+
 __all__ = [HSException, NoAuthMethod, HTTPError, BadRequest, Unauthorized, PaymentRequired, Forbidden, NotFound, MethodNotAllowed,
            NotAcceptable, RequestTimeout, Conflict, Gone, RequestURITooLong, UnsupportedMediaType, RequestedRangeNotSatisfiable, 
            MethodNotImplemented, InternalServerError, BadGateway, ServiceUnavailable, GatewayTimeout, HSRequest, HSAccessTokenAuth, 
-           HSFormat, api_resource]
+           HSFormat, api_resource, api_resource_list]

@@ -1,5 +1,5 @@
-from hellosign_sdk.utils import HSRequest, HSException, NoAuthMethod, HSAccessTokenAuth, HSFormat, api_resource
-from hellosign_sdk.resource import Account, ResourceList, SignatureRequest, Template, Team, Embedded, UnclaimedDraft
+from hellosign_sdk.utils import HSRequest, HSException, NoAuthMethod, HSAccessTokenAuth, HSFormat, api_resource, api_resource_list
+from hellosign_sdk.resource import Account, SignatureRequest, Template, Team, Embedded, UnclaimedDraft
 from requests.auth import HTTPBasicAuth
 import json
 
@@ -263,6 +263,7 @@ class HSClient(object):
         request = self._get_request()
         return request.get(self.SIGNATURE_REQUEST_INFO_URL + signature_request_id)
 
+    @api_resource_list(SignatureRequest)
     def get_signature_request_list(self, page=1):
         ''' Get a list of SignatureRequest that you can access
 
@@ -278,8 +279,7 @@ class HSClient(object):
 
         '''
         request = self._get_request()
-        response = request.get(self.SIGNATURE_REQUEST_LIST_URL, parameters={ "page": page })
-        return ResourceList(SignatureRequest, response)
+        return request.get(self.SIGNATURE_REQUEST_LIST_URL, parameters={ "page": page })
 
     def get_signature_request_file(self, signature_request_id, filename, file_type=None):
         ''' Download the PDF copy of the current documents
@@ -629,6 +629,7 @@ class HSClient(object):
         request = self._get_request()
         return request.get(self.TEMPLATE_GET_URL + template_id)
 
+    @api_resource_list(Template)
     def get_template_list(self, page=1):
         ''' Lists your Templates
 
@@ -640,8 +641,7 @@ class HSClient(object):
 
         '''
         request = self._get_request()
-        response = request.get(self.TEMPLATE_GET_LIST_URL, parameters={ "page": page })
-        return ResourceList(Template, response)
+        return request.get(self.TEMPLATE_GET_LIST_URL, parameters={ "page": page })
 
     # RECOMMEND: this api does not fail if the user has been added...
     def add_user_to_template(self, template_id, account_id=None, email_address=None):
