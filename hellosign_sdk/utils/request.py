@@ -46,13 +46,14 @@ class HSRequest(object):
     '''
 
     DEFAULT_ENCODING = "UTF-8"
-    USER_AGENT = "Hellosign-python-sdk"
+    USER_AGENT = "hellosign-python-sdk"
     
     parameters = None
     http_status_code = 0
     verify_ssl = True
     warnings = None
     response_callback = None
+    headers = None
 
     def __init__(self, auth, env="production"):
         self.auth = auth
@@ -85,11 +86,11 @@ class HSRequest(object):
         if self.debug:
             print("GET FILE: %s, headers=%s" % (url, headers))
 
-        get_headers = self._get_default_headers()
+        self.headers = self._get_default_headers()
         if headers is not None:
-            get_headers.update(headers)
+            self.headers.update(headers)
 
-        response = requests.get(url, headers=get_headers, auth=self.auth, verify=self.verify_ssl)
+        response = requests.get(url, headers=self.headers, auth=self.auth, verify=self.verify_ssl)
         
         self.http_status_code = response.status_code
         try:
@@ -120,17 +121,17 @@ class HSRequest(object):
         if self.debug:
             print("GET: %s, headers=%s" % (url, headers))
 
-        get_headers = self._get_default_headers()
+        self.headers = self._get_default_headers()
         get_parameters = self.parameters
         if get_parameters is None:
             # In case self.parameters is still empty
             get_parameters = {}
         if headers is not None:
-            get_headers.update(headers)
+            self.headers.update(headers)
         if parameters is not None:
             get_parameters.update(parameters)
 
-        response = requests.get(url, headers=get_headers, params=get_parameters, auth=self.auth, verify=self.verify_ssl)
+        response = requests.get(url, headers=self.headers, params=get_parameters, auth=self.auth, verify=self.verify_ssl)
         json_response = self._process_json_response(response)
 
         return json_response if get_json is True else response
@@ -153,11 +154,11 @@ class HSRequest(object):
         if self.debug:
             print("POST: %s, headers=%s" % (url, headers))
 
-        post_headers = self._get_default_headers()
+        self.headers = self._get_default_headers()
         if headers is not None:
-            post_headers.update(headers)
+            self.headers.update(headers)
 
-        response = requests.post(url, headers=post_headers, data=data, auth=self.auth, files=files, verify=self.verify_ssl)
+        response = requests.post(url, headers=self.headers, data=data, auth=self.auth, files=files, verify=self.verify_ssl)
         json_response = self._process_json_response(response)
         
         return json_response if get_json is True else response
@@ -177,15 +178,16 @@ class HSRequest(object):
                     print("Could not decode JSON response: \"%s\"" % resp.text)
                 raise e
 
-    def _get_user_agent(self):
+    @classmethod
+    def _get_user_agent(cls):
         ''' Get the user agent to be sent '''
         from hellosign_sdk import HSClient
-        return self.USER_AGENT + '/' + HSClient.version
+        return cls.USER_AGENT + '/' + HSClient.version
 
     def _get_default_headers(self):
         ''' Return the default headers to send '''
         return {
-            'User-Agent': self._get_user_agent()
+            'User-Agent': HSRequest._get_user_agent()
         }
 
     def _process_json_response(self, response):

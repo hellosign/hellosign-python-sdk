@@ -696,7 +696,7 @@ class HSClient(object):
 
         return response
 
-    def create_embedded_template_draft(self, client_id, signer_roles, test_mode=False, files=None, file_urls=None, title=None, subject=None, message=None, cc_roles=None, merge_fields=None):
+    def create_embedded_template_draft(self, client_id, signer_roles, test_mode=False, files=None, file_urls=None, title=None, subject=None, message=None, cc_roles=None, merge_fields=None, use_preexisting_fields=False):
         ''' Creates an embedded Template draft for further editing.
 
         Args:
@@ -726,6 +726,8 @@ class HSClient(object):
                 name (str): The name of the merge field. Must be unique.
                 type (str): Can only be "text" or "checkbox".
 
+            use_preexisting_fields (bool): Whether to use preexisting PDF fields
+
         Returns:
             A Template object specifying the Id of the draft
 
@@ -740,7 +742,8 @@ class HSClient(object):
             'message': message,
             'signer_roles': signer_roles,
             'cc_roles': cc_roles,
-            'merge_fields': merge_fields #opt
+            'merge_fields': merge_fields, #opt
+            'use_preexisting_fields': use_preexisting_fields
         }
 
         return self._create_embedded_template_draft(**params)
@@ -875,7 +878,7 @@ class HSClient(object):
 
     #####  UNCLAIMED DRAFT METHODS  #######################
 
-    def create_unclaimed_draft(self, test_mode=False, files=None, file_urls=None, draft_type=None, subject=None, message=None, signers=None, cc_email_addresses=None, signing_redirect_url=None, form_fields_per_document=None, metadata=None):
+    def create_unclaimed_draft(self, test_mode=False, files=None, file_urls=None, draft_type=None, subject=None, message=None, signers=None, cc_email_addresses=None, signing_redirect_url=None, form_fields_per_document=None, metadata=None, use_preexisting_fields=False):
         ''' Creates a new Draft that can be claimed using the claim URL
 
         Creates a new Draft that can be claimed using the claim URL. The first
@@ -918,6 +921,8 @@ class HSClient(object):
 
             metadata (dict, optional): Metadata to associate with the draft
 
+            use_preexisting_fields (bool): Whether to use preexisting PDF fields
+
         Returns:
             An UnclaimedDraft object
 
@@ -936,12 +941,13 @@ class HSClient(object):
             'signers': signers,
             'cc_email_addresses': cc_email_addresses,
             'form_fields_per_document': form_fields_per_document,
-            'metadata': metadata
+            'metadata': metadata,
+            'use_preexisting_fields': use_preexisting_fields
         }
 
         return self._create_unclaimed_draft(**params)
 
-    def create_embedded_unclaimed_draft(self, test_mode=False, client_id=None, is_for_embedded_signing=False, requester_email_address=None, files=None, file_urls=None, draft_type=None, subject=None, message=None, signers=None, cc_email_addresses=None, signing_redirect_url=None, requesting_redirect_url=None, form_fields_per_document=None, metadata=None):
+    def create_embedded_unclaimed_draft(self, test_mode=False, client_id=None, is_for_embedded_signing=False, requester_email_address=None, files=None, file_urls=None, draft_type=None, subject=None, message=None, signers=None, cc_email_addresses=None, signing_redirect_url=None, requesting_redirect_url=None, form_fields_per_document=None, metadata=None, use_preexisting_fields=False):
         ''' Creates a new Draft to be used for embedded requesting
 
         Args:
@@ -986,6 +992,8 @@ class HSClient(object):
 
             metadata (dict, optional): Metadata to associate with the draft
 
+            use_preexisting_fields (bool): Whether to use preexisting PDF fields
+
         Returns:
             An UnclaimedDraft object
 
@@ -1015,7 +1023,8 @@ class HSClient(object):
             'signers': signers,
             'cc_email_addresses': cc_email_addresses,
             'form_fields_per_document': form_fields_per_document,
-            'metadata': metadata
+            'metadata': metadata,
+            'use_preexisting_fields': use_preexisting_fields
         }
 
         return self._create_unclaimed_draft(**params)
@@ -1411,7 +1420,7 @@ class HSClient(object):
         return response
 
     @api_resource(UnclaimedDraft)
-    def _create_unclaimed_draft(self, test_mode=False, client_id=None, is_for_embedded_signing=False, requester_email_address=None, files=None, file_urls=None, draft_type=None, subject=None, message=None, signers=None, cc_email_addresses=None, signing_redirect_url=None, requesting_redirect_url=None, form_fields_per_document=None, metadata=None):
+    def _create_unclaimed_draft(self, test_mode=False, client_id=None, is_for_embedded_signing=False, requester_email_address=None, files=None, file_urls=None, draft_type=None, subject=None, message=None, signers=None, cc_email_addresses=None, signing_redirect_url=None, requesting_redirect_url=None, form_fields_per_document=None, metadata=None, use_preexisting_fields=False):
         ''' Creates a new Draft that can be claimed using the claim URL
 
         Args:
@@ -1459,6 +1468,8 @@ class HSClient(object):
 
             metadata (dict, optional): Metadata to associate with the draft
 
+            use_preexisting_fields (bool): Whether to use preexisting PDF fields
+
         Returns:
             An UnclaimedDraft object
 
@@ -1491,7 +1502,8 @@ class HSClient(object):
             "subject": subject, 
             "message": message,
             "signing_redirect_url": signing_redirect_url,
-            "form_fields_per_document": form_fields_per_document
+            "form_fields_per_document": form_fields_per_document,
+            "use_preexisting_fields": use_preexisting_fields
         }
 
         url = self.UNCLAIMED_DRAFT_CREATE_URL
@@ -1586,7 +1598,7 @@ class HSClient(object):
         return response
 
     @api_resource(Template)
-    def _create_embedded_template_draft(self, client_id, signer_roles, test_mode=False, files=None, file_urls=None, title=None, subject=None, message=None, cc_roles=None, merge_fields=None):
+    def _create_embedded_template_draft(self, client_id, signer_roles, test_mode=False, files=None, file_urls=None, title=None, subject=None, message=None, cc_roles=None, merge_fields=None, use_preexisting_fields=False):
         ''' Helper method for creating embedded template drafts.
             See public function for params.
         '''
@@ -1599,7 +1611,8 @@ class HSClient(object):
             'client_id' : client_id, 
             'title'     : title, 
             'subject'   : subject, 
-            'message'   : message
+            'message'   : message,
+            'use_preexisting_fields': use_preexisting_fields
         }
 
         # Prep files

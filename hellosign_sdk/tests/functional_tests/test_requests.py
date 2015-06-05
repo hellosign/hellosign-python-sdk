@@ -1,4 +1,5 @@
 from hellosign_sdk.tests.functional_tests import BaseTestCase
+from hellosign_sdk.utils import HSRequest
 from time import time
 
 #
@@ -26,7 +27,7 @@ from time import time
 #
 
 
-class TestWarnings(BaseTestCase):
+class TestRequests(BaseTestCase):
 
     TEST_WARNING_NAME = 'fake_warning'
     TEST_WARNING_MSG = 'Fake warning message'
@@ -70,3 +71,26 @@ class TestWarnings(BaseTestCase):
         self.client.response_callback = None
         self.client.create_account("demo-%s@example.com" % (t+1))
         self.assertIsNone(self.client.get_last_warnings())
+
+    def test_user_agent(self):
+        ''' Test that the user agent is correctly sent '''
+
+        self.client.create_account("demo-%s@example.com" % time())
+
+        req_headers = self.client.request.headers
+        self.assertIsNotNone(req_headers)
+        self.assertIsInstance(req_headers, dict)
+        self.assertIsNotNone(req_headers.get('User-Agent'))
+        self.assertEquals(req_headers['User-Agent'], HSRequest._get_user_agent())
+
+        parts = req_headers['User-Agent'].split('/')
+        self.assertIs(len(parts), 2)
+        self.assertEquals(parts[0], 'hellosign-python-sdk')
+        parts = parts[1].split('.')
+        self.assertIs(len(parts), 3)
+        try:
+            int(parts[0])
+            int(parts[1])
+        except ValueError:
+            self.fail('Invalid version number')
+        self.assertEquals(parts[2], '0')
