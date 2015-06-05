@@ -1,4 +1,4 @@
-from hellosign_sdk.utils import HSRequest, HSException, NoAuthMethod, HSAccessTokenAuth, HSFormat
+from hellosign_sdk.utils import HSRequest, HSException, NoAuthMethod, HSAccessTokenAuth, HSFormat, api_resource
 from hellosign_sdk.resource import Account, ResourceList, SignatureRequest, Template, Team, Embedded, UnclaimedDraft
 from requests.auth import HTTPBasicAuth
 import json
@@ -164,6 +164,7 @@ class HSClient(object):
 
     #####  ACCOUNT METHODS  ###############################
 
+    @api_resource(Account)
     def create_account(self, email_address, password=None, client_id=None, client_secret=None):
         ''' Create a new account.
 
@@ -194,7 +195,7 @@ class HSClient(object):
         if 'oauth_data' in response:
             response["account"]["oauth"] = response['oauth_data']
 
-        return self._make_object(Account, response)
+        return response
 
     # Get account info and put in self.account so that further access to the
     # info can be made by using self.account.attribute
@@ -218,6 +219,7 @@ class HSClient(object):
         return self.account
 
     # At the moment you can only update your callback_url only
+    @api_resource(Account)
     def update_account_info(self):
         ''' Update current account information
 
@@ -228,8 +230,7 @@ class HSClient(object):
 
         '''
         request = self._get_request()
-        response = request.post(self.ACCOUNT_UPDATE_URL, { 'callback_url': self.account.callback_url })
-        return self._make_object(Account, response)
+        return request.post(self.ACCOUNT_UPDATE_URL, { 'callback_url': self.account.callback_url })
 
     def verify_account(self, email_address):
         ''' Verify whether a HelloSign Account exists 
@@ -248,6 +249,7 @@ class HSClient(object):
 
     #####  SIGNATURE REQUEST METHODS  #####################
 
+    @api_resource(SignatureRequest)
     def get_signature_request(self, signature_request_id):
         ''' Get a signature request by its ID
 
@@ -259,8 +261,7 @@ class HSClient(object):
 
         '''
         request = self._get_request()
-        response = request.get(self.SIGNATURE_REQUEST_INFO_URL + signature_request_id)
-        return self._make_object(SignatureRequest, response)
+        return request.get(self.SIGNATURE_REQUEST_INFO_URL + signature_request_id)
 
     def get_signature_request_list(self, page=1):
         ''' Get a list of SignatureRequest that you can access
@@ -433,6 +434,7 @@ class HSClient(object):
 
         return self._send_signature_request_with_template(**params)
 
+    @api_resource(SignatureRequest)
     def remind_signature_request(self, signature_request_id, email_address):
         ''' Sends an email to the signer reminding them to sign the signature request
 
@@ -450,8 +452,7 @@ class HSClient(object):
 
         '''
         request = self._get_request()
-        response = request.post(self.SIGNATURE_REQUEST_REMIND_URL + signature_request_id, data={ "email_address": email_address })
-        return self._make_object(SignatureRequest, response)
+        return request.post(self.SIGNATURE_REQUEST_REMIND_URL + signature_request_id, data={ "email_address": email_address })
 
     def cancel_signature_request(self, signature_request_id):
         ''' Cancels a SignatureRequest
@@ -614,6 +615,7 @@ class HSClient(object):
 
     #####  REUSABLE FORM METHODS  #########################
 
+    @api_resource(Template)
     def get_template(self, template_id):
         ''' Gets a Template which includes a list of Accounts that can access it
 
@@ -625,8 +627,7 @@ class HSClient(object):
 
         '''
         request = self._get_request()
-        response = request.get(self.TEMPLATE_GET_URL + template_id)
-        return self._make_object(Template, response)
+        return request.get(self.TEMPLATE_GET_URL + template_id)
 
     def get_template_list(self, page=1):
         ''' Lists your Templates
@@ -747,6 +748,7 @@ class HSClient(object):
     
     #####  TEAM METHODS  ##################################
 
+    @api_resource(Team)
     def get_team_info(self):
         ''' Gets your Team and a list of its members
 
@@ -759,9 +761,9 @@ class HSClient(object):
 
         '''
         request = self._get_request()
-        response = request.get(self.TEAM_INFO_URL)
-        return self._make_object(Team, response)
+        return request.get(self.TEAM_INFO_URL)
 
+    @api_resource(Team)
     def create_team(self, name):
         ''' Creates a new Team
 
@@ -775,10 +777,10 @@ class HSClient(object):
 
         '''
         request = self._get_request()
-        response = request.post(self.TEAM_CREATE_URL, { "name": name })
-        return self._make_object(Team, response)
+        return request.post(self.TEAM_CREATE_URL, { "name": name })
 
     # RECOMMEND: The api event create a new team if you do not belong to any team
+    @api_resource(Team)
     def update_team_name(self, name):
         ''' Updates a Team's name
 
@@ -790,8 +792,7 @@ class HSClient(object):
 
         '''
         request = self._get_request()
-        response = request.post(self.TEAM_UPDATE_URL, { "name": name })
-        return self._make_object(Team, response)
+        return request.post(self.TEAM_UPDATE_URL, { "name": name })
 
     def destroy_team(self):
         ''' Delete your Team
@@ -839,6 +840,7 @@ class HSClient(object):
 
     #####  EMBEDDED METHODS  ##############################
 
+    @api_resource(Embedded)
     def get_embedded_object(self, signature_id):
         ''' Retrieves a embedded signing object
 
@@ -852,9 +854,9 @@ class HSClient(object):
 
         '''
         request = self._get_request()
-        response = request.get(self.EMBEDDED_OBJECT_GET_URL + signature_id)
-        return self._make_object(Embedded, response)
+        return request.get(self.EMBEDDED_OBJECT_GET_URL + signature_id)
 
+    @api_resource(Embedded)
     def get_template_edit_url(self, template_id):
         ''' Retrieves a embedded template for editing
 
@@ -868,8 +870,7 @@ class HSClient(object):
 
         '''
         request = self._get_request()
-        response = request.get(self.EMBEDDED_TEMPLATE_EDIT_URL + template_id)
-        return self._make_object(Embedded, response)
+        return request.get(self.EMBEDDED_TEMPLATE_EDIT_URL + template_id)
 
 
     #####  UNCLAIMED DRAFT METHODS  #######################
@@ -1145,34 +1146,6 @@ class HSClient(object):
         if self.request:
             return self.request.get_warnings()
 
-    def _uncamelize(self, s):
-        ''' Convert a camel-cased string to using underscores '''
-        res = ''
-        if s:
-            for i in range(len(s)): 
-                if i > 0 and s[i].lower() != s[i]:
-                    res += '_'
-                res += s[i].lower()
-        return res
-
-    # NOTE: this is a good candidate to become a decorator
-    def _make_object(self, obj_cls, json_response):
-        ''' Make an object from response data 
-
-            Args:
-                obj_cls (class):        Object class    
-                json_response (dict):   Decoded JSON response
-
-            Returns: Resource
-        '''
-        key = self._uncamelize(obj_cls.__name__)
-        if key not in json_response:
-            raise ValueError('"%s" is expected in the response' % key)
-        obj_data = json_response[key]
-        warnings = self.request.get_warnings()
-        return obj_cls(obj_data, None, warnings)
-
-
     def _boolean(self, v):
         ''' Convert a value to a boolean '''
         return '1' if (v in (True, 'true', 'True', '1', 1)) else '0'
@@ -1243,6 +1216,7 @@ class HSClient(object):
                 if not any(field.values()):
                     raise HSException("One of the following fields is required: %s" % ", ".join(field.keys()))
 
+    @api_resource(SignatureRequest)
     def _send_signature_request(self, test_mode=False, client_id=None, files=None, file_urls=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, cc_email_addresses=None, form_fields_per_document=None, use_text_tags=False, hide_text_tags=False, metadata=None):
         ''' To share the same logic between send_signature_request &
             send_signature_request_embedded functions
@@ -1337,8 +1311,9 @@ class HSClient(object):
 
         request = self._get_request()
         response = request.post(url, data=data, files=files_payload)
-        return self._make_object(SignatureRequest, response)
+        return response
 
+    @api_resource(SignatureRequest)
     def _send_signature_request_with_template(self, test_mode=False, client_id=None, template_id=None, template_ids=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, ccs=None, custom_fields=None, metadata=None):
         ''' To share the same logic between send_signature_request_with_template 
             and send_signature_request_embedded_with_template
@@ -1433,8 +1408,9 @@ class HSClient(object):
         request = self._get_request()
         response = request.post(url, data=data)
 
-        return self._make_object(SignatureRequest, response)
+        return response
 
+    @api_resource(UnclaimedDraft)
     def _create_unclaimed_draft(self, test_mode=False, client_id=None, is_for_embedded_signing=False, requester_email_address=None, files=None, file_urls=None, draft_type=None, subject=None, message=None, signers=None, cc_email_addresses=None, signing_redirect_url=None, requesting_redirect_url=None, form_fields_per_document=None, metadata=None):
         ''' Creates a new Draft that can be claimed using the claim URL
 
@@ -1541,8 +1517,9 @@ class HSClient(object):
         request = self._get_request()
         response = request.post(url, data=data, files=files_payload)
 
-        return self._make_object(UnclaimedDraft, response)
+        return response
 
+    @api_resource(Template)
     def _add_remove_user_template(self, url, template_id, account_id=None, email_address=None):
         ''' Add or Remove user from a Template
 
@@ -1575,8 +1552,9 @@ class HSClient(object):
         request = self._get_request()
         response = request.post(url + template_id, data)
 
-        return self._make_object(Template, response)
+        return response
 
+    @api_resource(Team)
     def _add_remove_team_member(self, url, email_address=None, account_id=None):
         ''' Add or Remove a team member
 
@@ -1605,8 +1583,9 @@ class HSClient(object):
         request = self._get_request()
         response = request.post(url, data)
 
-        return self._make_object(Team, response)
+        return response
 
+    @api_resource(Template)
     def _create_embedded_template_draft(self, client_id, signer_roles, test_mode=False, files=None, file_urls=None, title=None, subject=None, message=None, cc_roles=None, merge_fields=None):
         ''' Helper method for creating embedded template drafts.
             See public function for params.
@@ -1650,8 +1629,9 @@ class HSClient(object):
 
         response = request.post(url, data=data, files=files_payload)
 
-        return self._make_object(Template, response)
+        return response
 
+    @api_resource(UnclaimedDraft)
     def _create_embedded_unclaimed_draft_with_template(self, test_mode=False, client_id=None, is_for_embedded_signing=False, template_id=None, template_ids=None, requester_email_address=None, title=None, subject=None, message=None, signers=None, ccs=None, signing_redirect_url=None, requesting_redirect_url=None, metadata=None, custom_fields=None):
         ''' Helper method for creating unclaimed drafts from templates
             See public function for params.
@@ -1693,4 +1673,4 @@ class HSClient(object):
         request = self._get_request()
         response = request.post(url, data=data)
 
-        return self._make_object(UnclaimedDraft, response)
+        return response
