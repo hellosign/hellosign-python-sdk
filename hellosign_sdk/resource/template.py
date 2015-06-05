@@ -94,7 +94,7 @@ class Template(Resource):
         expires_at (int): Date when the edit_url expires
     '''
 
-    def __init__(self, jsonstr=None, key=None):
+    def __init__(self, jsonstr=None, key=None, warnings=None):
         ''' Initialization of the object
 
         Args:
@@ -104,8 +104,9 @@ class Template(Resource):
                 of the object
             key (str): Optional key to use with jsonstr. If `key` exists, we'll
                 load the data of `jsonstr[key]` instead of the whole `jsonstr`
+            warnings (list): List of associated warnings
         '''
-        super(Template, self).__init__(jsonstr, key)
+        super(Template, self).__init__(jsonstr, key, warnings)
         if 'reusable_form_id' in self.json_data:
             self.json_data['template_id'] = self.json_data['reusable_form_id']
             del self.json_data['reusable_form_id']

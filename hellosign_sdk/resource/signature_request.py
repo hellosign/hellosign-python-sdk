@@ -88,7 +88,7 @@ class SignatureRequest(Resource):
 
     '''
 
-    def __init__(self, jsonstr=None, key=None):
+    def __init__(self, jsonstr=None, key=None, warnings=None):
         ''' Initialization of the object
 
         Args:
@@ -98,8 +98,9 @@ class SignatureRequest(Resource):
                 of the object
             key (str): Optional key to use with jsonstr. If `key` exists, we'll
                 load the data of `jsonstr[key]` instead of the whole `jsonstr`
+            warnings (list): List of associated warnings
         '''
-        super(SignatureRequest, self).__init__(jsonstr, key)
+        super(SignatureRequest, self).__init__(jsonstr, key, warnings)
         if 'signatures' in self.json_data:
             signature_list = []
             for signature in self.signatures:

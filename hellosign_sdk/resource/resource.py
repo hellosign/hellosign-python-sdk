@@ -35,9 +35,12 @@ class Resource(object):
 
     '''
 
-    json_data = None
+    INTERNALS = ['json_data', 'warnings']
 
-    def __init__(self, jsonstr=None, key=None):
+    json_data = None
+    warnings = None
+
+    def __init__(self, jsonstr=None, key=None, warnings=None):
         ''' Initialization of the object
 
         Args:
@@ -49,6 +52,7 @@ class Resource(object):
                 load the data of `jsonstr[key]` instead of the whole `jsonstr`
         '''
         super(Resource, self).__init__()
+        self.warnings = warnings
         if jsonstr is not None:
             data = json.loads(json.dumps(jsonstr))
             if key is not None:
@@ -57,21 +61,21 @@ class Resource(object):
                 object.__setattr__(self, 'json_data', data)
 
     def __getattr__(self, name):
-        if name != "json_data":
+        if name not in self.INTERNALS:
             if name in self.json_data:
                 return self.json_data[name]
             raise AttributeError('%s has no attribute "%s"' % (self.__class__.__name__, name))
 
     def __setattr__(self, name, value):
-        if name != "json_data":
+        if name not in self.INTERNALS:
             if name in self.json_data:
                 self.json_data[name] = value
             else:
                 raise AttributeError('%s has no attribute "%s"' % (self.__class__.__name__, name))
         else:
-            self.__dict__["json_data"] = value
+            self.__dict__[name] = value
 
     def get_warnings(self):
         ''' Return the list of warnings associated with this object, or None if there aren't any '''
-        if self.json_data:
-            return self.json_data.get('warnings')
+        if self.warnings and len(self.warnings) > 0:
+            return self.warnings

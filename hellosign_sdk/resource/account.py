@@ -66,7 +66,7 @@ class Account(Resource):
     ROLE_MEMBER = 'm'
     ROLE_DEVELOPER = 'd'
 
-    def __init__(self, jsonstr=None, key=None):
+    def __init__(self, jsonstr=None, key=None, warnings=None):
         ''' Initialization of the object
 
         Args:
@@ -76,8 +76,9 @@ class Account(Resource):
                 of the object
             key (str): Optional key to use with jsonstr. If `key` exists, we'll
                 load the data of `jsonstr[key]` instead of the whole `jsonstr`
+            warnings (list): List of associated warnings
         '''
-        super(Account, self).__init__(jsonstr, key)
+        super(Account, self).__init__(jsonstr, key, warnings)
         if self.json_data and 'oauth' in self.json_data:
             oauth = HSAccessTokenAuth.from_response(self.json_data['oauth'])
             self.json_data['oauth'] = oauth

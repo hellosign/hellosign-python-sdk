@@ -53,6 +53,7 @@ class HSRequest(object):
     http_status_code = 0
     verify_ssl = True
     warnings = None
+    response_callback = None
 
     def __init__(self, auth, env="production"):
         self.auth = auth
@@ -143,11 +144,7 @@ class HSRequest(object):
             get_parameters.update(parameters)
 
         response = requests.get(url, headers=get_headers, params=get_parameters, auth=self.auth, verify=self.verify_ssl)
-        json_response = self._get_json_response(response)
-
-        self.http_status_code = response.status_code
-        self._check_error(response, json_response)
-        self._check_warnings(response, json_response)
+        json_response = self._process_json_response(response)
 
         return json_response if get_json is True else response
 
@@ -174,13 +171,24 @@ class HSRequest(object):
             post_headers.update(headers)
 
         response = requests.post(url, headers=post_headers, data=data, auth=self.auth, files=files, verify=self.verify_ssl)
+        json_response = self._process_json_response(response)
+        
+        return json_response if get_json is True else response
+
+    def _process_json_response(self, response):
+        ''' Process a given response '''
+
         json_response = self._get_json_response(response)
+        
+        if self.response_callback is not None:
+            json_response = self.response_callback(json_response)
+            response._content = json.dumps(json_response)
 
         self.http_status_code = response.status_code
         self._check_error(response, json_response)
-        self._check_warnings(response, json_response)
-        
-        return json_response if get_json is True else response
+        self._check_warnings(json_response)
+
+        return json_response
 
     def _check_error(self, response, json_response=None):
         ''' Check for HTTP error code from the response, raise exception if there's any
@@ -212,18 +220,13 @@ class HSRequest(object):
         # Return True if everything is OK
         return True
 
-    def _check_warnings(self, response, json_response=None):
+    def _check_warnings(self, json_response):
         ''' Extract warnings from the response to make them accessible
 
         Args:
-            response (object): Object returned by requests' `get` and `post`
-                methods
-
-            json_response (dict): JSON response, if applicable
+            json_response (dict): JSON response
         
         '''
-
-        json_response = json_response or self._get_json_response(response)
 
         self.warnings = None
         if json_response:
