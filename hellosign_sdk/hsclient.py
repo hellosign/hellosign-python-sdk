@@ -471,7 +471,7 @@ class HSClient(object):
         request = self._get_request()
         request.post(url=self.SIGNATURE_REQUEST_CANCEL_URL + signature_request_id, get_json=False)
 
-    def send_signature_request_embedded(self, test_mode=False, client_id=None, files=None, file_urls=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, cc_email_addresses=None, form_fields_per_document=None, metadata=None):
+    def send_signature_request_embedded(self, test_mode=False, client_id=None, files=None, file_urls=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, cc_email_addresses=None, form_fields_per_document=None, use_text_tags=False, hide_text_tags=False, metadata=None):
         ''' Creates and sends a new SignatureRequest with the submitted documents
 
         Creates a new SignatureRequest with the submitted documents to be signed
@@ -515,6 +515,10 @@ class HSClient(object):
             form_fields_per_document (str): The fields that should appear on the document, expressed as a serialized JSON data structure which is
                 a list of lists of the form fields. Please refer to the API reference of HelloSign for more details (https://www.hellosign.com/api/reference#SignatureRequest)
 
+            use_text_tags (bool, optional): Use text tags in the provided file(s) to create form fields
+
+            hide_text_tags (bool, optional): Hide text tag areas
+
             metadata (dict, optional): Metadata to associate with the signature request
 
         Returns:
@@ -525,17 +529,19 @@ class HSClient(object):
         self._check_required_fields({ "signers": signers, "client_id": client_id }, [{ "files": files, "file_urls": file_urls }])
 
         params = {
-            'test_mode': self._boolean(test_mode), 
-            'client_id': client_id, 
+            'test_mode': self._boolean(test_mode),
+            'client_id': client_id,
             'files': files,
-            'file_urls': file_urls, 
-            'title': title, 
-            'subject': subject, 
+            'file_urls': file_urls,
+            'title': title,
+            'subject': subject,
             'message': message,
-            'signing_redirect_url': signing_redirect_url, 
+            'signing_redirect_url': signing_redirect_url,
             'signers': signers,
             'cc_email_addresses': cc_email_addresses,
             'form_fields_per_document': form_fields_per_document,
+            'use_text_tags': self._boolean(use_text_tags),
+            'hide_text_tags': self._boolean(hide_text_tags),
             'metadata': metadata
         }
 
