@@ -106,33 +106,33 @@ for signature_request in signature_request_list:
 ````python
 files = ["NDA.pdf", "AppendixA.pdf"]
 signers = [
-    {"name": "Jack", "email_address": "jack@example.com"}, 
+    {"name": "Jack", "email_address": "jack@example.com"},
     {"name": "Jill", "email_address": "jill@example.com"}
 ]
 cc_email_addresses = ["lawyer@hellosign.com", "lawyer@example.com"]
 
 # Send a signature request with remote files
 signature_request = client.send_signature_request(
-                                test_mode=True, 
-                                files=None, 
-                                file_urls=["http://www.example.com/download/sample.pdf"], 
-                                title="NDA with Acme Co.", 
-                                subject="The NDA we talked about", 
-                                message="Please sign this NDA and then we can discuss more. Let me know if you have any questions.", 
-                                signing_redirect_url=None, 
-                                signers=signers, 
+                                test_mode=True,
+                                files=None,
+                                file_urls=["http://www.example.com/download/sample.pdf"],
+                                title="NDA with Acme Co.",
+                                subject="The NDA we talked about",
+                                message="Please sign this NDA and then we can discuss more. Let me know if you have any questions.",
+                                signing_redirect_url=None,
+                                signers=signers,
                                 cc_email_addresses=cc_email_addresses)
 
 # Send a signature request with uploaded files
 signature_request = client.send_signature_request(
-                                test_mode=True, 
-                                files=files, 
-                                file_urls=None, 
-                                title="NDA with Acme Co.", 
-                                subject="The NDA we talked about", 
-                                message="Please sign this NDA and then we can discuss more. Let me know if you have any questions.", 
-                                signing_redirect_url=None, 
-                                signers=signers, 
+                                test_mode=True,
+                                files=files,
+                                file_urls=None,
+                                title="NDA with Acme Co.",
+                                subject="The NDA we talked about",
+                                message="Please sign this NDA and then we can discuss more. Let me know if you have any questions.",
+                                signing_redirect_url=None,
+                                signers=signers,
                                 cc_email_addresses=cc_email_addresses)
 ````
 
@@ -140,7 +140,7 @@ signature_request = client.send_signature_request(
 
 ````python
 signers = [
-    {"name": "Jack", "email_address": "jack@example.com"}, 
+    {"name": "Jack", "email_address": "jack@example.com"},
     {"name": "Jill", "email_address": "jill@example.com"}
 ]
 cc_email_addresses = ["lawyer@hellosign.com", "lawyer@example.com"]
@@ -149,20 +149,20 @@ ccs = [
     { "email_address": "lawyer@example.com", "role_name": "Lawyer 2" }
 ]
 custom_fields = [
-    { "Field 1": "Value 1" }, 
+    { "Field 1": "Value 1" },
     { "Field 2": "Value 2" }
 ]
 
 # Send a signature request with uploaded files
 signature_request = client.send_signature_request_with_template(
-                                        test_mode=True, 
-                                        template_id="fa5c8a0b0f492d768749333ad6fcc214c111e967", 
-                                        title="NDA with Acme Co.", 
-                                        subject="The NDA we talked about", 
-                                        message="Please sign this NDA and then we can discuss more. Let me know if you have any questions.", 
-                                        signing_redirect_url=None, 
-                                        signers=signers, 
-                                        ccs=ccs, 
+                                        test_mode=True,
+                                        template_id="fa5c8a0b0f492d768749333ad6fcc214c111e967",
+                                        title="NDA with Acme Co.",
+                                        subject="The NDA we talked about",
+                                        message="Please sign this NDA and then we can discuss more. Let me know if you have any questions.",
+                                        signing_redirect_url=None,
+                                        signers=signers,
+                                        ccs=ccs,
                                         custom_fields=custom_fields)
 ````
 
@@ -172,7 +172,7 @@ signature_request = client.send_signature_request_with_template(
 
 ````python
 signers = [
-    {"name": "Jack", "email_address": "jack@example.com"}, 
+    {"name": "Jack", "email_address": "jack@example.com"},
     {"name": "Jill", "email_address": "jill@example.com"}
 ]
 signature_request = client.send_signature_request_embedded(
@@ -191,7 +191,7 @@ signature_request = client.send_signature_request_embedded(
 for signature in signature_request.signatures:
     embedded_obj = client.get_embedded_object(signature.signature_id)
     sign_url = embedded_obj.sign_url
-                                
+
 ````
 
 More information about the asscociated front-end code can be found [here](https://www.hellosign.com/api/embeddedSigningWalkthrough#ClientSide)
@@ -255,7 +255,7 @@ We do not allow app callbacks (event or OAuth) to be set to localhost. However i
 ```
 The MIT License (MIT)
 
-Copyright (C) 2014 hellosign.com
+Copyright (C) 2015 hellosign.com
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

@@ -5,9 +5,9 @@ import json
 
 #
 # The MIT License (MIT)
-# 
+#
 # Copyright (C) 2014 hellosign.com
-# 
+#
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
 # in the Software without restriction, including without limitation the rights
@@ -36,7 +36,7 @@ class HSClient(object):
 
     '''
 
-    version = '3.8.0'   # SDK version
+    version = '3.8.1'   # SDK version
     API_VERSION = 'v3'  # API version
     API_URL = ''
 
@@ -168,7 +168,7 @@ class HSClient(object):
     def create_account(self, email_address, password=None, client_id=None, client_secret=None):
         ''' Create a new account.
 
-        If the account is created via an app, then Account.oauth will contain the 
+        If the account is created via an app, then Account.oauth will contain the
         OAuth data that can be used to execute actions on behalf of the newly created account.
 
         Args:
@@ -182,7 +182,7 @@ class HSClient(object):
 
         '''
         request = self._get_request()
-        
+
         params = {
             'email_address': email_address
         }
@@ -233,7 +233,7 @@ class HSClient(object):
         return request.post(self.ACCOUNT_UPDATE_URL, { 'callback_url': self.account.callback_url })
 
     def verify_account(self, email_address):
-        ''' Verify whether a HelloSign Account exists 
+        ''' Verify whether a HelloSign Account exists
 
             email_address (str): Email address for the account to verify
 
@@ -289,8 +289,8 @@ class HSClient(object):
 
             filename (str): Filename to save the PDF file to. This should be a full path.
 
-            file_type (str): Type of file to return. Either "pdf" for a single merged document 
-                             or "zip" for a collection of individual documents. Defaults to "pdf" 
+            file_type (str): Type of file to return. Either "pdf" for a single merged document
+                             or "zip" for a collection of individual documents. Defaults to "pdf"
                              if not specified.
 
         Returns:
@@ -313,17 +313,17 @@ class HSClient(object):
 
         Args:
             test_mode (bool, optional): Whether this is a test, the signature request will not be legally binding if set to True. Defaults to False.
-            
+
             files (list of str): the uploaded file(s) to send for signature
-            
+
             file_urls (list of str): urls of the file for HelloSign to download to send for signature. Use either `files` or `file_urls`
-            
+
             title (str, optional): The title you want to assign to the SignatureRequest
-            
+
             subject (str, optional): The subject in the email that will be sent to the signers
-            
+
             message (str, optional): The custom message in the email that will be sent to the signers
-            
+
             signing_redirect_url (str, optional): The URL you want the signer redirected to after they successfully sign.
 
             signers (list of dict): A list of signers, which each has the following attributes:
@@ -350,15 +350,15 @@ class HSClient(object):
         '''
 
         self._check_required_fields({ "signers": signers }, [{ "files": files, "file_urls": file_urls }])
-        
+
         params = {
-            'test_mode': self._boolean(test_mode), 
-            'files': files, 
-            'file_urls':file_urls, 
+            'test_mode': self._boolean(test_mode),
+            'files': files,
+            'file_urls':file_urls,
             'title': title,
-            'subject': subject, 
+            'subject': subject,
             'message': message,
-            'signing_redirect_url': signing_redirect_url, 
+            'signing_redirect_url': signing_redirect_url,
             'signers': signers,
             'cc_email_addresses': cc_email_addresses,
             'form_fields_per_document': form_fields_per_document,
@@ -378,21 +378,21 @@ class HSClient(object):
         Args:
             test_mode (bool, optional): Whether this is a test, the signature
                 request will not be legally binding if set to True. Defaults to False.
-            
+
             template_id (str): The id of the Template to use when creating the SignatureRequest.
                                Mutually exclusive with template_ids.
 
-            template_ids (list): The ids of the Templates to use when creating the SignatureRequest. 
+            template_ids (list): The ids of the Templates to use when creating the SignatureRequest.
                                  Mutually exclusive with template_id.
-            
+
             title (str, optional): The title you want to assign to the SignatureRequest
-            
+
             subject (str, optional): The subject in the email that will be sent to the signers
-            
+
             message (str, optional): The custom message in the email that will be sent to the signers
-            
+
             signing_redirect_url (str, optional): The URL you want the signer redirected to after they successfully sign.
-            
+
             signers (list of dict): A list of signers, which each has the following attributes:
 
                 role_name (str): Signer role
@@ -422,12 +422,12 @@ class HSClient(object):
             'test_mode': self._boolean(test_mode),
             'template_id': template_id,
             'template_ids': template_ids,
-            'title': title, 
-            'subject': subject, 
+            'title': title,
+            'subject': subject,
             'message': message,
-            'signing_redirect_url': signing_redirect_url, 
+            'signing_redirect_url': signing_redirect_url,
             'signers': signers,
-            'ccs': ccs, 
+            'ccs': ccs,
             'custom_fields': custom_fields,
             'metadata': metadata
         }
@@ -559,13 +559,13 @@ class HSClient(object):
             test_mode (bool, optional): Whether this is a test, the signature
                 request will not be legally binding if set to True. Defaults to False.
 
-            client_id (str): Client id of the app you're using to create this embedded signature request. 
+            client_id (str): Client id of the app you're using to create this embedded signature request.
                 Visit the embedded page to learn more about this parameter (https://www.hellosign.com/api/embeddedSigningWalkthrough)
 
             template_id (str): The id of the Template to use when creating the SignatureRequest.
                                Mutually exclusive with template_ids.
 
-            template_ids (list): The ids of the Templates to use when creating the SignatureRequest. 
+            template_ids (list): The ids of the Templates to use when creating the SignatureRequest.
                                  Mutually exclusive with template_id.
 
             title (str, optional): The title you want to assign to the SignatureRequest
@@ -602,16 +602,16 @@ class HSClient(object):
         self._check_required_fields({ "signers": signers, "client_id": client_id }, [{ "template_id": template_id, "template_ids": template_ids }])
 
         params = {
-            'test_mode': self._boolean(test_mode), 
+            'test_mode': self._boolean(test_mode),
             'client_id': client_id,
-            'template_id': template_id, 
+            'template_id': template_id,
             'template_ids': template_ids,
-            'title': title, 
+            'title': title,
             'subject': subject,
-            'message': message, 
+            'message': message,
             'signing_redirect_url': signing_redirect_url,
-            'signers': signers, 
-            'ccs': ccs, 
+            'signers': signers,
+            'ccs': ccs,
             'custom_fields': custom_fields,
             'metadata': metadata
         }
@@ -656,7 +656,7 @@ class HSClient(object):
         Args:
             template_id (str): The id of the template to give the account access to
 
-            account_id (str): The id of the account to give access to the template. 
+            account_id (str): The id of the account to give access to the template.
                 The account id prevails if both account_id and email_address are provided.
 
             email_address (str): The email address of the account to give access to.
@@ -673,7 +673,7 @@ class HSClient(object):
         Args:
             template_id (str): The id of the template to remove the account's access from.
 
-            account_id (str): The id of the account to remove access from the template. 
+            account_id (str): The id of the account to remove access from the template.
                 The account id prevails if both account_id and email_address are provided.
 
             email_address (str): The email address of the account to remove access from.
@@ -723,12 +723,12 @@ class HSClient(object):
             signer_roles (list of dict): A list of signer roles, each of which has the following attributes:
 
                 name (str): The role name of the signer that will be displayed when the template is used to create a signature request.
-                order (str, optional): The order in which this signer role is required to sign. 
+                order (str, optional): The order in which this signer role is required to sign.
 
             cc_roles (list of str, optional): The CC roles that must be assigned when using the template to send a signature request
 
-            merge_fields (list of dict, optional): The merge fields that can be placed on the template's document(s) by the user claiming the template draft. Each must have the following two parameters: 
-                
+            merge_fields (list of dict, optional): The merge fields that can be placed on the template's document(s) by the user claiming the template draft. Each must have the following two parameters:
+
                 name (str): The name of the merge field. Must be unique.
                 type (str): Can only be "text" or "checkbox".
 
@@ -739,12 +739,12 @@ class HSClient(object):
 
         '''
         params = {
-            'test_mode': self._boolean(test_mode), 
-            'client_id': client_id, 
+            'test_mode': self._boolean(test_mode),
+            'client_id': client_id,
             'files': files,
-            'file_urls': file_urls, 
-            'title': title, 
-            'subject': subject, 
+            'file_urls': file_urls,
+            'title': title,
+            'subject': subject,
             'message': message,
             'signer_roles': signer_roles,
             'cc_roles': cc_roles,
@@ -754,7 +754,7 @@ class HSClient(object):
 
         return self._create_embedded_template_draft(**params)
 
-    
+
     #####  TEAM METHODS  ##################################
 
     @api_resource(Team)
@@ -821,7 +821,7 @@ class HSClient(object):
         Args:
             account_id (str): The id of the account of the user to invite to your team.
 
-            email_address (str): The email address of the account to invite to your team. 
+            email_address (str): The email address of the account to invite to your team.
                 The account id prevails if both account_id and email_address are provided.
 
         Returns:
@@ -837,7 +837,7 @@ class HSClient(object):
         Args:
             account_id (str): The id of the account of the user to remove from your team.
 
-            email_address (str): The email address of the account to remove from your team. 
+            email_address (str): The email address of the account to remove from your team.
                 The account id prevails if both account_id and email_address are provided.
 
         Returns:
@@ -937,13 +937,13 @@ class HSClient(object):
         self._check_required_fields({ 'draft_type': draft_type }, [{ "files": files, "file_urls": file_urls }])
 
         params = {
-            'test_mode': self._boolean(test_mode), 
+            'test_mode': self._boolean(test_mode),
             'files': files,
-            'file_urls': file_urls, 
+            'file_urls': file_urls,
             'draft_type': draft_type,
-            'subject': subject, 
+            'subject': subject,
             'message': message,
-            'signing_redirect_url': signing_redirect_url, 
+            'signing_redirect_url': signing_redirect_url,
             'signers': signers,
             'cc_email_addresses': cc_email_addresses,
             'form_fields_per_document': form_fields_per_document,
@@ -1005,27 +1005,27 @@ class HSClient(object):
 
         '''
 
-        self._check_required_fields({ 
-            'client_id': client_id, 
-            'requester_email_address': requester_email_address, 
+        self._check_required_fields({
+            'client_id': client_id,
+            'requester_email_address': requester_email_address,
             'draft_type': draft_type
-        }, [{ 
-            "files": files, 
-            "file_urls": file_urls 
+        }, [{
+            "files": files,
+            "file_urls": file_urls
         }])
 
         params = {
-            'test_mode': self._boolean(test_mode), 
-            'client_id': client_id, 
+            'test_mode': self._boolean(test_mode),
+            'client_id': client_id,
             'requester_email_address': requester_email_address,
             'is_for_embedded_signing': self._boolean(is_for_embedded_signing),
             'files': files,
-            'file_urls': file_urls, 
+            'file_urls': file_urls,
             'draft_type': draft_type,
-            'subject': subject, 
+            'subject': subject,
             'message': message,
-            'signing_redirect_url': signing_redirect_url, 
-            'requesting_redirect_url': requesting_redirect_url, 
+            'signing_redirect_url': signing_redirect_url,
+            'requesting_redirect_url': requesting_redirect_url,
             'signers': signers,
             'cc_email_addresses': cc_email_addresses,
             'form_fields_per_document': form_fields_per_document,
@@ -1043,17 +1043,17 @@ class HSClient(object):
                 set to True. Defaults to False.
 
             client_id (str): Client id of the app you're using to create this draft. Visit our embedded page to learn more about this parameter.
-            
+
             template_id (str): The id of the Template to use when creating the Unclaimed Draft.
                                Mutually exclusive with template_ids.
 
-            template_ids (list of str): The ids of the Templates to use when creating the Unclaimed Draft. 
+            template_ids (list of str): The ids of the Templates to use when creating the Unclaimed Draft.
                                  Mutually exclusive with template_id.
-            
+
             requester_email_address (str): The email address of the user that should be designated as the requester of this draft, if the draft type is "request_signature."
-            
+
             title (str, optional): The title you want to assign to the Unclaimed Draft
-            
+
             subject (str, optional): The subject in the email that will be sent to the signers
 
             message (str, optional): The custom message in the email that will be sent to the signers
@@ -1062,15 +1062,15 @@ class HSClient(object):
 
                 name (str): The name of the signer
                 email_address (str): email address of the signer
-            
+
             ccs (list of str, optional): A list of email addresses that should be CC'd
-            
+
             signing_redirect_url (str, optional): The URL you want the signer redirected to after they successfully sign.
-            
+
             requesting_redirect_url (str, optional): The URL you want the signer to be redirected to after the request has been sent.
-            
+
             is_for_embedded_signing (bool, optional): The request created from this draft will also be signable in embedded mode if set to True. The default is False.
-            
+
             metadata (dict, optional): Metadata to associate with the draft
                 Each request can include up to 10 metadata keys, with key names up to 40 characters long and values up to 500 characters long.
 
@@ -1081,12 +1081,12 @@ class HSClient(object):
 
         self._check_required_fields(
             {
-                "client_id": client_id, 
+                "client_id": client_id,
                 "requester_email_address": requester_email_address
-            }, 
-            [{ 
-                "template_id": template_id, 
-                "template_ids": template_ids 
+            },
+            [{
+                "template_id": template_id,
+                "template_ids": template_ids
             }])
 
         params = {
@@ -1095,14 +1095,14 @@ class HSClient(object):
             'is_for_embedded_signing': is_for_embedded_signing,
             'template_id': template_id,
             'template_ids': template_ids,
-            'title': title, 
-            'subject': subject, 
+            'title': title,
+            'subject': subject,
             'message': message,
             'requester_email_address': requester_email_address,
-            'signing_redirect_url': signing_redirect_url, 
-            'requesting_redirect_url': requesting_redirect_url, 
+            'signing_redirect_url': signing_redirect_url,
+            'requesting_redirect_url': requesting_redirect_url,
             'signers': signers,
-            'ccs': ccs, 
+            'ccs': ccs,
             'custom_fields': custom_fields,
             'metadata': metadata
         }
@@ -1129,7 +1129,7 @@ class HSClient(object):
             "state": state,
             "code": code,
             "grant_type": "authorization_code",
-            "client_id": client_id, 
+            "client_id": client_id,
             "client_secret": client_secret
         })
         return HSAccessTokenAuth.from_response(response)
@@ -1166,7 +1166,7 @@ class HSClient(object):
         return '1' if (v in (True, 'true', 'True', '1', 1)) else '0'
 
     def _get_request(self, auth=None):
-        ''' Return an http request object 
+        ''' Return an http request object
 
             auth: Auth data to use
 
@@ -1240,7 +1240,7 @@ class HSClient(object):
             test_mode (bool, optional): Whether this is a test, the signature
                 request will not be legally binding if set to True. Defaults to False.
 
-            client_id (str): Client id of the app you're using to create this embedded signature request. 
+            client_id (str): Client id of the app you're using to create this embedded signature request.
                 Visit the embedded page to learn more about this parameter (https://www.hellosign.com/api/embeddedSigningWalkthrough)
 
             files (list of str): the uploaded file(s) to send for signature
@@ -1296,12 +1296,12 @@ class HSClient(object):
 
         # Metadata
         metadata_payload = HSFormat.format_single_dict(metadata, 'metadata')
-        
+
         payload = {
-            "test_mode": self._boolean(test_mode), 
-            "client_id": client_id, 
+            "test_mode": self._boolean(test_mode),
+            "client_id": client_id,
             "title": title,
-            "subject": subject, 
+            "subject": subject,
             "message": message,
             "signing_redirect_url": signing_redirect_url,
             "form_fields_per_document": form_fields_per_document,
@@ -1330,20 +1330,20 @@ class HSClient(object):
 
     @api_resource(SignatureRequest)
     def _send_signature_request_with_template(self, test_mode=False, client_id=None, template_id=None, template_ids=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, ccs=None, custom_fields=None, metadata=None):
-        ''' To share the same logic between send_signature_request_with_template 
+        ''' To share the same logic between send_signature_request_with_template
             and send_signature_request_embedded_with_template
 
         Args:
             test_mode (bool, optional): Whether this is a test, the signature
                 request will not be legally binding if set to True. Defaults to False.
 
-            client_id (str): Client id of the app you're using to create this embedded signature request. 
+            client_id (str): Client id of the app you're using to create this embedded signature request.
                 Visit the embedded page to learn more about this parameter (https://www.hellosign.com/api/embeddedSigningWalkthrough)
 
             template_id (str): The id of the Template to use when creating the SignatureRequest.
                                Mutually exclusive with template_ids.
 
-            template_ids (list): The ids of the Templates to use when creating the SignatureRequest. 
+            template_ids (list): The ids of the Templates to use when creating the SignatureRequest.
                                  Mutually exclusive with template_id.
 
             title (str, optional): The title you want to assign to the SignatureRequest
@@ -1362,7 +1362,7 @@ class HSClient(object):
                 email_address (str): email address of the signer
                 pin (str, optional): The 4- to 12-character access code that will secure this signer's signature page
 
-            ccs (list of dict, optional): The email address of the CC filling the role of RoleName. Required when a CC role exists for the Template. 
+            ccs (list of dict, optional): The email address of the CC filling the role of RoleName. Required when a CC role exists for the Template.
                 Each dict has the following attributes:
 
                 role_name (str):        CC role name
@@ -1397,11 +1397,11 @@ class HSClient(object):
                 template_ids_payload["template_ids[%s]" % i] = template_ids[i]
 
         payload = {
-            "test_mode": self._boolean(test_mode), 
+            "test_mode": self._boolean(test_mode),
             "client_id": client_id,
-            "template_id": template_id, 
+            "template_id": template_id,
             "title": title,
-            "subject": subject, 
+            "subject": subject,
             "message": message,
             "signing_redirect_url": signing_redirect_url
         }
@@ -1486,7 +1486,7 @@ class HSClient(object):
 
         # Files URLs
         file_urls_payload = HSFormat.format_file_url_params(file_urls)
-        
+
         # Signers
         signers_payload = {}
         if signers:
@@ -1503,9 +1503,9 @@ class HSClient(object):
         metadata_payload = HSFormat.format_single_dict(metadata, 'metadata')
 
         payload = {
-            "test_mode": self._boolean(test_mode), 
+            "test_mode": self._boolean(test_mode),
             "type": draft_type,
-            "subject": subject, 
+            "subject": subject,
             "message": message,
             "signing_redirect_url": signing_redirect_url,
             "form_fields_per_document": form_fields_per_document,
@@ -1613,10 +1613,10 @@ class HSClient(object):
 
 
         payload = {
-            'test_mode' : self._boolean(test_mode), 
-            'client_id' : client_id, 
-            'title'     : title, 
-            'subject'   : subject, 
+            'test_mode' : self._boolean(test_mode),
+            'client_id' : client_id,
+            'title'     : title,
+            'subject'   : subject,
             'message'   : message,
             'use_preexisting_fields': use_preexisting_fields
         }
@@ -1664,7 +1664,7 @@ class HSClient(object):
             "template_id": template_id,
             "requester_email_address": requester_email_address,
             "title": title,
-            "subject": subject, 
+            "subject": subject,
             "message": message,
             "signing_redirect_url": signing_redirect_url,
             "requesting_redirect_url": requesting_redirect_url
