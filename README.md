@@ -215,7 +215,7 @@ claim_url = draft.claim_url
 
 More information about the asscociated front-end code can be found [here](https://www.hellosign.com/api/embeddedRequestingWalkthrough#ClientSideRequesting)
 
-Once the user edits the draft in the embedded iFrame and sends the signature request your app callback will receive and `signature_request_sent` event containing a `SignatureRequest` object. If we had used `is_for_embedded_signing=True`, we would want to get the signature ids out of the `SignatureRequest` from that event and fetch the signature urls at this point. In your event callback handler, you will need to do something like this:
+Once the user edits the draft in the embedded iFrame and sends the signature request your app callback will receive a `signature_request_sent` event containing a `SignatureRequest` object. If we had used `is_for_embedded_signing=True`, we would want to get the signature ids out of the `SignatureRequest` from that event and fetch the signature urls at this point. In your event callback handler, you will need to do something like this:
 
 ````python
 client = HSClient(api_key='your_api_key')
@@ -234,7 +234,7 @@ if event_data['event']['event_type'] == 'signature_request_sent':
 You can run the test suite by executing the following commands after you cloned the repo:
 Note that it requires to have a HelloSign account, with at least one template and one api app.
 
-**WARNING:** We advise against running those tests against you personal account as it performs destructive actions.
+**WARNING:** We advise against running the tests against your personal account as they perform destructive actions.
 
 ```
 cd hellosign_sdk
@@ -248,7 +248,7 @@ nosetests --with-coverage --cover-package=hellosign_sdk --include=hellosign_sdk/
 ## Additional notes
 
 ### Local callbacks
-We do not allow app callbacks (event or OAuth) to be set to localhost. However it is still possible to test callbacks against a local server. Tunneling services such as ngrok (http://ngrok.com) can help you set this up.
+We do not allow app callbacks (event or OAuth) to be set to localhost. However it is still possible to test callbacks against a local server. Tunneling services such as [ngrok](http://ngrok.com) can help you set this up.
 
 ## License
 

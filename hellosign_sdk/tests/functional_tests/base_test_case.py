@@ -48,8 +48,8 @@ class BaseTestCase(TestCase):
             BaseTestCase.warned = True
             print("\n\n")
             print(" ==================================================================")
-            print(" = WARNING: We advise against running those tests against your    =")
-            print(" = personal account as it performs destructive actions            =")
+            print(" = WARNING: We advise against running the tests against your      =")
+            print(" = personal account as they perform destructive actions.          =")
             print(" ==================================================================")
             while True:
                 resp = raw_input(' > Continue (type yes or hit Ctrl+C to exit)?')

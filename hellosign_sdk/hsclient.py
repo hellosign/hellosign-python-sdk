@@ -64,6 +64,7 @@ class HSClient(object):
 
     TEMPLATE_GET_URL = ''
     TEMPLATE_GET_LIST_URL = ''
+    TEMPLATE_GET_FILES_URL = ''
     TEMPLATE_DELETE_URL = '' #new
     TEMPLATE_ADD_USER_URL = ''
     TEMPLATE_REMOVE_USER_URL = ''
@@ -149,6 +150,7 @@ class HSClient(object):
 
         self.TEMPLATE_GET_URL = self.API_URL + '/template/'
         self.TEMPLATE_GET_LIST_URL = self.API_URL + '/template/list'
+        self.TEMPLATE_GET_FILES_URL = self.API_URL + '/template/files/'
         self.TEMPLATE_DELETE_URL = self.API_URL + '/template/delete/'
         self.TEMPLATE_ADD_USER_URL = self.API_URL + '/template/add_user/'
         self.TEMPLATE_REMOVE_USER_URL = self.API_URL + '/template/remove_user/'
@@ -701,6 +703,25 @@ class HSClient(object):
         response = request.post(url + template_id, get_json=False)
 
         return response
+
+    # def get_template_files(self, template_id):
+    def get_template_files(self, template_id, filename):
+        ''' Download a PDF copy of a template's original files
+
+        Args:
+            template_id (str): The id of the template to retrieve.
+
+            filename (str): Filename to save the PDF file to. This should be a full path.
+
+        Returns:
+            Returns a PDF file
+
+        '''
+
+        url = self.TEMPLATE_GET_FILES_URL + template_id
+        request = self._get_request()
+        
+        return request.get_file(url, filename)
 
     def create_embedded_template_draft(self, client_id, signer_roles, test_mode=False, files=None, file_urls=None, title=None, subject=None, message=None, cc_roles=None, merge_fields=None, use_preexisting_fields=False):
         ''' Creates an embedded Template draft for further editing.

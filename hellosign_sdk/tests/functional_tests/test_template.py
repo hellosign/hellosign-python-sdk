@@ -126,3 +126,18 @@ class TestTemplate(BaseTestCase):
             pass
         except BaseException as e:
             self.fail('Expected Not Found, but got %s' % e)
+
+    def test_template_files(self):
+        '''Tests failure response for template files download'''
+
+        # Note that we won't be actually downloading a templates files, but rather checking to make sure no template with a matching id is found
+
+        template_id = 'ax5d921d0d3ccfcd594d2b8c897ba774d89c9234' #random
+
+        try:
+            response = self.client.get_template_files(template_id, 'download.pdf')
+            if response:
+                self.fail('Expected failure, but got success')
+            pass
+        except BaseException as e:
+            self.fail('Expected Not Found, but got %s' % e)
