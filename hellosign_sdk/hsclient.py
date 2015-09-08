@@ -27,6 +27,7 @@ import json
 # SOFTWARE.
 #
 
+
 class HSClient(object):
 
     ''' Client object to interact with the API urls
@@ -56,18 +57,18 @@ class HSClient(object):
     SIGNATURE_REQUEST_CREATE_EMBEDDED_WITH_TEMPLATE_URL = ''
 
     EMBEDDED_OBJECT_GET_URL = ''
-    EMBEDDED_TEMPLATE_EDIT_URL = '' #new
+    EMBEDDED_TEMPLATE_EDIT_URL = ''  # new
 
     UNCLAIMED_DRAFT_CREATE_URL = ''
     UNCLAIMED_DRAFT_CREATE_EMBEDDED_URL = ''
-    UNCLAIMED_DRAFT_CREATE_EMBEDDED_WITH_TEMPLATE_URL = '' #new
+    UNCLAIMED_DRAFT_CREATE_EMBEDDED_WITH_TEMPLATE_URL = ''  # new
 
     TEMPLATE_GET_URL = ''
     TEMPLATE_GET_LIST_URL = ''
-    TEMPLATE_DELETE_URL = '' #new
+    TEMPLATE_DELETE_URL = ''  # new
     TEMPLATE_ADD_USER_URL = ''
     TEMPLATE_REMOVE_USER_URL = ''
-    TEMPLATE_CREATE_EMBEDDED_DRAFT_URL = '' #new
+    TEMPLATE_CREATE_EMBEDDED_DRAFT_URL = ''  # new
 
     TEAM_INFO_URL = ''
     TEAM_UPDATE_URL = ''
@@ -161,7 +162,6 @@ class HSClient(object):
         self.TEAM_ADD_MEMBER_URL = self.API_URL + '/team/add_member'
         self.TEAM_REMOVE_MEMBER_URL = self.API_URL + '/team/remove_member'
 
-
     #####  ACCOUNT METHODS  ###############################
 
     @api_resource(Account)
@@ -230,7 +230,9 @@ class HSClient(object):
 
         '''
         request = self._get_request()
-        return request.post(self.ACCOUNT_UPDATE_URL, { 'callback_url': self.account.callback_url })
+        return request.post(self.ACCOUNT_UPDATE_URL, {
+            'callback_url': self.account.callback_url
+        })
 
     def verify_account(self, email_address):
         ''' Verify whether a HelloSign Account exists
@@ -245,7 +247,6 @@ class HSClient(object):
             'email_address': email_address
         })
         return ('account' in resp)
-
 
     #####  SIGNATURE REQUEST METHODS  #####################
 
@@ -279,7 +280,9 @@ class HSClient(object):
 
         '''
         request = self._get_request()
-        return request.get(self.SIGNATURE_REQUEST_LIST_URL, parameters={ "page": page })
+        return request.get(self.SIGNATURE_REQUEST_LIST_URL, parameters={
+            "page": page
+        })
 
     def get_signature_request_file(self, signature_request_id, filename, file_type=None):
         ''' Download the PDF copy of the current documents
@@ -349,12 +352,12 @@ class HSClient(object):
 
         '''
 
-        self._check_required_fields({ "signers": signers }, [{ "files": files, "file_urls": file_urls }])
+        self._check_required_fields({"signers": signers}, [{"files": files, "file_urls": file_urls}])
 
         params = {
             'test_mode': self._boolean(test_mode),
             'files': files,
-            'file_urls':file_urls,
+            'file_urls': file_urls,
             'title': title,
             'subject': subject,
             'message': message,
@@ -416,7 +419,7 @@ class HSClient(object):
 
         '''
 
-        self._check_required_fields({ "signers": signers }, [{ "template_id": template_id, "template_ids": template_ids }])
+        self._check_required_fields({"signers": signers}, [{"template_id": template_id, "template_ids": template_ids}])
 
         params = {
             'test_mode': self._boolean(test_mode),
@@ -452,7 +455,9 @@ class HSClient(object):
 
         '''
         request = self._get_request()
-        return request.post(self.SIGNATURE_REQUEST_REMIND_URL + signature_request_id, data={ "email_address": email_address })
+        return request.post(self.SIGNATURE_REQUEST_REMIND_URL + signature_request_id, data={
+            "email_address": email_address
+        })
 
     def cancel_signature_request(self, signature_request_id):
         ''' Cancels a SignatureRequest
@@ -526,7 +531,7 @@ class HSClient(object):
 
         '''
 
-        self._check_required_fields({ "signers": signers, "client_id": client_id }, [{ "files": files, "file_urls": file_urls }])
+        self._check_required_fields({"signers": signers, "client_id": client_id}, [{"files": files, "file_urls": file_urls}])
 
         params = {
             'test_mode': self._boolean(test_mode),
@@ -599,7 +604,7 @@ class HSClient(object):
 
         '''
 
-        self._check_required_fields({ "signers": signers, "client_id": client_id }, [{ "template_id": template_id, "template_ids": template_ids }])
+        self._check_required_fields({"signers": signers, "client_id": client_id}, [{"template_id": template_id, "template_ids": template_ids}])
 
         params = {
             'test_mode': self._boolean(test_mode),
@@ -617,7 +622,6 @@ class HSClient(object):
         }
 
         return self._send_signature_request_with_template(**params)
-
 
     #####  REUSABLE FORM METHODS  #########################
 
@@ -647,7 +651,7 @@ class HSClient(object):
 
         '''
         request = self._get_request()
-        return request.get(self.TEMPLATE_GET_LIST_URL, parameters={ "page": page })
+        return request.get(self.TEMPLATE_GET_LIST_URL, parameters={"page": page})
 
     # RECOMMEND: this api does not fail if the user has been added...
     def add_user_to_template(self, template_id, account_id=None, email_address=None):
@@ -754,7 +758,6 @@ class HSClient(object):
 
         return self._create_embedded_template_draft(**params)
 
-
     #####  TEAM METHODS  ##################################
 
     @api_resource(Team)
@@ -786,7 +789,7 @@ class HSClient(object):
 
         '''
         request = self._get_request()
-        return request.post(self.TEAM_CREATE_URL, { "name": name })
+        return request.post(self.TEAM_CREATE_URL, {"name": name})
 
     # RECOMMEND: The api event create a new team if you do not belong to any team
     @api_resource(Team)
@@ -801,7 +804,7 @@ class HSClient(object):
 
         '''
         request = self._get_request()
-        return request.post(self.TEAM_UPDATE_URL, { "name": name })
+        return request.post(self.TEAM_UPDATE_URL, {"name": name})
 
     def destroy_team(self):
         ''' Delete your Team
@@ -846,7 +849,6 @@ class HSClient(object):
         '''
         return self._add_remove_team_member(self.TEAM_REMOVE_MEMBER_URL, email_address, account_id)
 
-
     #####  EMBEDDED METHODS  ##############################
 
     @api_resource(Embedded)
@@ -880,7 +882,6 @@ class HSClient(object):
         '''
         request = self._get_request()
         return request.get(self.EMBEDDED_TEMPLATE_EDIT_URL + template_id)
-
 
     #####  UNCLAIMED DRAFT METHODS  #######################
 
@@ -934,7 +935,13 @@ class HSClient(object):
 
         '''
 
-        self._check_required_fields({ 'draft_type': draft_type }, [{ "files": files, "file_urls": file_urls }])
+        self._check_required_fields({
+            'draft_type': draft_type
+        }, [{
+            "files": files, 
+            "file_urls": file_urls
+            }]
+        )
 
         params = {
             'test_mode': self._boolean(test_mode),
@@ -1079,15 +1086,14 @@ class HSClient(object):
 
         '''
 
-        self._check_required_fields(
-            {
-                "client_id": client_id,
-                "requester_email_address": requester_email_address
-            },
-            [{
-                "template_id": template_id,
-                "template_ids": template_ids
-            }])
+        self._check_required_fields({
+            "client_id": client_id,
+            "requester_email_address": requester_email_address
+        }, [{
+            "template_id": template_id,
+            "template_ids": template_ids
+            }]
+        )
 
         params = {
             'test_mode': self._boolean(test_mode),
@@ -1108,7 +1114,6 @@ class HSClient(object):
         }
 
         return self._create_embedded_unclaimed_draft_with_template(**params)
-
 
     #####  OAUTH METHODS  #################################
 
@@ -1152,7 +1157,6 @@ class HSClient(object):
         })
         self.auth = HSAccessTokenAuth.from_response(response)
         return self.auth.access_token
-
 
     #####  HELPERS  #######################################
 
@@ -1322,7 +1326,6 @@ class HSClient(object):
         data.update(cc_email_addresses_payload)
         data.update(file_urls_payload)
         data.update(metadata_payload)
-        # data = dict(payload.items() + signers_payload.items() + cc_email_addresses_payload.items() + file_urls_payload.items() + metadata_payload.items())
 
         request = self._get_request()
         response = request.post(url, data=data, files=files_payload)
@@ -1563,9 +1566,13 @@ class HSClient(object):
 
         data = {}
         if account_id is not None:
-            data = { "account_id": account_id }
+            data = {
+                "account_id": account_id
+            }
         else:
-            data = { "email_address": email_address }
+            data = {
+                "email_address": email_address
+            }
 
         request = self._get_request()
         response = request.post(url + template_id, data)
@@ -1594,9 +1601,13 @@ class HSClient(object):
 
         data = {}
         if account_id is not None:
-            data = { "account_id": account_id }
+            data = {
+                "account_id": account_id
+            }
         else:
-            data = { "email_address": email_address }
+            data = {
+                "email_address": email_address
+            }
 
         request = self._get_request()
         response = request.post(url, data)
@@ -1611,13 +1622,12 @@ class HSClient(object):
 
         url = self.TEMPLATE_CREATE_EMBEDDED_DRAFT_URL
 
-
         payload = {
-            'test_mode' : self._boolean(test_mode),
-            'client_id' : client_id,
-            'title'     : title,
-            'subject'   : subject,
-            'message'   : message,
+            'test_mode': self._boolean(test_mode),
+            'client_id': client_id,
+            'title': title,
+            'subject': subject,
+            'message': message,
             'use_preexisting_fields': use_preexisting_fields
         }
 
