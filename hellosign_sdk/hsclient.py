@@ -704,19 +704,28 @@ class HSClient(object):
         return request.get(self.TEMPLATE_GET_URL + template_id)
 
     @api_resource_list(Template)
-    def get_template_list(self, page=1):
+    def get_template_list(self, page=1, page_size=None, account_id=None, query=None):
         ''' Lists your Templates
 
         Args:
 
-            page (int, optional): Page number of the template List to return. Defaults to 1.
+            page (int, optional):           Page number of the template List to return. Defaults to 1.
+            page_size (int, optional):      Number of objects to be returned per page, must be between 1 and 100, default is 20.
+            account_id (str, optional):     Which account to return Templates for. Must be a team member. Use "all" to indicate all team members. Defaults to your account.
+            query (str, optional):          String that includes search terms and/or fields to be used to filter the Template objects.
 
         Returns:
             A ResourceList object
 
         '''
         request = self._get_request()
-        return request.get(self.TEMPLATE_GET_LIST_URL, parameters={"page": page})
+        parameters = {
+            'page': page,
+            'page_size': page_size,
+            'account_id': account_id,
+            'query': query
+        }
+        return request.get(self.TEMPLATE_GET_LIST_URL, parameters=parameters)
 
     # RECOMMEND: this api does not fail if the user has been added...
     def add_user_to_template(self, template_id, account_id=None, email_address=None):
