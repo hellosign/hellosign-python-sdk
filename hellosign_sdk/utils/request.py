@@ -173,7 +173,7 @@ class HSRequest(object):
                 text = resp.text.strip('\n')
                 if len(text) > 0:
                     return json.loads(text)
-            except ValueError, e:
+            except ValueError as e:
                 if self.debug:
                     print("Could not decode JSON response: \"%s\"" % resp.text)
                 raise e
