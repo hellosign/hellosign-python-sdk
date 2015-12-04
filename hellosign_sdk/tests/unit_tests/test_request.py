@@ -4,6 +4,7 @@ from hellosign_sdk import HSClient
 from hellosign_sdk.utils import HSRequest, BadRequest
 import tempfile
 import os
+import StringIO
 
 #
 # The MIT License (MIT)
@@ -92,14 +93,20 @@ class Request(TestCase):
         f.close()
         response = request.get_file(url='http://httpbin.org/robots.txt',
                                     headers={'Custom-Header': 'Nothing'},
-                                    filename=temp_filename)
+                                    path_or_file=temp_filename)
         os.unlink(temp_filename)
         self.assertEquals(response, True)
 
         response = request.get_file(url='http://httpbin.org/robots.txt',
                                     headers={'Custom-Header': 'Nothing'},
-                                    filename='')
+                                    path_or_file='')
         self.assertEquals(response, False)
+
+        out = StringIO.StringIO()
+        response = request.get_file(url='http://httpbin.org/robots.txt',
+                                    headers={'Custom-Header': 'Nothing'},
+                                    path_or_file=out)
+        self.assertEquals(response, True)
 
     def test_get_file_https(self):
         request = HSRequest(self.client.auth)
@@ -109,11 +116,17 @@ class Request(TestCase):
 
         response = request.get_file(url='https://httpbin.org/robots.txt',
                                     headers={'Custom-Header': 'Nothing'},
-                                    filename=temp_filename)
+                                    path_or_file=temp_filename)
         os.unlink(temp_filename)
         self.assertEquals(response, True)
 
         response = request.get_file(url='https://httpbin.org/robots.txt',
                                     headers={'Custom-Header': 'Nothing'},
-                                    filename='')
+                                    path_or_file='')
         self.assertEquals(response, False)
+
+        out = StringIO.StringIO()
+        response = request.get_file(url='http://httpbin.org/robots.txt',
+                                    headers={'Custom-Header': 'Nothing'},
+                                    path_or_file=out)
+        self.assertEquals(response, True)
