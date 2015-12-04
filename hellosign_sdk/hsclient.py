@@ -37,7 +37,7 @@ class HSClient(object):
 
     '''
 
-    version = '3.8.3'   # SDK version
+    version = '3.8.4'   # SDK version
     API_VERSION = 'v3'  # API version
     API_URL = ''
 
