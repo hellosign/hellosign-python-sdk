@@ -47,7 +47,7 @@ class HSRequest(object):
 
     DEFAULT_ENCODING = "UTF-8"
     USER_AGENT = "hellosign-python-sdk"
-    
+
     parameters = None
     http_status_code = 0
     verify_ssl = True
@@ -66,13 +66,15 @@ class HSRequest(object):
         if self.warnings and len(self.warnings) > 0:
             return self.warnings
 
-    def get_file(self, url, filename, headers=None):
+    def get_file(self, url, path_or_file=None, headers=None, filename=None):
         ''' Get a file from a url and save it as `filename`
 
         Args:
             url (str): URL to send the request to
 
-            filename (str): File name to save the file as, this can be either
+            path_or_file (str or file): A writable File-like object or a path to save the file to.
+
+            filename (str): [DEPRECATED] File name to save the file as, this can be either
                 a full path or a relative path
 
             headers (str, optional): custom headers
@@ -82,6 +84,7 @@ class HSRequest(object):
             otherwise.
 
         '''
+        path_or_file = path_or_file or filename
 
         if self.debug:
             print("GET FILE: %s, headers=%s" % (url, headers))
@@ -91,17 +94,20 @@ class HSRequest(object):
             self.headers.update(headers)
 
         response = requests.get(url, headers=self.headers, auth=self.auth, verify=self.verify_ssl)
-        
+
         self.http_status_code = response.status_code
         try:
             # No need to check for warnings here
             self._check_error(response)
-            fd = os.open(filename, os.O_CREAT | os.O_RDWR)
-            with os.fdopen(fd, "w+b") as f:
-                f.write(response.content)
+            try:
+                path_or_file.write(response.content)
+            except AttributeError:
+                fd = os.open(path_or_file, os.O_CREAT | os.O_RDWR)
+                with os.fdopen(fd, "w+b") as f:
+                    f.write(response.content)
         except:
             return False
-        
+
         return True
 
     def get(self, url, headers=None, parameters=None, get_json=True):

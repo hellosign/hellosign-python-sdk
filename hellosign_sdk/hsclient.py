@@ -314,14 +314,16 @@ class HSClient(object):
 
         return request.get(self.SIGNATURE_REQUEST_LIST_URL, parameters=parameters)
 
-    def get_signature_request_file(self, signature_request_id, filename, file_type=None):
+    def get_signature_request_file(self, signature_request_id, path_or_file=None, file_type=None, filename=None):
         ''' Download the PDF copy of the current documents
 
         Args:
 
             signature_request_id (str): Id of the signature request
 
-            filename (str):             Filename to save the PDF file to. This should be a full path.
+            path_or_file (str or file): A writable File-like object or a full path to save the PDF file to.
+
+            filename (str):             [DEPRECATED] Filename to save the PDF file to. This should be a full path.
 
             file_type (str):            Type of file to return. Either "pdf" for a single merged document or "zip" for a collection of individual documents. Defaults to "pdf" if not specified.
 
@@ -333,7 +335,7 @@ class HSClient(object):
         url = self.SIGNATURE_REQUEST_DOWNLOAD_PDF_URL + signature_request_id
         if file_type:
             url += '?file_type=%s' % file_type
-        return request.get_file(url, filename)
+        return request.get_file(url, path_or_file or filename)
 
     def send_signature_request(self, test_mode=False, files=None, file_urls=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, cc_email_addresses=None, form_fields_per_document=None, use_text_tags=False, hide_text_tags=False, metadata=None, ux_version=None):
         ''' Creates and sends a new SignatureRequest with the submitted documents
