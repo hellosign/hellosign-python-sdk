@@ -59,7 +59,7 @@ class Request(TestCase):
         self.assertEquals(isinstance(response, dict), True)
 
         try:
-            response = request.get(url='https://www.hellosign.com/oauth/token',
+            response = request.get(url='https://app.hellosign.com/oauth/token',
                                    get_json=True)
         except BadRequest as e:
             self.assertEquals('400 error' in str(e), True)
