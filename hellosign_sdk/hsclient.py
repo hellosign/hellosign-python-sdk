@@ -783,25 +783,32 @@ class HSClient(object):
 
         return response
 
-    # def get_template_files(self, template_id):
-    def get_template_files(self, template_id, filename):
+    def get_template_files(self, template_id, filename=None):
         ''' Download a PDF copy of a template's original files
 
         Args:
 
             template_id (str):  The id of the template to retrieve.
 
-            filename (str):     Filename to save the PDF file to. This should be a full path.
+            filename (str, optional): Filename to save the PDF file to.
+                                      This should be a full path.
 
         Returns:
-            Returns a PDF file
+            Returns a PDF file if `filename` is provided.
+            Requests' response object otherwise.
 
         '''
 
         url = self.TEMPLATE_GET_FILES_URL + template_id
         request = self._get_request()
 
-        return request.get_file(url, filename)
+        if filename is not None:
+            return request.get_file(url, filename)
+
+        parameters = {
+            'get_url': True,
+        }
+        return request.get(url, parameters=parameters)
 
     def create_embedded_template_draft(self, client_id, signer_roles, test_mode=False, files=None, file_urls=None, title=None, subject=None, message=None, cc_roles=None, merge_fields=None, use_preexisting_fields=False):
         ''' Creates an embedded Template draft for further editing.
