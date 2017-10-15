@@ -21,7 +21,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 #
-
+from StringIO import StringIO
 
 class HSFormat(object):
     ''' Authentication object using HelloSign's access token '''
@@ -45,7 +45,10 @@ class HSFormat(object):
         files_payload = {}
         if files:
             for idx, filename in enumerate(files):
-                files_payload["file[" + str(idx) + "]"] = open(filename, 'rb')
+	        if isinstance(filename, StringIO):
+                    files_payload["file[" + str(idx) + "]"] = filename.getvalue()
+                else:
+                    files_payload["file[" + str(idx) + "]"] = open(filename, 'rb')
         return files_payload
 
     @staticmethod
