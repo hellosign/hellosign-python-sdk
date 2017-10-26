@@ -40,7 +40,7 @@ class TestHSFormat(TestCase):
 
         result = HSFormat.format_file_params(input_params)
 
-        keys = result.keys()
+        keys = list(result.keys())
 
         attribute = hasattr(result[keys[0]], 'read') #check if file (can be read)
 

@@ -4,7 +4,7 @@ from hellosign_sdk import HSClient
 from hellosign_sdk.utils import HSRequest, BadRequest
 import tempfile
 import os
-import StringIO
+from io import BytesIO
 
 #
 # The MIT License (MIT)
@@ -102,7 +102,7 @@ class Request(TestCase):
                                     path_or_file='')
         self.assertEquals(response, False)
 
-        out = StringIO.StringIO()
+        out = BytesIO()
         response = request.get_file(url='http://httpbin.org/robots.txt',
                                     headers={'Custom-Header': 'Nothing'},
                                     path_or_file=out)
@@ -125,7 +125,7 @@ class Request(TestCase):
                                     path_or_file='')
         self.assertEquals(response, False)
 
-        out = StringIO.StringIO()
+        out = BytesIO()
         response = request.get_file(url='http://httpbin.org/robots.txt',
                                     headers={'Custom-Header': 'Nothing'},
                                     path_or_file=out)

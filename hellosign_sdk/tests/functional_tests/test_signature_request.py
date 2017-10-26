@@ -152,17 +152,20 @@ class TestSignatureRequest(BaseTestCase):
         sig_req_list = self.client.get_signature_request_list()
         if len(sig_req_list) == 0:
             sig_req = self._send_test_signature_request()
+            self._wait_for_signature_request_to_complete()
         else:
             sig_req = sig_req_list[0]
         return sig_req
+
+    def _wait_for_signature_request_to_complete(self, sleep_time=10):
+        sleep(sleep_time)
 
     def test_signature_request_get_and_list(self):
         ''' Test get signature requests '''
 
         self._send_test_signature_request()
 
-        # Wait a little bit for the file to be ready
-        sleep(5) 
+        self._wait_for_signature_request_to_complete()
 
         # Listing
         sig_req_list = self.client.get_signature_request_list()
@@ -181,9 +184,6 @@ class TestSignatureRequest(BaseTestCase):
         sig_req = self._get_one_signature_request()
         signer = sig_req.signatures[0].signer_email_address
 
-        # Wait a little bit for the file to be ready
-        sleep(5)
-
         # Sent reminder
         try:
             self.client.remind_signature_request(sig_req.signature_request_id, signer)
@@ -192,29 +192,29 @@ class TestSignatureRequest(BaseTestCase):
 
     def test_signature_request_file(self):
         ''' Test retrieving signature request files '''
-        
-        sig_req = self._get_one_signature_request()
 
-        # Wait a little bit for the file to be ready
-        sleep(10) 
+        # Send signature request
+        sig_req = self._send_test_signature_request()
+
+        self._wait_for_signature_request_to_complete()
 
         # Download PDF file
         f = tempfile.NamedTemporaryFile(delete=True)
-        temp_filename = f.name
+        self.assertTrue(self.client.get_signature_request_file(sig_req.signature_request_id, f))
         f.close()
-        self.assertTrue(self.client.get_signature_request_file(sig_req.signature_request_id, temp_filename))
 
         # Download ZIP file
         f = tempfile.NamedTemporaryFile(delete=True)
-        temp_filename = f.name
+        self.assertTrue(self.client.get_signature_request_file(sig_req.signature_request_id, f, file_type='zip'))
         f.close()
-        self.assertTrue(self.client.get_signature_request_file(sig_req.signature_request_id, temp_filename, file_type='zip'))
 
     def test_signature_request_send(self):
         ''' Test sending signature requests '''
 
         # Send signature request
         sig_req = self._send_test_signature_request()
+
+        self._wait_for_signature_request_to_complete()
 
         cc_email_addresses = sig_req.cc_email_addresses
         signers = [{
@@ -235,6 +235,8 @@ class TestSignatureRequest(BaseTestCase):
         except HSException as e:
             self.assertTrue(e.message.find('One of the following fields is required') >= 0)
 
+        self._wait_for_signature_request_to_complete()
+
         # Cancel signature request
         try:
             self.client.cancel_signature_request(sig_req.signature_request_id)
@@ -243,6 +245,8 @@ class TestSignatureRequest(BaseTestCase):
 
         # Try with text tags
         sig_req2 = self._send_test_signature_request(use_text_tags=True)
+
+        self._wait_for_signature_request_to_complete()
 
         # Cancel signature request
         try:
@@ -259,10 +263,11 @@ class TestSignatureRequest(BaseTestCase):
         # Send signature request with two templates
         sig_req2 = self._send_test_signature_request(use_multi_templates=True)
 
+        self._wait_for_signature_request_to_complete()
+
         # Cancel signature requests
         try:
             self.client.cancel_signature_request(sig_req1.signature_request_id)
-            sleep(2)
             self.client.cancel_signature_request(sig_req2.signature_request_id)
         except HSException as e:
             self.fail(e.message)
@@ -270,6 +275,9 @@ class TestSignatureRequest(BaseTestCase):
     def test_embedded_signature_request_send(self):
         ''' Test sending embedded signature requests '''
         sig_req = self._send_test_signature_request(embedded=True)
+
+        self._wait_for_signature_request_to_complete()
+
         try:
             self.client.cancel_signature_request(sig_req.signature_request_id)
         except HSException as e:

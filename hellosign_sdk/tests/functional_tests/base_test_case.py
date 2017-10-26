@@ -30,8 +30,6 @@ from hellosign_sdk.tests import test_helper
 class BaseTestCase(TestCase):
     ''' Base for all test cases '''
 
-    warned = False
-
     def setUp(self):
         params = {
             'api_key': test_helper.api_key
@@ -40,29 +38,17 @@ class BaseTestCase(TestCase):
             params['env'] = test_helper.env
         except AttributeError:
             params['env'] = 'production'
+        try:
+            ok_to_run_functional_tests = test_helper.ok_to_run_functional_tests
+        except AttributeError:
+            ok_to_run_functional_tests = False
         self.client = HSClient(**params)
         self.client_id = test_helper.client_id
         self.client_secret = test_helper.client_secret
 
-        if params['env'] == 'production' and not BaseTestCase.warned:
-            BaseTestCase.warned = True
-            print("\n\n")
-            print(" ==================================================================")
-            print(" = WARNING: We advise against running the tests against your      =")
-            print(" = personal account as they perform destructive actions.          =")
-            print(" ==================================================================")
-            while True:
-                resp = raw_input(' > Continue (type yes or hit Ctrl+C to exit)?')
-                if resp == 'yes':
-                    # Continue to tests
-                    break
-                elif resp == 'no':
-                    # Stop here
-                    import sys
-                    sys.exit()
-                else:
-                    # Ask question again
-                    pass 
-            print
-
-        print
+        if params['env'] == 'production' and not ok_to_run_functional_tests:
+            raise Exception(
+                'We advise against running the tests against your personal '
+                'account as they perform destructive actions. Please set '
+                "ok_to_run_functional_tests=True in test_helper.py"
+            )

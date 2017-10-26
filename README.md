@@ -231,6 +231,17 @@ if event_data['event']['event_type'] == 'signature_request_sent':
 
 ## Tests
 
+### Setup
+```
+# Create a new virtual environment that uses Python 3
+mkvirtualenv hellosign-py3 -p `which python3` --no-site-packages
+workon hellosign-py3
+
+# Install the required dependencies
+pip install -r test_requirements.txt
+```
+
+### Running Tests
 You can run the test suite by executing the following commands after you cloned the repo:
 Note that it requires to have a HelloSign account, with at least one template and one api app.
 
@@ -242,7 +253,7 @@ cp tests/test_helper.sample.py tests/test_helper.py
 HELLOSIGN_API_KEY='YOUR API KEY'
 HELLOSIGN_API_CLIENT_ID='YOUR APP CLIENT ID'
 HELLOSIGN_API_CLIENT_SECRET='YOUR APP CLIENT SECRET'
-nosetests --with-coverage --cover-package=hellosign_sdk --include=hellosign_sdk/tests/unit_tests/* --include=hellosign_sdk/tests/functional_tests/*
+nosetests --with-coverage --cover-package=hellosign_sdk hellosign_sdk.tests.unit_tests hellosign_sdk.tests.functional_tests
 ```
 
 ## Additional notes

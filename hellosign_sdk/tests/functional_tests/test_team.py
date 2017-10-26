@@ -59,7 +59,7 @@ class TestTeam(BaseTestCase):
         ''' Test adding a new team member '''
 
         team = self.client.get_team_info()
-        num_members = len(team.accounts)
+        num_invited_accounts = len(team.invited_accounts)
 
         # Invalid
         try:
@@ -76,7 +76,7 @@ class TestTeam(BaseTestCase):
         # Valid
         result = self.client.add_team_member(email_address="py-sdk-test-%s@example.com" % time())
         self.assertTrue(isinstance(result, Team))
-        self.assertEquals(len(result.accounts), num_members + 1)
+        self.assertEquals(len(result.invited_accounts), num_invited_accounts + 1)
 
     def test_remove_team_member(self):
         ''' Test removing a team member '''
