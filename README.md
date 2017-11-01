@@ -233,11 +233,7 @@ if event_data['event']['event_type'] == 'signature_request_sent':
 
 ### Setup
 ```
-# Create a new virtual environment that uses Python 3
-mkvirtualenv hellosign-py3 -p `which python3` --no-site-packages
-workon hellosign-py3
-
-# Install the required dependencies
+# Preferably in a virtualenv, install the required dependencies
 pip install -r test_requirements.txt
 ```
 
