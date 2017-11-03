@@ -39,16 +39,16 @@ class BaseTestCase(TestCase):
         except AttributeError:
             params['env'] = 'production'
         try:
-            ok_to_run_functional_tests = test_helper.ok_to_run_functional_tests
+            should_run_functional_tests = test_helper.should_run_functional_tests
         except AttributeError:
-            ok_to_run_functional_tests = False
+            should_run_functional_tests = False
         self.client = HSClient(**params)
         self.client_id = test_helper.client_id
         self.client_secret = test_helper.client_secret
 
-        if params['env'] == 'production' and not ok_to_run_functional_tests:
+        if params['env'] == 'production' and not should_run_functional_tests:
             raise Exception(
                 'We advise against running the tests against your personal '
                 'account as they perform destructive actions. Please set '
-                "ok_to_run_functional_tests=True in test_helper.py"
+                "should_run_functional_tests=True in test_helper.py"
             )
