@@ -22,6 +22,7 @@
 # SOFTWARE.
 #
 
+import os
 
 class HSFormat(object):
     ''' Authentication object using HelloSign's access token '''
@@ -42,10 +43,13 @@ class HSFormat(object):
         '''
             Utility method for formatting file parameters for transmission
         '''
-        files_payload = {}
+        files_payload = []
         if files:
             for idx, filename in enumerate(files):
-                files_payload["file[" + str(idx) + "]"] = open(filename, 'rb')
+                files_payload.append((
+                    'file[%s]' % idx,
+                     (os.path.basename(filename), open(filename, 'rb'))
+                ))
         return files_payload
 
     @staticmethod
