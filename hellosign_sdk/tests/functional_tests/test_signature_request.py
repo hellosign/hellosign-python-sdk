@@ -178,7 +178,7 @@ class TestSignatureRequest(BaseTestCase):
     def test_signature_request_reminder(self):
         ''' Test sending a reminder for a signature request '''
 
-        sig_req = self._get_one_signature_request()
+        sig_req = self._send_test_signature_request()
         signer = sig_req.signatures[0].signer_email_address
 
         # Wait a little bit for the file to be ready
@@ -186,14 +186,15 @@ class TestSignatureRequest(BaseTestCase):
 
         # Sent reminder
         try:
-            self.client.remind_signature_request(sig_req.signature_request_id, signer)
+            result = self.client.remind_signature_request(sig_req.signature_request_id, signer)
+            self.assertEquals(isinstance(result, SignatureRequest), True)
         except Forbidden as e:
             self.fail(e.message)
 
     def test_signature_request_file(self):
         ''' Test retrieving signature request files '''
-        
-        sig_req = self._get_one_signature_request()
+
+        sig_req = self._send_test_signature_request()
 
         # Wait a little bit for the file to be ready
         sleep(10) 
@@ -237,6 +238,7 @@ class TestSignatureRequest(BaseTestCase):
 
         # Cancel signature request
         try:
+            sleep(59)  # wait for SIGNATURE_REQUEST_SENT
             self.client.cancel_signature_request(sig_req.signature_request_id)
         except HSException as e:
             self.fail(e.message)
@@ -246,6 +248,7 @@ class TestSignatureRequest(BaseTestCase):
 
         # Cancel signature request
         try:
+            sleep(59)  # wait for SIGNATURE_REQUEST_SENT
             self.client.cancel_signature_request(sig_req2.signature_request_id)
         except HSException as e:
             self.fail(e.message)
@@ -261,6 +264,7 @@ class TestSignatureRequest(BaseTestCase):
 
         # Cancel signature requests
         try:
+            sleep(59)  # wait for SIGNATURE_REQUEST_SENT
             self.client.cancel_signature_request(sig_req1.signature_request_id)
             sleep(2)
             self.client.cancel_signature_request(sig_req2.signature_request_id)
@@ -271,6 +275,7 @@ class TestSignatureRequest(BaseTestCase):
         ''' Test sending embedded signature requests '''
         sig_req = self._send_test_signature_request(embedded=True)
         try:
+            sleep(59)  # wait for SIGNATURE_REQUEST_SENT
             self.client.cancel_signature_request(sig_req.signature_request_id)
         except HSException as e:
             self.fail(e.message)

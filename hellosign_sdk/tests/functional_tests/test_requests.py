@@ -93,4 +93,4 @@ class TestRequests(BaseTestCase):
             int(parts[1])
         except ValueError:
             self.fail('Invalid version number')
-        self.assertEquals(parts[2], '0')
+        self.assertEquals(parts[2], '5')
