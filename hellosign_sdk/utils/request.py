@@ -86,6 +86,9 @@ class HSRequest(object):
         '''
         path_or_file = path_or_file or filename
 
+        if not path_or_file:
+            raise ValueError('Must provide path_or_file argument.')
+
         if self.debug:
             print("GET FILE: %s, headers=%s" % (url, headers))
 
