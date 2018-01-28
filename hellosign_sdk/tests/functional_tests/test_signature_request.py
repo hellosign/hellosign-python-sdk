@@ -84,7 +84,8 @@ class TestSignatureRequest(BaseTestCase):
                                                                             message=message, 
                                                                             signers=signers, 
                                                                             ccs=cc_email_addresses,
-                                                                            metadata=metadata)
+                                                                            metadata=metadata,
+                                                                            allow_decline=True)
             else:
                 sig_req = self.client.send_signature_request(test_mode=True, 
                                                                 files=files, 
@@ -93,7 +94,8 @@ class TestSignatureRequest(BaseTestCase):
                                                                 message=message, 
                                                                 signers=signers, 
                                                                 cc_email_addresses=cc_email_addresses,
-                                                                metadata=metadata)
+                                                                metadata=metadata,
+                                                                allow_decline=True)
         elif use_text_tags:
             files[0] = os.path.dirname(os.path.realpath(__file__)) + "/docs/nda-text-tags.pdf"
             signers.append({
@@ -109,7 +111,8 @@ class TestSignatureRequest(BaseTestCase):
                                                                     signers=signers, 
                                                                     cc_email_addresses=cc_email_addresses, 
                                                                     use_text_tags=True,
-                                                                    metadata=metadata)
+                                                                    metadata=metadata,
+                                                                    allow_decline=True)
         else:
             sig_req = self.client.send_signature_request_embedded(test_mode=True, 
                                                                     client_id=self.client_id, 
@@ -119,7 +122,8 @@ class TestSignatureRequest(BaseTestCase):
                                                                     message=message, 
                                                                     signers=signers, 
                                                                     cc_email_addresses=cc_email_addresses,
-                                                                    metadata=metadata)
+                                                                    metadata=metadata,
+                                                                    allow_decline=True)
 
         self.assertEquals(isinstance(sig_req, SignatureRequest), True)
         self.assertEquals(sig_req.title, title)

@@ -31,7 +31,6 @@ import json
 class HSClient(object):
 
     ''' Client object to interact with the API urls
-
     Most of the operations of the SDK is made through this object. Please refer
     to the README.rst file for more details on how to use the client object.
 
@@ -337,7 +336,7 @@ class HSClient(object):
             url += '?file_type=%s' % file_type
         return request.get_file(url, path_or_file or filename)
 
-    def send_signature_request(self, test_mode=False, files=None, file_urls=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, cc_email_addresses=None, form_fields_per_document=None, use_text_tags=False, hide_text_tags=False, metadata=None, ux_version=None):
+    def send_signature_request(self, test_mode=False, files=None, file_urls=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, cc_email_addresses=None, form_fields_per_document=None, use_text_tags=False, hide_text_tags=False, metadata=None, ux_version=None, allow_decline=False):
         ''' Creates and sends a new SignatureRequest with the submitted documents
 
         Creates and sends a new SignatureRequest with the submitted documents.
@@ -380,6 +379,8 @@ class HSClient(object):
 
             ux_version (int):                       UX version, either 1 (default) or 2.
 
+            allow_decline(bool, optional):         Allows signers to decline to sign a document if set to 1. Defaults to 0.
+
         Returns:
             A SignatureRequest object
 
@@ -406,7 +407,8 @@ class HSClient(object):
             'form_fields_per_document': form_fields_per_document,
             'use_text_tags': self._boolean(use_text_tags),
             'hide_text_tags': self._boolean(hide_text_tags),
-            'metadata': metadata
+            'metadata': metadata,
+            'allow_decline': self._boolean(allow_decline)
         }
 
         if ux_version is not None:
@@ -414,7 +416,7 @@ class HSClient(object):
 
         return self._send_signature_request(**params)
 
-    def send_signature_request_with_template(self, test_mode=False, template_id=None, template_ids=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, ccs=None, custom_fields=None, metadata=None, ux_version=None):
+    def send_signature_request_with_template(self, test_mode=False, template_id=None, template_ids=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, ccs=None, custom_fields=None, metadata=None, ux_version=None, allow_decline=False):
         ''' Creates and sends a new SignatureRequest based off of a Template
 
         Creates and sends a new SignatureRequest based off of the Template
@@ -454,6 +456,8 @@ class HSClient(object):
 
             ux_version (int):                       UX version, either 1 (default) or 2.
 
+            allow_decline (bool, optional):         Allows signers to decline to sign a document if set to 1. Defaults to 0.
+
         Returns:
             A SignatureRequest object
 
@@ -478,7 +482,8 @@ class HSClient(object):
             'signers': signers,
             'ccs': ccs,
             'custom_fields': custom_fields,
-            'metadata': metadata
+            'metadata': metadata,
+            'allow_decline': allow_decline
         }
 
         if ux_version is not None:
@@ -527,7 +532,7 @@ class HSClient(object):
         request = self._get_request()
         request.post(url=self.SIGNATURE_REQUEST_CANCEL_URL + signature_request_id, get_json=False)
 
-    def send_signature_request_embedded(self, test_mode=False, client_id=None, files=None, file_urls=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, cc_email_addresses=None, form_fields_per_document=None, use_text_tags=False, hide_text_tags=False, metadata=None, ux_version=None):
+    def send_signature_request_embedded(self, test_mode=False, client_id=None, files=None, file_urls=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, cc_email_addresses=None, form_fields_per_document=None, use_text_tags=False, hide_text_tags=False, metadata=None, ux_version=None, allow_decline=False):
         ''' Creates and sends a new SignatureRequest with the submitted documents
 
         Creates a new SignatureRequest with the submitted documents to be signed
@@ -575,6 +580,8 @@ class HSClient(object):
 
             ux_version (int):                       UX version, either 1 (default) or 2.
 
+            allow_decline (bool, optional):         Allows signers to decline to sign a document if set to 1. Defaults to 0.
+
         Returns:
             A SignatureRequest object
 
@@ -603,7 +610,8 @@ class HSClient(object):
             'form_fields_per_document': form_fields_per_document,
             'use_text_tags': self._boolean(use_text_tags),
             'hide_text_tags': self._boolean(hide_text_tags),
-            'metadata': metadata
+            'metadata': metadata,
+            'allow_decline': allow_decline
         }
 
         if ux_version is not None:
@@ -611,7 +619,7 @@ class HSClient(object):
 
         return self._send_signature_request(**params)
 
-    def send_signature_request_embedded_with_template(self, test_mode=False, client_id=None, template_id=None, template_ids=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, ccs=None, custom_fields=None, metadata=None, ux_version=None):
+    def send_signature_request_embedded_with_template(self, test_mode=False, client_id=None, template_id=None, template_ids=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, ccs=None, custom_fields=None, metadata=None, ux_version=None, allow_decline=False):
         ''' Creates and sends a new SignatureRequest based off of a Template
 
         Creates a new SignatureRequest based on the given Template to be
@@ -654,6 +662,8 @@ class HSClient(object):
 
             ux_version (int):                       UX version, either 1 (default) or 2.
 
+            allow_decline (bool, optional):         Allows signers to decline to sign a document if set to 1. Defaults to 0.
+
         Returns:
             A SignatureRequest object of the newly created Signature Request
 
@@ -680,7 +690,8 @@ class HSClient(object):
             'signers': signers,
             'ccs': ccs,
             'custom_fields': custom_fields,
-            'metadata': metadata
+            'metadata': metadata,
+            'allow_decline': allow_decline
         }
 
         if ux_version is not None:
@@ -987,7 +998,7 @@ class HSClient(object):
 
     #  ----  UNCLAIMED DRAFT METHODS  ---------------------
 
-    def create_unclaimed_draft(self, test_mode=False, files=None, file_urls=None, draft_type=None, subject=None, message=None, signers=None, cc_email_addresses=None, signing_redirect_url=None, form_fields_per_document=None, metadata=None, use_preexisting_fields=False):
+    def create_unclaimed_draft(self, test_mode=False, files=None, file_urls=None, draft_type=None, subject=None, message=None, signers=None, cc_email_addresses=None, signing_redirect_url=None, form_fields_per_document=None, metadata=None, use_preexisting_fields=False, allow_decline=False):
         ''' Creates a new Draft that can be claimed using the claim URL
 
         Creates a new Draft that can be claimed using the claim URL. The first
@@ -1029,6 +1040,8 @@ class HSClient(object):
 
             use_preexisting_fields (bool):              Whether to use preexisting PDF fields
 
+            allow_decline (bool, optional):             Allows signers to decline to sign a document if set to 1. Defaults to 0.
+
         Returns:
             An UnclaimedDraft object
 
@@ -1054,12 +1067,13 @@ class HSClient(object):
             'cc_email_addresses': cc_email_addresses,
             'form_fields_per_document': form_fields_per_document,
             'metadata': metadata,
-            'use_preexisting_fields': use_preexisting_fields
+            'use_preexisting_fields': use_preexisting_fields,
+            'allow_decline': self._boolean(allow_decline)
         }
 
         return self._create_unclaimed_draft(**params)
 
-    def create_embedded_unclaimed_draft(self, test_mode=False, client_id=None, is_for_embedded_signing=False, requester_email_address=None, files=None, file_urls=None, draft_type=None, subject=None, message=None, signers=None, cc_email_addresses=None, signing_redirect_url=None, requesting_redirect_url=None, form_fields_per_document=None, metadata=None, use_preexisting_fields=False):
+    def create_embedded_unclaimed_draft(self, test_mode=False, client_id=None, is_for_embedded_signing=False, requester_email_address=None, files=None, file_urls=None, draft_type=None, subject=None, message=None, signers=None, cc_email_addresses=None, signing_redirect_url=None, requesting_redirect_url=None, form_fields_per_document=None, metadata=None, use_preexisting_fields=False, allow_decline=False):
         ''' Creates a new Draft to be used for embedded requesting
 
         Args:
@@ -1100,6 +1114,8 @@ class HSClient(object):
 
             use_preexisting_fields (bool):              Whether to use preexisting PDF fields
 
+            allow_decline (bool, optional):             Allows signers to decline to sign a document if set to 1. Defaults to 0.
+
         Returns:
             An UnclaimedDraft object
 
@@ -1131,12 +1147,13 @@ class HSClient(object):
             'cc_email_addresses': cc_email_addresses,
             'form_fields_per_document': form_fields_per_document,
             'metadata': metadata,
-            'use_preexisting_fields': use_preexisting_fields
+            'use_preexisting_fields': use_preexisting_fields,
+            'allow_decline': self._boolean(allow_decline)
         }
 
         return self._create_unclaimed_draft(**params)
 
-    def create_embedded_unclaimed_draft_with_template(self, test_mode=False, client_id=None, is_for_embedded_signing=False, template_id=None, template_ids=None, requester_email_address=None, title=None, subject=None, message=None, signers=None, ccs=None, signing_redirect_url=None, requesting_redirect_url=None, metadata=None, custom_fields=None):
+    def create_embedded_unclaimed_draft_with_template(self, test_mode=False, client_id=None, is_for_embedded_signing=False, template_id=None, template_ids=None, requester_email_address=None, title=None, subject=None, message=None, signers=None, ccs=None, signing_redirect_url=None, requesting_redirect_url=None, metadata=None, custom_fields=None, allow_decline=False):
         ''' Creates a new Draft to be used for embedded requesting
 
             Args:
@@ -1174,6 +1191,8 @@ class HSClient(object):
 
                 custom_fields (list of dict, optional):     A list of custom fields. Required when a CustomField exists in the Template. An item of the list should look like this: `{'name: value'}`
 
+                allow_decline (bool, optional):             Allows signers to decline to sign a document if set to 1. Defaults to 0.
+
         '''
 
         self._check_required_fields({
@@ -1200,7 +1219,8 @@ class HSClient(object):
             'signers': signers,
             'ccs': ccs,
             'custom_fields': custom_fields,
-            'metadata': metadata
+            'metadata': metadata,
+            'allow_decline': self._boolean(allow_decline)
         }
 
         return self._create_embedded_unclaimed_draft_with_template(**params)
@@ -1333,7 +1353,7 @@ class HSClient(object):
                     raise HSException("One of the following fields is required: %s" % ", ".join(field.keys()))
 
     @api_resource(SignatureRequest)
-    def _send_signature_request(self, test_mode=False, client_id=None, files=None, file_urls=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, cc_email_addresses=None, form_fields_per_document=None, use_text_tags=False, hide_text_tags=False, metadata=None, ux_version=None):
+    def _send_signature_request(self, test_mode=False, client_id=None, files=None, file_urls=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, cc_email_addresses=None, form_fields_per_document=None, use_text_tags=False, hide_text_tags=False, metadata=None, ux_version=None, allow_decline=False):
         ''' To share the same logic between send_signature_request &
             send_signature_request_embedded functions
 
@@ -1374,6 +1394,8 @@ class HSClient(object):
 
             ux_version (int):                       UX version, either 1 (default) or 2.
 
+            allow_decline (bool, optional);         Allows signers to decline to sign a document if set to 1. Defaults to 0.
+
         Returns:
             A SignatureRequest object
 
@@ -1403,7 +1425,8 @@ class HSClient(object):
             "signing_redirect_url": signing_redirect_url,
             "form_fields_per_document": form_fields_per_document,
             "use_text_tags": self._boolean(use_text_tags),
-            "hide_text_tags": self._boolean(hide_text_tags)
+            "hide_text_tags": self._boolean(hide_text_tags),
+            "allow_decline": self._boolean(allow_decline)
         }
 
         if ux_version is not None:
@@ -1428,7 +1451,7 @@ class HSClient(object):
         return response
 
     @api_resource(SignatureRequest)
-    def _send_signature_request_with_template(self, test_mode=False, client_id=None, template_id=None, template_ids=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, ccs=None, custom_fields=None, metadata=None, ux_version=None):
+    def _send_signature_request_with_template(self, test_mode=False, client_id=None, template_id=None, template_ids=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, ccs=None, custom_fields=None, metadata=None, ux_version=None, allow_decline=False):
         ''' To share the same logic between send_signature_request_with_template
             and send_signature_request_embedded_with_template
 
@@ -1468,6 +1491,8 @@ class HSClient(object):
 
             ux_version (int):                       UX version, either 1 (default) or 2.
 
+            allow_decline (bool, optional):         Allows signers to decline to sign a document if set to 1. Defaults to 0.
+
         Returns:
             A SignatureRequest object
 
@@ -1498,7 +1523,8 @@ class HSClient(object):
             "title": title,
             "subject": subject,
             "message": message,
-            "signing_redirect_url": signing_redirect_url
+            "signing_redirect_url": signing_redirect_url,
+            "allow_decline": self._boolean(allow_decline)
         }
 
         if ux_version is not None:
@@ -1524,7 +1550,7 @@ class HSClient(object):
         return response
 
     @api_resource(UnclaimedDraft)
-    def _create_unclaimed_draft(self, test_mode=False, client_id=None, is_for_embedded_signing=False, requester_email_address=None, files=None, file_urls=None, draft_type=None, subject=None, message=None, signers=None, cc_email_addresses=None, signing_redirect_url=None, requesting_redirect_url=None, form_fields_per_document=None, metadata=None, use_preexisting_fields=False):
+    def _create_unclaimed_draft(self, test_mode=False, client_id=None, is_for_embedded_signing=False, requester_email_address=None, files=None, file_urls=None, draft_type=None, subject=None, message=None, signers=None, cc_email_addresses=None, signing_redirect_url=None, requesting_redirect_url=None, form_fields_per_document=None, metadata=None, use_preexisting_fields=False, allow_decline=False):
         ''' Creates a new Draft that can be claimed using the claim URL
 
         Args:
@@ -1565,6 +1591,8 @@ class HSClient(object):
 
             use_preexisting_fields (bool):                  Whether to use preexisting PDF fields
 
+            allow_decline (bool, optional):                 Allows signers to decline to sign a document if set to 1. Defaults to 0.
+
         Returns:
             An UnclaimedDraft object
 
@@ -1598,7 +1626,8 @@ class HSClient(object):
             "message": message,
             "signing_redirect_url": signing_redirect_url,
             "form_fields_per_document": form_fields_per_document,
-            "use_preexisting_fields": use_preexisting_fields
+            "use_preexisting_fields": use_preexisting_fields,
+            "allow_decline": self._boolean(allow_decline)
         }
 
         url = self.UNCLAIMED_DRAFT_CREATE_URL
@@ -1749,7 +1778,7 @@ class HSClient(object):
         return response
 
     @api_resource(UnclaimedDraft)
-    def _create_embedded_unclaimed_draft_with_template(self, test_mode=False, client_id=None, is_for_embedded_signing=False, template_id=None, template_ids=None, requester_email_address=None, title=None, subject=None, message=None, signers=None, ccs=None, signing_redirect_url=None, requesting_redirect_url=None, metadata=None, custom_fields=None):
+    def _create_embedded_unclaimed_draft_with_template(self, test_mode=False, client_id=None, is_for_embedded_signing=False, template_id=None, template_ids=None, requester_email_address=None, title=None, subject=None, message=None, signers=None, ccs=None, signing_redirect_url=None, requesting_redirect_url=None, metadata=None, custom_fields=None, allow_decline=False):
         ''' Helper method for creating unclaimed drafts from templates
             See public function for params.
         '''
@@ -1765,7 +1794,8 @@ class HSClient(object):
             "subject": subject,
             "message": message,
             "signing_redirect_url": signing_redirect_url,
-            "requesting_redirect_url": requesting_redirect_url
+            "requesting_redirect_url": requesting_redirect_url,
+            "allow_decline": self._boolean(allow_decline)
         }
 
         #format multi params

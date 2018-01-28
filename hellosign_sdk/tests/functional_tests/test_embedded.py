@@ -77,13 +77,15 @@ class TestEmbedded(BaseTestCase):
 
         # Create request
         try:
-            emb_sig_req = self.client.send_signature_request_embedded_with_template(test_mode=True, 
+            emb_sig_req = self.client.send_signature_request_embedded_with_template(test_mode=True,
                                                                                     client_id=self.client_id, 
                                                                                     template_id=template_id, 
                                                                                     subject=subject, 
                                                                                     title=subject, 
                                                                                     message=message, 
-                                                                                    signers=signers)
+                                                                                    signers=signers,
+                                                                                    allow_decline=True)
+
             self.assertTrue(isinstance(emb_sig_req, SignatureRequest))
             self.assertEquals(len(emb_sig_req.signatures), 1)
         except HSException as e:

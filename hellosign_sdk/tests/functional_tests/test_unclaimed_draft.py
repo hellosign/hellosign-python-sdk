@@ -65,7 +65,8 @@ class TestUnclaimedDraft(BaseTestCase):
                 message="Please do not reply to the messages", 
                 signers=signers, 
                 cc_email_addresses=cc_email_addresses,
-                metadata=metadata)
+                metadata=metadata,
+                allow_decline=True)
 
         self.assertEquals(isinstance(result, UnclaimedDraft), True)
 
@@ -113,7 +114,8 @@ class TestUnclaimedDraft(BaseTestCase):
                 message="Please do not reply to the messages", 
                 signers=signers, 
                 cc_email_addresses=cc_email_addresses,
-                metadata=metadata)
+                metadata=metadata,
+                allow_decline=False)
         self.assertEquals(isinstance(result, UnclaimedDraft), True)
 
     def test_create_embedded_unclaimed_draft_with_template(self):
@@ -163,7 +165,8 @@ class TestUnclaimedDraft(BaseTestCase):
             signers=signers, 
             signing_redirect_url='http://url.com', 
             requesting_redirect_url='http://url.com', 
-            metadata=metadata)
+            metadata=metadata,
+            allow_decline=False)
 
         self.assertEquals(isinstance(returned, UnclaimedDraft), True)
 
