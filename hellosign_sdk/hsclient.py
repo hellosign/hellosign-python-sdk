@@ -36,7 +36,7 @@ class HSClient(object):
 
     '''
 
-    version = '3.8.5'   # SDK version
+    version = '3.8.7'   # SDK version
     API_VERSION = 'v3'  # API version
     API_URL = ''
 
@@ -111,12 +111,12 @@ class HSClient(object):
     def _init_endpoints(self):
 
         API_PRODUCTION_URL = "https://api.hellosign.com"
-        API_DEV_URL = "https://www.dev-hellosign.com/apiapp_dev.php"
-        API_STAGING_URL = "https://staging.hellosign.com/apiapp.php"
+        API_DEV_URL = "https://api.dev-hellosign.com"
+        API_STAGING_URL = "https://api.staging-hellosign.com"
 
-        WEB_PRODUCTION_URL = "https://www.hellosign.com"
-        WEB_DEV_URL = "https://www.dev-hellosign.com/webapp_dev.php"
-        WEB_STAGING_URL = "https://staging.hellosign.com/webapp_dev.php"
+        WEB_PRODUCTION_URL = "https://app.hellosign.com"
+        WEB_DEV_URL = "https://app.dev-hellosign.com"
+        WEB_STAGING_URL = "https://app.staging-hellosign.com"
 
         if self.env == "production":
             self.API_URL = API_PRODUCTION_URL + '/' + self.API_VERSION
@@ -395,7 +395,7 @@ class HSClient(object):
         )
 
         params = {
-            'test_mode': self._boolean(test_mode),
+            'test_mode': test_mode,
             'files': files,
             'file_urls': file_urls,
             'title': title,
@@ -405,10 +405,10 @@ class HSClient(object):
             'signers': signers,
             'cc_email_addresses': cc_email_addresses,
             'form_fields_per_document': form_fields_per_document,
-            'use_text_tags': self._boolean(use_text_tags),
-            'hide_text_tags': self._boolean(hide_text_tags),
+            'use_text_tags': use_text_tags,
+            'hide_text_tags': hide_text_tags,
             'metadata': metadata,
-            'allow_decline': self._boolean(allow_decline)
+            'allow_decline': allow_decline
         }
 
         if ux_version is not None:
@@ -472,7 +472,7 @@ class HSClient(object):
         )
 
         params = {
-            'test_mode': self._boolean(test_mode),
+            'test_mode': test_mode,
             'template_id': template_id,
             'template_ids': template_ids,
             'title': title,
@@ -597,7 +597,7 @@ class HSClient(object):
         )
 
         params = {
-            'test_mode': self._boolean(test_mode),
+            'test_mode': test_mode,
             'client_id': client_id,
             'files': files,
             'file_urls': file_urls,
@@ -608,8 +608,8 @@ class HSClient(object):
             'signers': signers,
             'cc_email_addresses': cc_email_addresses,
             'form_fields_per_document': form_fields_per_document,
-            'use_text_tags': self._boolean(use_text_tags),
-            'hide_text_tags': self._boolean(hide_text_tags),
+            'use_text_tags': use_text_tags,
+            'hide_text_tags': hide_text_tags,
             'metadata': metadata,
             'allow_decline': allow_decline
         }
@@ -679,7 +679,7 @@ class HSClient(object):
         )
 
         params = {
-            'test_mode': self._boolean(test_mode),
+            'test_mode': test_mode,
             'client_id': client_id,
             'template_id': template_id,
             'template_ids': template_ids,
@@ -852,7 +852,7 @@ class HSClient(object):
 
         '''
         params = {
-            'test_mode': self._boolean(test_mode),
+            'test_mode': test_mode,
             'client_id': client_id,
             'files': files,
             'file_urls': file_urls,
@@ -1056,7 +1056,7 @@ class HSClient(object):
         )
 
         params = {
-            'test_mode': self._boolean(test_mode),
+            'test_mode': test_mode,
             'files': files,
             'file_urls': file_urls,
             'draft_type': draft_type,
@@ -1068,7 +1068,7 @@ class HSClient(object):
             'form_fields_per_document': form_fields_per_document,
             'metadata': metadata,
             'use_preexisting_fields': use_preexisting_fields,
-            'allow_decline': self._boolean(allow_decline)
+            'allow_decline': allow_decline
         }
 
         return self._create_unclaimed_draft(**params)
@@ -1132,10 +1132,10 @@ class HSClient(object):
         )
 
         params = {
-            'test_mode': self._boolean(test_mode),
+            'test_mode': test_mode,
             'client_id': client_id,
             'requester_email_address': requester_email_address,
-            'is_for_embedded_signing': self._boolean(is_for_embedded_signing),
+            'is_for_embedded_signing': is_for_embedded_signing,
             'files': files,
             'file_urls': file_urls,
             'draft_type': draft_type,
@@ -1148,7 +1148,7 @@ class HSClient(object):
             'form_fields_per_document': form_fields_per_document,
             'metadata': metadata,
             'use_preexisting_fields': use_preexisting_fields,
-            'allow_decline': self._boolean(allow_decline)
+            'allow_decline': allow_decline
         }
 
         return self._create_unclaimed_draft(**params)
@@ -1205,7 +1205,7 @@ class HSClient(object):
         )
 
         params = {
-            'test_mode': self._boolean(test_mode),
+            'test_mode': test_mode,
             'client_id': client_id,
             'is_for_embedded_signing': is_for_embedded_signing,
             'template_id': template_id,
@@ -1220,7 +1220,7 @@ class HSClient(object):
             'ccs': ccs,
             'custom_fields': custom_fields,
             'metadata': metadata,
-            'allow_decline': self._boolean(allow_decline)
+            'allow_decline': allow_decline
         }
 
         return self._create_embedded_unclaimed_draft_with_template(**params)
@@ -1626,7 +1626,7 @@ class HSClient(object):
             "message": message,
             "signing_redirect_url": signing_redirect_url,
             "form_fields_per_document": form_fields_per_document,
-            "use_preexisting_fields": use_preexisting_fields,
+            "use_preexisting_fields": self._boolean(use_preexisting_fields),
             "allow_decline": self._boolean(allow_decline)
         }
 
@@ -1745,7 +1745,7 @@ class HSClient(object):
             'title': title,
             'subject': subject,
             'message': message,
-            'use_preexisting_fields': use_preexisting_fields
+            'use_preexisting_fields': self._boolean(use_preexisting_fields)
         }
 
         # Prep files
@@ -1787,7 +1787,7 @@ class HSClient(object):
         payload = {
             "test_mode": self._boolean(test_mode),
             "client_id": client_id,
-            "is_for_embedded_signing": is_for_embedded_signing,
+            "is_for_embedded_signing": self._boolean(is_for_embedded_signing),
             "template_id": template_id,
             "requester_email_address": requester_email_address,
             "title": title,
