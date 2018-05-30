@@ -1635,7 +1635,7 @@ class HSClient(object):
         if client_id is not None:
             payload.update({
                 'client_id': client_id,
-                'is_for_embedded_signing': '1' if is_for_embedded_signing else '0',
+                'is_for_embedded_signing': '1' if is_for_embedded_signing and is_for_embedded_signing != '0' else '0',
                 'requester_email_address': requester_email_address,
                 'requesting_redirect_url': requesting_redirect_url
             })
