@@ -20,7 +20,7 @@ setup(
         'Programming Language :: Python :: 2.7'
     ],
     keywords='hellosign python sdk',
-    url='https://github.com/HelloFax/hellosign-python-sdk',
+    url='https://github.com/hellosign/hellosign-python-sdk',
     author='HelloSign',
     author_email='apisupport@hellosign.com',
     license='MIT',
