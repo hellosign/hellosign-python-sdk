@@ -313,7 +313,7 @@ class HSClient(object):
 
         return request.get(self.SIGNATURE_REQUEST_LIST_URL, parameters=parameters)
 
-    def get_signature_request_file(self, signature_request_id, path_or_file=None, file_type=None, filename=None):
+    def get_signature_request_file(self, signature_request_id, path_or_file=None, file_type=None, filename=None, get_url=False):
         ''' Download the PDF copy of the current documents
 
         Args:
@@ -327,11 +327,17 @@ class HSClient(object):
             file_type (str):            Type of file to return. Either "pdf" for a single merged document or "zip" for a collection of individual documents. Defaults to "pdf" if not specified.
 
         Returns:
-            True if file is downloaded and successfully written, False otherwise.
+            If get_url is True: dictionary with `file_url` and `expires_at` timestamp.
 
+            Else: True if file is downloaded and successfully written, False otherwise.
         '''
         request = self._get_request()
         url = self.SIGNATURE_REQUEST_DOWNLOAD_PDF_URL + signature_request_id
+        if get_url:
+            parameters = {'get_url': True}
+
+            return request.get(url, parameters=parameters)
+
         if file_type:
             url += '?file_type=%s' % file_type
         return request.get_file(url, path_or_file or filename)
