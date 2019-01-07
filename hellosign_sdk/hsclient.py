@@ -336,7 +336,7 @@ class HSClient(object):
             url += '?file_type=%s' % file_type
         return request.get_file(url, path_or_file or filename)
 
-    def send_signature_request(self, test_mode=False, files=None, file_urls=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, cc_email_addresses=None, form_fields_per_document=None, use_text_tags=False, hide_text_tags=False, metadata=None, ux_version=None, allow_decline=False):
+    def send_signature_request(self, test_mode=False, files=None, file_urls=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, cc_email_addresses=None, form_fields_per_document=None, use_text_tags=False, hide_text_tags=False, metadata=None, ux_version=None, allow_decline=False, attachments=False):
         ''' Creates and sends a new SignatureRequest with the submitted documents
 
         Creates and sends a new SignatureRequest with the submitted documents.
@@ -381,6 +381,13 @@ class HSClient(object):
 
             allow_decline(bool, optional):         Allows signers to decline to sign a document if set to 1. Defaults to 0.
 
+            attachments (list of dict):            A list of attachments, which each has the following attributes:
+
+                name (str):                        The name of attachment
+                instructions (str):                The instructions for uploading the attachment
+                signer_index (int):                The signer's index whose needs to upload the attachments, see signers parameter for more details
+                required (bool, optional):         Determines if the attachment must be uploaded
+
         Returns:
             A SignatureRequest object
 
@@ -408,7 +415,8 @@ class HSClient(object):
             'use_text_tags': use_text_tags,
             'hide_text_tags': hide_text_tags,
             'metadata': metadata,
-            'allow_decline': allow_decline
+            'allow_decline': allow_decline,
+            'attachments': attachments
         }
 
         if ux_version is not None:
@@ -532,7 +540,7 @@ class HSClient(object):
         request = self._get_request()
         request.post(url=self.SIGNATURE_REQUEST_CANCEL_URL + signature_request_id, get_json=False)
 
-    def send_signature_request_embedded(self, test_mode=False, client_id=None, files=None, file_urls=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, cc_email_addresses=None, form_fields_per_document=None, use_text_tags=False, hide_text_tags=False, metadata=None, ux_version=None, allow_decline=False):
+    def send_signature_request_embedded(self, test_mode=False, client_id=None, files=None, file_urls=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, cc_email_addresses=None, form_fields_per_document=None, use_text_tags=False, hide_text_tags=False, metadata=None, ux_version=None, allow_decline=False, attachments=None):
         ''' Creates and sends a new SignatureRequest with the submitted documents
 
         Creates a new SignatureRequest with the submitted documents to be signed
@@ -582,6 +590,13 @@ class HSClient(object):
 
             allow_decline (bool, optional):         Allows signers to decline to sign a document if set to 1. Defaults to 0.
 
+            attachments (list of dict):            A list of attachments, which each has the following attributes:
+
+                name (str):                        The name of attachment
+                instructions (str):                The instructions for uploading the attachment
+                signer_index (int):                The signer's index whose needs to upload the attachments, see signers parameter for more details
+                required (bool, optional):         Determines if the attachment must be uploaded
+
         Returns:
             A SignatureRequest object
 
@@ -611,7 +626,8 @@ class HSClient(object):
             'use_text_tags': use_text_tags,
             'hide_text_tags': hide_text_tags,
             'metadata': metadata,
-            'allow_decline': allow_decline
+            'allow_decline': allow_decline,
+            'attachments': attachments
         }
 
         if ux_version is not None:
@@ -1353,7 +1369,7 @@ class HSClient(object):
                     raise HSException("One of the following fields is required: %s" % ", ".join(field.keys()))
 
     @api_resource(SignatureRequest)
-    def _send_signature_request(self, test_mode=False, client_id=None, files=None, file_urls=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, cc_email_addresses=None, form_fields_per_document=None, use_text_tags=False, hide_text_tags=False, metadata=None, ux_version=None, allow_decline=False):
+    def _send_signature_request(self, test_mode=False, client_id=None, files=None, file_urls=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, cc_email_addresses=None, form_fields_per_document=None, use_text_tags=False, hide_text_tags=False, metadata=None, ux_version=None, allow_decline=False, attachments=None):
         ''' To share the same logic between send_signature_request &
             send_signature_request_embedded functions
 
@@ -1396,6 +1412,13 @@ class HSClient(object):
 
             allow_decline (bool, optional);         Allows signers to decline to sign a document if set to 1. Defaults to 0.
 
+            attachments (list of dict):            A list of attachments, which each has the following attributes:
+
+                name (str):                        The name of attachment
+                instructions (str):                The instructions for uploading the attachment
+                signer_index (int):                The signer's index whose needs to upload the attachments, see signers parameter for more details
+                required (bool, optional):         Determines if the attachment must be uploaded
+
         Returns:
             A SignatureRequest object
 
@@ -1415,6 +1438,9 @@ class HSClient(object):
 
         # Metadata
         metadata_payload = HSFormat.format_single_dict(metadata, 'metadata')
+
+        # Attachments
+        attachments_payload = HSFormat.format_dict_list(attachments, 'attachments')
 
         payload = {
             "test_mode": self._boolean(test_mode),
@@ -1445,6 +1471,7 @@ class HSClient(object):
         data.update(cc_email_addresses_payload)
         data.update(file_urls_payload)
         data.update(metadata_payload)
+        data.update(attachments_payload)
 
         request = self._get_request()
         response = request.post(url, data=data, files=files_payload)
