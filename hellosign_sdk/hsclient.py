@@ -407,7 +407,7 @@ class HSClient(object):
 
         return self._send_signature_request(**params)
 
-    def send_signature_request_with_template(self, test_mode=False, template_id=None, template_ids=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, ccs=None, custom_fields=None, metadata=None, ux_version=None, allow_decline=False):
+    def send_signature_request_with_template(self, test_mode=False, template_id=None, template_ids=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, ccs=None, custom_fields=None, metadata=None, allow_decline=False, files=None, file_urls=None, signing_options=None):
         ''' Creates and sends a new SignatureRequest based off of a Template
 
         Creates and sends a new SignatureRequest based off of the Template
@@ -445,9 +445,13 @@ class HSClient(object):
 
             metadata (dict, optional):              Metadata to associate with the signature request
 
-            ux_version (int):                       UX version, either 1 (default) or 2.
-
             allow_decline (bool, optional):         Allows signers to decline to sign a document if set to 1. Defaults to 0.
+
+            files (list of str):                    The uploaded file(s) to append to the Signature Request.
+
+            file_urls (list of str):                URLs of the file for HelloSign to download to append to the Signature Request. Use either `files` or `file_urls`
+
+            signing_options (dict, optional):       Allows the reqeuster to specify the types allowed for creating a signature. Defaults to account settings.
 
         Returns:
             A SignatureRequest object
@@ -458,7 +462,9 @@ class HSClient(object):
             "signers": signers
         }, [{
             "template_id": template_id,
-            "template_ids": template_ids
+            "template_ids": template_ids,
+            "files": files,
+            "file_urls": file_urls
             }]
         )
 
@@ -474,11 +480,11 @@ class HSClient(object):
             'ccs': ccs,
             'custom_fields': custom_fields,
             'metadata': metadata,
-            'allow_decline': allow_decline
+            'allow_decline': allow_decline,
+            'files': files,
+            'file_urls': file_urls,
+            'signing_options': signing_options
         }
-
-        if ux_version is not None:
-            params['ux_version'] = ux_version
 
         return self._send_signature_request_with_template(**params)
 
@@ -1443,7 +1449,7 @@ class HSClient(object):
         return response
 
     @api_resource(SignatureRequest)
-    def _send_signature_request_with_template(self, test_mode=False, client_id=None, template_id=None, template_ids=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, ccs=None, custom_fields=None, metadata=None, ux_version=None, allow_decline=False):
+    def _send_signature_request_with_template(self, test_mode=False, client_id=None, template_id=None, template_ids=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, ccs=None, custom_fields=None, metadata=None, allow_decline=False, files=None, file_urls=None, signing_options=None):
         ''' To share the same logic between send_signature_request_with_template
             and send_signature_request_embedded_with_template
 
@@ -1451,7 +1457,7 @@ class HSClient(object):
 
             test_mode (bool, optional):             Whether this is a test, the signature request will not be legally binding if set to True. Defaults to False.
 
-            client_id (str):                        Client id of the app you're using to create this embedded signature request. Visit the embedded page to learn more about this parameter (https://www.hellosign.com/api/embeddedSigningWalkthrough)
+            client_id (str):                        Client id of the app you're using to create this embedded signature request. Visit the embedded page to learn more about this parameter (https://app.hellosign.com/api/embeddedSigningWalkthrough)
 
             template_id (str):                      The id of the Template to use when creating the SignatureRequest. Mutually exclusive with template_ids.
 
@@ -1481,9 +1487,13 @@ class HSClient(object):
 
             metadata (dict, optional):              Metadata to associate with the signature request
 
-            ux_version (int):                       UX version, either 1 (default) or 2.
-
             allow_decline (bool, optional):         Allows signers to decline to sign a document if set to 1. Defaults to 0.
+
+            files (list of str):                    The uploaded file(s) to append to the Signature Request.
+
+            file_urls (list of str):                URLs of the file for HelloSign to download to append to the Signature Request. Use either `files` or `file_urls`
+
+            signing_options (dict, optional):       Allows the reqeuster to specify the types allowed for creating a signature. Defaults to account settings.
 
         Returns:
             A SignatureRequest object
@@ -1508,6 +1518,12 @@ class HSClient(object):
             for i in range(len(template_ids)):
                 template_ids_payload["template_ids[%s]" % i] = template_ids[i]
 
+        # Files
+        files_payload = HSFormat.format_file_params(files)
+
+        # File URLs
+        file_urls_payload = HSFormat.format_file_url_params(file_urls)
+
         payload = {
             "test_mode": self._boolean(test_mode),
             "client_id": client_id,
@@ -1516,11 +1532,9 @@ class HSClient(object):
             "subject": subject,
             "message": message,
             "signing_redirect_url": signing_redirect_url,
-            "allow_decline": self._boolean(allow_decline)
+            "allow_decline": self._boolean(allow_decline),
+            "signing_options": json.dumps(signing_options)
         }
-
-        if ux_version is not None:
-            payload['ux_version'] = ux_version
 
         # remove attributes with empty value
         payload = HSFormat.strip_none_values(payload)
@@ -1535,9 +1549,10 @@ class HSClient(object):
         data.update(custom_fields_payload)
         data.update(metadata_payload)
         data.update(template_ids_payload)
+        data.update(file_urls_payload)
 
         request = self._get_request()
-        response = request.post(url, data=data)
+        response = request.post(url, data=data, files=files_payload)
 
         return response
 
