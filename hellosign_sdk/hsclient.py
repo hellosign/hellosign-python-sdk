@@ -571,7 +571,7 @@ class HSClient(object):
         request = self._get_request()
         request.post(url=self.SIGNATURE_REQUEST_REMOVE_ACCESS_URL + signature_request_id, get_json=False)
 
-    def send_signature_request_embedded(self, test_mode=False, client_id=None, files=None, file_urls=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, cc_email_addresses=None, form_fields_per_document=None, use_text_tags=False, hide_text_tags=False, metadata=None, ux_version=None, allow_decline=False):
+    def send_signature_request_embedded(self, test_mode=False, client_id=None, files=None, file_urls=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, cc_email_addresses=None, form_fields_per_document=None, use_text_tags=False, hide_text_tags=False, metadata=None, allow_decline=False, allow_reassign=False, signing_options=None):
         ''' Creates and sends a new SignatureRequest with the submitted documents
 
         Creates a new SignatureRequest with the submitted documents to be signed
@@ -617,9 +617,11 @@ class HSClient(object):
 
             metadata (dict, optional):              Metadata to associate with the signature request
 
-            ux_version (int):                       UX version, either 1 (default) or 2.
-
             allow_decline (bool, optional):         Allows signers to decline to sign a document if set to 1. Defaults to 0.
+
+            allow_reassign (bool, optional):         Allows signers to reassign their signature requests to other signers if set to True. Defaults to False.
+
+            signing_options (dict, optional):       Allows the reqeuster to specify the types allowed for creating a signature. Defaults to account settings.
 
         Returns:
             A SignatureRequest object
@@ -650,15 +652,14 @@ class HSClient(object):
             'use_text_tags': use_text_tags,
             'hide_text_tags': hide_text_tags,
             'metadata': metadata,
-            'allow_decline': allow_decline
+            'allow_decline': allow_decline,
+            'allow_reassign': allow_reassign,
+            'signing_options': signing_options
         }
-
-        if ux_version is not None:
-            params['ux_version'] = ux_version
 
         return self._send_signature_request(**params)
 
-    def send_signature_request_embedded_with_template(self, test_mode=False, client_id=None, template_id=None, template_ids=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, ccs=None, custom_fields=None, metadata=None, ux_version=None, allow_decline=False):
+    def send_signature_request_embedded_with_template(self, test_mode=False, client_id=None, template_id=None, template_ids=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, ccs=None, custom_fields=None, metadata=None, allow_decline=False, files=None, file_urls=None, signing_options=None):
         ''' Creates and sends a new SignatureRequest based off of a Template
 
         Creates a new SignatureRequest based on the given Template to be
@@ -670,7 +671,7 @@ class HSClient(object):
 
             test_mode (bool, optional):             Whether this is a test, the signature request will not be legally binding if set to True. Defaults to False.
 
-            client_id (str):                        Client id of the app you're using to create this embedded signature request. Visit the embedded page to learn more about this parameter (https://www.hellosign.com/api/embeddedSigningWalkthrough)
+            client_id (str):                        Client id of the app you're using to create this embedded signature request. Visit the embedded page to learn more about this parameter (https://app.hellosign.com/api/embeddedSigningWalkthrough)
 
             template_id (str):                      The id of the Template to use when creating the SignatureRequest. Mutually exclusive with template_ids.
 
@@ -699,9 +700,13 @@ class HSClient(object):
 
             metadata (dict, optional):              Metadata to associate with the signature request
 
-            ux_version (int):                       UX version, either 1 (default) or 2.
-
             allow_decline (bool, optional):         Allows signers to decline to sign a document if set to 1. Defaults to 0.
+
+            files (list of str):                    The uploaded file(s) to append to the Signature Request.
+
+            file_urls (list of str):                URLs of the file for HelloSign to download to append to the Signature Request. Use either `files` or `file_urls`
+
+            signing_options (dict, optional):       Allows the reqeuster to specify the types allowed for creating a signature. Defaults to account settings.
 
         Returns:
             A SignatureRequest object of the newly created Signature Request
@@ -713,7 +718,9 @@ class HSClient(object):
             "client_id": client_id
         }, [{
             "template_id": template_id,
-            "template_ids": template_ids
+            "template_ids": template_ids,
+            "files": files,
+            "file_urls": file_urls
             }]
         )
 
@@ -730,15 +737,15 @@ class HSClient(object):
             'ccs': ccs,
             'custom_fields': custom_fields,
             'metadata': metadata,
-            'allow_decline': allow_decline
+            'allow_decline': allow_decline,
+            'files': files,
+            'file_urls': file_urls,
+            'signing_options': signing_options
         }
-
-        if ux_version is not None:
-            params['ux_version'] = ux_version
 
         return self._send_signature_request_with_template(**params)
 
-    #  ----  REUSABLE FORM METHODS  -----------------------
+    #  ----  TEMPLATE METHODS  -----------------------
 
     @api_resource(Template)
     def get_template(self, template_id):
