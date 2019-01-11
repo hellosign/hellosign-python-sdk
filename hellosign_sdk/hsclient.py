@@ -141,6 +141,7 @@ class HSClient(object):
         self.SIGNATURE_REQUEST_CREATE_URL = self.API_URL + '/signature_request/send'
         self.SIGNATURE_REQUEST_CREATE_WITH_TEMPLATE_URL = self.API_URL + '/signature_request/send_with_template'
         self.SIGNATURE_REQUEST_REMIND_URL = self.API_URL + '/signature_request/remind/'
+        self.SIGNATURE_REQUEST_UPDATE_URL = self.API_URL + '/signature_request/update/'
         self.SIGNATURE_REQUEST_CANCEL_URL = self.API_URL + '/signature_request/cancel/'
         self.SIGNATURE_REQUEST_CREATE_EMBEDDED_URL = self.API_URL + '/signature_request/create_embedded'
         self.SIGNATURE_REQUEST_CREATE_EMBEDDED_WITH_TEMPLATE_URL = self.API_URL + '/signature_request/create_embedded_with_template'
@@ -512,6 +513,27 @@ class HSClient(object):
         return request.post(self.SIGNATURE_REQUEST_REMIND_URL + signature_request_id, data={
             "email_address": email_address,
             "name": name
+        })
+
+    def update_signature_request(self, signature_request_id, signature_id, email_address):
+        ''' Updates the email address for a given signer on a signature request.
+
+        Args:
+
+            signature_request_id (str): The id of the SignatureRequest to update
+
+            signature_id (str):         The signature id for the recipient
+
+            email_address (str):        The new email address of the recipient
+
+        Returns:
+            A SignatureRequest object
+
+        '''
+        request = self._get_request()
+        return request.post(self.SIGNATURE_REQUEST_UPDATE_URL + signature_request_id, data={
+            "signature_id": signature_id,
+            "email_address": email_address
         })
 
     def cancel_signature_request(self, signature_request_id):
