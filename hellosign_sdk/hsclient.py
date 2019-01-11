@@ -36,7 +36,7 @@ class HSClient(object):
 
     '''
 
-    version = '3.8.7'   # SDK version
+    version = '3.8.8'   # SDK version
     API_VERSION = 'v3'  # API version
     API_URL = ''
 
@@ -261,14 +261,12 @@ class HSClient(object):
     #  ----  SIGNATURE REQUEST METHODS  -------------------
 
     @api_resource(SignatureRequest)
-    def get_signature_request(self, signature_request_id, ux_version=None):
+    def get_signature_request(self, signature_request_id):
         ''' Get a signature request by its ID
 
         Args:
 
             signature_request_id (str):     The id of the SignatureRequest to retrieve
-
-            ux_version (int):               UX version, either 1 (default) or 2.
 
         Returns:
             A SignatureRequest object
@@ -278,15 +276,10 @@ class HSClient(object):
         request = self._get_request()
         parameters = None
 
-        if ux_version is not None:
-            parameters = {
-                'ux_version': ux_version
-            }
-
         return request.get(self.SIGNATURE_REQUEST_INFO_URL + signature_request_id, parameters=parameters)
 
     @api_resource_list(SignatureRequest)
-    def get_signature_request_list(self, page=1, ux_version=None):
+    def get_signature_request_list(self, page=1):
         ''' Get a list of SignatureRequest that you can access
 
         This includes SignatureRequests you have sent as well as received, but
@@ -295,8 +288,6 @@ class HSClient(object):
         Args:
 
             page (int, optional):   Which page number of the SignatureRequest list to return. Defaults to 1.
-
-            ux_version (int):       UX version, either 1 (default) or 2.
 
         Returns:
             A ResourceList object
@@ -307,9 +298,6 @@ class HSClient(object):
         parameters = {
             "page": page
         }
-
-        if ux_version is not None:
-            parameters['ux_version'] = ux_version
 
         return request.get(self.SIGNATURE_REQUEST_LIST_URL, parameters=parameters)
 
@@ -336,7 +324,7 @@ class HSClient(object):
             url += '?file_type=%s' % file_type
         return request.get_file(url, path_or_file or filename)
 
-    def send_signature_request(self, test_mode=False, files=None, file_urls=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, cc_email_addresses=None, form_fields_per_document=None, use_text_tags=False, hide_text_tags=False, metadata=None, ux_version=None, allow_decline=False):
+    def send_signature_request(self, test_mode=False, files=None, file_urls=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, cc_email_addresses=None, form_fields_per_document=None, use_text_tags=False, hide_text_tags=False, custom_fields=None, metadata=None, allow_decline=False, allow_reassign=False, signing_options=None):
         ''' Creates and sends a new SignatureRequest with the submitted documents
 
         Creates and sends a new SignatureRequest with the submitted documents.
@@ -348,15 +336,15 @@ class HSClient(object):
 
             test_mode (bool, optional):             Whether this is a test, the signature request will not be legally binding if set to True. Defaults to False.
 
-            files (list of str):                    The uploaded file(s) to send for signature
+            files (list of str):                    The uploaded file(s) to send for signature.
 
             file_urls (list of str):                URLs of the file for HelloSign to download to send for signature. Use either `files` or `file_urls`
 
-            title (str, optional):                  The title you want to assign to the SignatureRequest
+            title (str, optional):                  The title you want to assign to the SignatureRequest.
 
-            subject (str, optional):                The subject in the email that will be sent to the signers
+            subject (str, optional):                The subject in the email that will be sent to the signers.
 
-            message (str, optional):                The custom message in the email that will be sent to the signers
+            message (str, optional):                The custom message in the email that will be sent to the signers.
 
             signing_redirect_url (str, optional):   The URL you want the signer redirected to after they successfully sign.
 
@@ -367,19 +355,23 @@ class HSClient(object):
                 order (str, optional):              The order the signer is required to sign in
                 pin (str, optional):                The 4- to 12-character access code that will secure this signer's signature page
 
-            cc_email_addresses (list, optional):    A list of email addresses that should be CC'd
+            cc_email_addresses (list, optional):    A list of email addresses that should be CC'd on the request.
 
-            form_fields_per_document (str):         The fields that should appear on the document, expressed as a serialized JSON data structure which is a list of lists of the form fields. Please refer to the API reference of HelloSign for more details (https://www.hellosign.com/api/reference#SignatureRequest)
+            form_fields_per_document (str):         The signer components that should appear on the document, expressed as a serialized JSON data structure which is a list of lists of the form fields. Please refer to the API reference of HelloSign for more details (https://app.hellosign.com/api/reference#SignatureRequest).
 
-            use_text_tags (bool, optional):         Use text tags in the provided file(s) to create form fields
+            use_text_tags (bool, optional):         Use text tags in the provided file(s) to specify signer components.
 
-            hide_text_tags (bool, optional):        Hide text tag areas
+            hide_text_tags (bool, optional):        Hide text tag areas.
 
-            metadata (dict, optional):              Metadata to associate with the signature request
+            custom_fields (list of dict, optional): A list of custom fields defined by Text Tags for Form Fields per Document. An item of the list should look like this: `{'name: value'}`
 
-            ux_version (int):                       UX version, either 1 (default) or 2.
+            metadata (dict, optional):              Metadata associated with the signature request.
 
-            allow_decline(bool, optional):         Allows signers to decline to sign a document if set to 1. Defaults to 0.
+            allow_decline (bool, optional):          Allows signers to decline to sign a document if set to True. Defaults to False.
+
+            allow_reassign (bool, optional):         Allows signers to reassign their signature requests to other signers if set to True. Defaults to False.
+
+            signing_options (dict, optional):       Allows the reqeuster to specify the types allowed for creating a signature. Defaults to account settings.
 
         Returns:
             A SignatureRequest object
@@ -408,11 +400,10 @@ class HSClient(object):
             'use_text_tags': use_text_tags,
             'hide_text_tags': hide_text_tags,
             'metadata': metadata,
-            'allow_decline': allow_decline
+            'allow_decline': allow_decline,
+            'allow_reassign': allow_reassign,
+            'signing_options': signing_options
         }
-
-        if ux_version is not None:
-            params['ux_version'] = ux_version
 
         return self._send_signature_request(**params)
 
@@ -1353,7 +1344,7 @@ class HSClient(object):
                     raise HSException("One of the following fields is required: %s" % ", ".join(field.keys()))
 
     @api_resource(SignatureRequest)
-    def _send_signature_request(self, test_mode=False, client_id=None, files=None, file_urls=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, cc_email_addresses=None, form_fields_per_document=None, use_text_tags=False, hide_text_tags=False, metadata=None, ux_version=None, allow_decline=False):
+    def _send_signature_request(self, test_mode=False, client_id=None, files=None, file_urls=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, custom_fields=None, cc_email_addresses=None, form_fields_per_document=None, use_text_tags=False, hide_text_tags=False, metadata=None, allow_decline=False, allow_reassign=False, signing_options=None):
         ''' To share the same logic between send_signature_request &
             send_signature_request_embedded functions
 
@@ -1392,9 +1383,11 @@ class HSClient(object):
 
             metadata (dict, optional):              Metadata to associate with the signature request
 
-            ux_version (int):                       UX version, either 1 (default) or 2.
-
             allow_decline (bool, optional);         Allows signers to decline to sign a document if set to 1. Defaults to 0.
+
+            allow_reassign (bool, optional):         Allows signers to reassign their signature requests to other signers if set to True. Defaults to False.
+
+            signing_options (dict, optional):       Allows the reqeuster to specify the types allowed for creating a signature. Defaults to account settings.
 
         Returns:
             A SignatureRequest object
@@ -1426,11 +1419,10 @@ class HSClient(object):
             "form_fields_per_document": form_fields_per_document,
             "use_text_tags": self._boolean(use_text_tags),
             "hide_text_tags": self._boolean(hide_text_tags),
-            "allow_decline": self._boolean(allow_decline)
+            "allow_decline": self._boolean(allow_decline),
+            "allow_reassign": self._boolean(allow_reassign),
+            "signing_options": json.dumps(signing_options)
         }
-
-        if ux_version is not None:
-            payload['ux_version'] = ux_version
 
         # remove attributes with none value
         payload = HSFormat.strip_none_values(payload)
