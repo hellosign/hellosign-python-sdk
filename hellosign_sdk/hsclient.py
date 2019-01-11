@@ -143,6 +143,7 @@ class HSClient(object):
         self.SIGNATURE_REQUEST_REMIND_URL = self.API_URL + '/signature_request/remind/'
         self.SIGNATURE_REQUEST_UPDATE_URL = self.API_URL + '/signature_request/update/'
         self.SIGNATURE_REQUEST_CANCEL_URL = self.API_URL + '/signature_request/cancel/'
+        self.SIGNATURE_REQUEST_REMOVE_ACCESS_URL = self.API_URL + '/signature_request/remove/'
         self.SIGNATURE_REQUEST_CREATE_EMBEDDED_URL = self.API_URL + '/signature_request/create_embedded'
         self.SIGNATURE_REQUEST_CREATE_EMBEDDED_WITH_TEMPLATE_URL = self.API_URL + '/signature_request/create_embedded_with_template'
 
@@ -553,6 +554,22 @@ class HSClient(object):
         '''
         request = self._get_request()
         request.post(url=self.SIGNATURE_REQUEST_CANCEL_URL + signature_request_id, get_json=False)
+
+    def remove_signature_request_access(self, signature_request_id):
+        ''' Removes your access to a completed SignatureRequest
+
+        The SignatureRequest must be fully executed by all parties (signed or declined to sign). Other parties will continue to maintain access to the completed signature request document(s).
+
+        Args:
+
+            signature_request_id (str): The id of the signature request to remove
+
+        Returns:
+            None
+
+        '''
+        request = self._get_request()
+        request.post(url=self.SIGNATURE_REQUEST_REMOVE_ACCESS_URL + signature_request_id, get_json=False)
 
     def send_signature_request_embedded(self, test_mode=False, client_id=None, files=None, file_urls=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, cc_email_addresses=None, form_fields_per_document=None, use_text_tags=False, hide_text_tags=False, metadata=None, ux_version=None, allow_decline=False):
         ''' Creates and sends a new SignatureRequest with the submitted documents
