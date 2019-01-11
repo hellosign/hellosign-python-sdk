@@ -545,7 +545,7 @@ class HSClient(object):
 
         Args:
 
-            signing_request_id (str): The id of the signature request to cancel
+            signature_request_id (str): The id of the signature request to cancel
 
         Returns:
             None
