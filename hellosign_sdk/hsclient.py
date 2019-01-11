@@ -860,7 +860,7 @@ class HSClient(object):
 
         return request.get_file(url, filename)
 
-    def create_embedded_template_draft(self, client_id, signer_roles, test_mode=False, files=None, file_urls=None, title=None, subject=None, message=None, cc_roles=None, merge_fields=None, use_preexisting_fields=False):
+    def create_embedded_template_draft(self, client_id, signer_roles, test_mode=False, files=None, file_urls=None, title=None, subject=None, message=None, cc_roles=None, merge_fields=None, skip_me_now=False, use_preexisting_fields=False, allow_reassign=False, metadata=None):
         ''' Creates an embedded Template draft for further editing.
 
         Args:
@@ -891,7 +891,13 @@ class HSClient(object):
                 name (str):                     The name of the merge field. Must be unique.
                 type (str):                     Can only be "text" or "checkbox".
 
-            use_preexisting_fields (bool):      Whether to use preexisting PDF fields
+            skip_me_now (bool, optional):          Disables the "Me (Now)" option for the document's preparer. Defaults to 0.
+
+            use_preexisting_fields (bool, optional):      Whether to use preexisting PDF fields
+
+            metadata (dict, optional):                  Metadata to associate with the draft
+
+            allow_reassign (bool, optional):         Allows signers to reassign their signature requests to other signers if set to True. Defaults to False.
 
         Returns:
             A Template object specifying the Id of the draft
@@ -908,7 +914,10 @@ class HSClient(object):
             'signer_roles': signer_roles,
             'cc_roles': cc_roles,
             'merge_fields': merge_fields,
-            'use_preexisting_fields': use_preexisting_fields
+            'skip_me_now': skip_me_now,
+            'use_preexisting_fields': use_preexisting_fields,
+            'metadata': metadata,
+            'allow_reassign': allow_reassign
         }
 
         return self._create_embedded_template_draft(**params)
@@ -1788,7 +1797,7 @@ class HSClient(object):
         return response
 
     @api_resource(Template)
-    def _create_embedded_template_draft(self, client_id, signer_roles, test_mode=False, files=None, file_urls=None, title=None, subject=None, message=None, cc_roles=None, merge_fields=None, use_preexisting_fields=False):
+    def _create_embedded_template_draft(self, client_id, signer_roles, test_mode=False, files=None, file_urls=None, title=None, subject=None, message=None, cc_roles=None, merge_fields=None, skip_me_now=False, use_preexisting_fields=False, metadata=None, allow_reassign=False):
         ''' Helper method for creating embedded template drafts.
             See public function for params.
         '''
@@ -1801,7 +1810,9 @@ class HSClient(object):
             'title': title,
             'subject': subject,
             'message': message,
-            'use_preexisting_fields': self._boolean(use_preexisting_fields)
+            'skip_me_now': self._boolean(skip_me_now),
+            'use_preexisting_fields': self._boolean(use_preexisting_fields),
+            'allow_reassign': self._boolean(allow_reassign)
         }
 
         # Prep files
@@ -1816,6 +1827,8 @@ class HSClient(object):
         merge_fields_payload = {
             'merge_fields': json.dumps(merge_fields)
         }
+        # Prep Metadata
+        metadata_payload = HSFormat.format_single_dict(metadata, 'metadata')
 
         # Assemble data for sending
         data = {}
@@ -1823,6 +1836,7 @@ class HSClient(object):
         data.update(file_urls_payload)
         data.update(signer_roles_payload)
         data.update(ccs_payload)
+        data.update(metadata_payload)
         if (merge_fields is not None):
             data.update(merge_fields_payload)
         data = HSFormat.strip_none_values(data)
