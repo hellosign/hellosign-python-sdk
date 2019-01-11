@@ -489,7 +489,7 @@ class HSClient(object):
         return self._send_signature_request_with_template(**params)
 
     @api_resource(SignatureRequest)
-    def remind_signature_request(self, signature_request_id, email_address):
+    def remind_signature_request(self, signature_request_id, email_address, name=None):
         ''' Sends an email to the signer reminding them to sign the signature request
 
         Sends an email to the signer reminding them to sign the signature
@@ -502,13 +502,16 @@ class HSClient(object):
 
             email_address (str):        The email address of the signer to send a reminder to
 
+            name (str, optional):       The name of the signer to send a reminder to
+
         Returns:
             A SignatureRequest object
 
         '''
         request = self._get_request()
         return request.post(self.SIGNATURE_REQUEST_REMIND_URL + signature_request_id, data={
-            "email_address": email_address
+            "email_address": email_address,
+            "name": name
         })
 
     def cancel_signature_request(self, signature_request_id):
