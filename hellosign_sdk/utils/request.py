@@ -5,9 +5,9 @@ from .exception import *
 
 #
 # The MIT License (MIT)
-# 
+#
 # Copyright (C) 2014 hellosign.com
-# 
+#
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
 # in the Software without restriction, including without limitation the rights
@@ -111,7 +111,7 @@ class HSRequest(object):
         return True
 
     def get(self, url, headers=None, parameters=None, get_json=True):
-        ''' Send a GET request with custome headers and parameters
+        ''' Send a GET request with custom headers and parameters
 
         Args:
             url (str): URL to send the request to
@@ -166,7 +166,7 @@ class HSRequest(object):
 
         response = requests.post(url, headers=self.headers, data=data, auth=self.auth, files=files, verify=self.verify_ssl)
         json_response = self._process_json_response(response)
-        
+
         return json_response if get_json is True else response
 
 
@@ -200,7 +200,7 @@ class HSRequest(object):
         ''' Process a given response '''
 
         json_response = self._get_json_response(response)
-        
+
         if self.response_callback is not None:
             json_response = self.response_callback(json_response)
             response._content = json.dumps(json_response)
@@ -225,7 +225,7 @@ class HSRequest(object):
 
         Returns:
             True if status code is not error code
-        
+
         '''
 
         # If status code is 4xx or 5xx, that should be an error
@@ -246,7 +246,7 @@ class HSRequest(object):
 
         Args:
             json_response (dict): JSON response
-        
+
         '''
 
         self.warnings = None

@@ -161,6 +161,7 @@ class HSClient(object):
         self.TEMPLATE_ADD_USER_URL = self.API_URL + '/template/add_user/'
         self.TEMPLATE_REMOVE_USER_URL = self.API_URL + '/template/remove_user/'
         self.TEMPLATE_CREATE_EMBEDDED_DRAFT_URL = self.API_URL + '/template/create_embedded_draft'
+        self.TEMPLATE_UPDATE_FILES_URL = self.API_URL + '/template/update_files/'
 
         self.TEAM_INFO_URL = self.API_URL + '/team'
         self.TEAM_UPDATE_URL = self.TEAM_INFO_URL
@@ -303,7 +304,7 @@ class HSClient(object):
 
         return request.get(self.SIGNATURE_REQUEST_LIST_URL, parameters=parameters)
 
-    def get_signature_request_file(self, signature_request_id, path_or_file=None, file_type=None, filename=None):
+    def get_signature_request_file(self, signature_request_id, path_or_file=None, file_type=None, filename=None, get_url=False, get_data_uri=False):
         ''' Download the PDF copy of the current documents
 
         Args:
@@ -316,15 +317,25 @@ class HSClient(object):
 
             file_type (str):            Type of file to return. Either "pdf" for a single merged document or "zip" for a collection of individual documents. Defaults to "pdf" if not specified.
 
+            get_url (bool, optional):   If True, returns a URL link to the file. Defaults to false.
+
+            get_data_uri (bool, optional):  If True, returns the file as base64 encoded string. Defaults to False.
+
         Returns:
-            True if file is downloaded and successfully written, False otherwise.
+            Returns a PDF file, URL link to file, or base64 encoded file
 
         '''
         request = self._get_request()
         url = self.SIGNATURE_REQUEST_DOWNLOAD_PDF_URL + signature_request_id
         if file_type:
             url += '?file_type=%s' % file_type
-        return request.get_file(url, path_or_file or filename)
+            return request.get_file(url, path_or_file or filename)
+
+        if get_url:
+            url += '?get_url=1'
+        elif get_data_uri:
+            url += '?get_data_uri=1'
+        return request.get(url)
 
     def send_signature_request(self, test_mode=False, files=None, file_urls=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, cc_email_addresses=None, form_fields_per_document=None, use_text_tags=False, hide_text_tags=False, custom_fields=None, metadata=None, allow_decline=False, allow_reassign=False, signing_options=None):
         ''' Creates and sends a new SignatureRequest with the submitted documents
@@ -840,27 +851,73 @@ class HSClient(object):
 
         return response
 
-    # def get_template_files(self, template_id):
-    def get_template_files(self, template_id, filename):
-        ''' Download a PDF copy of a template's original files
+    def get_template_files(self, template_id, path_or_file=None, file_type=None, filename=None, get_url=False, get_data_uri=False):
+        ''' Download a copy of a template's original files
 
         Args:
 
-            template_id (str):  The id of the template to retrieve.
+            template_id (str):          id of the template to download
 
-            filename (str):     Filename to save the PDF file to. This should be a full path.
+            path_or_file (str or file): A writable File-like object or a full path to save the PDF file to.
+
+            filename (str):             [DEPRECATED] Filename to save the PDF file to. This should be a full path.
+
+            file_type (str):            Type of file to return. Either "pdf" for a single merged document or "zip" for a collection of individual documents. Defaults to "pdf" if not specified.
+
+            get_url (bool, optional):   If True, returns a URL link to the file. Defaults to false.
+
+            get_data_uri (bool, optional):  If True, returns the file as base64 encoded string. Defaults to False.
 
         Returns:
-            Returns a PDF file
+            Returns a PDF file, URL link to file, or base64 encoded file
 
         '''
-
-        url = self.TEMPLATE_GET_FILES_URL + template_id
         request = self._get_request()
+        url = self.TEMPLATE_GET_FILES_URL + template_id
+        if file_type:
+            url += '?file_type=%s' % file_type
+            return request.get_file(url, path_or_file or filename)
 
-        return request.get_file(url, filename)
+        if get_url:
+            url += '?get_url=1'
+        elif get_data_uri:
+            url += '?get_data_uri=1'
+        return request.get(url)
 
-    def create_embedded_template_draft(self, client_id, signer_roles, test_mode=False, files=None, file_urls=None, title=None, subject=None, message=None, cc_roles=None, merge_fields=None, skip_me_now=False, use_preexisting_fields=False, allow_reassign=False, metadata=None):
+    def update_template_files(self, template_id, files=None, file_urls=None, subject=None, message=None, client_id=None, test_mode=False):
+        ''' Overlays a new file with the overlay of an existing template.
+
+        Args:
+
+            template_id (str):          The id of the template whose files to update
+
+            files (list of str):        The file(s) to use for the template.
+
+            file_urls (list of str):    URLs of the file for HelloSign to use for the template. Use either `files` or `file_urls`, but not both.
+
+            subject (str, optional):    The default template email subject
+
+            message (str, optional):    The default template email message
+
+            test_mode (bool, optional): Whether this is a test, the signature request created from this Template will not be legally binding if set to 1. Defaults to 0.
+
+            client_id (str):             Client id of the app associated with the Template
+
+        Returns:
+            A Template object
+
+        '''
+        request = self._get_request()
+        return request.post(self.TEMPLATE_UPDATE_FILES_URL + template_id, data={
+            "files": files,
+            "file_urls": file_urls,
+            "subject": subject,
+            "message": message,
+            "test_mode": self._boolean(test_mode),
+            "client_id": client_id
+        })
+
+    def create_embedded_template_draft(self, client_id, signer_roles, test_mode=False, files=None, file_urls=None, title=None, subject=None, message=None, cc_roles=None, merge_fields=None, skip_me_now=False, use_preexisting_fields=False, allow_reassign=False, metadata=None, allow_ccs=False):
         ''' Creates an embedded Template draft for further editing.
 
         Args:
@@ -895,9 +952,11 @@ class HSClient(object):
 
             use_preexisting_fields (bool, optional):      Whether to use preexisting PDF fields
 
-            metadata (dict, optional):                  Metadata to associate with the draft
+            metadata (dict, optional):                    Metadata to associate with the draft
 
-            allow_reassign (bool, optional):         Allows signers to reassign their signature requests to other signers if set to True. Defaults to False.
+            allow_reassign (bool, optional):              Allows signers to reassign their signature requests to other signers if set to True. Defaults to False.
+
+            allow_ccs (bool, optional):                   Specifies whether the user is allowed to provide email addresses to CC when creating a tempate. Defaults to False.
 
         Returns:
             A Template object specifying the Id of the draft
@@ -917,7 +976,8 @@ class HSClient(object):
             'skip_me_now': skip_me_now,
             'use_preexisting_fields': use_preexisting_fields,
             'metadata': metadata,
-            'allow_reassign': allow_reassign
+            'allow_reassign': allow_reassign,
+            'allow_ccs': allow_ccs
         }
 
         return self._create_embedded_template_draft(**params)
@@ -1797,7 +1857,7 @@ class HSClient(object):
         return response
 
     @api_resource(Template)
-    def _create_embedded_template_draft(self, client_id, signer_roles, test_mode=False, files=None, file_urls=None, title=None, subject=None, message=None, cc_roles=None, merge_fields=None, skip_me_now=False, use_preexisting_fields=False, metadata=None, allow_reassign=False):
+    def _create_embedded_template_draft(self, client_id, signer_roles, test_mode=False, files=None, file_urls=None, title=None, subject=None, message=None, cc_roles=None, merge_fields=None, skip_me_now=False, use_preexisting_fields=False, metadata=None, allow_reassign=False, allow_ccs=False):
         ''' Helper method for creating embedded template drafts.
             See public function for params.
         '''
@@ -1812,7 +1872,9 @@ class HSClient(object):
             'message': message,
             'skip_me_now': self._boolean(skip_me_now),
             'use_preexisting_fields': self._boolean(use_preexisting_fields),
-            'allow_reassign': self._boolean(allow_reassign)
+            'allow_reassign': self._boolean(allow_reassign),
+            'allow_ccs':
+            self._boolean(allow_ccs)
         }
 
         # Prep files
