@@ -1079,7 +1079,7 @@ class HSClient(object):
 
     @api_resource(Embedded)
     def get_embedded_object(self, signature_id):
-        ''' Retrieves a embedded signing object
+        ''' Retrieves an embedded signing object
 
         Retrieves an embedded object containing a signature url that can be opened in an iFrame.
 
@@ -1095,21 +1095,61 @@ class HSClient(object):
         return request.get(self.EMBEDDED_OBJECT_GET_URL + signature_id)
 
     @api_resource(Embedded)
-    def get_template_edit_url(self, template_id):
+    def get_template_edit_url(self, template_id, test_mode=False, cc_roles=None, merge_fields=None, skip_signer_roles=False, skip_subject_message=False):
         ''' Retrieves a embedded template for editing
 
-        Retrieves an embedded object containing a template url that can be opened in an iFrame.
+        Retrieves an embedded object containing a template edit url that can be opened in an iFrame.
 
         Args:
 
-            template_id (str): The id of the template to get a signature url for
+            template_id (str):                  The id of the template to get an edit url for
+
+            test_mode (bool, optional):         Whether this is a test, the signature requests created from this template will not be legally binding if set to True. Defaults to False.
+
+            cc_roles (list of str, optional):   The CC roles that must be assigned when using the template to send a signature request
+
+            merge_fields (list of dict, optional): The merge fields that can be placed on the template's document(s) by the user claiming the template draft. Each must have the following two parameters:
+
+                name (str):                     The name of the merge field. Must be unique.
+                type (str):                     Can only be "text" or "checkbox".
+
+            skip_me_now (bool, optional):          Disables the "Me (Now)" option for the document's preparer. Defaults to False.
+
+            skip_subject_message (bool, optional):  Disables the option to edit the template's default subject and message. Defaults to False.
 
         Returns:
             An Embedded object
 
         '''
+
+        # Prep CCs
+        ccs_payload = HSFormat.format_param_list(cc_roles, 'cc_roles')
+        # Prep Merge Fields
+        merge_fields_payload = {
+            'merge_fields': json.dumps(merge_fields)
+        }
+
+        payload = {
+            "test_mode": self._boolean(test_mode),
+            "skip_signer_roles": self._boolean(skip_signer_roles),
+            "skip_subject_message": self._boolean(skip_subject_message)
+        }
+
+        # remove attributes with none value
+        payload = HSFormat.strip_none_values(payload)
+
+        url = self.EMBEDDED_TEMPLATE_EDIT_URL + template_id
+
+        data = {}
+        data.update(payload)
+        data.update(ccs_payload)
+        data.update(merge_fields_payload)
+
         request = self._get_request()
-        return request.get(self.EMBEDDED_TEMPLATE_EDIT_URL + template_id)
+        response = request.post(url, data=data)
+        return response
+        # request = self._get_request()
+        # return request.get(self.EMBEDDED_TEMPLATE_EDIT_URL + template_id)
 
     #  ----  UNCLAIMED DRAFT METHODS  ---------------------
 
