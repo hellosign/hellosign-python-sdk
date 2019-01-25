@@ -60,6 +60,15 @@ class HSFormat(object):
         return file_urls_payload
 
     @staticmethod
+    def format_logo_params(logo):
+        '''
+            Utility method for formatting custom logo parameters for API Apps
+        '''
+        logo_payload = {}
+        logo_payload["custom_logo_file"] = open(logo, 'rb')
+        return logo_payload
+
+    @staticmethod
     def format_param_list(listed_params, output_name):
         '''
             Utility method for formatting lists of parameters for api consumption

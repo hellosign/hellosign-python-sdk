@@ -1,5 +1,5 @@
 from hellosign_sdk.utils import HSRequest, HSException, NoAuthMethod, HSAccessTokenAuth, HSFormat, api_resource, api_resource_list
-from hellosign_sdk.resource import Account, SignatureRequest, Template, Team, Embedded, UnclaimedDraft
+from hellosign_sdk.resource import Account, ApiApp, SignatureRequest, Template, Team, Embedded, UnclaimedDraft
 from requests.auth import HTTPBasicAuth
 import json
 
@@ -76,6 +76,12 @@ class HSClient(object):
     TEAM_DESTROY_URL = ''
     TEAM_ADD_MEMBER_URL = ''
     TEAM_REMOVE_MEMBER_URL = ''
+
+    API_APP_INFO_URL = ''
+    API_APP_LIST_URL = ''
+    API_APP_CREATE_URL = ''
+    API_APP_UPDATE_URL = ''
+    API_APP_DELETE_URL = ''
 
     OAUTH_TOKEN_URL = ''
 
@@ -169,6 +175,12 @@ class HSClient(object):
         self.TEAM_DESTROY_URL = self.API_URL + '/team/destroy'
         self.TEAM_ADD_MEMBER_URL = self.API_URL + '/team/add_member'
         self.TEAM_REMOVE_MEMBER_URL = self.API_URL + '/team/remove_member'
+
+        self.API_APP_INFO_URL = self.API_URL + '/api_app/'
+        self.API_APP_LIST_URL = self.API_URL + '/api_app/list'
+        self.API_APP_CREATE_URL = self.API_URL + '/api_app'
+        self.API_APP_UPDATE_URL = self.API_APP_INFO_URL
+        self.API_APP_DELETE_URL = self.API_APP_INFO_URL
 
     #  ----  ACCOUNT METHODS  -----------------------------
 
@@ -1148,8 +1160,153 @@ class HSClient(object):
         request = self._get_request()
         response = request.post(url, data=data)
         return response
-        # request = self._get_request()
-        # return request.get(self.EMBEDDED_TEMPLATE_EDIT_URL + template_id)
+
+    #  ----  API APP METHODS  --------------------------------
+
+    @api_resource(ApiApp)
+    def get_api_app_info(self, client_id):
+        ''' Gets an API App by its Client ID
+
+        Returns information about the specified API App
+
+        Returns:
+            An ApiApp object
+
+        '''
+        request = self._get_request()
+        return request.get(self.API_APP_INFO_URL + client_id)
+
+    @api_resource_list(ApiApp)
+    def get_api_app_list(self, page=1, page_size=None):
+        ''' Lists your API Apps
+
+        Args:
+
+            page (int, optional):           Page number of the API App List to return. Defaults to 1.
+            page_size (int, optional):      Number of objects to be returned per page, must be between 1 and 100, default is 20.
+
+        Returns:
+            A ResourceList object
+
+        '''
+        request = self._get_request()
+        parameters = {
+            'page': page,
+            'page_size': page_size
+        }
+        return request.get(self.API_APP_LIST_URL, parameters=parameters)
+
+    @api_resource(ApiApp)
+    def create_api_app(self, name, domain, callback_url=None, custom_logo_file=None, oauth_callback_url=None, oauth_scopes=None, white_labeling_options=None, option_insert_everywhere=False):
+        ''' Creates a new API App
+
+        Creates a new API App with the specified settings.
+
+        Args:
+
+            name (str): The name of the API App
+
+            domain (str): The domain name associated with the API App
+
+            callback_url (str, optional): The URL that HelloSign events will be POSTed to
+
+            custom_logo_file (str, optional): The image file to use as a custom logo
+
+            oauth_callback_url (str, optional): The URL that HelloSign OAuth events will be POSTed to
+
+            oauth_scopes (list of str, optional):  List of the API App's OAuth scopes
+
+            white_labeling_options (dict, optional): Customization options for the API App's signer page
+
+            option_insert_everywhere (bool, optional): Denotes if signers can "Insert Everywhere" when
+            signing a document
+
+        Returns:
+            An ApiApp object
+
+        '''
+
+        # Prep custom logo
+        custom_logo_payload = HSFormat.format_logo_params(custom_logo_file)
+
+        payload = {
+            "name": name,
+            "domain": domain,
+            "callback_url": callback_url,
+            "oauth[callback_url]": oauth_callback_url,
+            "oauth[scopes]": oauth_scopes,
+            "white_labeling_options": json.dumps(white_labeling_options),
+            "options[can_insert_everywhere]": self._boolean(option_insert_everywhere)
+        }
+
+        # remove attributes with none value
+        payload = HSFormat.strip_none_values(payload)
+
+        request = self._get_request()
+        return request.post(self.API_APP_CREATE_URL, data=payload, files=custom_logo_payload)
+
+    @api_resource(ApiApp)
+    def update_api_app(self, client_id, name=None, domain=None, callback_url=None, custom_logo_file=None, oauth_callback_url=None, oauth_scopes=None, white_labeling_options=None, option_insert_everywhere=False):
+        ''' Updates the specified API App
+
+        Updates an API App with the specified settings.
+
+        Args:
+
+            name (str): The name of the API App
+
+            domain (str): The domain name associated with the API App
+
+            callback_url (str, optional): The URL that HelloSign events will be POSTed to
+
+            custom_logo_file (str, optional): The image file to use as a custom logo
+
+            oauth_callback_url (str, optional): The URL that HelloSign OAuth events will be POSTed to
+
+            oauth_scopes (list of str, optional):  List of the API App's OAuth scopes
+
+            white_labeling_options (dict, optional): Customization options for the API App's signer page
+
+            option_insert_everywhere (bool, optional): Denotes if signers can "Insert Everywhere" when
+            signing a document
+
+        Returns:
+            An ApiApp object
+
+        '''
+
+        # Prep custom logo
+        custom_logo_payload = HSFormat.format_logo_params(custom_logo_file)
+
+        payload = {
+            "name": name,
+            "domain": domain,
+            "callback_url": callback_url,
+            "oauth[callback_url]": oauth_callback_url,
+            "oauth[scopes]": oauth_scopes,
+            "white_labeling_options": json.dumps(white_labeling_options),
+            "options[can_insert_everywhere]": self._boolean(option_insert_everywhere)
+        }
+
+        # remove attributes with none value
+        payload = HSFormat.strip_none_values(payload)
+
+        request = self._get_request()
+        url = self.API_APP_UPDATE_URL + client_id
+
+        return request.post(url, data=payload, files=custom_logo_payload)
+
+    def delete_api_app(self, client_id):
+        ''' Deletes the specified API App
+
+        Deletes an API App. Can only be involved for API Apps you own.
+
+        Returns:
+            None
+
+        '''
+        request = self._get_request()
+        request.delete(url=self.API_APP_DELETE_URL + client_id)
 
     #  ----  UNCLAIMED DRAFT METHODS  ---------------------
 

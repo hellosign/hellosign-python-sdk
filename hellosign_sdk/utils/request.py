@@ -169,6 +169,28 @@ class HSRequest(object):
 
         return json_response if get_json is True else response
 
+    def delete(self, url, headers=None):
+        ''' Make POST request to a url
+
+        Args:
+            url (str): URL to send the request to
+            headers (str, optional): custom headers
+
+        Returns:
+            None
+
+        '''
+
+        if self.debug:
+            print("POST: %s, headers=%s" % (url, headers))
+
+        self.headers = self._get_default_headers()
+        if headers is not None:
+            self.headers.update(headers)
+
+        response = requests.delete(url, headers=self.headers, auth=self.auth, verify=self.verify_ssl)
+
+        return response
 
     ####  HELPERS  ########################################
 

@@ -2,9 +2,9 @@ import json
 
 #
 # The MIT License (MIT)
-# 
+#
 # Copyright (C) 2014 hellosign.com
-# 
+#
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
 # in the Software without restriction, including without limitation the rights
@@ -27,7 +27,7 @@ import json
 class Resource(object):
 
     ''' An abstract class to represent some objects used by our SDK such as
-    Account, SignatureRequest, Template, Team, UnclaimedDraft, Embedded.
+    Account, ApiAp, SignatureRequest, Template, Team, UnclaimedDraft, Embedded.
     These objects share the same way of storing data.
 
     Information and settings are stored physically in `self.json_data`, and
