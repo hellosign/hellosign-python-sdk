@@ -1,5 +1,4 @@
 from .resource import Resource
-from hellosign_sdk.utils import HSAccessTokenAuth
 
 #
 # The MIT License (MIT)

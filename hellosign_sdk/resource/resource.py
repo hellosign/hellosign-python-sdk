@@ -24,10 +24,11 @@ import json
 # SOFTWARE.
 #
 
+
 class Resource(object):
 
     ''' An abstract class to represent some objects used by our SDK such as
-    Account, ApiAp, SignatureRequest, Template, Team, UnclaimedDraft, Embedded.
+    Account, ApiApp, SignatureRequest, Template, Team, UnclaimedDraft, Embedded.
     These objects share the same way of storing data.
 
     Information and settings are stored physically in `self.json_data`, and
