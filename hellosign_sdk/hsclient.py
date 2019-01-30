@@ -396,7 +396,7 @@ class HSClient(object):
 
             allow_reassign (bool, optional):         Allows signers to reassign their signature requests to other signers if set to True. Defaults to False.
 
-            signing_options (dict, optional):       Allows the reqeuster to specify the types allowed for creating a signature. Defaults to account settings.
+            signing_options (dict, optional):       Allows the requester to specify the types allowed for creating a signature. Defaults to account settings.
 
         Returns:
             A SignatureRequest object
@@ -476,7 +476,7 @@ class HSClient(object):
 
             file_urls (list of str):                URLs of the file for HelloSign to download to append to the Signature Request. Use either `files` or `file_urls`
 
-            signing_options (dict, optional):       Allows the reqeuster to specify the types allowed for creating a signature. Defaults to account settings.
+            signing_options (dict, optional):       Allows the requester to specify the types allowed for creating a signature. Defaults to account settings.
 
         Returns:
             A SignatureRequest object
@@ -644,7 +644,7 @@ class HSClient(object):
 
             allow_reassign (bool, optional):         Allows signers to reassign their signature requests to other signers if set to True. Defaults to False.
 
-            signing_options (dict, optional):       Allows the reqeuster to specify the types allowed for creating a signature. Defaults to account settings.
+            signing_options (dict, optional):       Allows the requester to specify the types allowed for creating a signature. Defaults to account settings.
 
         Returns:
             A SignatureRequest object
@@ -729,7 +729,7 @@ class HSClient(object):
 
             file_urls (list of str):                URLs of the file for HelloSign to download to append to the Signature Request. Use either `files` or `file_urls`
 
-            signing_options (dict, optional):       Allows the reqeuster to specify the types allowed for creating a signature. Defaults to account settings.
+            signing_options (dict, optional):       Allows the requester to specify the types allowed for creating a signature. Defaults to account settings.
 
         Returns:
             A SignatureRequest object of the newly created Signature Request
@@ -968,7 +968,7 @@ class HSClient(object):
 
             allow_reassign (bool, optional):              Allows signers to reassign their signature requests to other signers if set to True. Defaults to False.
 
-            allow_ccs (bool, optional):                   Specifies whether the user is allowed to provide email addresses to CC when creating a tempate. Defaults to False.
+            allow_ccs (bool, optional):                   Specifies whether the user is allowed to provide email addresses to CC when creating a template. Defaults to False.
 
         Returns:
             A Template object specifying the Id of the draft
@@ -1310,7 +1310,7 @@ class HSClient(object):
 
     #  ----  UNCLAIMED DRAFT METHODS  ---------------------
 
-    def create_unclaimed_draft(self, test_mode=False, files=None, file_urls=None, draft_type=None, subject=None, message=None, signers=None, cc_email_addresses=None, signing_redirect_url=None, form_fields_per_document=None, metadata=None, use_preexisting_fields=False, allow_decline=False):
+    def create_unclaimed_draft(self, test_mode=False, files=None, file_urls=None, draft_type=None, subject=None, message=None, signers=None, custom_fields=None, cc_email_addresses=None, signing_redirect_url=None, form_fields_per_document=None, metadata=None, use_preexisting_fields=False, use_text_tags=False, hide_text_tags=False, allow_decline=False, signing_options=None):
         ''' Creates a new Draft that can be claimed using the claim URL
 
         Creates a new Draft that can be claimed using the claim URL. The first
@@ -1342,6 +1342,8 @@ class HSClient(object):
                 email_address (str):                    Email address of the signer
                 order (str, optional):                  The order the signer is required to sign in
 
+            custom_fields (list of dict, optional):     A list of custom fields. Required when a CustomField exists in the Template. An item of the list should look like this: `{'name: value'}`
+
             cc_email_addresses (list of str, optional): A list of email addresses that should be CC'd
 
             signing_redirect_url (str, optional):       The URL you want the signer redirected to after they successfully sign.
@@ -1352,7 +1354,13 @@ class HSClient(object):
 
             use_preexisting_fields (bool):              Whether to use preexisting PDF fields
 
+            use_text_tags (bool, optional):             Use text tags in the provided file(s) to create form fields
+
+            hide_text_tags (bool, optional):            Hide text tag areas
+
             allow_decline (bool, optional):             Allows signers to decline to sign a document if set to 1. Defaults to 0.
+
+            signing_options (dict, optional):           Allows the requester to specify the types allowed for creating a signature. Defaults to account settings.
 
         Returns:
             An UnclaimedDraft object
@@ -1376,16 +1384,20 @@ class HSClient(object):
             'message': message,
             'signing_redirect_url': signing_redirect_url,
             'signers': signers,
+            'custom_fields': custom_fields,
             'cc_email_addresses': cc_email_addresses,
             'form_fields_per_document': form_fields_per_document,
             'metadata': metadata,
             'use_preexisting_fields': use_preexisting_fields,
-            'allow_decline': allow_decline
+            'use_text_tags': use_text_tags,
+            'hide_text_tags': hide_text_tags,
+            'allow_decline': allow_decline,
+            'signing_options': signing_options
         }
 
         return self._create_unclaimed_draft(**params)
 
-    def create_embedded_unclaimed_draft(self, test_mode=False, client_id=None, is_for_embedded_signing=False, requester_email_address=None, files=None, file_urls=None, draft_type=None, subject=None, message=None, signers=None, cc_email_addresses=None, signing_redirect_url=None, requesting_redirect_url=None, form_fields_per_document=None, metadata=None, use_preexisting_fields=False, allow_decline=False):
+    def create_embedded_unclaimed_draft(self, test_mode=False, client_id=None, is_for_embedded_signing=False, requester_email_address=None, files=None, file_urls=None, draft_type=None, subject=None, message=None, signers=None, custom_fields=None, cc_email_addresses=None, signing_redirect_url=None, requesting_redirect_url=None, form_fields_per_document=None, metadata=None, use_preexisting_fields=False, use_text_tags=False, hide_text_tags=False, skip_me_now=False, allow_decline=False, allow_reassign=False, signing_options=None, allow_ccs=False):
         ''' Creates a new Draft to be used for embedded requesting
 
         Args:
@@ -1414,6 +1426,8 @@ class HSClient(object):
                 email_address (str):                    Email address of the signer
                 order (str, optional):                  The order the signer is required to sign in
 
+            custom_fields (list of dict, optional):     A list of custom fields. Required when a CustomField exists using text tags for form_fields_per_document. An item of the list should look like this: `{'name: value'}`
+
             cc_email_addresses (list of str, optional): A list of email addresses that should be CC'd
 
             signing_redirect_url (str, optional):       The URL you want the signer redirected to after they successfully sign.
@@ -1426,7 +1440,17 @@ class HSClient(object):
 
             use_preexisting_fields (bool):              Whether to use preexisting PDF fields
 
+            use_text_tags (bool, optional):             Use text tags in the provided file(s) to create form fields
+
+            hide_text_tags (bool, optional):            Hide text tag areas
+
+            skip_me_now (bool, optional):               Disables the "Me (Now)" option for the document's preparer. Defaults to 0.
+
+            signing_options (dict, optional):          Allows the requester to specify the types allowed for creating a signature. Defaults to account settings.
+
             allow_decline (bool, optional):             Allows signers to decline to sign a document if set to 1. Defaults to 0.
+
+            allow_ccs (bool, optional):                     Specifies whether the user is allowed to provide email addresses to CC when sending the request. Defaults to False.
 
         Returns:
             An UnclaimedDraft object
@@ -1456,11 +1480,18 @@ class HSClient(object):
             'signing_redirect_url': signing_redirect_url,
             'requesting_redirect_url': requesting_redirect_url,
             'signers': signers,
+            'custom_fields': custom_fields,
             'cc_email_addresses': cc_email_addresses,
             'form_fields_per_document': form_fields_per_document,
             'metadata': metadata,
             'use_preexisting_fields': use_preexisting_fields,
-            'allow_decline': allow_decline
+            'use_text_tags': use_text_tags,
+            'hide_text_tags': hide_text_tags,
+            'skip_me_now': skip_me_now,
+            'signing_options': signing_options,
+            'allow_reassign': allow_reassign,
+            'allow_decline': allow_decline,
+            'allow_ccs': allow_ccs
         }
 
         return self._create_unclaimed_draft(**params)
@@ -1708,7 +1739,7 @@ class HSClient(object):
 
             allow_reassign (bool, optional):         Allows signers to reassign their signature requests to other signers if set to True. Defaults to False.
 
-            signing_options (dict, optional):       Allows the reqeuster to specify the types allowed for creating a signature. Defaults to account settings.
+            signing_options (dict, optional):       Allows the requester to specify the types allowed for creating a signature. Defaults to account settings.
 
         Returns:
             A SignatureRequest object
@@ -1808,7 +1839,7 @@ class HSClient(object):
 
             file_urls (list of str):                URLs of the file for HelloSign to download to append to the Signature Request. Use either `files` or `file_urls`
 
-            signing_options (dict, optional):       Allows the reqeuster to specify the types allowed for creating a signature. Defaults to account settings.
+            signing_options (dict, optional):       Allows the requester to specify the types allowed for creating a signature. Defaults to account settings.
 
         Returns:
             A SignatureRequest object
@@ -1872,7 +1903,7 @@ class HSClient(object):
         return response
 
     @api_resource(UnclaimedDraft)
-    def _create_unclaimed_draft(self, test_mode=False, client_id=None, is_for_embedded_signing=False, requester_email_address=None, files=None, file_urls=None, draft_type=None, subject=None, message=None, signers=None, cc_email_addresses=None, signing_redirect_url=None, requesting_redirect_url=None, form_fields_per_document=None, metadata=None, use_preexisting_fields=False, allow_decline=False):
+    def _create_unclaimed_draft(self, test_mode=False, client_id=None, is_for_embedded_signing=False, requester_email_address=None, files=None, file_urls=None, draft_type=None, subject=None, message=None, signers=None, custom_fields=None, cc_email_addresses=None, signing_redirect_url=None, requesting_redirect_url=None, form_fields_per_document=None, metadata=None, use_preexisting_fields=False, use_text_tags=False, hide_text_tags=False, skip_me_now=False, allow_reassign=False, allow_decline=False, signing_options=None, allow_ccs=False):
         ''' Creates a new Draft that can be claimed using the claim URL
 
         Args:
@@ -1901,6 +1932,8 @@ class HSClient(object):
                 email_address (str):                        Email address of the signer
                 order (str, optional):                      The order the signer is required to sign in
 
+            custom_fields (list of dict, optional):         A list of custom fields. Required when a CustomField exists using text tags or form_fields_per_document. An item of the list should look like this: `{'name: value'}`
+
             cc_email_addresses (list of str, optional):     A list of email addresses that should be CC'd
 
             signing_redirect_url (str, optional):           The URL you want the signer redirected to after they successfully sign.
@@ -1913,7 +1946,19 @@ class HSClient(object):
 
             use_preexisting_fields (bool):                  Whether to use preexisting PDF fields
 
+            use_text_tags (bool, optional):                 Use text tags in the provided file(s) to create form fields
+
+            hide_text_tags (bool, optional):                Hide text tag areas
+
+            skip_me_now (bool, optional):                   Disables the "Me (Now)" option for the document's preparer. Defaults to 0.
+
+            allow_reassign (bool, optional):                Allows signers to reassign their signature requests to other signers if set to True. Defaults to False.
+
             allow_decline (bool, optional):                 Allows signers to decline to sign a document if set to 1. Defaults to 0.
+
+            signing_options (dict, optional):               Allows the requester to specify the types allowed for creating a signature. Defaults to account settings.
+
+            allow_ccs (bool, optional):                     Specifies whether the user is allowed to provide email addresses to CC when sending the request. Defaults to False.
 
         Returns:
             An UnclaimedDraft object
@@ -1938,6 +1983,9 @@ class HSClient(object):
         # CCs
         cc_email_addresses_payload = HSFormat.format_param_list(cc_email_addresses, 'cc_email_addresses')
 
+        # Custom fields
+        custom_fields_payload = HSFormat.format_custom_fields(custom_fields)
+
         # Metadata
         metadata_payload = HSFormat.format_single_dict(metadata, 'metadata')
 
@@ -1949,7 +1997,13 @@ class HSClient(object):
             "signing_redirect_url": signing_redirect_url,
             "form_fields_per_document": form_fields_per_document,
             "use_preexisting_fields": self._boolean(use_preexisting_fields),
-            "allow_decline": self._boolean(allow_decline)
+            "use_text_tags": self._boolean(use_text_tags),
+            "hide_text_tags": self._boolean(hide_text_tags),
+            "skip_me_now": self._boolean(skip_me_now),
+            "allow_reassign": self._boolean(allow_reassign),
+            "allow_decline": self._boolean(allow_decline),
+            "signing_options": json.dumps(signing_options),
+            "allow_ccs": self._boolean(allow_ccs)
         }
 
         url = self.UNCLAIMED_DRAFT_CREATE_URL
@@ -1968,6 +2022,7 @@ class HSClient(object):
 
         data = payload.copy()
         data.update(signers_payload)
+        data.update(custom_fields_payload)
         data.update(cc_email_addresses_payload)
         data.update(file_urls_payload)
         data.update(metadata_payload)
