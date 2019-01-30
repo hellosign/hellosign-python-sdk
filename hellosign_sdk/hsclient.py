@@ -1496,7 +1496,7 @@ class HSClient(object):
 
         return self._create_unclaimed_draft(**params)
 
-    def create_embedded_unclaimed_draft_with_template(self, test_mode=False, client_id=None, is_for_embedded_signing=False, template_id=None, template_ids=None, requester_email_address=None, title=None, subject=None, message=None, signers=None, ccs=None, signing_redirect_url=None, requesting_redirect_url=None, metadata=None, custom_fields=None, allow_decline=False):
+    def create_embedded_unclaimed_draft_with_template(self, test_mode=False, client_id=None, is_for_embedded_signing=False, template_id=None, template_ids=None, requester_email_address=None, title=None, subject=None, message=None, signers=None, ccs=None, signing_redirect_url=None, requesting_redirect_url=None, metadata=None, custom_fields=None, files=None, file_urls=None, skip_me_now=False, allow_decline=False, allow_reassign=False, signing_options=None):
         ''' Creates a new Draft to be used for embedded requesting
 
             Args:
@@ -1534,7 +1534,17 @@ class HSClient(object):
 
                 custom_fields (list of dict, optional):     A list of custom fields. Required when a CustomField exists in the Template. An item of the list should look like this: `{'name: value'}`
 
+                files (list of str):                        The uploaded file(s) to append to the Signature Request.
+
+                file_urls (list of str):                    URLs of the file for HelloSign to download to append to the Signature Request. Use either `files` or `file_urls`
+
+                skip_me_now (bool, optional):               Disables the "Me (Now)" option for the document's preparer. Defaults to 0.
+
                 allow_decline (bool, optional):             Allows signers to decline to sign a document if set to 1. Defaults to 0.
+
+                allow_reassign (bool, optional):            Allows signers to reassign their signature requests to other signers if set to True. Defaults to False.
+
+                signing_options (dict, optional):           Allows the requester to specify the types allowed for creating a signature. Defaults to account settings.
 
         '''
 
@@ -1561,9 +1571,14 @@ class HSClient(object):
             'requesting_redirect_url': requesting_redirect_url,
             'signers': signers,
             'ccs': ccs,
-            'custom_fields': custom_fields,
             'metadata': metadata,
-            'allow_decline': allow_decline
+            'custom_fields': custom_fields,
+            'files': files,
+            'file_urls': file_urls,
+            'skip_me_now': skip_me_now,
+            'allow_decline': allow_decline,
+            'allow_reassign': allow_reassign,
+            'signing_options': signing_options
         }
 
         return self._create_embedded_unclaimed_draft_with_template(**params)
@@ -2162,7 +2177,7 @@ class HSClient(object):
         return response
 
     @api_resource(UnclaimedDraft)
-    def _create_embedded_unclaimed_draft_with_template(self, test_mode=False, client_id=None, is_for_embedded_signing=False, template_id=None, template_ids=None, requester_email_address=None, title=None, subject=None, message=None, signers=None, ccs=None, signing_redirect_url=None, requesting_redirect_url=None, metadata=None, custom_fields=None, allow_decline=False):
+    def _create_embedded_unclaimed_draft_with_template(self, test_mode=False, client_id=None, is_for_embedded_signing=False, template_id=None, template_ids=None, requester_email_address=None, title=None, subject=None, message=None, signers=None, ccs=None, signing_redirect_url=None, requesting_redirect_url=None, metadata=None, custom_fields=None, files=None, file_urls=None, skip_me_now=False, allow_decline=False, allow_reassign=False, signing_options=None):
         ''' Helper method for creating unclaimed drafts from templates
             See public function for params.
         '''
@@ -2179,7 +2194,10 @@ class HSClient(object):
             "message": message,
             "signing_redirect_url": signing_redirect_url,
             "requesting_redirect_url": requesting_redirect_url,
-            "allow_decline": self._boolean(allow_decline)
+            "skip_me_now": self._boolean(skip_me_now),
+            "allow_decline": self._boolean(allow_decline),
+            "allow_reassign": self._boolean(allow_reassign),
+            "signing_options": json.dumps(signing_options)
         }
 
         #format multi params
@@ -2189,6 +2207,12 @@ class HSClient(object):
         metadata_payload = HSFormat.format_single_dict(metadata, 'metadata')
         custom_fields_payload = HSFormat.format_custom_fields(custom_fields)
 
+        # Files
+        files_payload = HSFormat.format_file_params(files)
+
+        # File URLs
+        file_urls_payload = HSFormat.format_file_url_params(file_urls)
+
         #assemble payload
         data = {}
         data.update(payload)
@@ -2197,11 +2221,12 @@ class HSClient(object):
         data.update(ccs_payload)
         data.update(metadata_payload)
         data.update(custom_fields_payload)
+        data.update(file_urls_payload)
         data = HSFormat.strip_none_values(data)
 
         #send call
         url = self.UNCLAIMED_DRAFT_CREATE_EMBEDDED_WITH_TEMPLATE_URL
         request = self._get_request()
-        response = request.post(url, data=data)
+        response = request.post(url, data=data, files=files_payload)
 
         return response
