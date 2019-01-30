@@ -61,6 +61,7 @@ class HSClient(object):
     UNCLAIMED_DRAFT_CREATE_URL = ''
     UNCLAIMED_DRAFT_CREATE_EMBEDDED_URL = ''
     UNCLAIMED_DRAFT_CREATE_EMBEDDED_WITH_TEMPLATE_URL = ''
+    UNCLAIMED_DRAFT_EDIT_AND_RESEND_URL = ''
 
     TEMPLATE_GET_URL = ''
     TEMPLATE_GET_LIST_URL = ''
@@ -159,6 +160,7 @@ class HSClient(object):
         self.UNCLAIMED_DRAFT_CREATE_URL = self.API_URL + '/unclaimed_draft/create'
         self.UNCLAIMED_DRAFT_CREATE_EMBEDDED_URL = self.API_URL + '/unclaimed_draft/create_embedded'
         self.UNCLAIMED_DRAFT_CREATE_EMBEDDED_WITH_TEMPLATE_URL = self.API_URL + '/unclaimed_draft/create_embedded_with_template'
+        self.UNCLAIMED_DRAFT_EDIT_AND_RESEND_URL = self.API_URL + '/unclaimed_draft/edit_and_resend/'
 
         self.TEMPLATE_GET_URL = self.API_URL + '/template/'
         self.TEMPLATE_GET_LIST_URL = self.API_URL + '/template/list'
@@ -539,6 +541,7 @@ class HSClient(object):
             "name": name
         })
 
+    @api_resource(SignatureRequest)
     def update_signature_request(self, signature_request_id, signature_id, email_address):
         ''' Updates the email address for a given signer on a signature request.
 
@@ -1546,6 +1549,9 @@ class HSClient(object):
 
                 signing_options (dict, optional):           Allows the requester to specify the types allowed for creating a signature. Defaults to account settings.
 
+            Returns:
+                An UnclaimedDraft object
+
         '''
 
         self._check_required_fields({
@@ -1582,6 +1588,50 @@ class HSClient(object):
         }
 
         return self._create_embedded_unclaimed_draft_with_template(**params)
+
+    @api_resource(UnclaimedDraft)
+    def unclaimed_draft_edit_and_resend(self, signature_request_id, client_id, test_mode=False, requesting_redirect_url=None, signing_redirect_url=None, is_for_embedded_signing=False, requester_email_address=None):
+        ''' Updates a new signature request from an embedded request that can be edited prior to being sent.
+
+        Args:
+
+            signature_request_id (str):         The id of the SignatureRequest to edit and resend
+
+            client_id (str):                            Client id of the app you're using to create this draft. Visit our embedded page to learn more about this parameter.
+
+            test_mode (bool, optional):                 Whether this is a test, the signature request created from this draft will not be legally binding if set to True. Defaults to False.
+
+            requesting_redirect_url (str, optional):    The URL you want the signer to be redirected to after the request has been sent.
+
+            signing_redirect_url (str, optional):       The URL you want the signer redirected to after they successfully sign.
+
+            is_for_embedded_signing (bool, optional):   The request created from this draft will also be signable in embedded mode if set to True. The default is False.
+
+            requester_email_address (str, optional):              The email address of the user that should be designated as the requester of this draft, if the draft type is "request_signature."
+
+        Returns:
+            A UnclaimedDraft object
+
+        '''
+
+        self._check_required_fields({
+            "client_id": client_id
+            }
+        )
+
+        data = {
+            'client_id': client_id,
+            'test_mode': self._boolean(test_mode),
+            'requesting_redirect_url': requesting_redirect_url,
+            'signing_redirect_url': signing_redirect_url,
+            'is_for_embedded_signing': self._boolean(is_for_embedded_signing),
+            'requester_email_address': requester_email_address
+        }
+
+        data = HSFormat.strip_none_values(data)
+
+        request = self._get_request()
+        return request.post(self.UNCLAIMED_DRAFT_EDIT_AND_RESEND_URL + signature_request_id, data=data)
 
     #  ----  OAUTH METHODS  -------------------------------
 
