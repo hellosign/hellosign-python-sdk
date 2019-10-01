@@ -336,7 +336,7 @@ class HSClient(object):
             url += '?file_type=%s' % file_type
         return request.get_file(url, path_or_file or filename)
 
-    def send_signature_request(self, test_mode=False, files=None, file_urls=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, cc_email_addresses=None, form_fields_per_document=None, use_text_tags=False, hide_text_tags=False, metadata=None, ux_version=None, allow_decline=False):
+    def send_signature_request(self, test_mode=False, files=None, file_urls=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, cc_email_addresses=None, form_fields_per_document=None, use_text_tags=False, hide_text_tags=False, metadata=None, ux_version=None, allow_decline=False, signing_options=None):
         ''' Creates and sends a new SignatureRequest with the submitted documents
 
         Creates and sends a new SignatureRequest with the submitted documents.
@@ -381,6 +381,13 @@ class HSClient(object):
 
             allow_decline(bool, optional):         Allows signers to decline to sign a document if set to 1. Defaults to 0.
 
+            signing_options (dict, optional):       An object defining the signature methods available to the signer
+                draw (bool)                         Allow signer to draw their signature?
+                type (bool)                         Allow signer to type their signature?
+                upload (bool)                       Allow signer to upload a signature?
+                phone (bool)                        Allow signer to capture their signature with their phone camera?
+                default (str)                       Which method should be default? One of 'draw', 'type', 'upload', or 'phone'
+
         Returns:
             A SignatureRequest object
 
@@ -408,7 +415,8 @@ class HSClient(object):
             'use_text_tags': use_text_tags,
             'hide_text_tags': hide_text_tags,
             'metadata': metadata,
-            'allow_decline': allow_decline
+            'allow_decline': allow_decline,
+            'signing_options': signing_options
         }
 
         if ux_version is not None:
@@ -416,7 +424,7 @@ class HSClient(object):
 
         return self._send_signature_request(**params)
 
-    def send_signature_request_with_template(self, test_mode=False, template_id=None, template_ids=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, ccs=None, custom_fields=None, metadata=None, ux_version=None, allow_decline=False):
+    def send_signature_request_with_template(self, test_mode=False, template_id=None, template_ids=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, ccs=None, custom_fields=None, metadata=None, ux_version=None, allow_decline=False, signing_options=None):
         ''' Creates and sends a new SignatureRequest based off of a Template
 
         Creates and sends a new SignatureRequest based off of the Template
@@ -458,6 +466,13 @@ class HSClient(object):
 
             allow_decline (bool, optional):         Allows signers to decline to sign a document if set to 1. Defaults to 0.
 
+            signing_options (dict, optional):       An object defining the signature methods available to the signer
+                draw (bool)                         Allow signer to draw their signature?
+                type (bool)                         Allow signer to type their signature?
+                upload (bool)                       Allow signer to upload a signature?
+                phone (bool)                        Allow signer to capture their signature with their phone camera?
+                default (str)                       Which method should be default? One of 'draw', 'type', 'upload', or 'phone'
+
         Returns:
             A SignatureRequest object
 
@@ -483,7 +498,8 @@ class HSClient(object):
             'ccs': ccs,
             'custom_fields': custom_fields,
             'metadata': metadata,
-            'allow_decline': allow_decline
+            'allow_decline': allow_decline,
+            'signing_options': signing_options
         }
 
         if ux_version is not None:
@@ -532,7 +548,7 @@ class HSClient(object):
         request = self._get_request()
         request.post(url=self.SIGNATURE_REQUEST_CANCEL_URL + signature_request_id, get_json=False)
 
-    def send_signature_request_embedded(self, test_mode=False, client_id=None, files=None, file_urls=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, cc_email_addresses=None, form_fields_per_document=None, use_text_tags=False, hide_text_tags=False, metadata=None, ux_version=None, allow_decline=False):
+    def send_signature_request_embedded(self, test_mode=False, client_id=None, files=None, file_urls=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, cc_email_addresses=None, form_fields_per_document=None, use_text_tags=False, hide_text_tags=False, metadata=None, ux_version=None, allow_decline=False, signing_options=None):
         ''' Creates and sends a new SignatureRequest with the submitted documents
 
         Creates a new SignatureRequest with the submitted documents to be signed
@@ -611,7 +627,8 @@ class HSClient(object):
             'use_text_tags': use_text_tags,
             'hide_text_tags': hide_text_tags,
             'metadata': metadata,
-            'allow_decline': allow_decline
+            'allow_decline': allow_decline,
+            'signing_options': signing_options
         }
 
         if ux_version is not None:
@@ -619,7 +636,7 @@ class HSClient(object):
 
         return self._send_signature_request(**params)
 
-    def send_signature_request_embedded_with_template(self, test_mode=False, client_id=None, template_id=None, template_ids=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, ccs=None, custom_fields=None, metadata=None, ux_version=None, allow_decline=False):
+    def send_signature_request_embedded_with_template(self, test_mode=False, client_id=None, template_id=None, template_ids=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, ccs=None, custom_fields=None, metadata=None, ux_version=None, allow_decline=False, signing_options=None):
         ''' Creates and sends a new SignatureRequest based off of a Template
 
         Creates a new SignatureRequest based on the given Template to be
@@ -664,6 +681,13 @@ class HSClient(object):
 
             allow_decline (bool, optional):         Allows signers to decline to sign a document if set to 1. Defaults to 0.
 
+            signing_options (dict, optional):       An object defining the signature methods available to the signer
+                draw (bool)                         Allow signer to draw their signature?
+                type (bool)                         Allow signer to type their signature?
+                upload (bool)                       Allow signer to upload a signature?
+                phone (bool)                        Allow signer to capture their signature with their phone camera?
+                default (str)                       Which method should be default? One of 'draw', 'type', 'upload', or 'phone'
+
         Returns:
             A SignatureRequest object of the newly created Signature Request
 
@@ -691,7 +715,8 @@ class HSClient(object):
             'ccs': ccs,
             'custom_fields': custom_fields,
             'metadata': metadata,
-            'allow_decline': allow_decline
+            'allow_decline': allow_decline,
+            'signing_options': signing_options
         }
 
         if ux_version is not None:
@@ -1353,7 +1378,7 @@ class HSClient(object):
                     raise HSException("One of the following fields is required: %s" % ", ".join(field.keys()))
 
     @api_resource(SignatureRequest)
-    def _send_signature_request(self, test_mode=False, client_id=None, files=None, file_urls=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, cc_email_addresses=None, form_fields_per_document=None, use_text_tags=False, hide_text_tags=False, metadata=None, ux_version=None, allow_decline=False):
+    def _send_signature_request(self, test_mode=False, client_id=None, files=None, file_urls=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, cc_email_addresses=None, form_fields_per_document=None, use_text_tags=False, hide_text_tags=False, metadata=None, ux_version=None, allow_decline=False, signing_options=None):
         ''' To share the same logic between send_signature_request &
             send_signature_request_embedded functions
 
@@ -1396,6 +1421,13 @@ class HSClient(object):
 
             allow_decline (bool, optional);         Allows signers to decline to sign a document if set to 1. Defaults to 0.
 
+            signing_options (dict, optional):       An object defining the signature methods available to the signer
+                draw (bool)                         Allow signer to draw their signature?
+                type (bool)                         Allow signer to type their signature?
+                upload (bool)                       Allow signer to upload a signature?
+                phone (bool)                        Allow signer to capture their signature with their phone camera?
+                default (str)                       Which method should be default? One of 'draw', 'type', 'upload', or 'phone'
+
         Returns:
             A SignatureRequest object
 
@@ -1415,6 +1447,9 @@ class HSClient(object):
 
         # Metadata
         metadata_payload = HSFormat.format_single_dict(metadata, 'metadata')
+
+        # Signing Options
+        signing_options_payload = HSFormat.format_single_dict(signing_options, 'signing_options')
 
         payload = {
             "test_mode": self._boolean(test_mode),
@@ -1445,13 +1480,14 @@ class HSClient(object):
         data.update(cc_email_addresses_payload)
         data.update(file_urls_payload)
         data.update(metadata_payload)
+        data.update(signing_options_payload)
 
         request = self._get_request()
         response = request.post(url, data=data, files=files_payload)
         return response
 
     @api_resource(SignatureRequest)
-    def _send_signature_request_with_template(self, test_mode=False, client_id=None, template_id=None, template_ids=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, ccs=None, custom_fields=None, metadata=None, ux_version=None, allow_decline=False):
+    def _send_signature_request_with_template(self, test_mode=False, client_id=None, template_id=None, template_ids=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, ccs=None, custom_fields=None, metadata=None, ux_version=None, allow_decline=False, signing_options=None):
         ''' To share the same logic between send_signature_request_with_template
             and send_signature_request_embedded_with_template
 
@@ -1493,6 +1529,13 @@ class HSClient(object):
 
             allow_decline (bool, optional):         Allows signers to decline to sign a document if set to 1. Defaults to 0.
 
+            signing_options (dict, optional):       An object defining the signature methods available to the signer
+                draw (bool)                         Allow signer to draw their signature?
+                type (bool)                         Allow signer to type their signature?
+                upload (bool)                       Allow signer to upload a signature?
+                phone (bool)                        Allow signer to capture their signature with their phone camera?
+                default (str)                       Which method should be default? One of 'draw', 'type', 'upload', or 'phone'
+
         Returns:
             A SignatureRequest object
 
@@ -1515,6 +1558,9 @@ class HSClient(object):
         if template_ids:
             for i in range(len(template_ids)):
                 template_ids_payload["template_ids[%s]" % i] = template_ids[i]
+
+        # Signing Options
+        signing_options_payload = HSFormat.format_single_dict(signing_options, 'signing_options')
 
         payload = {
             "test_mode": self._boolean(test_mode),
@@ -1542,6 +1588,7 @@ class HSClient(object):
         data.update(ccs_payload)
         data.update(custom_fields_payload)
         data.update(metadata_payload)
+        data.update(signing_options_payload)
         data.update(template_ids_payload)
 
         request = self._get_request()
