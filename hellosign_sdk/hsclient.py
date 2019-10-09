@@ -336,7 +336,7 @@ class HSClient(object):
             url += '?file_type=%s' % file_type
         return request.get_file(url, path_or_file or filename)
 
-    def send_signature_request(self, test_mode=False, files=None, file_urls=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, cc_email_addresses=None, form_fields_per_document=None, use_text_tags=False, hide_text_tags=False, metadata=None, ux_version=None, allow_decline=False):
+    def send_signature_request(self, test_mode=False, files=None, file_urls=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, cc_email_addresses=None, form_fields_per_document=None, use_text_tags=False, hide_text_tags=False, custom_fields=None, metadata=None, ux_version=None, allow_decline=False):
         ''' Creates and sends a new SignatureRequest with the submitted documents
 
         Creates and sends a new SignatureRequest with the submitted documents.
@@ -375,6 +375,8 @@ class HSClient(object):
 
             hide_text_tags (bool, optional):        Hide text tag areas
 
+            custom_fields (list of dict, optional): A list of custom fields. Required when a CustomField exists in the Template. An item of the list should look like this: `{'name: value'}`
+
             metadata (dict, optional):              Metadata to associate with the signature request
 
             ux_version (int):                       UX version, either 1 (default) or 2.
@@ -407,6 +409,7 @@ class HSClient(object):
             'form_fields_per_document': form_fields_per_document,
             'use_text_tags': use_text_tags,
             'hide_text_tags': hide_text_tags,
+            'custom_fields': custom_fields,
             'metadata': metadata,
             'allow_decline': allow_decline
         }
@@ -1353,7 +1356,7 @@ class HSClient(object):
                     raise HSException("One of the following fields is required: %s" % ", ".join(field.keys()))
 
     @api_resource(SignatureRequest)
-    def _send_signature_request(self, test_mode=False, client_id=None, files=None, file_urls=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, cc_email_addresses=None, form_fields_per_document=None, use_text_tags=False, hide_text_tags=False, metadata=None, ux_version=None, allow_decline=False):
+    def _send_signature_request(self, test_mode=False, client_id=None, files=None, file_urls=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, cc_email_addresses=None, form_fields_per_document=None, use_text_tags=False, hide_text_tags=False, custom_fields=None,  metadata=None, ux_version=None, allow_decline=False):
         ''' To share the same logic between send_signature_request &
             send_signature_request_embedded functions
 
@@ -1390,6 +1393,8 @@ class HSClient(object):
 
             hide_text_tags (bool, optional):        Hide text tag areas
 
+            custom_fields (list of dict, optional): A list of custom fields. Required when a CustomField exists in the Template. An item of the list should look like this: `{'name: value'}`
+
             metadata (dict, optional):              Metadata to associate with the signature request
 
             ux_version (int):                       UX version, either 1 (default) or 2.
@@ -1412,6 +1417,9 @@ class HSClient(object):
 
         # CCs
         cc_email_addresses_payload = HSFormat.format_param_list(cc_email_addresses, 'cc_email_addresses')
+
+        # Custom fields
+        custom_fields_payload = HSFormat.format_custom_fields(custom_fields)
 
         # Metadata
         metadata_payload = HSFormat.format_single_dict(metadata, 'metadata')
@@ -1444,6 +1452,7 @@ class HSClient(object):
         data.update(signers_payload)
         data.update(cc_email_addresses_payload)
         data.update(file_urls_payload)
+        data.update(custom_fields_payload)
         data.update(metadata_payload)
 
         request = self._get_request()
