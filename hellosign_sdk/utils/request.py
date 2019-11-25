@@ -170,7 +170,7 @@ class HSRequest(object):
         return json_response if get_json is True else response
 
     def delete(self, url, headers=None):
-        ''' Make POST request to a url
+        ''' Make POST request to a url to delete an API App or Template
 
         Args:
             url (str): URL to send the request to
