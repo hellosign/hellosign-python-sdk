@@ -318,7 +318,7 @@ class HSClient(object):
 
         return request.get(self.SIGNATURE_REQUEST_LIST_URL, parameters=parameters)
 
-    def get_signature_request_file(self, signature_request_id, path_or_file=None, file_type=None, filename=None, get_url=False, get_data_uri=False):
+    def get_signature_request_file(self, signature_request_id, path_or_file=None, file_type=None, filename=None, response_type=None):
         ''' Download the PDF copy of the current documents
 
         Args:
@@ -332,9 +332,8 @@ class HSClient(object):
             file_type (str): Type of file to return. Either "pdf" for a single merged document or "zip"
             for a collection of individual documents. Defaults to "pdf" if not specified.
 
-            get_url (bool, optional): If True, returns a URL link to the file. Defaults to false.
-
-            get_data_uri (bool, optional): If True, returns the file as base64 encoded string. Defaults to False.
+            response_type (str): File type of response to return. Either "url" to return a URL link to the file
+            or "data_uri" to return the file as a base64 encoded string. Only applicable to the "pdf" file_type.
 
         Returns:
             Returns a PDF file, URL link to file, or base64 encoded file
@@ -346,9 +345,9 @@ class HSClient(object):
             url += '?file_type=%s' % file_type
             return request.get_file(url, path_or_file or filename)
 
-        if get_url:
+        if response_type == 'url':
             url += '?get_url=1'
-        elif get_data_uri:
+        elif response_type == 'data_uri':
             url += '?get_data_uri=1'
         return request.get(url)
 
@@ -901,7 +900,7 @@ class HSClient(object):
         return response
 
     def get_template_files(self, template_id, path_or_file=None, file_type=None,
-            filename=None, get_url=False, get_data_uri=False):
+            filename=None, response_type=None):
         ''' Downloads a copy of a template's original files
 
         Args:
@@ -915,9 +914,8 @@ class HSClient(object):
             file_type (str): Type of file to return. Either "pdf" for a single merged document or
             "zip" for a collection of individual documents. Defaults to "pdf" if not specified.
 
-            get_url (bool, optional): If True, returns a URL link to the file. Defaults to false.
-
-            get_data_uri (bool, optional): If True, returns the file as base64 encoded string. Defaults to False.
+            response_type (str): File type of response to return. Either "url" to return a URL link to the file
+            or "data_uri" to return the file as a base64 encoded string. Only applicable to the "pdf" file_type.
 
         Returns:
             Returns a PDF file, URL link to file, or base64 encoded file
@@ -929,9 +927,9 @@ class HSClient(object):
             url += '?file_type=%s' % file_type
             return request.get_file(url, path_or_file or filename)
 
-        if get_url:
+        if response_type == 'url':
             url += '?get_url=1'
-        elif get_data_uri:
+        elif response_type == 'data_uri':
             url += '?get_data_uri=1'
         return request.get(url)
 
