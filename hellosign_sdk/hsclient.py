@@ -614,7 +614,8 @@ class HSClient(object):
             'use_text_tags': use_text_tags,
             'hide_text_tags': hide_text_tags,
             'metadata': metadata,
-            'allow_decline': allow_decline
+            'allow_decline': allow_decline,
+            'is_for_embedded_signing': True
         }
 
         if ux_version is not None:
@@ -1356,7 +1357,7 @@ class HSClient(object):
                     raise HSException("One of the following fields is required: %s" % ", ".join(field.keys()))
 
     @api_resource(SignatureRequest)
-    def _send_signature_request(self, test_mode=False, client_id=None, files=None, file_urls=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, cc_email_addresses=None, form_fields_per_document=None, use_text_tags=False, hide_text_tags=False, metadata=None, ux_version=None, allow_decline=False):
+    def _send_signature_request(self, test_mode=False, client_id=None, files=None, file_urls=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, cc_email_addresses=None, form_fields_per_document=None, use_text_tags=False, hide_text_tags=False, metadata=None, ux_version=None, allow_decline=False, is_for_embedded_signing=None):
         ''' To share the same logic between send_signature_request &
             send_signature_request_embedded functions
 
@@ -1439,7 +1440,7 @@ class HSClient(object):
         payload = HSFormat.strip_none_values(payload)
 
         url = self.SIGNATURE_REQUEST_CREATE_URL
-        if client_id:
+        if is_for_embedded_signing:
             url = self.SIGNATURE_REQUEST_CREATE_EMBEDDED_URL
 
         data = {}
