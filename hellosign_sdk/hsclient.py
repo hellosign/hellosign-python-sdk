@@ -336,7 +336,7 @@ class HSClient(object):
             url += '?file_type=%s' % file_type
         return request.get_file(url, path_or_file or filename)
 
-    def send_signature_request(self, test_mode=False, files=None, file_urls=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, cc_email_addresses=None, form_fields_per_document=None, use_text_tags=False, hide_text_tags=False, metadata=None, ux_version=None, allow_decline=False):
+    def send_signature_request(self, test_mode=False, client_id=None, files=None, file_urls=None, title=None, subject=None, message=None, signing_redirect_url=None, signers=None, cc_email_addresses=None, form_fields_per_document=None, use_text_tags=False, hide_text_tags=False, metadata=None, ux_version=None, allow_decline=False):
         ''' Creates and sends a new SignatureRequest with the submitted documents
 
         Creates and sends a new SignatureRequest with the submitted documents.
@@ -347,6 +347,8 @@ class HSClient(object):
         Args:
 
             test_mode (bool, optional):             Whether this is a test, the signature request will not be legally binding if set to True. Defaults to False.
+
+            client_id (str):                        Pass client_id. For non embedded requests this can be used for white-labeling
 
             files (list of str):                    The uploaded file(s) to send for signature
 
@@ -396,6 +398,7 @@ class HSClient(object):
 
         params = {
             'test_mode': test_mode,
+            'client_id': client_id,
             'files': files,
             'file_urls': file_urls,
             'title': title,
