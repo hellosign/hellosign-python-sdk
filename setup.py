@@ -11,7 +11,7 @@ def readme():
 
 setup(
     name='hellosign-python-sdk',
-    version='3.8.7',
+    version='3.8.8',
     description="A Python wrapper for the HelloSign API (http://www.hellosign.com/api)",
     long_description=readme(),
     classifiers=[
@@ -20,7 +20,7 @@ setup(
         'Programming Language :: Python :: 2.7'
     ],
     keywords='hellosign python sdk',
-    url='https://github.com/HelloFax/hellosign-python-sdk',
+    url='https://github.com/hellosign/hellosign-python-sdk',
     author='HelloSign',
     author_email='apisupport@hellosign.com',
     license='MIT',

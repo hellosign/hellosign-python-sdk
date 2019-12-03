@@ -6,7 +6,7 @@ We're excited you're considering contributing to our project! Your patches are e
 
 * Make sure you have a [GitHub account](https://github.com/signup/free)
 * Make sure you have a [HelloSign account](http://www.hellosign.com)
-* Submit a new [issue ticket](https://github.com/HelloFax/hellosign-java-sdk/issues), assuming one does not already exist.
+* Submit a new [issue ticket](https://github.com/hellosign/hellosign-python-sdk), assuming one does not already exist.
   * Clearly describe the issue including steps to reproduce when it is a bug.
   * Make sure to include the version you are using which has the issue (and confirm that the issue you are having has not been fixed in a later version)
 * Fork the repository on GitHub
@@ -27,7 +27,7 @@ always necessary to create a new issue ticket.
 ## Submitting Changes
 
 * Push your changes to your fork of the repository.
-* Submit a pull request to the repository in the HelloFax organization.
+* Submit a pull request to the repository in the HelloSign organization.
 * Update your issue ticket to mark that you have submitted code and are ready for it to be reviewed (Status: Ready for Merge).
   * Include a link to the pull request in the ticket.
 * The HelloSign dev team looks at Pull Requests on a regular basis.

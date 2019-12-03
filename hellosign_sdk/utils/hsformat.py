@@ -1,8 +1,8 @@
 #
 # The MIT License (MIT)
-# 
+#
 # Copyright (C) 2014 hellosign.com
-# 
+#
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
 # in the Software without restriction, including without limitation the rights
@@ -60,6 +60,15 @@ class HSFormat(object):
         return file_urls_payload
 
     @staticmethod
+    def format_logo_params(logo):
+        '''
+            Utility method for formatting custom logo parameters for API Apps
+        '''
+        logo_payload = {}
+        logo_payload["custom_logo_file"] = open(logo, 'rb')
+        return logo_payload
+
+    @staticmethod
     def format_param_list(listed_params, output_name):
         '''
             Utility method for formatting lists of parameters for api consumption
@@ -82,13 +91,13 @@ class HSFormat(object):
             and outputs:
             signers[0][name]  : val1
             signers[0][email] : val2
-            ... 
+            ...
 
             Args:
                 list_of_dicts (list of dicts) - the list to format
-                
+
                 output_name (str) - the parameter name to prepend to each key
-                
+
                 key (str, optional) - Used for substituting a key present in the dictionaries for the index. The above might become signers['Lawyer']['name'] instead of using a numerical index if the key "role_name" was specified.
 
         '''
@@ -125,6 +134,15 @@ class HSFormat(object):
                 for key, value in custom_field.items():
                     output_payload["custom_fields[" + key + "]"] = value
         return output_payload
+
+    @staticmethod
+    def format_signing_options(listed_params):
+        '''
+            Utility method for formatting signing options for api consumption
+            Args:
+                listed_params (list of values) - the list to format
+        '''
+        return listed_params
 
     @staticmethod
     def strip_none_values(dictionary):

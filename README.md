@@ -21,7 +21,7 @@ pip install hellosign-python-sdk
 
 Install from code:
 ````sh
-git clone https://github.com/HelloFax/hellosign-python-sdk.git
+git clone https://github.com/HelloSign/hellosign-python-sdk.git
 cd hellosign-python-sdk
 python setup.py install
 ````
@@ -213,7 +213,7 @@ draft = client.create_embedded_unclaimed_draft(
 claim_url = draft.claim_url
 ````
 
-More information about the asscociated front-end code can be found [here](https://www.hellosign.com/api/embeddedRequestingWalkthrough#ClientSideRequesting)
+More information about the associated front-end code can be found [here](https://app.hellosign.com/api/embeddedRequestingWalkthrough#EmbeddedRequestingClientSide)
 
 Once the user edits the draft in the embedded iFrame and sends the signature request your app callback will receive a `signature_request_sent` event containing a `SignatureRequest` object. If we had used `is_for_embedded_signing=True`, we would want to get the signature ids out of the `SignatureRequest` from that event and fetch the signature urls at this point. In your event callback handler, you will need to do something like this:
 
