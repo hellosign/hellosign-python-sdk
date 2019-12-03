@@ -1,5 +1,4 @@
 from .resource import Resource
-from hellosign_sdk.utils import HSAccessTokenAuth
 
 #
 # The MIT License (MIT)
@@ -26,45 +25,56 @@ from hellosign_sdk.utils import HSAccessTokenAuth
 #
 
 
-class Account(Resource):
-    ''' Contains information about an account and its settings.
+class ApiApp(Resource):
+    ''' Contains information about an API App.
 
     Attributes:
-        account_id (str): The id of the Account
+        client_id (str): The API App's Client ID
 
-        email_address (str): The email address associated with the Account
+        created_at (int): Unix timestamp of when the API App was created
 
-        is_paid_hs (bool) : If the user has a paid HelloSign license will
-        return true
+        name (str): The name of the API App
 
-        is_paid_hf (bool): If the user has a paid HelloFax license will return
-        true
+        domain (str): The domain name associated with the API App
 
-        quotas (dict) : An object detailing remaining monthly quotas, which has
-        the following attributes:
-        templates_left (int): API templates remaining
-        api_signature_requests_left (int): API signature requests remaining
+        callback_url (str) : The URL that HelloSign events will be POSTed to
 
-        callback_url (str): The URL that HelloSign events will be POSTed to
+        is_approved (bool): Indicates if the API App is approved
 
-        role_code (str): The membership role for the team.
-            a = Admin,
-            m = Member
-            d = Developer
+        owner_account (dict): Information about the API App owner
+
+            account_id (str): The id of the Account
+
+            email_address (str): The email address associated with the Account
+
+        options (dict): Options that override the Account settings
+
+            can_insert_everywhere (bool): Denotes if signers can "Insert Everywhere" when
+            signing a document
+
+        oauth (dict): Information about the API App's OAuth properties. Null if OAuth is
+        not configured for the API App.
+
+            callback_url (str): The URL that HelloSign OAuth events will be POSTed to
+
+            secret (str): The API App's OAuth secret
+
+            scopes (list): List of the API App's OAuth scopes
+
+            charges_users (bool): Indicates whether the API App or the authorized user
+            is billed for OAuth requests.
+
+        white_labeling_options (dict): Customization options for the API App's signer page
 
     Examples:
-        To print the account_id
+        To print the client_id
 
         >>> from hsclient import HSClient
         >>> client = HSClient()
-        >>> account = client.get_account_info()
-        >>> print account.account_id
+        >>> app = client.get_api_app_info()
+        >>> print app.client_id
 
     '''
-
-    ROLE_ADMIN = 'a'
-    ROLE_MEMBER = 'm'
-    ROLE_DEVELOPER = 'd'
 
     def __init__(self, jsonstr=None, key=None, warnings=None):
         ''' Initialization of the object
@@ -78,11 +88,8 @@ class Account(Resource):
                 load the data of `jsonstr[key]` instead of the whole `jsonstr`
             warnings (list): List of associated warnings
         '''
-        super(Account, self).__init__(jsonstr, key, warnings)
-        if self.json_data and 'oauth' in self.json_data:
-            oauth = HSAccessTokenAuth.from_response(self.json_data['oauth'])
-            self.json_data['oauth'] = oauth
+        super(ApiApp, self).__init__(jsonstr, key, warnings)
 
     def __str__(self):
         ''' Return a string representation of this Account '''
-        return 'Account %s (%s)' % (self.account_id, self.email_address)
+        return 'ApiApp %s (%s)' % (self.name, self.client_id)
