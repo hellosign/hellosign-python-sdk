@@ -1,4 +1,5 @@
 from .account import Account
+from .apiapp import ApiApp
 from .embedded import Embedded
 from .signature import Signature
 from .signature_request import SignatureRequest
@@ -8,4 +9,4 @@ from .unclaimed_draft import UnclaimedDraft
 from .resource_list import ResourceList
 from .resource import Resource
 
-__all__ = [Account, Embedded, Signature, SignatureRequest, Team, Template, UnclaimedDraft, Resource, ResourceList]
+__all__ = [Account, ApiApp, Embedded, Signature, SignatureRequest, Team, Template, UnclaimedDraft, Resource, ResourceList]
