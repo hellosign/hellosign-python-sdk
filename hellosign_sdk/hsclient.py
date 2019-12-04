@@ -351,7 +351,7 @@ class HSClient(object):
             url += '?get_data_uri=1'
         return request.get(url)
 
-    def send_signature_request(self, test_mode=False, files=None, file_urls=None,
+    def send_signature_request(self, test_mode=False, client_id=None, files=None, file_urls=None,
             title=None, subject=None, message=None, signing_redirect_url=None,
             signers=None, cc_email_addresses=None, form_fields_per_document=None,
             use_text_tags=False, hide_text_tags=False, custom_fields=None,
@@ -367,6 +367,8 @@ class HSClient(object):
 
             test_mode (bool, optional): Whether this is a test, the signature request will not be legally binding
             if set to True. Defaults to False.
+
+            client_id (str): Pass client_id. For non embedded requests this can be used for white-labeling
 
             files (list of str): The uploaded file(s) to send for signature.
 
@@ -422,6 +424,7 @@ class HSClient(object):
 
         params = {
             'test_mode': test_mode,
+            'client_id': client_id,
             'files': files,
             'file_urls': file_urls,
             'title': title,
@@ -701,7 +704,8 @@ class HSClient(object):
             'metadata': metadata,
             'allow_decline': allow_decline,
             'allow_reassign': allow_reassign,
-            'signing_options': signing_options
+            'signing_options': signing_options,
+            'is_for_embedded_signing': True
         }
 
         return self._send_signature_request(**params)
@@ -1852,7 +1856,7 @@ class HSClient(object):
             signing_redirect_url=None, signers=None, custom_fields=None,
             cc_email_addresses=None, form_fields_per_document=None, use_text_tags=False,
             hide_text_tags=False, metadata=None, allow_decline=False, allow_reassign=False,
-            signing_options=None):
+            signing_options=None, is_for_embedded_signing=False):
         ''' To share the same logic between send_signature_request &
             send_signature_request_embedded functions
 
@@ -1897,6 +1901,8 @@ class HSClient(object):
 
             signing_options (dict, optional): Allows the requester to specify the types allowed for creating a signature. Defaults to account settings.
 
+            is_for_embedded_signing (bool): send_signature_request and send_signature_request_embedded share the same sending logic. To differenciate the two calls embedded requests are now flagged.
+
         Returns:
             A SignatureRequest object
 
@@ -1929,14 +1935,14 @@ class HSClient(object):
             "hide_text_tags": self._boolean(hide_text_tags),
             "allow_decline": self._boolean(allow_decline),
             "allow_reassign": self._boolean(allow_reassign),
-            "signing_options": json.dumps(signing_options)
+            "signing_options": json.dumps(signing_options).replace('null','{}')
         }
 
         # remove attributes with none value
         payload = HSFormat.strip_none_values(payload)
 
         url = self.SIGNATURE_REQUEST_CREATE_URL
-        if client_id:
+        if is_for_embedded_signing:
             url = self.SIGNATURE_REQUEST_CREATE_EMBEDDED_URL
 
         data = {}
@@ -2038,7 +2044,7 @@ class HSClient(object):
             "message": message,
             "signing_redirect_url": signing_redirect_url,
             "allow_decline": self._boolean(allow_decline),
-            "signing_options": json.dumps(signing_options)
+            "signing_options": json.dumps(signing_options).replace('null','{}')
         }
 
         # remove attributes with empty value
@@ -2168,7 +2174,7 @@ class HSClient(object):
             "skip_me_now": self._boolean(skip_me_now),
             "allow_reassign": self._boolean(allow_reassign),
             "allow_decline": self._boolean(allow_decline),
-            "signing_options": json.dumps(signing_options),
+            "signing_options": json.dumps(signing_options).replace('null','{}'),
             "allow_ccs": self._boolean(allow_ccs)
         }
 
@@ -2357,7 +2363,7 @@ class HSClient(object):
             "skip_me_now": self._boolean(skip_me_now),
             "allow_decline": self._boolean(allow_decline),
             "allow_reassign": self._boolean(allow_reassign),
-            "signing_options": json.dumps(signing_options)
+            "signing_options": json.dumps(signing_options).replace('null','{}')
         }
 
         #format multi params
