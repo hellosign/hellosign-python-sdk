@@ -158,3 +158,14 @@ class TestHSFormat(TestCase):
         numkeys = len(result.keys())
 
         self.assertEquals(numkeys, 1)
+
+    def test_format_signing_options(self):
+        input_params = None
+        result = HSFormat.format_signing_options(input_params, 'signing_options')
+        self.assertEquals(result, {})
+
+        input_params = {
+            "draw": True
+        }
+        result = HSFormat.format_signing_options(input_params, 'signing_options')
+        self.assertEquals(result, {'signing_options': '{"draw": true}'})
