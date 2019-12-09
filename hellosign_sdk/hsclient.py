@@ -1886,7 +1886,7 @@ class HSClient(object):
                 order (str, optional): The order the signer is required to sign in
                 pin (str, optional): The 4- to 12-character access code that will secure this signer's signature page
 
-            custom_fields (list of dict, optional): A list of custom fields. Required when a CustomField exists in the Template. An item of the list should look like this: `{'name: value'}`
+            custom_fields (list of dict, optional): A list of custom fields. Required when a CustomField exists in the Template
             
             cc_email_addresses (list, optional): A list of email addresses that should be CCed
 
