@@ -296,7 +296,7 @@ class HSClient(object):
         return request.get(self.SIGNATURE_REQUEST_INFO_URL + signature_request_id, parameters=parameters)
 
     @api_resource_list(SignatureRequest)
-    def get_signature_request_list(self, page=1):
+    def get_signature_request_list(self, page=1, page_size=None):
         ''' Get a list of SignatureRequest that you can access
 
         This includes SignatureRequests you have sent as well as received, but
@@ -305,6 +305,8 @@ class HSClient(object):
         Args:
 
             page (int, optional): Which page number of the SignatureRequest list to return. Defaults to 1.
+            page_size (int, optional): Number of SignatureRequests to return per page. Since not explict
+                                       it defaults to 20.
 
         Returns:
             A ResourceList object
@@ -313,7 +315,8 @@ class HSClient(object):
 
         request = self._get_request()
         parameters = {
-            "page": page
+            "page": page,
+            "page_size": page_size
         }
 
         return request.get(self.SIGNATURE_REQUEST_LIST_URL, parameters=parameters)
