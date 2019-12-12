@@ -36,7 +36,7 @@ class HSClient(object):
 
     '''
 
-    version = '3.8.8'   # SDK version
+    version = '3.8.9'   # SDK version
     API_VERSION = 'v3'  # API version
     API_URL = ''
 
@@ -439,6 +439,7 @@ class HSClient(object):
             'form_fields_per_document': form_fields_per_document,
             'use_text_tags': use_text_tags,
             'hide_text_tags': hide_text_tags,
+            'custom_fields': custom_fields,
             'metadata': metadata,
             'allow_decline': allow_decline,
             'allow_reassign': allow_reassign,
@@ -1888,6 +1889,8 @@ class HSClient(object):
                 order (str, optional): The order the signer is required to sign in
                 pin (str, optional): The 4- to 12-character access code that will secure this signer's signature page
 
+            custom_fields (list of dict, optional): A list of custom fields. Required when a CustomField exists in the Template
+            
             cc_email_addresses (list, optional): A list of email addresses that should be CCed
 
             form_fields_per_document (str): The fields that should appear on the document, expressed as a serialized JSON data structure which is a list of lists of the form fields. Please refer to the API reference of HelloSign for more details (https://www.hellosign.com/api/reference#SignatureRequest)
@@ -1920,11 +1923,17 @@ class HSClient(object):
         # Signers
         signers_payload = HSFormat.format_dict_list(signers, 'signers')
 
+        # Custom fields
+        custom_fields_payload = HSFormat.format_custom_fields(custom_fields)
+
         # CCs
         cc_email_addresses_payload = HSFormat.format_param_list(cc_email_addresses, 'cc_email_addresses')
 
         # Metadata
         metadata_payload = HSFormat.format_single_dict(metadata, 'metadata')
+
+        # Signing options
+        signing_options_payload = HSFormat.format_signing_options(signing_options, 'signing_options')
 
         payload = {
             "test_mode": self._boolean(test_mode),
@@ -1951,9 +1960,11 @@ class HSClient(object):
         data = {}
         data.update(payload)
         data.update(signers_payload)
+        data.update(custom_fields_payload)
         data.update(cc_email_addresses_payload)
         data.update(file_urls_payload)
         data.update(metadata_payload)
+        data.update(signing_options_payload)
 
         request = self._get_request()
         response = request.post(url, data=data, files=files_payload)
@@ -2026,6 +2037,9 @@ class HSClient(object):
         # Metadata
         metadata_payload = HSFormat.format_single_dict(metadata, 'metadata')
 
+        # Signing options
+        signing_options_payload = HSFormat.format_signing_options(signing_options, 'signing_options')
+
         # Template ids
         template_ids_payload = {}
         if template_ids:
@@ -2048,6 +2062,7 @@ class HSClient(object):
             "signing_redirect_url": signing_redirect_url,
             "allow_decline": self._boolean(allow_decline),
             "signing_options": HSFormat.format_json_data(signing_options)
+
         }
 
         # remove attributes with empty value
@@ -2062,6 +2077,7 @@ class HSClient(object):
         data.update(ccs_payload)
         data.update(custom_fields_payload)
         data.update(metadata_payload)
+        data.update(signing_options_payload)
         data.update(template_ids_payload)
         data.update(file_urls_payload)
 
@@ -2164,6 +2180,9 @@ class HSClient(object):
         # Metadata
         metadata_payload = HSFormat.format_single_dict(metadata, 'metadata')
 
+        # Signing options
+        signing_options_payload = HSFormat.format_signing_options(signing_options, 'signing_options')
+
         payload = {
             "test_mode": self._boolean(test_mode),
             "type": draft_type,
@@ -2178,6 +2197,7 @@ class HSClient(object):
             "allow_reassign": self._boolean(allow_reassign),
             "allow_decline": self._boolean(allow_decline),
             "signing_options": HSFormat.format_json_data(signing_options),
+
             "allow_ccs": self._boolean(allow_ccs)
         }
 
@@ -2201,6 +2221,7 @@ class HSClient(object):
         data.update(cc_email_addresses_payload)
         data.update(file_urls_payload)
         data.update(metadata_payload)
+        data.update(signing_options_payload)
 
         request = self._get_request()
         response = request.post(url, data=data, files=files_payload)
@@ -2374,6 +2395,7 @@ class HSClient(object):
         signers_payload = HSFormat.format_dict_list(signers, 'signers', 'role_name')
         ccs_payload = HSFormat.format_dict_list(ccs, 'ccs', 'role_name')
         metadata_payload = HSFormat.format_single_dict(metadata, 'metadata')
+        signing_options_payload = HSFormat.format_signing_options(signing_options, 'signing_options')
         custom_fields_payload = HSFormat.format_custom_fields(custom_fields)
 
         # Files
@@ -2389,6 +2411,7 @@ class HSClient(object):
         data.update(signers_payload)
         data.update(ccs_payload)
         data.update(metadata_payload)
+        data.update(signing_options_payload)
         data.update(custom_fields_payload)
         data.update(file_urls_payload)
         data = HSFormat.strip_none_values(data)

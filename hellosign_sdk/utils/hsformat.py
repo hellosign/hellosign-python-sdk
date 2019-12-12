@@ -137,13 +137,16 @@ class HSFormat(object):
         return output_payload
 
     @staticmethod
-    def format_signing_options(listed_params):
+    def format_signing_options(listed_params, output_name):
         '''
             Utility method for formatting signing options for api consumption
             Args:
                 listed_params (list of values) - the list to format
         '''
-        return listed_params
+        if not listed_params:
+            return {}
+        
+        return {output_name: json.dumps(listed_params)}
 
     @staticmethod
     def strip_none_values(dictionary):
