@@ -1933,12 +1933,12 @@ class HSClient(object):
             "subject": subject,
             "message": message,
             "signing_redirect_url": signing_redirect_url,
-            "form_fields_per_document": form_fields_per_document,
+            "form_fields_per_document": HSFormat.format_json_data(form_fields_per_document),
             "use_text_tags": self._boolean(use_text_tags),
             "hide_text_tags": self._boolean(hide_text_tags),
             "allow_decline": self._boolean(allow_decline),
             "allow_reassign": self._boolean(allow_reassign),
-            "signing_options": json.dumps(signing_options).replace('null','{}')
+            "signing_options": HSFormat.format_json_data(signing_options)
         }
 
         # remove attributes with none value
@@ -2047,7 +2047,7 @@ class HSClient(object):
             "message": message,
             "signing_redirect_url": signing_redirect_url,
             "allow_decline": self._boolean(allow_decline),
-            "signing_options": json.dumps(signing_options).replace('null','{}')
+            "signing_options": HSFormat.format_json_data(signing_options)
         }
 
         # remove attributes with empty value
@@ -2170,14 +2170,14 @@ class HSClient(object):
             "subject": subject,
             "message": message,
             "signing_redirect_url": signing_redirect_url,
-            "form_fields_per_document": form_fields_per_document,
+            "form_fields_per_document": HSFormat.format_json_data(form_fields_per_document),
             "use_preexisting_fields": self._boolean(use_preexisting_fields),
             "use_text_tags": self._boolean(use_text_tags),
             "hide_text_tags": self._boolean(hide_text_tags),
             "skip_me_now": self._boolean(skip_me_now),
             "allow_reassign": self._boolean(allow_reassign),
             "allow_decline": self._boolean(allow_decline),
-            "signing_options": json.dumps(signing_options).replace('null','{}'),
+            "signing_options": HSFormat.format_json_data(signing_options),
             "allow_ccs": self._boolean(allow_ccs)
         }
 
@@ -2366,7 +2366,7 @@ class HSClient(object):
             "skip_me_now": self._boolean(skip_me_now),
             "allow_decline": self._boolean(allow_decline),
             "allow_reassign": self._boolean(allow_reassign),
-            "signing_options": json.dumps(signing_options).replace('null','{}')
+            "signing_options": HSFormat.format_json_data(signing_options)
         }
 
         #format multi params
