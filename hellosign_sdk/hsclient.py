@@ -355,7 +355,7 @@ class HSClient(object):
             title=None, subject=None, message=None, signing_redirect_url=None,
             signers=None, cc_email_addresses=None, form_fields_per_document=None,
             use_text_tags=False, hide_text_tags=False, custom_fields=None,
-            metadata=None, allow_decline=False, allow_reassign=False, signing_options=None):
+            metadata=None, allow_decline=False, allow_reassign=False, signing_options=None, attachments=False):
         ''' Creates and sends a new SignatureRequest with the submitted documents
 
         Creates and sends a new SignatureRequest with the submitted documents.
@@ -409,6 +409,12 @@ class HSClient(object):
 
             signing_options (dict, optional): Allows the requester to specify the types allowed for creating a signature. Defaults to account settings.
 
+            attachments (list of dict):            A list of attachments, which each has the following attributes:
+                name (str):                        The name of attachment
+                instructions (str):                The instructions for uploading the attachment
+                signer_index (int):                The signer's index whose needs to upload the attachments, see signers parameter for more details
+                required (bool, optional):         Determines if the attachment must be uploaded
+
         Returns:
             A SignatureRequest object
 
@@ -440,7 +446,8 @@ class HSClient(object):
             'metadata': metadata,
             'allow_decline': allow_decline,
             'allow_reassign': allow_reassign,
-            'signing_options': signing_options
+            'signing_options': signing_options,
+            'attachments': attachments
         }
 
         return self._send_signature_request(**params)
@@ -620,7 +627,7 @@ class HSClient(object):
             files=None, file_urls=None, title=None, subject=None, message=None,
             signing_redirect_url=None, signers=None, cc_email_addresses=None,
             form_fields_per_document=None, use_text_tags=False, hide_text_tags=False,
-            metadata=None, allow_decline=False, allow_reassign=False, signing_options=None):
+            metadata=None, allow_decline=False, allow_reassign=False, signing_options=None, attachments=None):
         ''' Creates and sends a new SignatureRequest with the submitted documents
 
         Creates a new SignatureRequest with the submitted documents to be signed
@@ -674,6 +681,13 @@ class HSClient(object):
 
             signing_options (dict, optional): Allows the requester to specify the types allowed for creating a signature. Defaults to account settings.
 
+            attachments (list of dict):            A list of attachments, which each has the following attributes:
+                name (str):                        The name of attachment
+                instructions (str):                The instructions for uploading the attachment
+                signer_index (int):                The signer's index whose needs to upload the attachments, see signers parameter for more details
+                required (bool, optional):         Determines if the attachment must be uploaded
+
+
         Returns:
             A SignatureRequest object
 
@@ -706,7 +720,8 @@ class HSClient(object):
             'allow_decline': allow_decline,
             'allow_reassign': allow_reassign,
             'signing_options': signing_options,
-            'is_for_embedded_signing': True
+            'is_for_embedded_signing': True,
+            'attachments': attachments
         }
 
         return self._send_signature_request(**params)
@@ -1857,7 +1872,7 @@ class HSClient(object):
             signing_redirect_url=None, signers=None, custom_fields=None,
             cc_email_addresses=None, form_fields_per_document=None, use_text_tags=False,
             hide_text_tags=False, metadata=None, allow_decline=False, allow_reassign=False,
-            signing_options=None, is_for_embedded_signing=False):
+            signing_options=None, is_for_embedded_signing=False, attachments=None):
         ''' To share the same logic between send_signature_request &
             send_signature_request_embedded functions
 
@@ -1905,6 +1920,13 @@ class HSClient(object):
             signing_options (dict, optional): Allows the requester to specify the types allowed for creating a signature. Defaults to account settings.
 
             is_for_embedded_signing (bool): send_signature_request and send_signature_request_embedded share the same sending logic. To differenciate the two calls embedded requests are now flagged.
+
+            attachments (list of dict):            A list of attachments, which each has the following attributes:
+                name (str):                        The name of attachment
+                instructions (str):                The instructions for uploading the attachment
+                signer_index (int):                The signer's index whose needs to upload the attachments, see signers parameter for more details
+                required (bool, optional):         Determines if the attachment must be uploaded
+
 
         Returns:
             A SignatureRequest object
@@ -2036,6 +2058,9 @@ class HSClient(object):
         # Signing options
         signing_options_payload = HSFormat.format_signing_options(signing_options, 'signing_options')
 
+        # Attachments
+        attachments_payload = HSFormat.format_dict_list(attachments, 'attachments')
+
         # Template ids
         template_ids_payload = {}
         if template_ids:
@@ -2074,6 +2099,7 @@ class HSClient(object):
         data.update(signing_options_payload)
         data.update(template_ids_payload)
         data.update(file_urls_payload)
+        data.update(attachments_payload)
 
         request = self._get_request()
         response = request.post(url, data=data, files=files_payload)
