@@ -14,6 +14,7 @@ setup(
     version='3.8.9',
     description="A Python wrapper for the HelloSign API (http://www.hellosign.com/api)",
     long_description=readme(),
+    long_description_content_type='text/markdown',
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'License :: OSI Approved :: MIT License',
