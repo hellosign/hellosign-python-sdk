@@ -341,14 +341,16 @@ class HSClient(object):
         '''
         request = self._get_request()
         url = self.SIGNATURE_REQUEST_DOWNLOAD_PDF_URL + signature_request_id
-        if file_type:
-            url += '?file_type=%s' % file_type
-            return request.get_file(url, path_or_file or filename)
 
         if response_type == 'url':
             url += '?get_url=1'
         elif response_type == 'data_uri':
             url += '?get_data_uri=1'
+        else:
+            if file_type:
+                url += '?file_type=%s' % file_type
+            return request.get_file(url, path_or_file or filename)
+
         return request.get(url)
 
     def send_signature_request(self, test_mode=False, client_id=None, files=None, file_urls=None,
