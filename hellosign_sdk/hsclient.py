@@ -360,7 +360,7 @@ class HSClient(object):
             title=None, subject=None, message=None, signing_redirect_url=None,
             signers=None, cc_email_addresses=None, form_fields_per_document=None,
             use_text_tags=False, hide_text_tags=False, custom_fields=None,
-            metadata=None, allow_decline=False, allow_reassign=False, signing_options=None, attachments=False):
+            metadata=None, allow_decline=False, allow_reassign=False, signing_options=None, attachments=None):
         ''' Creates and sends a new SignatureRequest with the submitted documents
 
         Creates and sends a new SignatureRequest with the submitted documents.
