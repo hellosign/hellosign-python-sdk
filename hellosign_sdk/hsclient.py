@@ -412,7 +412,7 @@ class HSClient(object):
             attachments (list of dict):            A list of attachments, which each has the following attributes:
                 name (str):                        The name of the attachment
                 instructions (str):                The instructions for uploading the attachment
-                signer_index (int):                The signer's index whose needs to upload the attachments, see signers parameter for more details
+                signer_index (int):                The index of the signer who needs to upload the attachments, see signers parameter for more details
                 required (bool, optional):         Determines if the attachment must be uploaded
 
         Returns:
