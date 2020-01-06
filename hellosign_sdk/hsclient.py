@@ -409,7 +409,7 @@ class HSClient(object):
 
             signing_options (dict, optional): Allows the requester to specify the types allowed for creating a signature. Defaults to account settings.
 
-            attachments (list of dict):            A list of attachments, which each has the following attributes:
+            attachments (list of dict):            A list of attachments, each with the following attributes:
                 name (str):                        The name of the attachment
                 instructions (str):                The instructions for uploading the attachment
                 signer_index (int):                The index of the signer who needs to upload the attachments, see signers parameter for more details
