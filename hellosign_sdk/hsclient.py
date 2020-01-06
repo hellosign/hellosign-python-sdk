@@ -355,7 +355,7 @@ class HSClient(object):
             title=None, subject=None, message=None, signing_redirect_url=None,
             signers=None, cc_email_addresses=None, form_fields_per_document=None,
             use_text_tags=False, hide_text_tags=False, custom_fields=None,
-            metadata=None, allow_decline=False, allow_reassign=False, signing_options=None, attachments=False):
+            metadata=None, allow_decline=False, allow_reassign=False, signing_options=None, attachments=None):
         ''' Creates and sends a new SignatureRequest with the submitted documents
 
         Creates and sends a new SignatureRequest with the submitted documents.
@@ -409,10 +409,10 @@ class HSClient(object):
 
             signing_options (dict, optional): Allows the requester to specify the types allowed for creating a signature. Defaults to account settings.
 
-            attachments (list of dict):            A list of attachments, which each has the following attributes:
-                name (str):                        The name of attachment
+            attachments (list of dict):            A list of attachments, each with the following attributes:
+                name (str):                        The name of the attachment
                 instructions (str):                The instructions for uploading the attachment
-                signer_index (int):                The signer's index whose needs to upload the attachments, see signers parameter for more details
+                signer_index (int):                The index of the signer who needs to upload the attachments, see signers parameter for more details
                 required (bool, optional):         Determines if the attachment must be uploaded
 
         Returns:
