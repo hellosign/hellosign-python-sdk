@@ -305,7 +305,7 @@ class HSClient(object):
         Args:
 
             page (int, optional): Which page number of the SignatureRequest list to return. Defaults to 1.
-            page_size (int, optional): Number of SignatureRequests to return per page. Since not explict
+            page_size (int, optional): Number of SignatureRequests to return per page. When not explicit
                                        it defaults to 20.
 
         Returns:
