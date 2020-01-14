@@ -1921,7 +1921,7 @@ class HSClient(object):
 
             is_for_embedded_signing (bool): send_signature_request and send_signature_request_embedded share the same sending logic. To differenciate the two calls embedded requests are now flagged.
 
-            attachments (list of dict):            A list of attachments, which each has the following attributes:
+            attachments (list of dict):            A list of attachments, each with the following attributes::
                 name (str):                        The name of attachment
                 instructions (str):                The instructions for uploading the attachment
                 signer_index (int):                The signer's index whose needs to upload the attachments, see signers parameter for more details
