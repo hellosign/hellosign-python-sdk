@@ -396,7 +396,7 @@ class HSClient(object):
 
             cc_email_addresses (list, optional): A list of email addresses that should be CC'd on the request.
 
-            form_fields_per_document (str): The signer components that should appear on the document, expressed as a serialized
+            form_fields_per_document (str or list of dict, optional): The signer components that should appear on the document, expressed as a serialized
             JSON data structure which is a list of lists of the form fields. Please refer to the API reference of HelloSign for more details (https://app.hellosign.com/api/reference#SignatureRequest).
 
             use_text_tags (bool, optional): Use text tags in the provided file(s) to specify signer components.
@@ -664,7 +664,7 @@ class HSClient(object):
 
             cc_email_addresses (list, optional): A list of email addresses that should be CCed
 
-            form_fields_per_document (str): The fields that should appear on the document, expressed as a serialized
+            form_fields_per_document (str or list of dict, optional): The fields that should appear on the document, expressed as a serialized
             JSON data structure which is a list of lists of the form fields. Please refer to the API reference of HelloSign for more details (https://www.hellosign.com/api/reference#SignatureRequest)
 
             use_text_tags (bool, optional): Use text tags in the provided file(s) to create form fields
@@ -1426,7 +1426,7 @@ class HSClient(object):
 
             signing_redirect_url (str, optional): The URL you want the signer redirected to after they successfully sign.
 
-            form_fields_per_document (str, optional): The fields that should appear on the document, expressed as a serialized JSON
+            form_fields_per_document (str or list of dict, optional): The fields that should appear on the document, expressed as a serialized JSON
             data structure which is a list of lists of the form fields. Please refer to the API reference of HelloSign for more details (https://www.hellosign.com/api/reference#SignatureRequest)
 
             metadata (dict, optional): Metadata to associate with the draft
@@ -1521,7 +1521,7 @@ class HSClient(object):
 
             requesting_redirect_url (str, optional): The URL you want the signer to be redirected to after the request has been sent.
 
-            form_fields_per_document (str, optional): The fields that should appear on the document, expressed as a serialized JSON data structure which is a list of lists of the form fields. Please refer to the API reference of HelloSign for more details (https://www.hellosign.com/api/reference#SignatureRequest)
+            form_fields_per_document (str or list of dict, optional): The fields that should appear on the document, expressed as a serialized JSON data structure which is a list of lists of the form fields. Please refer to the API reference of HelloSign for more details (https://www.hellosign.com/api/reference#SignatureRequest)
 
             metadata (dict, optional): Metadata to associate with the draft
 
@@ -1895,7 +1895,7 @@ class HSClient(object):
             
             cc_email_addresses (list, optional): A list of email addresses that should be CCed
 
-            form_fields_per_document (str): The fields that should appear on the document, expressed as a serialized JSON data structure which is a list of lists of the form fields. Please refer to the API reference of HelloSign for more details (https://www.hellosign.com/api/reference#SignatureRequest)
+            form_fields_per_document (str or list of dict, optional): The fields that should appear on the document, expressed as a serialized JSON data structure which is a list of lists of the form fields. Please refer to the API reference of HelloSign for more details (https://www.hellosign.com/api/reference#SignatureRequest)
 
             use_text_tags (bool, optional): Use text tags in the provided file(s) to create form fields
 
@@ -1928,6 +1928,12 @@ class HSClient(object):
         # Custom fields
         custom_fields_payload = HSFormat.format_custom_fields(custom_fields)
 
+        # Form fields per document
+        if type(form_fields_per_document) is str:
+            form_fields_payload = form_fields_per_document
+        else:
+            form_fields_payload = HSFormat.format_json_data(form_fields_per_document)
+
         # CCs
         cc_email_addresses_payload = HSFormat.format_param_list(cc_email_addresses, 'cc_email_addresses')
 
@@ -1944,7 +1950,7 @@ class HSClient(object):
             "subject": subject,
             "message": message,
             "signing_redirect_url": signing_redirect_url,
-            "form_fields_per_document": HSFormat.format_json_data(form_fields_per_document),
+            "form_fields_per_document": form_fields_payload,
             "use_text_tags": self._boolean(use_text_tags),
             "hide_text_tags": self._boolean(hide_text_tags),
             "allow_decline": self._boolean(allow_decline),
@@ -2133,7 +2139,7 @@ class HSClient(object):
 
             requesting_redirect_url (str, optional): The URL you want the signer to be redirected to after the request has been sent.
 
-            form_fields_per_document (str): The fields that should appear on the document, expressed as a serialized JSON data structure which is a list of lists of the form fields. Please refer to the API reference of HelloSign for more details (https://www.hellosign.com/api/reference#SignatureRequest).
+            form_fields_per_document (str or list of dict, optional): The fields that should appear on the document, expressed as a serialized JSON data structure which is a list of lists of the form fields. Please refer to the API reference of HelloSign for more details (https://www.hellosign.com/api/reference#SignatureRequest).
 
             metadata (dict, optional): Metadata to associate with the draft
 
@@ -2179,6 +2185,12 @@ class HSClient(object):
         # Custom fields
         custom_fields_payload = HSFormat.format_custom_fields(custom_fields)
 
+        # Form fields per document
+        if type(form_fields_per_document) is str:
+            form_fields_payload = form_fields_per_document
+        else:
+            form_fields_payload = HSFormat.format_json_data(form_fields_per_document)
+
         # Metadata
         metadata_payload = HSFormat.format_single_dict(metadata, 'metadata')
 
@@ -2191,7 +2203,7 @@ class HSClient(object):
             "subject": subject,
             "message": message,
             "signing_redirect_url": signing_redirect_url,
-            "form_fields_per_document": HSFormat.format_json_data(form_fields_per_document),
+            "form_fields_per_document": form_fields_payload,
             "use_preexisting_fields": self._boolean(use_preexisting_fields),
             "use_text_tags": self._boolean(use_text_tags),
             "hide_text_tags": self._boolean(hide_text_tags),
