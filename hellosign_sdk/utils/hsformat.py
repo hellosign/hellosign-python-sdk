@@ -21,6 +21,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 #
+
 import json
 
 class HSFormat(object):
@@ -151,3 +152,13 @@ class HSFormat(object):
     def strip_none_values(dictionary):
         if dictionary:
             return dict((key, value) for (key, value) in dictionary.items() if value)
+
+    @staticmethod
+    def format_json_data(options):
+        '''
+            Utility method to convert to JSON data were required. Several of the signing parameters require JSON data
+            Args:
+                options (list of options) - the list of options passed to convert to JSON data
+        '''
+        json_data = json.dumps(options).replace('null', '')
+        return json_data
