@@ -1401,7 +1401,7 @@ class HSClient(object):
             draft_type=None, subject=None, message=None, signers=None, custom_fields=None,
             cc_email_addresses=None, signing_redirect_url=None, form_fields_per_document=None,
             metadata=None, use_preexisting_fields=False, use_text_tags=False,
-            hide_text_tags=False, allow_decline=False, signing_options=None):
+            hide_text_tags=False, allow_decline=False, signing_options=None, attachments=None):
         ''' Creates a new Draft that can be claimed using the claim URL
 
         Creates a new Draft that can be claimed using the claim URL. The first
@@ -1457,6 +1457,12 @@ class HSClient(object):
             signing_options (dict, optional): Allows the requester to specify the types allowed for creating a signature.
             Defaults to account settings.
 
+            attachments (list of dict):            A list of attachments, each with the following attributes:
+                name (str):                        The name of the attachment
+                instructions (str):                The instructions for uploading the attachment
+                signer_index (int):                The index of the signer who needs to upload the attachments, see signers parameter for more details
+                required (bool, optional):         Determines if the attachment must be uploaded
+
         Returns:
             An UnclaimedDraft object
 
@@ -1487,7 +1493,8 @@ class HSClient(object):
             'use_text_tags': use_text_tags,
             'hide_text_tags': hide_text_tags,
             'allow_decline': allow_decline,
-            'signing_options': signing_options
+            'signing_options': signing_options,
+            'attachments': attachments
         }
 
         return self._create_unclaimed_draft(**params)
@@ -1499,7 +1506,7 @@ class HSClient(object):
             requesting_redirect_url=None, form_fields_per_document=None, metadata=None,
             use_preexisting_fields=False, use_text_tags=False, hide_text_tags=False,
             skip_me_now=False, allow_decline=False, allow_reassign=False,
-            signing_options=None, allow_ccs=False):
+            signing_options=None, allow_ccs=False, attachments=None):
         ''' Creates a new Draft to be used for embedded requesting
 
         Args:
@@ -1554,6 +1561,12 @@ class HSClient(object):
 
             allow_ccs (bool, optional): Specifies whether the user is allowed to provide email addresses to CC when sending the request. Defaults to False.
 
+            attachments (list of dict):            A list of attachments, each with the following attributes:
+                name (str):                        The name of the attachment
+                instructions (str):                The instructions for uploading the attachment
+                signer_index (int):                The index of the signer who needs to upload the attachments, see signers parameter for more details
+                required (bool, optional):         Determines if the attachment must be uploaded
+
         Returns:
             An UnclaimedDraft object
 
@@ -1593,7 +1606,8 @@ class HSClient(object):
             'signing_options': signing_options,
             'allow_reassign': allow_reassign,
             'allow_decline': allow_decline,
-            'allow_ccs': allow_ccs
+            'allow_ccs': allow_ccs,
+            'attachments': attachments
         }
 
         return self._create_unclaimed_draft(**params)
@@ -1965,6 +1979,9 @@ class HSClient(object):
         # Signing options
         signing_options_payload = HSFormat.format_signing_options(signing_options, 'signing_options')
 
+        # Attachments
+        attachments_payload = HSFormat.format_dict_list(attachments, 'attachments')
+
         payload = {
             "test_mode": self._boolean(test_mode),
             "client_id": client_id,
@@ -1995,6 +2012,7 @@ class HSClient(object):
         data.update(file_urls_payload)
         data.update(metadata_payload)
         data.update(signing_options_payload)
+        data.update(attachments_payload)
 
         request = self._get_request()
         response = request.post(url, data=data, files=files_payload)
@@ -2070,9 +2088,6 @@ class HSClient(object):
         # Signing options
         signing_options_payload = HSFormat.format_signing_options(signing_options, 'signing_options')
 
-        # Attachments
-        attachments_payload = HSFormat.format_dict_list(attachments, 'attachments')
-
         # Template ids
         template_ids_payload = {}
         if template_ids:
@@ -2113,7 +2128,6 @@ class HSClient(object):
         data.update(signing_options_payload)
         data.update(template_ids_payload)
         data.update(file_urls_payload)
-        data.update(attachments_payload)
 
         request = self._get_request()
         response = request.post(url, data=data, files=files_payload)
@@ -2128,7 +2142,7 @@ class HSClient(object):
             requesting_redirect_url=None, form_fields_per_document=None, metadata=None,
             use_preexisting_fields=False, use_text_tags=False, hide_text_tags=False,
             skip_me_now=False, allow_reassign=False, allow_decline=False,
-            signing_options=None, allow_ccs=False):
+            signing_options=None, allow_ccs=False, attachments=None):
         ''' Creates a new Draft that can be claimed using the claim URL
 
         Args:
@@ -2185,6 +2199,12 @@ class HSClient(object):
 
             allow_ccs (bool, optional): Specifies whether the user is allowed to provide email addresses to CC when sending the request. Defaults to False.
 
+            attachments (list of dict):            A list of attachments, each with the following attributes:
+                name (str):                        The name of the attachment
+                instructions (str):                The instructions for uploading the attachment
+                signer_index (int):                The index of the signer who needs to upload the attachments, see signers parameter for more details
+                required (bool, optional):         Determines if the attachment must be uploaded
+
         Returns:
             An UnclaimedDraft object
 
@@ -2222,6 +2242,9 @@ class HSClient(object):
 
         # Signing options
         signing_options_payload = HSFormat.format_signing_options(signing_options, 'signing_options')
+
+        # Attachments
+        attachments_payload = HSFormat.format_dict_list(attachments, 'attachments')
 
         payload = {
             "test_mode": self._boolean(test_mode),
@@ -2262,6 +2285,7 @@ class HSClient(object):
         data.update(file_urls_payload)
         data.update(metadata_payload)
         data.update(signing_options_payload)
+        data.update(attachments_payload)
 
         request = self._get_request()
         response = request.post(url, data=data, files=files_payload)
