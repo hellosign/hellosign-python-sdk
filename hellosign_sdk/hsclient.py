@@ -992,7 +992,7 @@ class HSClient(object):
     def create_embedded_template_draft(self, client_id, signer_roles, test_mode=False,
             files=None, file_urls=None, title=None, subject=None, message=None,
             cc_roles=None, merge_fields=None, skip_me_now=False, use_preexisting_fields=False,
-            allow_reassign=False, metadata=None, allow_ccs=False):
+            allow_reassign=False, metadata=None, allow_ccs=False, attachments=None):
         ''' Creates an embedded Template draft for further editing.
 
         Args:
@@ -1039,6 +1039,12 @@ class HSClient(object):
             allow_ccs (bool, optional): Specifies whether the user is allowed to
             provide email addresses to CC when creating a template. Defaults to False.
 
+            attachments (list of dict):            A list of attachments, each with the following attributes:
+                name (str):                        The name of the attachment
+                instructions (str):                The instructions for uploading the attachment
+                signer_index (int):                The index of the signer who needs to upload the attachments, see signers parameter for more details
+                required (bool, optional):         Determines if the attachment must be uploaded
+
         Returns:
             A Template object specifying the id of the draft
 
@@ -1058,7 +1064,8 @@ class HSClient(object):
             'use_preexisting_fields': use_preexisting_fields,
             'metadata': metadata,
             'allow_reassign': allow_reassign,
-            'allow_ccs': allow_ccs
+            'allow_ccs': allow_ccs,
+            'attachments': attachments
         }
 
         return self._create_embedded_template_draft(**params)
@@ -2350,7 +2357,7 @@ class HSClient(object):
     def _create_embedded_template_draft(self, client_id, signer_roles, test_mode=False,
             files=None, file_urls=None, title=None, subject=None, message=None,
             cc_roles=None, merge_fields=None, skip_me_now=False,
-            use_preexisting_fields=False, metadata=None, allow_reassign=False, allow_ccs=False):
+            use_preexisting_fields=False, metadata=None, allow_reassign=False, allow_ccs=False, attachments=None):
         ''' Helper method for creating embedded template drafts.
             See public function for params.
         '''
@@ -2385,6 +2392,9 @@ class HSClient(object):
         # Prep Metadata
         metadata_payload = HSFormat.format_single_dict(metadata, 'metadata')
 
+        # Attachments
+        attachments_payload = HSFormat.format_dict_list(attachments, 'attachments')
+
         # Assemble data for sending
         data = {}
         data.update(payload)
@@ -2395,6 +2405,7 @@ class HSClient(object):
         if (merge_fields is not None):
             data.update(merge_fields_payload)
         data = HSFormat.strip_none_values(data)
+        data.update(attachments_payload)
 
         request = self._get_request()
 
