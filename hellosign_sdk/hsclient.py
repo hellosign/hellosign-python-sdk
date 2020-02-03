@@ -375,7 +375,7 @@ class HSClient(object):
 
             client_id (str): Pass client_id. For non embedded requests this can be used for white-labeling
 
-            files (list of str): The uploaded file(s) to send for signature.
+            files (list of str or StringIO): The uploaded file(s) to send for signature.
 
             file_urls (list of str): URLs of the file for HelloSign to download to send for signature. Use either `files` or `file_urls`
 
@@ -1892,7 +1892,7 @@ class HSClient(object):
                 pin (str, optional): The 4- to 12-character access code that will secure this signer's signature page
 
             custom_fields (list of dict, optional): A list of custom fields. Required when a CustomField exists in the Template
-            
+
             cc_email_addresses (list, optional): A list of email addresses that should be CCed
 
             form_fields_per_document (str or list of dict, optional): The fields that should appear on the document, expressed as a serialized JSON data structure which is a list of lists of the form fields. Please refer to the API reference of HelloSign for more details (https://www.hellosign.com/api/reference#SignatureRequest)
