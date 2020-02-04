@@ -48,7 +48,7 @@ class HSFormat(object):
         files_payload = {}
         if files:
             for idx, filename in enumerate(files):
-	        if isinstance(filename, StringIO):
+                if isinstance(filename, StringIO):
                     files_payload["file[" + str(idx) + "]"] = filename.getvalue()
                 else:
                     files_payload["file[" + str(idx) + "]"] = open(filename, 'rb')
