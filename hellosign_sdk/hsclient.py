@@ -36,7 +36,7 @@ class HSClient(object):
 
     '''
 
-    version = '3.8.9'   # SDK version
+    version = '3.9.0'   # SDK version
     API_VERSION = 'v3'  # API version
     API_URL = ''
 
@@ -2424,10 +2424,10 @@ class HSClient(object):
         data.update(signer_roles_payload)
         data.update(ccs_payload)
         data.update(metadata_payload)
+        data.update(attachments_payload)
         if (merge_fields is not None):
             data.update(merge_fields_payload)
         data = HSFormat.strip_none_values(data)
-        data.update(attachments_payload)
 
         request = self._get_request()
 
