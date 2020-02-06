@@ -360,7 +360,7 @@ class HSClient(object):
             title=None, subject=None, message=None, signing_redirect_url=None,
             signers=None, cc_email_addresses=None, form_fields_per_document=None,
             use_text_tags=False, hide_text_tags=False, custom_fields=None,
-            metadata=None, allow_decline=False, allow_reassign=False, signing_options=None):
+            metadata=None, allow_decline=False, allow_reassign=False, signing_options=None, attachments=None):
         ''' Creates and sends a new SignatureRequest with the submitted documents
 
         Creates and sends a new SignatureRequest with the submitted documents.
@@ -414,6 +414,12 @@ class HSClient(object):
 
             signing_options (dict, optional): Allows the requester to specify the types allowed for creating a signature. Defaults to account settings.
 
+            attachments (list of dict):            A list of attachments, each with the following attributes:
+                name (str):                        The name of the attachment
+                instructions (str):                The instructions for uploading the attachment
+                signer_index (int):                The index of the signer who needs to upload the attachments, see signers parameter for more details
+                required (bool, optional):         Determines if the attachment must be uploaded
+
         Returns:
             A SignatureRequest object
 
@@ -445,7 +451,8 @@ class HSClient(object):
             'metadata': metadata,
             'allow_decline': allow_decline,
             'allow_reassign': allow_reassign,
-            'signing_options': signing_options
+            'signing_options': signing_options,
+            'attachments': attachments
         }
 
         return self._send_signature_request(**params)
@@ -625,7 +632,7 @@ class HSClient(object):
             files=None, file_urls=None, title=None, subject=None, message=None,
             signing_redirect_url=None, signers=None, cc_email_addresses=None,
             form_fields_per_document=None, use_text_tags=False, hide_text_tags=False,
-            metadata=None, allow_decline=False, allow_reassign=False, signing_options=None):
+            metadata=None, allow_decline=False, allow_reassign=False, signing_options=None, attachments=None):
         ''' Creates and sends a new SignatureRequest with the submitted documents
 
         Creates a new SignatureRequest with the submitted documents to be signed
@@ -679,6 +686,13 @@ class HSClient(object):
 
             signing_options (dict, optional): Allows the requester to specify the types allowed for creating a signature. Defaults to account settings.
 
+            attachments (list of dict):            A list of attachments, each with the following attributes:
+                name (str):                        The name of attachment
+                instructions (str):                The instructions for uploading the attachment
+                signer_index (int):                The signer's index whose needs to upload the attachments, see signers parameter for more details
+                required (bool, optional):         Determines if the attachment must be uploaded
+
+
         Returns:
             A SignatureRequest object
 
@@ -711,7 +725,8 @@ class HSClient(object):
             'allow_decline': allow_decline,
             'allow_reassign': allow_reassign,
             'signing_options': signing_options,
-            'is_for_embedded_signing': True
+            'is_for_embedded_signing': True,
+            'attachments': attachments
         }
 
         return self._send_signature_request(**params)
@@ -982,7 +997,7 @@ class HSClient(object):
     def create_embedded_template_draft(self, client_id, signer_roles, test_mode=False,
             files=None, file_urls=None, title=None, subject=None, message=None,
             cc_roles=None, merge_fields=None, skip_me_now=False, use_preexisting_fields=False,
-            allow_reassign=False, metadata=None, allow_ccs=False):
+            allow_reassign=False, metadata=None, allow_ccs=False, attachments=None):
         ''' Creates an embedded Template draft for further editing.
 
         Args:
@@ -1029,6 +1044,12 @@ class HSClient(object):
             allow_ccs (bool, optional): Specifies whether the user is allowed to
             provide email addresses to CC when creating a template. Defaults to False.
 
+            attachments (list of dict):            A list of attachments, each with the following attributes:
+                name (str):                        The name of the attachment
+                instructions (str):                The instructions for uploading the attachment
+                signer_index (int):                The index of the signer who needs to upload the attachments, see signers parameter for more details
+                required (bool, optional):         Determines if the attachment must be uploaded
+
         Returns:
             A Template object specifying the id of the draft
 
@@ -1048,7 +1069,8 @@ class HSClient(object):
             'use_preexisting_fields': use_preexisting_fields,
             'metadata': metadata,
             'allow_reassign': allow_reassign,
-            'allow_ccs': allow_ccs
+            'allow_ccs': allow_ccs,
+            'attachments': attachments
         }
 
         return self._create_embedded_template_draft(**params)
@@ -1386,7 +1408,7 @@ class HSClient(object):
             draft_type=None, subject=None, message=None, signers=None, custom_fields=None,
             cc_email_addresses=None, signing_redirect_url=None, form_fields_per_document=None,
             metadata=None, use_preexisting_fields=False, use_text_tags=False,
-            hide_text_tags=False, allow_decline=False, signing_options=None):
+            hide_text_tags=False, allow_decline=False, signing_options=None, attachments=None):
         ''' Creates a new Draft that can be claimed using the claim URL
 
         Creates a new Draft that can be claimed using the claim URL. The first
@@ -1442,6 +1464,12 @@ class HSClient(object):
             signing_options (dict, optional): Allows the requester to specify the types allowed for creating a signature.
             Defaults to account settings.
 
+            attachments (list of dict):            A list of attachments, each with the following attributes:
+                name (str):                        The name of the attachment
+                instructions (str):                The instructions for uploading the attachment
+                signer_index (int):                The index of the signer who needs to upload the attachments, see signers parameter for more details
+                required (bool, optional):         Determines if the attachment must be uploaded
+
         Returns:
             An UnclaimedDraft object
 
@@ -1472,7 +1500,8 @@ class HSClient(object):
             'use_text_tags': use_text_tags,
             'hide_text_tags': hide_text_tags,
             'allow_decline': allow_decline,
-            'signing_options': signing_options
+            'signing_options': signing_options,
+            'attachments': attachments
         }
 
         return self._create_unclaimed_draft(**params)
@@ -1484,7 +1513,7 @@ class HSClient(object):
             requesting_redirect_url=None, form_fields_per_document=None, metadata=None,
             use_preexisting_fields=False, use_text_tags=False, hide_text_tags=False,
             skip_me_now=False, allow_decline=False, allow_reassign=False,
-            signing_options=None, allow_ccs=False):
+            signing_options=None, allow_ccs=False, attachments=None):
         ''' Creates a new Draft to be used for embedded requesting
 
         Args:
@@ -1539,6 +1568,12 @@ class HSClient(object):
 
             allow_ccs (bool, optional): Specifies whether the user is allowed to provide email addresses to CC when sending the request. Defaults to False.
 
+            attachments (list of dict):            A list of attachments, each with the following attributes:
+                name (str):                        The name of the attachment
+                instructions (str):                The instructions for uploading the attachment
+                signer_index (int):                The index of the signer who needs to upload the attachments, see signers parameter for more details
+                required (bool, optional):         Determines if the attachment must be uploaded
+
         Returns:
             An UnclaimedDraft object
 
@@ -1578,7 +1613,8 @@ class HSClient(object):
             'signing_options': signing_options,
             'allow_reassign': allow_reassign,
             'allow_decline': allow_decline,
-            'allow_ccs': allow_ccs
+            'allow_ccs': allow_ccs,
+            'attachments': attachments
         }
 
         return self._create_unclaimed_draft(**params)
@@ -1862,7 +1898,7 @@ class HSClient(object):
             signing_redirect_url=None, signers=None, custom_fields=None,
             cc_email_addresses=None, form_fields_per_document=None, use_text_tags=False,
             hide_text_tags=False, metadata=None, allow_decline=False, allow_reassign=False,
-            signing_options=None, is_for_embedded_signing=False):
+            signing_options=None, is_for_embedded_signing=False, attachments=None):
         ''' To share the same logic between send_signature_request &
             send_signature_request_embedded functions
 
@@ -1911,6 +1947,13 @@ class HSClient(object):
 
             is_for_embedded_signing (bool): send_signature_request and send_signature_request_embedded share the same sending logic. To differenciate the two calls embedded requests are now flagged.
 
+            attachments (list of dict):            A list of attachments, each with the following attributes:
+                name (str):                        The name of attachment
+                instructions (str):                The instructions for uploading the attachment
+                signer_index (int):                The signer's index whose needs to upload the attachments, see signers parameter for more details
+                required (bool, optional):         Determines if the attachment must be uploaded
+
+
         Returns:
             A SignatureRequest object
 
@@ -1943,6 +1986,9 @@ class HSClient(object):
         # Signing options
         signing_options_payload = HSFormat.format_signing_options(signing_options, 'signing_options')
 
+        # Attachments
+        attachments_payload = HSFormat.format_dict_list(attachments, 'attachments')
+
         payload = {
             "test_mode": self._boolean(test_mode),
             "client_id": client_id,
@@ -1973,6 +2019,7 @@ class HSClient(object):
         data.update(file_urls_payload)
         data.update(metadata_payload)
         data.update(signing_options_payload)
+        data.update(attachments_payload)
 
         request = self._get_request()
         response = request.post(url, data=data, files=files_payload)
@@ -2102,7 +2149,7 @@ class HSClient(object):
             requesting_redirect_url=None, form_fields_per_document=None, metadata=None,
             use_preexisting_fields=False, use_text_tags=False, hide_text_tags=False,
             skip_me_now=False, allow_reassign=False, allow_decline=False,
-            signing_options=None, allow_ccs=False):
+            signing_options=None, allow_ccs=False, attachments=None):
         ''' Creates a new Draft that can be claimed using the claim URL
 
         Args:
@@ -2159,6 +2206,12 @@ class HSClient(object):
 
             allow_ccs (bool, optional): Specifies whether the user is allowed to provide email addresses to CC when sending the request. Defaults to False.
 
+            attachments (list of dict):            A list of attachments, each with the following attributes:
+                name (str):                        The name of the attachment
+                instructions (str):                The instructions for uploading the attachment
+                signer_index (int):                The index of the signer who needs to upload the attachments, see signers parameter for more details
+                required (bool, optional):         Determines if the attachment must be uploaded
+
         Returns:
             An UnclaimedDraft object
 
@@ -2196,6 +2249,9 @@ class HSClient(object):
 
         # Signing options
         signing_options_payload = HSFormat.format_signing_options(signing_options, 'signing_options')
+
+        # Attachments
+        attachments_payload = HSFormat.format_dict_list(attachments, 'attachments')
 
         payload = {
             "test_mode": self._boolean(test_mode),
@@ -2236,6 +2292,7 @@ class HSClient(object):
         data.update(file_urls_payload)
         data.update(metadata_payload)
         data.update(signing_options_payload)
+        data.update(attachments_payload)
 
         request = self._get_request()
         response = request.post(url, data=data, files=files_payload)
@@ -2322,7 +2379,7 @@ class HSClient(object):
     def _create_embedded_template_draft(self, client_id, signer_roles, test_mode=False,
             files=None, file_urls=None, title=None, subject=None, message=None,
             cc_roles=None, merge_fields=None, skip_me_now=False,
-            use_preexisting_fields=False, metadata=None, allow_reassign=False, allow_ccs=False):
+            use_preexisting_fields=False, metadata=None, allow_reassign=False, allow_ccs=False, attachments=None):
         ''' Helper method for creating embedded template drafts.
             See public function for params.
         '''
@@ -2357,6 +2414,9 @@ class HSClient(object):
         # Prep Metadata
         metadata_payload = HSFormat.format_single_dict(metadata, 'metadata')
 
+        # Attachments
+        attachments_payload = HSFormat.format_dict_list(attachments, 'attachments')
+
         # Assemble data for sending
         data = {}
         data.update(payload)
@@ -2367,6 +2427,7 @@ class HSClient(object):
         if (merge_fields is not None):
             data.update(merge_fields_payload)
         data = HSFormat.strip_none_values(data)
+        data.update(attachments_payload)
 
         request = self._get_request()
 
