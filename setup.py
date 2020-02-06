@@ -11,7 +11,7 @@ def readme():
 
 setup(
     name='hellosign-python-sdk',
-    version='3.8.9',
+    version='3.9.0',
     description="A Python wrapper for the HelloSign API (http://www.hellosign.com/api)",
     long_description=readme(),
     long_description_content_type='text/markdown',
