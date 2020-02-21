@@ -2116,7 +2116,8 @@ class HSClient(object):
             "message": message,
             "signing_redirect_url": signing_redirect_url,
             "allow_decline": self._boolean(allow_decline),
-            "signing_options": HSFormat.format_json_data(signing_options)
+            "signing_options": HSFormat.format_json_data(signing_options),
+            "custom_fields": HSFormat.format_json_data(custom_fields)
 
         }
 
