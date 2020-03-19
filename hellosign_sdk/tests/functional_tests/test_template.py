@@ -40,7 +40,7 @@ class TestTemplate(BaseTestCase):
         except NotFound:
             team = self.client.create_team("Team Name")
             self.assertTrue(isinstance(team, Team))
-            self.assertEquals(team.name, "Team Name")
+            self.assertEqual(team.name, "Team Name")
 
         if len(team.accounts) < 2:
             try:
@@ -68,7 +68,7 @@ class TestTemplate(BaseTestCase):
         template = self._get_one_template()
         result = self.client.get_template(template.template_id)
         self.assertTrue(isinstance(result, Template))
-        self.assertEquals(result.template_id, template.template_id)
+        self.assertEqual(result.template_id, template.template_id)
 
     def test_add_remove_template_users(self):
         ''' Test adding and removing users from a template '''
@@ -96,7 +96,7 @@ class TestTemplate(BaseTestCase):
             {'name': 'Madame President', 'order': 2},
             {'name': 'Lee Adama', 'order': 3},
         ]
-        cc_roles = ['Deck Chief','Admiral','Starbuck']
+        cc_roles = ['Deck Chief', 'Admiral','Starbuck']
         merge_fields = [{'name':'mymerge', 'type':'text'}]
 
         response = self.client.create_embedded_template_draft(

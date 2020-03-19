@@ -51,12 +51,12 @@ class TestAccount(BaseTestCase):
             
             email = "py-sdk-test-%s@example.com" % time()
             result = self.client.create_account(email)
-            self.assertEquals(isinstance(result, Account), True)
+            self.assertEqual(isinstance(result, Account), True)
 
             # Should work too if giving a password, even though it's not used
             email = "py-sdk-test-%s@example.com" % time()
             result = self.client.create_account(email, "something")
-            self.assertEquals(isinstance(result, Account), True)
+            self.assertEqual(isinstance(result, Account), True)
             
         except HSException as e:
             self.fail(e.message)
@@ -73,7 +73,7 @@ class TestAccount(BaseTestCase):
         try:
             acct = self.client.create_account(email, client_id=self.client_id, client_secret=self.client_secret)
             self.assertTrue(acct is not None)
-            self.assertEquals(acct.email_address, email)
+            self.assertEqual(acct.email_address, email)
             self.assertTrue(hasattr(acct, 'oauth'))
             self.assertTrue(acct.oauth is not None)
             self.assertTrue(isinstance(acct.oauth, HSAccessTokenAuth))
@@ -86,7 +86,7 @@ class TestAccount(BaseTestCase):
 
         # Valid account
         result = self.client.get_account_info()
-        self.assertEquals(isinstance(result, Account), True)
+        self.assertEqual(isinstance(result, Account), True)
 
         # Account does not exist
         try:
@@ -101,7 +101,7 @@ class TestAccount(BaseTestCase):
 
         # We update nothing, but the api returns an Account object, so it is considered successful
         result = self.client.get_account_info()
-        self.assertEquals(isinstance(result, Account), True)
+        self.assertEqual(isinstance(result, Account), True)
 
         # Invalid callback url
         try:
@@ -115,8 +115,8 @@ class TestAccount(BaseTestCase):
         new_callback_url = 'http://www.example.com/mycallback'
         self.client.account.callback_url = new_callback_url
         result = self.client.update_account_info()
-        self.assertEquals(isinstance(result, Account), True)
-        self.assertEquals(result.callback_url, new_callback_url)
+        self.assertEqual(isinstance(result, Account), True)
+        self.assertEqual(result.callback_url, new_callback_url)
 
     def test_account_verify(self):
         ''' Test verifying the existence of a given account '''

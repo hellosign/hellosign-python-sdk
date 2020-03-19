@@ -125,16 +125,16 @@ class TestSignatureRequest(BaseTestCase):
                                                                     metadata=metadata,
                                                                     allow_decline=True)
 
-        self.assertEquals(isinstance(sig_req, SignatureRequest), True)
-        self.assertEquals(sig_req.title, title)
-        self.assertEquals(sig_req.subject, subject)
-        self.assertEquals(sig_req.message, message)
-        self.assertEquals(len(sig_req.signatures), 1)
-        self.assertEquals(len(sig_req.cc_email_addresses), 0 if use_template or use_multi_templates else 2)
-        self.assertEquals(sig_req.metadata is not None, True)
-        self.assertEquals(len(sig_req.metadata), len(metadata))
+        self.assertEqual(isinstance(sig_req, SignatureRequest), True)
+        self.assertEqual(sig_req.title, title)
+        self.assertEqual(sig_req.subject, subject)
+        self.assertEqual(sig_req.message, message)
+        self.assertEqual(len(sig_req.signatures), 1)
+        self.assertEqual(len(sig_req.cc_email_addresses), 0 if use_template or use_multi_templates else 2)
+        self.assertEqual(sig_req.metadata is not None, True)
+        self.assertEqual(len(sig_req.metadata), len(metadata))
         for (k, v) in metadata.items():
-            self.assertEquals(sig_req.metadata[k], v)
+            self.assertEqual(sig_req.metadata[k], v)
 
         return sig_req
 
@@ -191,7 +191,7 @@ class TestSignatureRequest(BaseTestCase):
         # Sent reminder
         try:
             result = self.client.remind_signature_request(sig_req.signature_request_id, signer)
-            self.assertEquals(isinstance(result, SignatureRequest), True)
+            self.assertEqual(isinstance(result, SignatureRequest), True)
         except Forbidden as e:
             self.fail(e.message)
 
@@ -340,27 +340,27 @@ class TestSignatureRequest(BaseTestCase):
         sig_req = SignatureRequest(sig_req_data)
 
         comps = sig_req.find_response_component(api_id=comp1['api_id'])
-        self.assertEquals(len(comps), 1)
-        self.assertEquals(comps[0], comp1)
+        self.assertEqual(len(comps), 1)
+        self.assertEqual(comps[0], comp1)
 
         comps = sig_req.find_response_component(signature_id=comp1['signature_id'])
-        self.assertEquals(len(comps), 3)
-        self.assertEquals(comps[0], comp1)
-        self.assertEquals(comps[1], comp2)
-        self.assertEquals(comps[2], comp3)
+        self.assertEqual(len(comps), 3)
+        self.assertEqual(comps[0], comp1)
+        self.assertEqual(comps[1], comp2)
+        self.assertEqual(comps[2], comp3)
 
         comps = sig_req.find_response_component(api_id='3j2k3j21k32')
-        self.assertEquals(len(comps), 0)
+        self.assertEqual(len(comps), 0)
 
         s = sig_req.find_signature(signature_id=sig_data['signature_id'])
         self.assertTrue(s is not None)
         self.assertTrue(isinstance(s, Signature), "Expected Signature but got %s" % s.__class__.__name__)
-        self.assertEquals(s.json_data, sig_data)
+        self.assertEqual(s.json_data, sig_data)
 
         s = sig_req.find_signature(signer_email_address=sig_data['signer_email_address'])
         self.assertTrue(s is not None)
         self.assertTrue(isinstance(s, Signature), "Expected Signature but got %s" % s.__class__.__name__)
-        self.assertEquals(s.json_data, sig_data)
+        self.assertEqual(s.json_data, sig_data)
 
         s = sig_req.find_signature(signature_id='j32kj32k13j')
-        self.assertEquals(s, None)
+        self.assertEqual(s, None)
