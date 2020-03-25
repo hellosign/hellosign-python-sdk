@@ -50,7 +50,7 @@ class TestEmbedded(BaseTestCase):
                                                                         signers=signers, 
                                                                         cc_email_addresses=cc_email_addresses)
             self.assertTrue(isinstance(emb_sig_req, SignatureRequest))
-            self.assertEquals(len(emb_sig_req.signatures), 1)
+            self.assertEqual(len(emb_sig_req.signatures), 1)
         except HSException as e:
             self.fail(e.message)
 
@@ -87,7 +87,7 @@ class TestEmbedded(BaseTestCase):
                                                                                     allow_decline=True)
 
             self.assertTrue(isinstance(emb_sig_req, SignatureRequest))
-            self.assertEquals(len(emb_sig_req.signatures), 1)
+            self.assertEqual(len(emb_sig_req.signatures), 1)
         except HSException as e:
             self.fail(e.message)
 

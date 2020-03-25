@@ -49,7 +49,7 @@ class ResourceList(list):
         super(ResourceList, self).__init__()
         if data is not None:
 
-            data = json.loads(data) if type(data) is not dict else data
+            data = json.loads(data) if not isinstance(data, dict) else data
             paging = data['list_info']
             raw_items = data.get(self.items_keys[item_cls.__name__])
 

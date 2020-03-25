@@ -4,7 +4,7 @@ from hellosign_sdk import HSClient
 from hellosign_sdk.utils import HSRequest, BadRequest
 import tempfile
 import os
-import StringIO
+import io
 
 #
 # The MIT License (MIT)
@@ -42,7 +42,7 @@ class Request(TestCase):
                                headers={'Custom-Header': 'Nothing'},
                                parameters={'param': 'Nothing'},
                                get_json=False)
-        self.assertEquals(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
         response = request.get(url='http://httpbin.org/get',
                                get_json=True)
         self.assertEquals(isinstance(response, dict), True)
@@ -53,7 +53,7 @@ class Request(TestCase):
                                headers={'Custom-Header': 'Nothing'},
                                parameters={'param': 'Nothing'},
                                get_json=False)
-        self.assertEquals(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
         response = request.get(url='https://httpbin.org/get',
                                get_json=True)
         self.assertEquals(isinstance(response, dict), True)
@@ -62,7 +62,7 @@ class Request(TestCase):
             response = request.get(url='https://app.hellosign.com/oauth/token',
                                    get_json=True)
         except BadRequest as e:
-            self.assertEquals('400 error' in str(e), True)
+            self.assertEqual('400 error' in str(e), True)
 
     def test_post(self):
         request = HSRequest(self.client.auth)
@@ -70,7 +70,7 @@ class Request(TestCase):
                                 data={"test": "None"}, get_json=False,
                                 headers={'Custom-Header': 'Nothing'}
                                 )
-        self.assertEquals(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
         response = request.post(url='http://httpbin.org/post',
                                 data={"test": "None"}, get_json=True
                                 )
@@ -81,7 +81,7 @@ class Request(TestCase):
                                 data={"test": "None"}, get_json=False,
                                 headers={'Custom-Header': 'Nothing'}
                                 )
-        self.assertEquals(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
         response = request.post(url='https://httpbin.org/post',
                                 data={"test": "None"}, get_json=True
                                 )
@@ -95,18 +95,18 @@ class Request(TestCase):
                                     headers={'Custom-Header': 'Nothing'},
                                     path_or_file=temp_filename)
         os.unlink(temp_filename)
-        self.assertEquals(response, True)
+        self.assertEqual(response, True)
 
         response = request.get_file(url='http://httpbin.org/robots.txt',
                                     headers={'Custom-Header': 'Nothing'},
                                     path_or_file='')
-        self.assertEquals(response, False)
+        self.assertEqual(response, False)
 
-        out = StringIO.StringIO()
+        out = io.StringIO()
         response = request.get_file(url='http://httpbin.org/robots.txt',
                                     headers={'Custom-Header': 'Nothing'},
                                     path_or_file=out)
-        self.assertEquals(response, True)
+        self.assertEqual(response, True)
 
     def test_get_file_https(self):
         request = HSRequest(self.client.auth)
@@ -118,15 +118,15 @@ class Request(TestCase):
                                     headers={'Custom-Header': 'Nothing'},
                                     path_or_file=temp_filename)
         os.unlink(temp_filename)
-        self.assertEquals(response, True)
+        self.assertEqual(response, True)
 
         response = request.get_file(url='https://httpbin.org/robots.txt',
                                     headers={'Custom-Header': 'Nothing'},
                                     path_or_file='')
-        self.assertEquals(response, False)
+        self.assertEqual(response, False)
 
-        out = StringIO.StringIO()
+        out = io.StringIO()
         response = request.get_file(url='http://httpbin.org/robots.txt',
                                     headers={'Custom-Header': 'Nothing'},
                                     path_or_file=out)
-        self.assertEquals(response, True)
+        self.assertEqual(response, True)
