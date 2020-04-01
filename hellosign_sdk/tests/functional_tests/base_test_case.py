@@ -52,7 +52,7 @@ class BaseTestCase(TestCase):
             print(" = personal account as they perform destructive actions.          =")
             print(" ==================================================================")
             while True:
-                resp = raw_input(' > Continue (type yes or hit Ctrl+C to exit)?')
+                resp = input(' > Continue (type yes or hit Ctrl+C to exit)?')
                 if resp == 'yes':
                     # Continue to tests
                     break
@@ -63,6 +63,6 @@ class BaseTestCase(TestCase):
                 else:
                     # Ask question again
                     pass 
-            print
+            print()
 
-        print
+        print()

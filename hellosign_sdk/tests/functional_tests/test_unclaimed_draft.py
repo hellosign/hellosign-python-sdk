@@ -68,7 +68,7 @@ class TestUnclaimedDraft(BaseTestCase):
                 metadata=metadata,
                 allow_decline=True)
 
-        self.assertEquals(isinstance(result, UnclaimedDraft), True)
+        self.assertEqual(isinstance(result, UnclaimedDraft), True)
 
     def test_embedded_unclaimed_draft(self):
         ''' Test creating an embedded unclaimed draft '''
@@ -116,7 +116,7 @@ class TestUnclaimedDraft(BaseTestCase):
                 cc_email_addresses=cc_email_addresses,
                 metadata=metadata,
                 allow_decline=False)
-        self.assertEquals(isinstance(result, UnclaimedDraft), True)
+        self.assertEqual(isinstance(result, UnclaimedDraft), True)
 
     def test_create_embedded_unclaimed_draft_with_template(self):
         ''' Test creating an embedded unclaimed draft from a template '''
@@ -168,7 +168,7 @@ class TestUnclaimedDraft(BaseTestCase):
             metadata=metadata,
             allow_decline=False)
 
-        self.assertEquals(isinstance(returned, UnclaimedDraft), True)
+        self.assertEqual(isinstance(returned, UnclaimedDraft), True)
 
     def _get_one_template(self, exclude=None):
         ''' Get one template from the current account '''

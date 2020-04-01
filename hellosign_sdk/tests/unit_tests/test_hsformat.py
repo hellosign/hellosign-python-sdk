@@ -58,7 +58,7 @@ class TestHSFormat(TestCase):
 
         result = HSFormat.format_file_url_params(input_params)
 
-        self.assertEquals(result, expected_result)
+        self.assertEqual(result, expected_result)
 
     def test_format_param_list(self):
 
@@ -71,7 +71,7 @@ class TestHSFormat(TestCase):
 
             result = HSFormat.format_param_list(input_params, 'birds')
 
-            self.assertEquals(result, expected_result)
+            self.assertEqual(result, expected_result)
 
     def test_format_dict_list(self):
 
@@ -108,11 +108,11 @@ class TestHSFormat(TestCase):
 
             result = HSFormat.format_dict_list(input_params, label)
 
-            self.assertEquals(result, expected_result)
+            self.assertEqual(result, expected_result)
 
             result = HSFormat.format_dict_list(input_params, label, key)
 
-            self.assertEquals(result, expected_result_with_key)
+            self.assertEqual(result, expected_result_with_key)
 
     def test_format_single_dict(self):
 
@@ -130,7 +130,7 @@ class TestHSFormat(TestCase):
 
         result = HSFormat.format_single_dict(input_params, label)
 
-        self.assertEquals(result, expected_result)
+        self.assertEqual(result, expected_result)
 
     def test_format_custom_fields(self):
 
@@ -143,7 +143,7 @@ class TestHSFormat(TestCase):
 
         result = HSFormat.format_custom_fields(input_params)
 
-        self.assertEquals(result, expected_result)
+        self.assertEqual(result, expected_result)
 
     def test_strip_none_values(self):
 
@@ -157,15 +157,15 @@ class TestHSFormat(TestCase):
         result = HSFormat.strip_none_values(input_params)
         numkeys = len(result.keys())
 
-        self.assertEquals(numkeys, 1)
+        self.assertEqual(numkeys, 1)
 
     def test_format_signing_options(self):
         input_params = None
         result = HSFormat.format_signing_options(input_params, 'signing_options')
-        self.assertEquals(result, {})
+        self.assertEqual(result, {})
 
         input_params = {
             "draw": True
         }
         result = HSFormat.format_signing_options(input_params, 'signing_options')
-        self.assertEquals(result, {'signing_options': '{"draw": true}'})
+        self.assertEqual(result, {'signing_options': '{"draw": true}'})

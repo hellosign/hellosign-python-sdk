@@ -1,6 +1,6 @@
 language: python
 python:
-- '2.7'
+- '3.7'
 before_install:
 - cp hellosign_sdk/tests/test_helper.sample.py hellosign_sdk/tests/test_helper.py
 - rm hellosign_sdk/tests/test_helper.sample.py

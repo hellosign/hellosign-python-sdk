@@ -76,7 +76,7 @@ class TestTeam(BaseTestCase):
         # Valid
         result = self.client.add_team_member(email_address="py-sdk-test-%s@example.com" % time())
         self.assertTrue(isinstance(result, Team))
-        #self.assertEquals(len(result.accounts), num_members + 1) Test no longer works
+        #self.assertEqual(len(result.accounts), num_members + 1) Test no longer works
 
     def test_remove_team_member(self):
         ''' Test removing a team member '''
@@ -120,7 +120,7 @@ class TestTeam(BaseTestCase):
         try:
             result = self.client.create_team(team_name)
             self.assertTrue(isinstance(result, Team))
-            self.assertEquals(result.name, team_name)
+            self.assertEqual(result.name, team_name)
         except HSException as e:
             self.fail('Could not destroy team: %s' % e.message)
 
@@ -135,7 +135,7 @@ class TestTeam(BaseTestCase):
             new_name = 'New team name'
             result = self.client.update_team_name(new_name)
             self.assertTrue(isinstance(result, Team))
-            self.assertEquals(result.name, new_name)
+            self.assertEqual(result.name, new_name)
         except HSException as e:
             self.fail(e.message)
 

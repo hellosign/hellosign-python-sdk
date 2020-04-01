@@ -48,9 +48,9 @@ class TestRequests(BaseTestCase):
         self.assertIs(len(warnings), 1)
         self.assertIsInstance(warnings[0], dict)
         self.assertIsNotNone(warnings[0].get('warning_name'))
-        self.assertEquals(warnings[0]['warning_name'], self.TEST_WARNING_NAME)
+        self.assertEqual(warnings[0]['warning_name'], self.TEST_WARNING_NAME)
         self.assertIsNotNone(warnings[0].get('warning_msg'))
-        self.assertEquals(warnings[0]['warning_msg'], self.TEST_WARNING_MSG)
+        self.assertEqual(warnings[0]['warning_msg'], self.TEST_WARNING_MSG)
 
     def test_warnings(self):
         ''' Test warning accessibility '''
@@ -81,11 +81,11 @@ class TestRequests(BaseTestCase):
         self.assertIsNotNone(req_headers)
         self.assertIsInstance(req_headers, dict)
         self.assertIsNotNone(req_headers.get('User-Agent'))
-        self.assertEquals(req_headers['User-Agent'], HSRequest._get_user_agent())
+        self.assertEqual(req_headers['User-Agent'], HSRequest._get_user_agent())
 
         parts = req_headers['User-Agent'].split('/')
         self.assertIs(len(parts), 2)
-        self.assertEquals(parts[0], 'hellosign-python-sdk')
+        self.assertEqual(parts[0], 'hellosign-python-sdk')
         parts = parts[1].split('.')
         self.assertIs(len(parts), 3)
         try:
@@ -93,4 +93,4 @@ class TestRequests(BaseTestCase):
             int(parts[1])
         except ValueError:
             self.fail('Invalid version number')
-        self.assertEquals(parts[2], '5')
+        self.assertEqual(parts[2], '5')

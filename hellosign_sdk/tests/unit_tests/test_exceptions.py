@@ -40,11 +40,11 @@ class TestException(TestCase):
 
     def test_no_auth_method(self):
         error = NoAuthMethod("No authentication information found")
-        self.assertEquals(str(error), "No authentication information found")
-        self.assertEquals(error.type, "NoAuthMethod")
+        self.assertEqual(str(error), "No authentication information found")
+        self.assertEqual(error.type, "NoAuthMethod")
 
     def test_http_error(self):
         error = BadRequest("Bad Request", 400)
         self.assertEquals(str(error), "Bad Request")
-        self.assertEquals(error.http_code, 400)
-        self.assertEquals(error.type, "BadRequest")
+        self.assertEqual(error.http_code, 400)
+        self.assertEqual(error.type, "BadRequest")

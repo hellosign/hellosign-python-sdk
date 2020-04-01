@@ -36,7 +36,7 @@ class HSClient(object):
 
     '''
 
-    version = '3.9.0'   # SDK version
+    version = '4.0.0'   # SDK version
     API_VERSION = 'v3'  # API version
     API_URL = ''
 
@@ -1972,7 +1972,7 @@ class HSClient(object):
         custom_fields_payload = HSFormat.format_custom_fields(custom_fields)
 
         # Form fields per document
-        if type(form_fields_per_document) is str:
+        if isinstance(form_fields_per_document, str):
             form_fields_payload = form_fields_per_document
         else:
             form_fields_payload = HSFormat.format_json_data(form_fields_per_document)
@@ -2239,7 +2239,7 @@ class HSClient(object):
         custom_fields_payload = HSFormat.format_custom_fields(custom_fields)
 
         # Form fields per document
-        if type(form_fields_per_document) is str:
+        if isinstance(form_fields_per_document, str):
             form_fields_payload = form_fields_per_document
         else:
             form_fields_payload = HSFormat.format_json_data(form_fields_per_document)
