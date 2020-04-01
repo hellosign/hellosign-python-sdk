@@ -11,14 +11,14 @@ def readme():
 
 setup(
     name='hellosign-python-sdk',
-    version='3.9.0',
+    version='4.0.0',
     description="A Python wrapper for the HelloSign API (http://www.hellosign.com/api)",
     long_description=readme(),
     long_description_content_type='text/markdown',
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'License :: OSI Approved :: MIT License',
-        'Programming Language :: Python :: 2.7'
+        'Programming Language :: Python :: 3.7'
     ],
     keywords='hellosign python sdk',
     url='https://github.com/hellosign/hellosign-python-sdk',
