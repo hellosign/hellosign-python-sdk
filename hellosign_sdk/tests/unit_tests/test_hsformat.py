@@ -42,7 +42,7 @@ class TestHSFormat(TestCase):
 
         keys = result.keys()
 
-        attribute = hasattr(result[keys[0]], 'read') #check if file (can be read)
+        attribute = hasattr(result[list(keys)[0]], 'read') #check if file (can be read)
 
         self.assertTrue(attribute)
         self.assertTrue(output_name in keys)
