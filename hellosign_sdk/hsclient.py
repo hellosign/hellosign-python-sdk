@@ -631,7 +631,7 @@ class HSClient(object):
     def send_signature_request_embedded(self, test_mode=False, client_id=None,
             files=None, file_urls=None, title=None, subject=None, message=None,
             signing_redirect_url=None, signers=None, cc_email_addresses=None,
-            form_fields_per_document=None, use_text_tags=False, hide_text_tags=False,
+            form_fields_per_document=None, use_text_tags=False, hide_text_tags=False, custom_fields=None,
             metadata=None, allow_decline=False, allow_reassign=False, signing_options=None, attachments=None):
         ''' Creates and sends a new SignatureRequest with the submitted documents
 
@@ -677,6 +677,8 @@ class HSClient(object):
             use_text_tags (bool, optional): Use text tags in the provided file(s) to create form fields
 
             hide_text_tags (bool, optional): Hide text tag areas
+            
+            custom_fields (list of dict, optional): A list of custom fields. Required when a CustomField exists using text tags for form_fields_per_document. An item of the list should look like this: `{'name: value'}`
 
             metadata (dict, optional): Metadata to associate with the signature request
 
@@ -721,6 +723,7 @@ class HSClient(object):
             'form_fields_per_document': form_fields_per_document,
             'use_text_tags': use_text_tags,
             'hide_text_tags': hide_text_tags,
+            'custom_fields': custom_fields,
             'metadata': metadata,
             'allow_decline': allow_decline,
             'allow_reassign': allow_reassign,
