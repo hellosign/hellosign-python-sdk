@@ -258,7 +258,10 @@ class HSRequest(object):
                 raise err_cls("%s error: %s" % (response.status_code, json_response["error"]["error_msg"]), response.status_code)
             # This is to catch error when we post get oauth data
             except TypeError:
-                raise err_cls("%s error: %s" % (response.status_code, json_response["error_description"]), response.status_code)
+                try:
+                    raise err_cls("%s error: %s" % (response.status_code, json_response["error_description"]), response.status_code)
+                except TypeError:
+                    raise err_cls("%s error" % response.status_code)
 
         # Return True if everything is OK
         return True
