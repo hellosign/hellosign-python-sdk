@@ -984,6 +984,7 @@ class HSClient(object):
             A Template object
 
         '''
+        files_payload = HSFormat.format_file_params(file)
         request = self._get_request()
         return request.post(self.TEMPLATE_UPDATE_FILES_URL + template_id, data={
             "file": file,
@@ -992,7 +993,7 @@ class HSClient(object):
             "message": message,
             "test_mode": self._boolean(test_mode),
             "client_id": client_id
-        })
+        }, files=files_payload)
 
     def create_embedded_template_draft(self, client_id, signer_roles, test_mode=False,
             files=None, file_urls=None, title=None, subject=None, message=None,
