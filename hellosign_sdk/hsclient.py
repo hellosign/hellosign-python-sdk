@@ -958,7 +958,7 @@ class HSClient(object):
             url += '?get_data_uri=1'
         return request.get(url)
 
-    def update_template_files(self, template_id, files=None, file_url=None,
+    def update_template_files(self, template_id, file=None, file_url=None,
             subject=None, message=None, client_id=None, test_mode=False):
         ''' Overlays a new file with the overlay of an existing template.
 
@@ -986,7 +986,7 @@ class HSClient(object):
         '''
         request = self._get_request()
         return request.post(self.TEMPLATE_UPDATE_FILES_URL + template_id, data={
-            "files": files,
+            "file": file,
             "file_url": file_url,
             "subject": subject,
             "message": message,
