@@ -958,7 +958,7 @@ class HSClient(object):
             url += '?get_data_uri=1'
         return request.get(url)
 
-    def update_template_files(self, template_id, files=None, file_urls=None,
+    def update_template_files(self, template_id, file=None, file_url=None,
             subject=None, message=None, client_id=None, test_mode=False):
         ''' Overlays a new file with the overlay of an existing template.
 
@@ -966,10 +966,10 @@ class HSClient(object):
 
             template_id (str): The id of the template whose files to update
 
-            files (list of str): The file(s) to use for the template.
+            file (list of str): The file(s) to use for the template.
 
-            file_urls (list of str): URLs of the file for HelloSign to use for the template.
-            Use either `files` or `file_urls`, but not both.
+            file_url (list of str): URLs of the file for HelloSign to use for the template.
+            Use either `file` or `file_url`, but not both.
 
             subject (str, optional): The default template email subject
 
@@ -986,8 +986,8 @@ class HSClient(object):
         '''
         request = self._get_request()
         return request.post(self.TEMPLATE_UPDATE_FILES_URL + template_id, data={
-            "files": files,
-            "file_urls": file_urls,
+            "file": file,
+            "file_url": file_url,
             "subject": subject,
             "message": message,
             "test_mode": self._boolean(test_mode),
