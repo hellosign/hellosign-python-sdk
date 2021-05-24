@@ -1191,7 +1191,7 @@ class HSClient(object):
 
     @api_resource(Embedded)
     def get_template_edit_url(self, template_id, test_mode=False, cc_roles=None,
-            merge_fields=None, skip_signer_roles=False, skip_subject_message=False):
+            merge_fields=[], skip_signer_roles=False, skip_subject_message=False):
         ''' Retrieves a embedded template for editing
 
         Retrieves an embedded object containing a template edit url that can be opened in an iFrame.
@@ -2378,7 +2378,7 @@ class HSClient(object):
     @api_resource(Template)
     def _create_embedded_template_draft(self, client_id, signer_roles, test_mode=False,
             files=None, file_urls=None, title=None, subject=None, message=None,
-            cc_roles=None, merge_fields=None, skip_me_now=False,
+            cc_roles=None, merge_fields=[], skip_me_now=False,
             use_preexisting_fields=False, metadata=None, allow_reassign=False, allow_ccs=False, attachments=None):
         ''' Helper method for creating embedded template drafts.
             See public function for params.
