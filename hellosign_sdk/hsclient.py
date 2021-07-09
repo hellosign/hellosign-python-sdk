@@ -572,7 +572,7 @@ class HSClient(object):
         })
 
     @api_resource(SignatureRequest)
-    def update_signature_request(self, signature_request_id, signature_id, email_address):
+    def update_signature_request(self, signature_request_id, signature_id, email_address=None, name=None):
         ''' Updates the email address for a given signer on a signature request.
 
         Args:
@@ -581,17 +581,31 @@ class HSClient(object):
 
             signature_id (str): The signature id for the recipient
 
-            email_address (str): The new email address of the recipient
+            email_address (optional, str): The new email address of the recipient
+
+            name (optional, str): The new name of the recipient
 
         Returns:
             A SignatureRequest object
 
         '''
         request = self._get_request()
-        return request.post(self.SIGNATURE_REQUEST_UPDATE_URL + signature_request_id, data={
-            "signature_id": signature_id,
-            "email_address": email_address
-        })
+
+        if (not email_address) and (not name):
+            raise HSException("Must provide at least email_address or name field")
+
+        request_data = {
+            "signature_id": signature_id
+        }
+
+        if email_address:
+            request_data["email_address"] = email_address
+        
+        if name:
+            request_data["name"] = name
+        
+
+        return request.post(self.SIGNATURE_REQUEST_UPDATE_URL + signature_request_id, data=request_data)
 
     def cancel_signature_request(self, signature_request_id):
         ''' Cancels a SignatureRequest
