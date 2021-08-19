@@ -360,7 +360,7 @@ class HSClient(object):
             title=None, subject=None, message=None, signing_redirect_url=None,
             signers=None, cc_email_addresses=None, form_fields_per_document=None,
             use_text_tags=False, hide_text_tags=False, custom_fields=None,
-            metadata=None, allow_decline=False, allow_reassign=False, signing_options=None, attachments=None):
+            metadata=None, allow_decline=False, allow_reassign=False, signing_options=None, field_options=None, attachments=None):
         ''' Creates and sends a new SignatureRequest with the submitted documents
 
         Creates and sends a new SignatureRequest with the submitted documents.
@@ -414,6 +414,8 @@ class HSClient(object):
 
             signing_options (dict, optional): Allows the requester to specify the types allowed for creating a signature. Defaults to account settings.
 
+            field_options (dict, optional): Allows the requester to specify the field options for a signature request. It has a date_format setting that allows requester to specify the date format.
+
             attachments (list of dict):            A list of attachments, each with the following attributes:
                 name (str):                        The name of the attachment
                 instructions (str):                The instructions for uploading the attachment
@@ -452,6 +454,7 @@ class HSClient(object):
             'allow_decline': allow_decline,
             'allow_reassign': allow_reassign,
             'signing_options': signing_options,
+            'field_options': field_options,
             'attachments': attachments
         }
 
@@ -632,7 +635,7 @@ class HSClient(object):
             files=None, file_urls=None, title=None, subject=None, message=None,
             signing_redirect_url=None, signers=None, cc_email_addresses=None,
             form_fields_per_document=None, use_text_tags=False, hide_text_tags=False,
-            metadata=None, allow_decline=False, allow_reassign=False, signing_options=None, attachments=None):
+            metadata=None, allow_decline=False, allow_reassign=False, signing_options=None, field_options=None, attachments=None):
         ''' Creates and sends a new SignatureRequest with the submitted documents
 
         Creates a new SignatureRequest with the submitted documents to be signed
@@ -686,6 +689,8 @@ class HSClient(object):
 
             signing_options (dict, optional): Allows the requester to specify the types allowed for creating a signature. Defaults to account settings.
 
+            field_options (dict, optional): Allows the requester to specify the field options for a signature request. It has a date_format setting that allows requester to specify the date format.
+
             attachments (list of dict):            A list of attachments, each with the following attributes:
                 name (str):                        The name of attachment
                 instructions (str):                The instructions for uploading the attachment
@@ -725,6 +730,7 @@ class HSClient(object):
             'allow_decline': allow_decline,
             'allow_reassign': allow_reassign,
             'signing_options': signing_options,
+            'field_options': field_options,
             'is_for_embedded_signing': True,
             'attachments': attachments
         }
@@ -1513,7 +1519,7 @@ class HSClient(object):
             requesting_redirect_url=None, form_fields_per_document=None, metadata=None,
             use_preexisting_fields=False, use_text_tags=False, hide_text_tags=False,
             skip_me_now=False, allow_decline=False, allow_reassign=False,
-            signing_options=None, allow_ccs=False, attachments=None):
+            signing_options=None, field_options=None, allow_ccs=False, attachments=None):
         ''' Creates a new Draft to be used for embedded requesting
 
         Args:
@@ -1564,6 +1570,8 @@ class HSClient(object):
 
             signing_options (dict, optional): Allows the requester to specify the types allowed for creating a signature. Defaults to account settings.
 
+            field_options (dict, optional): Allows the requester to specify the field options for a signature request. It has a date_format setting that allows requester to specify the date format.
+
             allow_decline (bool, optional): Allows signers to decline to sign a document if set to 1. Defaults to 0.
 
             allow_ccs (bool, optional): Specifies whether the user is allowed to provide email addresses to CC when sending the request. Defaults to False.
@@ -1611,6 +1619,7 @@ class HSClient(object):
             'hide_text_tags': hide_text_tags,
             'skip_me_now': skip_me_now,
             'signing_options': signing_options,
+            'field_options': field_options,
             'allow_reassign': allow_reassign,
             'allow_decline': allow_decline,
             'allow_ccs': allow_ccs,
@@ -1898,7 +1907,7 @@ class HSClient(object):
             signing_redirect_url=None, signers=None, custom_fields=None,
             cc_email_addresses=None, form_fields_per_document=None, use_text_tags=False,
             hide_text_tags=False, metadata=None, allow_decline=False, allow_reassign=False,
-            signing_options=None, is_for_embedded_signing=False, attachments=None):
+            signing_options=None, field_options=None, is_for_embedded_signing=False, attachments=None):
         ''' To share the same logic between send_signature_request &
             send_signature_request_embedded functions
 
@@ -1944,6 +1953,8 @@ class HSClient(object):
             allow_reassign (bool, optional): Allows signers to reassign their signature requests to other signers if set to True. Defaults to False.
 
             signing_options (dict, optional): Allows the requester to specify the types allowed for creating a signature. Defaults to account settings.
+
+            field_options (dict, optional): Allows the requester to specify the field options for a signature request. It has a date_format setting that allows requester to specify the date format.
 
             is_for_embedded_signing (bool): send_signature_request and send_signature_request_embedded share the same sending logic. To differenciate the two calls embedded requests are now flagged.
 
@@ -2001,7 +2012,8 @@ class HSClient(object):
             "hide_text_tags": self._boolean(hide_text_tags),
             "allow_decline": self._boolean(allow_decline),
             "allow_reassign": self._boolean(allow_reassign),
-            "signing_options": HSFormat.format_json_data(signing_options)
+            "signing_options": HSFormat.format_json_data(signing_options),
+            "field_options": HSFormat.format_json_data(field_options)
         }
 
         # remove attributes with none value
@@ -2149,7 +2161,7 @@ class HSClient(object):
             requesting_redirect_url=None, form_fields_per_document=None, metadata=None,
             use_preexisting_fields=False, use_text_tags=False, hide_text_tags=False,
             skip_me_now=False, allow_reassign=False, allow_decline=False,
-            signing_options=None, allow_ccs=False, attachments=None):
+            signing_options=None, field_options=None, allow_ccs=False, attachments=None):
         ''' Creates a new Draft that can be claimed using the claim URL
 
         Args:
@@ -2203,6 +2215,8 @@ class HSClient(object):
             allow_decline (bool, optional): Allows signers to decline to sign a document if set to 1. Defaults to 0.
 
             signing_options (dict, optional): Allows the requester to specify the types allowed for creating a signature. Defaults to account settings.
+            
+            field_options (dict, optional): Allows the requester to specify the field options for a signature request. It has a date_format setting that allows requester to specify the date format.
 
             allow_ccs (bool, optional): Specifies whether the user is allowed to provide email addresses to CC when sending the request. Defaults to False.
 
@@ -2267,7 +2281,7 @@ class HSClient(object):
             "allow_reassign": self._boolean(allow_reassign),
             "allow_decline": self._boolean(allow_decline),
             "signing_options": HSFormat.format_json_data(signing_options),
-
+            "field_options": HSFormat.format_json_data(field_options),
             "allow_ccs": self._boolean(allow_ccs)
         }
 
