@@ -1,6 +1,7 @@
 generatorName: python
 typeMappings: {}
 additionalProperties:
+  generatorLanguageVersion: 2.7
   packageName: hellosign_sdk
   projectName: hellosign-python-sdk
   sortModelPropertiesByRequiredFlag: true

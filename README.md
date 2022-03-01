@@ -57,7 +57,7 @@ this command.
 
 ### Requirements.
 
-Python 
+Python 2.7
 
 ### easy_install
 

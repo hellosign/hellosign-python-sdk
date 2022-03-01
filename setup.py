@@ -33,7 +33,7 @@ setup(
     author_email="apisupport@hellosign.com",
     url="",
     keywords=["OpenAPI", "OpenAPI-Generator", "HelloSign API"],
-    python_requires="",
+    python_requires="2.7",
     install_requires=REQUIRES,
     packages=find_packages(exclude=["test", "tests"]),
     include_package_data=True,
