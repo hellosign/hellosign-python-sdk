@@ -1,4 +1,4 @@
-from hellosign_openapi_python_sdk.models import EventCallbackRequestEvent
+from hellosign_sdk.models import EventCallbackRequestEvent
 import hmac
 import hashlib
 

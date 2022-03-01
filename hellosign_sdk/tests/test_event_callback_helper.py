@@ -3,8 +3,8 @@ import json
 import unittest
 from metadict import MetaDict
 
-from hellosign_openapi_python_sdk import ApiClient, Configuration, EventCallbackHelper
-from hellosign_openapi_python_sdk.models import EventCallbackApiAppRequest
+from hellosign_sdk import ApiClient, Configuration, EventCallbackHelper
+from hellosign_sdk.models import EventCallbackApiAppRequest
 
 
 class TestEventCallbackHelper(unittest.TestCase):

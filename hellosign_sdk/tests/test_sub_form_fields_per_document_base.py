@@ -3,8 +3,8 @@ import json
 import unittest
 from metadict import MetaDict
 
-from hellosign_openapi_python_sdk import ApiClient, Configuration, models
-from hellosign_openapi_python_sdk.models import SignatureRequestSendRequest
+from hellosign_sdk import ApiClient, Configuration, models
+from hellosign_sdk.models import SignatureRequestSendRequest
 
 
 class TestSubFormFieldsPerDocumentBase(unittest.TestCase):

@@ -27,4 +27,4 @@ from hellosign_sdk.exceptions import ApiValueError
 from hellosign_sdk.exceptions import ApiKeyError
 from hellosign_sdk.exceptions import ApiException
 
-from hellosign_openapi_python_sdk.event_callback_helper import EventCallbackHelper
+from hellosign_sdk.event_callback_helper import EventCallbackHelper
