@@ -1,0 +1,16 @@
+# TemplateResponseAccountQuota
+
+An array of the designated CC roles that must be specified when sending a SignatureRequest using this Template.
+
+## Properties
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| `templates_left` | ```int``` |  API templates remaining.  |  |
+| `api_signature_requests_left` | ```int``` |  API signature requests remaining.  |  |
+| `documents_left` | ```int``` |  Signature requests remaining.  |  |
+
+
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+

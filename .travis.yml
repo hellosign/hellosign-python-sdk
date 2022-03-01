@@ -1,18 +1,13 @@
+# ref: https://docs.travis-ci.com/user/languages/python
 language: python
 python:
-- '3.7'
-before_install:
-- cp hellosign_sdk/tests/test_helper.sample.py hellosign_sdk/tests/test_helper.py
-- rm hellosign_sdk/tests/test_helper.sample.py
+  - "3.6"
+  - "3.7"
+  - "3.8"
+  - "3.9"
+# command to install dependencies
 install:
-- pip install -e . --use-mirrors
-- pip install -r test_requirements.txt --use-mirrors
-script:
-  - nosetests --with-coverage --cover-package=hellosign_sdk --include=hellosign_sdk/tests/unit_tests/* --include=hellosign_sdk/tests/functional_tests/*
-after_success:
-- coveralls
-env:
-  global:
-  - secure: CYSSycNhQ7/3RCwQvHgyilTLnPlCRTlnoXsSGMz3eAdkRLpEdF4zwO0RTSm+ZsUudBD0CBssejSHfrvWOSJVIdyEbHYnjnfKyByXYEe1TqRvRp5RMNWQl25aCJfmNicJX5o0iRiEAnoPff+AGHlS5BGzoM54hT61D8UeASeDHxc=
-  - secure: lN5c/VlRKpgADCxpeOT7MtXfHEfcTduRkv6Py/TgKE+Wnep5zFJhm1cr1aBRIeKIdyChg0UGkfyGfDNiYCgBH22WdsotU68V+OtH5n4ykfwx6uxwzMAtAhRqwfedr20/rMYqY1yMNrWeLfuEY0z9uDHnXREMMKXzgTQfQ9cZOrk=
-  - secure: S5q+K1ZhX1x5NrFHBiundMxA1RVmy83KXw5QrXmIMEXPL7PYLAykte6kEdqHZ/+MFFEjcuLpFbMrTxJvvk6LgQfXJi25gL88CuYH2MNFOTRXBQ5GNhgzrv0RGI9rTTKsbe1KE7mgCIiLX8/wyFMMm9tUN4a3MjGPgmlX4vhCwwo=
+  - "pip install -r requirements.txt"
+  - "pip install -r test-requirements.txt"
+# command to run tests
+script: pytest --cov=hellosign_sdk

@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+set -e
+DIR=$(cd `dirname $0` && pwd)
+ROOT_DIR="${DIR}/.."
+
+rep () {
+  SEARCH_STRING=$1
+  REPLACE_STRING=$2
+  SCAN_DIRS=( \
+    "docs" \
+    "hellosign_sdk/model" \
+    "hellosign_sdk/models" \
+  )
+
+  printf "\nScanning for '${SEARCH_STRING}': "
+
+  set +e
+  for i in "${SCAN_DIRS[@]}"
+  do
+    perl -pi -e "s/${SEARCH_STRING}/${REPLACE_STRING}/g" \
+      "${ROOT_DIR}/${i}/"*.*
+  done
+}
+
+perl -pi -e 's/(.*)AllOf.md\)\n//g' "${ROOT_DIR}/README.md"
+
+rep '([^\\r\n]+?)from (.*)_all_of import (.*)\n' ''
+rep 'from (.*)_all_of import (.*)\n' ''
+rep "\s+globals\(\)\['[a-zA-Z]+AllOf(.*)\n" ''
