@@ -1,10 +1,10 @@
-import os
 import json
 import unittest
 from metadict import MetaDict
 
 from hellosign_sdk import ApiClient, Configuration, models
 from hellosign_sdk.models import SignatureRequestSendRequest
+from test_utils import get_fixture_data
 
 
 class TestSubFormFieldsPerDocumentBase(unittest.TestCase):
@@ -12,11 +12,7 @@ class TestSubFormFieldsPerDocumentBase(unittest.TestCase):
         configuration = Configuration()
         api_client = ApiClient(configuration)
 
-        file = open(
-            os.path.realpath('.') + '/../../oas/test_fixtures/SubFormFieldsPerDocument.json', 'r'
-        )
-        fixture_data = json.load(file)
-        file.close()
+        fixture_data = get_fixture_data('SubFormFieldsPerDocument')
 
         for ftype, data in fixture_data.items():
             payload = {

@@ -1,10 +1,10 @@
-import os
 import json
 import unittest
 from metadict import MetaDict
 
 from hellosign_sdk import ApiClient, Configuration, EventCallbackHelper
 from hellosign_sdk.models import EventCallbackApiAppRequest
+from test_utils import get_fixture_data
 
 
 class TestEventCallbackHelper(unittest.TestCase):
@@ -12,11 +12,7 @@ class TestEventCallbackHelper(unittest.TestCase):
         configuration = Configuration()
         api_client = ApiClient(configuration)
 
-        file = open(
-            os.path.realpath('.') + '/../../oas/test_fixtures/EventCallbackHelper.json', 'r'
-        )
-        fixture_data = json.load(file)
-        file.close()
+        fixture_data = get_fixture_data('EventCallbackHelper')
 
         api_key = '324e3b0840f065eb51f3fd63231d0d33daa35d4ed10d27718839e81737065782'
         api_key_rev = api_key[::-1]

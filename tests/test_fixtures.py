@@ -1,18 +1,16 @@
 import io
-import os
 import json
 import unittest
 from metadict import MetaDict
 
 from hellosign_sdk import ApiClient, Configuration, models
+from test_utils import get_fixture_data, get_base_path
 
 
 class TestFixtures(unittest.TestCase):
     def test_is_valid(self):
         configuration = Configuration()
         api_client = ApiClient(configuration)
-
-        base_path = os.path.realpath('.') + '/../../oas/test_fixtures'
 
         fixtures = [
             'AccountCreateRequest',
@@ -47,9 +45,7 @@ class TestFixtures(unittest.TestCase):
         ]
 
         for fixture in fixtures:
-            file = open(f'{base_path}/{fixture}.json', 'r')
-            fixture_data = json.load(file)
-            file.close()
+            fixture_data = get_fixture_data(fixture)
 
             for key, fixt_data in fixture_data.items():
                 class_type = eval(f'models.{fixture}')
@@ -63,18 +59,18 @@ class TestFixtures(unittest.TestCase):
                         continue
 
                     if param_value == (io.IOBase,):
-                        loaded = open(f'{base_path}/{fixt_data[param]}', 'rb')
+                        loaded = open(f'{get_base_path()}/{fixt_data[param]}', 'rb')
                         yanked_files[param] = loaded
                         loaded.close()
-                        data_with_files[param] = f'{base_path}/{fixt_data[param]}'
+                        data_with_files[param] = f'{get_base_path()}/{fixt_data[param]}'
                     elif param_value == ([io.IOBase],):
                         yanked_files[param] = []
                         data_with_files[param] = []
                         for file_v in fixt_data[param]:
-                            loaded = open(f'{base_path}/{file_v}', 'rb')
+                            loaded = open(f'{get_base_path()}/{file_v}', 'rb')
                             yanked_files[param].append(loaded)
                             loaded.close()
-                            data_with_files[param].append(f'{base_path}/{file_v}')
+                            data_with_files[param].append(f'{get_base_path()}/{file_v}')
                     else:
                         data_no_files[param] = fixt_data[param]
                         data_with_files[param] = fixt_data[param]
