@@ -113,6 +113,7 @@ class SignatureRequestSendWithTemplateRequest(ModelNormal):
             'custom_fields': ([SubCustomField],),  # noqa: E501
             'file': ([file_type],),  # noqa: E501
             'file_url': ([str],),  # noqa: E501
+            'is_qualified_signature': (bool,),  # noqa: E501
             'message': (str,),  # noqa: E501
             'metadata': ({str: (bool, date, datetime, dict, float, int, list, str, none_type)},),  # noqa: E501
             'signing_options': (SubSigningOptions,),  # noqa: E501
@@ -136,6 +137,7 @@ class SignatureRequestSendWithTemplateRequest(ModelNormal):
         'custom_fields': 'custom_fields',  # noqa: E501
         'file': 'file',  # noqa: E501
         'file_url': 'file_url',  # noqa: E501
+        'is_qualified_signature': 'is_qualified_signature',  # noqa: E501
         'message': 'message',  # noqa: E501
         'metadata': 'metadata',  # noqa: E501
         'signing_options': 'signing_options',  # noqa: E501
@@ -196,6 +198,7 @@ class SignatureRequestSendWithTemplateRequest(ModelNormal):
             custom_fields ([SubCustomField]): An array defining values and options for custom fields. Required when defining when a custom field exists in the Template.. [optional]  # noqa: E501
             file ([file_type]): **file** or **file_url** is required, but not both.  Use `file[]` to indicate the uploaded file(s) to send for signature.  Currently we only support use of either the `file[]` parameter or `file_url[]` parameter, not both.. [optional]  # noqa: E501
             file_url ([str]): **file_url** or **file** is required, but not both.  Use `file_url[]` to have HelloSign download the file(s) to send for signature.  Currently we only support use of either the `file[]` parameter or `file_url[]` parameter, not both.. [optional]  # noqa: E501
+            is_qualified_signature (bool): Send with a value of `true` if you wish to enable  [Qualified Electronic Signatures](https://www.hellosign.com/features/qualified-electronic-signatures) (QES),  which requires a face-to-face call to verify the signer's identity.<br> **Note**: QES is only available on the Premium API plan as an add-on purchase.  Cannot be used in `test_mode`. Only works on requests with one signer.. [optional] if omitted the server will use the default value of False  # noqa: E501
             message (str): The custom message in the email that will be sent to the signers.. [optional]  # noqa: E501
             metadata ({str: (bool, date, datetime, dict, float, int, list, str, none_type)}): Key-value data that should be attached to the signature request. This metadata is included in all API responses and events involving the signature request. For example, use the metadata field to store a signer's order number for look up when receiving events for the signature request.  Each request can include up to 10 metadata keys, with key names up to 40 characters long and values up to 1000 characters long.. [optional]  # noqa: E501
             signing_options (SubSigningOptions): [optional]  # noqa: E501
@@ -296,6 +299,7 @@ class SignatureRequestSendWithTemplateRequest(ModelNormal):
             custom_fields ([SubCustomField]): An array defining values and options for custom fields. Required when defining when a custom field exists in the Template.. [optional]  # noqa: E501
             file ([file_type]): **file** or **file_url** is required, but not both.  Use `file[]` to indicate the uploaded file(s) to send for signature.  Currently we only support use of either the `file[]` parameter or `file_url[]` parameter, not both.. [optional]  # noqa: E501
             file_url ([str]): **file_url** or **file** is required, but not both.  Use `file_url[]` to have HelloSign download the file(s) to send for signature.  Currently we only support use of either the `file[]` parameter or `file_url[]` parameter, not both.. [optional]  # noqa: E501
+            is_qualified_signature (bool): Send with a value of `true` if you wish to enable  [Qualified Electronic Signatures](https://www.hellosign.com/features/qualified-electronic-signatures) (QES),  which requires a face-to-face call to verify the signer's identity.<br> **Note**: QES is only available on the Premium API plan as an add-on purchase.  Cannot be used in `test_mode`. Only works on requests with one signer.. [optional] if omitted the server will use the default value of False  # noqa: E501
             message (str): The custom message in the email that will be sent to the signers.. [optional]  # noqa: E501
             metadata ({str: (bool, date, datetime, dict, float, int, list, str, none_type)}): Key-value data that should be attached to the signature request. This metadata is included in all API responses and events involving the signature request. For example, use the metadata field to store a signer's order number for look up when receiving events for the signature request.  Each request can include up to 10 metadata keys, with key names up to 40 characters long and values up to 1000 characters long.. [optional]  # noqa: E501
             signing_options (SubSigningOptions): [optional]  # noqa: E501

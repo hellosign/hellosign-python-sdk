@@ -1180,12 +1180,12 @@ configuration = Configuration(
 
 with ApiClient(configuration) as api_client:
     api = apis.SignatureRequestApi(api_client)
-    
+
     data = models.SignatureRequestUpdateRequest(
         email_address = "john@example.com",
         signature_id = "78caf2a1d01cd39cea2bc1cbb340dac3",
     )
-    
+
     signature_request_id = "2f9781e1a8e2045224d808c153c2e1d3df6f8f2f"
 
     try:
