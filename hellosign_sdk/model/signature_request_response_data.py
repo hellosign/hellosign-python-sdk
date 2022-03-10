@@ -96,7 +96,7 @@ class SignatureRequestResponseData(ModelNormal):
             'api_id': (str,),  # noqa: E501
             'signature_id': (str,),  # noqa: E501
             'name': (str,),  # noqa: E501
-            'value': (bool, date, datetime, dict, float, int, list, str, none_type,),  # noqa: E501
+            'value': (str,),  # noqa: E501
             'required': (bool,),  # noqa: E501
             'type': (str,),  # noqa: E501
         }
@@ -159,7 +159,7 @@ class SignatureRequestResponseData(ModelNormal):
             api_id (str): The unique ID for this field.. [optional]  # noqa: E501
             signature_id (str): The ID of the signature to which this response is linked.. [optional]  # noqa: E501
             name (str): The name of the form field.. [optional]  # noqa: E501
-            value (bool, date, datetime, dict, float, int, list, str, none_type): The value of the form field.. [optional]  # noqa: E501
+            value (str): The value of the form field.. [optional]  # noqa: E501
             required (bool): A boolean value denoting if this field is required.. [optional]  # noqa: E501
             type (str): - `text`: A text input field - `checkbox`: A yes/no checkbox - `date_signed`: A date - `dropdown`: An input field for dropdowns - `initials`: An input field for initials - `radio`: An input field for radios - `signature`: A signature input field - `text-merge`: A text field that has default text set by the api - `checkbox-merge`: A checkbox field that has default value set by the api. [optional]  # noqa: E501
         """
@@ -246,7 +246,7 @@ class SignatureRequestResponseData(ModelNormal):
             api_id (str): The unique ID for this field.. [optional]  # noqa: E501
             signature_id (str): The ID of the signature to which this response is linked.. [optional]  # noqa: E501
             name (str): The name of the form field.. [optional]  # noqa: E501
-            value (bool, date, datetime, dict, float, int, list, str, none_type): The value of the form field.. [optional]  # noqa: E501
+            value (str): The value of the form field.. [optional]  # noqa: E501
             required (bool): A boolean value denoting if this field is required.. [optional]  # noqa: E501
             type (str): - `text`: A text input field - `checkbox`: A yes/no checkbox - `date_signed`: A date - `dropdown`: An input field for dropdowns - `initials`: An input field for initials - `radio`: An input field for radios - `signature`: A signature input field - `text-merge`: A text field that has default text set by the api - `checkbox-merge`: A checkbox field that has default value set by the api. [optional]  # noqa: E501
         """

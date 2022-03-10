@@ -9,7 +9,7 @@ WORKINGDIR="/app/python"
 docker run --rm \
   -v "${PWD}/:/local" \
   openapitools/openapi-generator-cli:v5.3.0 generate \
-    -i "/local/oas/openapi.yaml" \
+    -i "/local/oas/openapi-sdk.yaml" \
     -c "/local/openapi-config.yaml" \
     -t "/local/templates" \
     -o "/local/"
@@ -26,6 +26,9 @@ cp -r "${PWD}/oas/examples/"*.py "${PWD}/examples/"
 printf "Adding examples to Docs ...\n"
 bash "${PWD}/bin/php" ./bin/generate-examples.php
 
+printf "Install Python dependencies ...\n"
+bash "${PWD}/bin/python" pip install -r requirements.txt
+
 printf "Replacing strings ...\n"
 docker run -it --rm \
   -v "${PWD}:${WORKINGDIR}" \
@@ -37,5 +40,8 @@ docker run -it --rm \
   -v "${PWD}:${WORKINGDIR}" \
   -w "${WORKINGDIR}" \
   perl bash ./bin/scan_for
+
+printf "Running tests ...\n"
+bash "${PWD}/bin/python" python -m unittest discover tests
 
 printf "Success!\n"

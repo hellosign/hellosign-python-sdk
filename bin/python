@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+# Warning: You should run this from rootless Docker (or Podman, or other)
+
+set -e
+DIR=$(cd `dirname $0` && pwd)
+ROOT_DIR="${DIR}/.."
+WORKINGDIR="/app/python"
+
+docker run -it --rm \
+  -v "hellosign-sdk-pip-cache:/usr/local/lib/python3.10" \
+  -v "${PWD}:${WORKINGDIR}" \
+  -w "${WORKINGDIR}" \
+  python:3.10-buster "$@"
