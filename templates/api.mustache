@@ -2,8 +2,9 @@
 
 import re  # noqa: F401
 import sys  # noqa: F401
+from metadict import MetaDict
 
-from {{packageName}}.api_client import ApiClient, Endpoint as _Endpoint
+from {{packageName}}.api_client import ApiClient, ApiException, Endpoint as _Endpoint
 from {{packageName}}.model_utils import (  # noqa: F401
     check_allowed_values,
     check_validations,
@@ -315,7 +316,61 @@ class {{classname}}(object):
         kwargs['{{paramName}}'] = \
             {{paramName}}
 {{/requiredParams}}
+        {{^returnType}}
         return self.{{operationId}}_endpoint.call_with_http_info(**kwargs)
+        {{/returnType}}
+        {{#returnType}}
+        try:
+            return self.{{operationId}}_endpoint.call_with_http_info(**kwargs)
+        except ApiException as e:
+            {{#responses}}
+            {{#dataType}}
+            {{^isWildcard}}
+            {{^isRange}}
+            if e.status == {{code}}:
+                e.body = self.api_client.deserialize(
+                    response=MetaDict({'data': e.body}),
+                    response_type=[{{{dataType}}}],
+                    _check_type=True,
+                )
+
+                raise e
+            {{/isRange}}
+            {{/isWildcard}}
+            {{/dataType}}
+            {{/responses}}
+            {{#responses}}
+            {{#dataType}}
+            {{#isRange}}
+            range_code = "{{code}}"[0]
+            range_code_left = int(f"{range_code}00")
+            range_code_right = int(f"{range_code}99")
+
+            if range_code_left <= e.status <= range_code_right:
+                e.body = self.api_client.deserialize(
+                    response=MetaDict({'data': e.body}),
+                    response_type=[{{{dataType}}}],
+                    _check_type=True,
+                )
+
+                raise e
+            {{/isRange}}
+            {{/dataType}}
+            {{/responses}}
+            {{#responses}}
+            {{#dataType}}
+            {{#isWildcard}}
+            e.body = self.api_client.deserialize(
+                response=MetaDict({'data': e.body}),
+                response_type=[{{{dataType}}}],
+                _check_type=True,
+            )
+
+            raise e
+            {{/isWildcard}}
+            {{/dataType}}
+            {{/responses}}
+        {{/returnType}}
 
 {{/operation}}
 {{/operations}}

@@ -36,13 +36,14 @@ class MockPoolManager(object):
         self._expected_request = {}
         self._expected_response = {}
 
-    def expect_request(self, content_type, data=None, response=None):
+    def expect_request(self, content_type, data=None, response=None, status=200):
         self._expected_request = {
             'content_type': content_type,
             'data': data,
         }
         self._expected_response = {
             'data': response,
+            'status': status,
         }
 
     def request(self, *args, **kwargs):
@@ -53,7 +54,7 @@ class MockPoolManager(object):
             self._tc.assertFalse('encode_multipart' in kwargs.keys())
 
         return urllib3.HTTPResponse(
-            status=200,
+            status=self._expected_response['status'],
             preload_content=True,
             body=json.dumps(self._expected_response['data']).encode()
         )
