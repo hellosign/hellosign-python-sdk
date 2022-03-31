@@ -32,9 +32,9 @@ from hellosign_sdk.exceptions import ApiAttributeError
 
 def lazy_import():
     from hellosign_sdk.model.sub_bulk_signer_list_custom_field import SubBulkSignerListCustomField
-    from hellosign_sdk.model.sub_bulk_signer_list_signer import SubBulkSignerListSigner
+    from hellosign_sdk.model.sub_signature_request_template_signer import SubSignatureRequestTemplateSigner
     globals()['SubBulkSignerListCustomField'] = SubBulkSignerListCustomField
-    globals()['SubBulkSignerListSigner'] = SubBulkSignerListSigner
+    globals()['SubSignatureRequestTemplateSigner'] = SubSignatureRequestTemplateSigner
 
 
 class SubBulkSignerList(ModelNormal):
@@ -91,7 +91,7 @@ class SubBulkSignerList(ModelNormal):
         lazy_import()
         return {
             'custom_fields': ([SubBulkSignerListCustomField],),  # noqa: E501
-            'signers': ([SubBulkSignerListSigner],),  # noqa: E501
+            'signers': ([SubSignatureRequestTemplateSigner],),  # noqa: E501
         }
 
     @cached_property
@@ -146,7 +146,7 @@ class SubBulkSignerList(ModelNormal):
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
             custom_fields ([SubBulkSignerListCustomField]): An array of custom field values.. [optional]  # noqa: E501
-            signers ([SubBulkSignerListSigner]): Add Signers to your Templated-based Signature Request. Allows the requester to specify editor options when a preparing a document. [optional]  # noqa: E501
+            signers ([SubSignatureRequestTemplateSigner]): Add Signers to your Templated-based Signature Request. Allows the requester to specify editor options when a preparing a document.  Currently only templates with a single role are supported. All signers must have the same `role` value.. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -229,7 +229,7 @@ class SubBulkSignerList(ModelNormal):
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
             custom_fields ([SubBulkSignerListCustomField]): An array of custom field values.. [optional]  # noqa: E501
-            signers ([SubBulkSignerListSigner]): Add Signers to your Templated-based Signature Request. Allows the requester to specify editor options when a preparing a document. [optional]  # noqa: E501
+            signers ([SubSignatureRequestTemplateSigner]): Add Signers to your Templated-based Signature Request. Allows the requester to specify editor options when a preparing a document.  Currently only templates with a single role are supported. All signers must have the same `role` value.. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)

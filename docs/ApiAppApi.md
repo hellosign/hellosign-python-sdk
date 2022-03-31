@@ -4,17 +4,17 @@ All URIs are relative to *https://api.hellosign.com/v3*
 
 |Method | HTTP request | Description|
 |------------- | ------------- | -------------|
-|[```api_app_create```](ApiAppApi.md#api_app_create) | ```POST /api_app``` | Creates a new API App.|
-|[```api_app_delete```](ApiAppApi.md#api_app_delete) | ```DELETE /api_app/{client_id}``` | Deletes an API App.|
-|[```api_app_get```](ApiAppApi.md#api_app_get) | ```GET /api_app/{client_id}``` | Gets an API App.|
-|[```api_app_list```](ApiAppApi.md#api_app_list) | ```GET /api_app/list``` | Lists your API Apps.|
-|[```api_app_update```](ApiAppApi.md#api_app_update) | ```PUT /api_app/{client_id}``` | Updates an existing API App.|
+|[```api_app_create```](ApiAppApi.md#api_app_create) | ```POST /api_app``` | Create API App|
+|[```api_app_delete```](ApiAppApi.md#api_app_delete) | ```DELETE /api_app/{client_id}``` | Delete API App|
+|[```api_app_get```](ApiAppApi.md#api_app_get) | ```GET /api_app/{client_id}``` | Get API App|
+|[```api_app_list```](ApiAppApi.md#api_app_list) | ```GET /api_app/list``` | List API Apps|
+|[```api_app_update```](ApiAppApi.md#api_app_update) | ```PUT /api_app/{client_id}``` | Update API App|
 
 
 # ```api_app_create```
 > ```ApiAppGetResponse api_app_create(api_app_create_request)```
 
-Creates a new API App.
+Create API App
 
 Creates a new API App.
 
@@ -101,7 +101,7 @@ with ApiClient(configuration) as api_client:
 # ```api_app_delete```
 > ```api_app_delete(client_id)```
 
-Deletes an API App.
+Delete API App
 
 Deletes an API App. Can only be invoked for apps you own.
 
@@ -170,7 +170,7 @@ void (empty response body)
 # ```api_app_get```
 > ```ApiAppGetResponse api_app_get(client_id)```
 
-Gets an API App.
+Get API App
 
 Returns an object with information about an API App.
 
@@ -239,7 +239,7 @@ with ApiClient(configuration) as api_client:
 # ```api_app_list```
 > ```ApiAppListResponse api_app_list()```
 
-Lists your API Apps.
+List API Apps
 
 Returns a list of API Apps that are accessible by you. If you are on a team with an Admin or Developer role, this list will include apps owned by teammates.
 
@@ -313,7 +313,7 @@ with ApiClient(configuration) as api_client:
 # ```api_app_update```
 > ```ApiAppGetResponse api_app_update(client_id, api_app_update_request)```
 
-Updates an existing API App.
+Update API App
 
 Updates an existing API App. Can only be invoked for apps you own. Only the fields you provide will be updated. If you wish to clear an existing optional field, provide an empty string.
 

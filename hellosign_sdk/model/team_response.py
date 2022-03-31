@@ -32,9 +32,7 @@ from hellosign_sdk.exceptions import ApiAttributeError
 
 def lazy_import():
     from hellosign_sdk.model.account_response import AccountResponse
-    from hellosign_sdk.model.warning_response import WarningResponse
     globals()['AccountResponse'] = AccountResponse
-    globals()['WarningResponse'] = WarningResponse
 
 
 class TeamResponse(ModelNormal):
@@ -93,7 +91,6 @@ class TeamResponse(ModelNormal):
             'name': (str,),  # noqa: E501
             'accounts': ([AccountResponse],),  # noqa: E501
             'invited_accounts': ([AccountResponse],),  # noqa: E501
-            'warnings': ([WarningResponse],),  # noqa: E501
         }
 
     @cached_property
@@ -105,7 +102,6 @@ class TeamResponse(ModelNormal):
         'name': 'name',  # noqa: E501
         'accounts': 'accounts',  # noqa: E501
         'invited_accounts': 'invited_accounts',  # noqa: E501
-        'warnings': 'warnings',  # noqa: E501
     }
 
     read_only_vars = {
@@ -152,7 +148,6 @@ class TeamResponse(ModelNormal):
             name (str): The name of your Team. [optional]  # noqa: E501
             accounts ([AccountResponse]): [optional]  # noqa: E501
             invited_accounts ([AccountResponse]): A list of all Accounts that have an outstanding invitation to join your Team. Note that this response is a subset of the response parameters found in `GET /account`.. [optional]  # noqa: E501
-            warnings ([WarningResponse]): [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -237,7 +232,6 @@ class TeamResponse(ModelNormal):
             name (str): The name of your Team. [optional]  # noqa: E501
             accounts ([AccountResponse]): [optional]  # noqa: E501
             invited_accounts ([AccountResponse]): A list of all Accounts that have an outstanding invitation to join your Team. Note that this response is a subset of the response parameters found in `GET /account`.. [optional]  # noqa: E501
-            warnings ([WarningResponse]): [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)

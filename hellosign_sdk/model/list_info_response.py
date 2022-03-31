@@ -83,7 +83,6 @@ class ListInfoResponse(ModelNormal):
         """
         return {
             'num_pages': (int,),  # noqa: E501
-            'num_response': (int, none_type,),  # noqa: E501
             'num_results': (int, none_type,),  # noqa: E501
             'page': (int,),  # noqa: E501
             'page_size': (int,),  # noqa: E501
@@ -96,7 +95,6 @@ class ListInfoResponse(ModelNormal):
 
     attribute_map = {
         'num_pages': 'num_pages',  # noqa: E501
-        'num_response': 'num_response',  # noqa: E501
         'num_results': 'num_results',  # noqa: E501
         'page': 'page',  # noqa: E501
         'page_size': 'page_size',  # noqa: E501
@@ -144,7 +142,6 @@ class ListInfoResponse(ModelNormal):
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
             num_pages (int): Total number of pages available. [optional]  # noqa: E501
-            num_response (int, none_type): Total number of objects available. [optional]  # noqa: E501
             num_results (int, none_type): Total number of objects available. [optional]  # noqa: E501
             page (int): Number of the page being returned. [optional]  # noqa: E501
             page_size (int): Objects returned per page. [optional]  # noqa: E501
@@ -230,7 +227,6 @@ class ListInfoResponse(ModelNormal):
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
             num_pages (int): Total number of pages available. [optional]  # noqa: E501
-            num_response (int, none_type): Total number of objects available. [optional]  # noqa: E501
             num_results (int, none_type): Total number of objects available. [optional]  # noqa: E501
             page (int): Number of the page being returned. [optional]  # noqa: E501
             page_size (int): Objects returned per page. [optional]  # noqa: E501

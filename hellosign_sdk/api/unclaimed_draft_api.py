@@ -268,7 +268,7 @@ class UnclaimedDraftApi(object):
         unclaimed_draft_create_request,
         **kwargs
     ):
-        """Creates a new Draft that can be claimed using the claim URL.  # noqa: E501
+        """Create Unclaimed Draft  # noqa: E501
 
         Creates a new Draft that can be claimed using the claim URL. The first authenticated user to access the URL will claim the Draft and will be shown either the \"Sign and send\" or the \"Request signature\" page with the Draft loaded. Subsequent access to the claim URL will result in a 404.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
@@ -346,7 +346,7 @@ class UnclaimedDraftApi(object):
         unclaimed_draft_create_embedded_request,
         **kwargs
     ):
-        """Creates a new Draft that will be claimed for use in an embedded iFrame.  # noqa: E501
+        """Create Embedded Unclaimed Draft  # noqa: E501
 
         Creates a new Draft that can be claimed and used in an embedded iFrame. The first authenticated user to access the URL will claim the Draft and will be shown the \"Request signature\" page with the Draft loaded. Subsequent access to the claim URL will result in a `404`. For this embedded endpoint the `requester_email_address` parameter is required.  **NOTE**: Embedded unclaimed drafts can only be accessed in embedded iFrames whereas normal drafts can be used and accessed on HelloSign.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
@@ -424,7 +424,7 @@ class UnclaimedDraftApi(object):
         unclaimed_draft_create_embedded_with_template_request,
         **kwargs
     ):
-        """Creates a new Draft using existing template(s) that will be claimed for use in an embedded iFrame.  # noqa: E501
+        """Create Embedded Unclaimed Draft with Template  # noqa: E501
 
         Creates a new Draft with a previously saved template(s) that can be claimed and used in an embedded iFrame. The first authenticated user to access the URL will claim the Draft and will be shown the \"Request signature\" page with the Draft loaded. Subsequent access to the claim URL will result in a `404`. For this embedded endpoint the `requester_email_address` parameter is required.  **NOTE**: Embedded unclaimed drafts can only be accessed in embedded iFrames whereas normal drafts can be used and accessed on HelloSign.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
@@ -503,7 +503,7 @@ class UnclaimedDraftApi(object):
         unclaimed_draft_edit_and_resend_request,
         **kwargs
     ):
-        """Creates a new signature request from an embedded request that can be edited prior to being sent.  # noqa: E501
+        """Edit and Resend Unclaimed Draft  # noqa: E501
 
         Creates a new signature request from an embedded request that can be edited prior to being sent to the recipients. Parameter `test_mode` can be edited prior to request. Signers can be edited in embedded editor. Requester's email address will remain unchanged if `requester_email_address` parameter is not set.  **NOTE**: Embedded unclaimed drafts can only be accessed in embedded iFrames whereas normal drafts can be used and accessed on HelloSign.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an

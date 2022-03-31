@@ -14,7 +14,7 @@ configuration = Configuration(
 with ApiClient(configuration) as api_client:
     api = apis.UnclaimedDraftApi(api_client)
 
-    signer_1 = models.SubUnclaimedDraftEmbeddedTemplateSigner(
+    signer_1 = models.SubUnclaimedDraftTemplateSigner(
         role="Client",
         name="George",
         email_address="george@example.com",

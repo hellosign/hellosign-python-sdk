@@ -4,18 +4,18 @@ All URIs are relative to *https://api.hellosign.com/v3*
 
 |Method | HTTP request | Description|
 |------------- | ------------- | -------------|
-|[```team_add_member```](TeamApi.md#team_add_member) | ```PUT /team/add_member``` | Adds or invites a user to your Team.|
-|[```team_create```](TeamApi.md#team_create) | ```POST /team/create``` | Creates a new Team.|
-|[```team_delete```](TeamApi.md#team_delete) | ```DELETE /team/destroy``` | Deletes your Team.|
-|[```team_get```](TeamApi.md#team_get) | ```GET /team``` | Gets your Team and a list of its members.|
-|[```team_remove_member```](TeamApi.md#team_remove_member) | ```POST /team/remove_member``` | Removes a user from your Team.|
-|[```team_update```](TeamApi.md#team_update) | ```PUT /team``` | Updates a Team&#39;s name.|
+|[```team_add_member```](TeamApi.md#team_add_member) | ```PUT /team/add_member``` | Add User to Team|
+|[```team_create```](TeamApi.md#team_create) | ```POST /team/create``` | Create Team|
+|[```team_delete```](TeamApi.md#team_delete) | ```DELETE /team/destroy``` | Delete Team|
+|[```team_get```](TeamApi.md#team_get) | ```GET /team``` | Get Team|
+|[```team_remove_member```](TeamApi.md#team_remove_member) | ```POST /team/remove_member``` | Remove User from Team|
+|[```team_update```](TeamApi.md#team_update) | ```PUT /team``` | Update Team|
 
 
 # ```team_add_member```
 > ```TeamGetResponse team_add_member(team_add_member_request)```
 
-Adds or invites a user to your Team.
+Add User to Team
 
 Invites a user (specified using the `email_address` parameter) to your Team. If the user does not currently have a HelloSign Account, a new one will be created for them. If a user is already a part of another Team, a `team_invite_failed` error will be returned.
 
@@ -86,7 +86,7 @@ with ApiClient(configuration) as api_client:
 # ```team_create```
 > ```TeamGetResponse team_create(team_create_request)```
 
-Creates a new Team.
+Create Team
 
 Creates a new Team and makes you a member. You must not currently belong to a Team to invoke.
 
@@ -157,7 +157,7 @@ with ApiClient(configuration) as api_client:
 # ```team_delete```
 > ```team_delete()```
 
-Deletes your Team.
+Delete Team
 
 Deletes your Team. Can only be invoked when you have a Team with only one member (yourself).
 
@@ -222,7 +222,7 @@ void (empty response body)
 # ```team_get```
 > ```TeamGetResponse team_get()```
 
-Gets your Team and a list of its members.
+Get Team
 
 Returns information about your Team as well as a list of its members. If you do not belong to a Team, a 404 error with an error_name of \"not_found\" will be returned.
 
@@ -288,7 +288,7 @@ This endpoint does not need any parameter.
 # ```team_remove_member```
 > ```TeamGetResponse team_remove_member(team_remove_member_request)```
 
-Removes a user from your Team.
+Remove User from Team
 
 Removes the provided user Account from your Team. If the Account had an outstanding invitation to your Team, the invitation will be expired. If you choose to transfer documents from the removed Account to an Account provided in the `new_owner_email_address` parameter (available only for Enterprise plans), the response status code will be 201, which indicates that your request has been queued but not fully executed.
 
@@ -360,7 +360,7 @@ with ApiClient(configuration) as api_client:
 # ```team_update```
 > ```TeamGetResponse team_update(team_update_request)```
 
-Updates a Team's name.
+Update Team
 
 Updates the name of your Team.
 

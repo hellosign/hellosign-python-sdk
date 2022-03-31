@@ -4,16 +4,16 @@ All URIs are relative to *https://api.hellosign.com/v3*
 
 |Method | HTTP request | Description|
 |------------- | ------------- | -------------|
-|[```account_create```](AccountApi.md#account_create) | ```POST /account/create``` | Signs up for a new HelloSign Account.|
-|[```account_get```](AccountApi.md#account_get) | ```GET /account``` | Returns your Account settings.|
-|[```account_update```](AccountApi.md#account_update) | ```PUT /account``` | Updates your Account&#39;s settings.|
-|[```account_verify```](AccountApi.md#account_verify) | ```POST /account/verify``` | Verify whether a HelloSign Account exists.|
+|[```account_create```](AccountApi.md#account_create) | ```POST /account/create``` | Create Account|
+|[```account_get```](AccountApi.md#account_get) | ```GET /account``` | Get Account|
+|[```account_update```](AccountApi.md#account_update) | ```PUT /account``` | Update Account|
+|[```account_verify```](AccountApi.md#account_verify) | ```POST /account/verify``` | Verify Account|
 
 
 # ```account_create```
 > ```AccountCreateResponse account_create(account_create_request)```
 
-Signs up for a new HelloSign Account.
+Create Account
 
 Creates a new HelloSign Account that is associated with the specified `email_address`.
 
@@ -84,7 +84,7 @@ with ApiClient(configuration) as api_client:
 # ```account_get```
 > ```AccountGetResponse account_get()```
 
-Returns your Account settings.
+Get Account
 
 Returns the properties and settings of your Account.
 
@@ -149,7 +149,7 @@ This endpoint does not need any parameter.
 # ```account_update```
 > ```AccountGetResponse account_update(account_update_request)```
 
-Updates your Account's settings.
+Update Account
 
 Updates the properties and settings of your Account.
 
@@ -220,7 +220,7 @@ with ApiClient(configuration) as api_client:
 # ```account_verify```
 > ```AccountVerifyResponse account_verify(account_verify_request)```
 
-Verify whether a HelloSign Account exists.
+Verify Account
 
 Verifies whether an HelloSign Account exists for the given email address.  **NOTE** This method is restricted to paid API users.
 

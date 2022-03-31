@@ -14,13 +14,13 @@ configuration = Configuration(
 with ApiClient(configuration) as api_client:
     api = apis.SignatureRequestApi(api_client)
 
-    signer_1 = models.SubSignatureRequestEmbeddedSigner(
+    signer_1 = models.SubSignatureRequestSigner(
         email_address="jack@example.com",
         name="Jack",
         order=0,
     )
 
-    signer_2 = models.SubSignatureRequestEmbeddedSigner(
+    signer_2 = models.SubSignatureRequestSigner(
         email_address="jill@example.com",
         name="Jill",
         order=1,

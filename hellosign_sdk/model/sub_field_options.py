@@ -113,7 +113,7 @@ class SubFieldOptions(ModelNormal):
         """SubFieldOptions - a model defined in OpenAPI
 
         Args:
-            date_format (str): Allows requester to specify the date format (see list of allowed [formats](https://app.hellosign.com/api/reference#DateFormats))  **Note**: Only available for Platinum and higher.
+            date_format (str): Allows requester to specify the date format (see list of allowed [formats](https://app.hellosign.com/api/reference#DateFormats))  **Note**: Only available for Premium and higher.
 
         Keyword Args:
             _check_type (bool): if True, values for parameters in openapi_types
@@ -198,7 +198,7 @@ class SubFieldOptions(ModelNormal):
         """SubFieldOptions - a model defined in OpenAPI
 
         Args:
-            date_format (str): Allows requester to specify the date format (see list of allowed [formats](https://app.hellosign.com/api/reference#DateFormats))  **Note**: Only available for Platinum and higher.
+            date_format (str): Allows requester to specify the date format (see list of allowed [formats](https://app.hellosign.com/api/reference#DateFormats))  **Note**: Only available for Premium and higher.
 
         Keyword Args:
             _check_type (bool): if True, values for parameters in openapi_types

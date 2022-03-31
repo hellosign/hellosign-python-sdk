@@ -349,7 +349,7 @@ class TeamApi(object):
         team_add_member_request,
         **kwargs
     ):
-        """Adds or invites a user to your Team.  # noqa: E501
+        """Add User to Team  # noqa: E501
 
         Invites a user (specified using the `email_address` parameter) to your Team. If the user does not currently have a HelloSign Account, a new one will be created for them. If a user is already a part of another Team, a `team_invite_failed` error will be returned.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
@@ -427,7 +427,7 @@ class TeamApi(object):
         team_create_request,
         **kwargs
     ):
-        """Creates a new Team.  # noqa: E501
+        """Create Team  # noqa: E501
 
         Creates a new Team and makes you a member. You must not currently belong to a Team to invoke.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
@@ -504,7 +504,7 @@ class TeamApi(object):
         self,
         **kwargs
     ):
-        """Deletes your Team.  # noqa: E501
+        """Delete Team  # noqa: E501
 
         Deletes your Team. Can only be invoked when you have a Team with only one member (yourself).  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
@@ -577,7 +577,7 @@ class TeamApi(object):
         self,
         **kwargs
     ):
-        """Gets your Team and a list of its members.  # noqa: E501
+        """Get Team  # noqa: E501
 
         Returns information about your Team as well as a list of its members. If you do not belong to a Team, a 404 error with an error_name of \"not_found\" will be returned.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
@@ -651,7 +651,7 @@ class TeamApi(object):
         team_remove_member_request,
         **kwargs
     ):
-        """Removes a user from your Team.  # noqa: E501
+        """Remove User from Team  # noqa: E501
 
         Removes the provided user Account from your Team. If the Account had an outstanding invitation to your Team, the invitation will be expired. If you choose to transfer documents from the removed Account to an Account provided in the `new_owner_email_address` parameter (available only for Enterprise plans), the response status code will be 201, which indicates that your request has been queued but not fully executed.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
@@ -729,7 +729,7 @@ class TeamApi(object):
         team_update_request,
         **kwargs
     ):
-        """Updates a Team's name.  # noqa: E501
+        """Update Team  # noqa: E501
 
         Updates the name of your Team.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an

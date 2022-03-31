@@ -4,13 +4,13 @@ All URIs are relative to *https://api.hellosign.com/v3*
 
 |Method | HTTP request | Description|
 |------------- | ------------- | -------------|
-|[```report_create```](ReportApi.md#report_create) | ```POST /report/create``` | Creates one or more report(s).|
+|[```report_create```](ReportApi.md#report_create) | ```POST /report/create``` | Create Report|
 
 
 # ```report_create```
 > ```ReportCreateResponse report_create(report_create_request)```
 
-Creates one or more report(s).
+Create Report
 
 Request the creation of one or more report(s).  When the report(s) have been generated, you will receive an email (one per requested report type) containing a link to download the report as a CSV file. The requested date range may be up to 12 months in duration, and `start_date` must not be more than 10 years in the past.
 

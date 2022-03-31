@@ -39,7 +39,7 @@ def lazy_import():
     from hellosign_sdk.model.sub_form_field_rule import SubFormFieldRule
     from hellosign_sdk.model.sub_form_fields_per_document_base import SubFormFieldsPerDocumentBase
     from hellosign_sdk.model.sub_signing_options import SubSigningOptions
-    from hellosign_sdk.model.sub_unclaimed_draft_embedded_signer import SubUnclaimedDraftEmbeddedSigner
+    from hellosign_sdk.model.sub_unclaimed_draft_signer import SubUnclaimedDraftSigner
     globals()['SubAttachment'] = SubAttachment
     globals()['SubCustomField'] = SubCustomField
     globals()['SubEditorOptions'] = SubEditorOptions
@@ -48,7 +48,7 @@ def lazy_import():
     globals()['SubFormFieldRule'] = SubFormFieldRule
     globals()['SubFormFieldsPerDocumentBase'] = SubFormFieldsPerDocumentBase
     globals()['SubSigningOptions'] = SubSigningOptions
-    globals()['SubUnclaimedDraftEmbeddedSigner'] = SubUnclaimedDraftEmbeddedSigner
+    globals()['SubUnclaimedDraftSigner'] = SubUnclaimedDraftSigner
 
 
 class UnclaimedDraftCreateEmbeddedRequest(ModelNormal):
@@ -137,7 +137,7 @@ class UnclaimedDraftCreateEmbeddedRequest(ModelNormal):
             'message': (str,),  # noqa: E501
             'metadata': ({str: (bool, date, datetime, dict, float, int, list, str, none_type)},),  # noqa: E501
             'show_preview': (bool,),  # noqa: E501
-            'signers': ([SubUnclaimedDraftEmbeddedSigner],),  # noqa: E501
+            'signers': ([SubUnclaimedDraftSigner],),  # noqa: E501
             'signing_options': (SubSigningOptions,),  # noqa: E501
             'signing_redirect_url': (str,),  # noqa: E501
             'skip_me_now': (bool,),  # noqa: E501
@@ -250,7 +250,7 @@ class UnclaimedDraftCreateEmbeddedRequest(ModelNormal):
             message (str): The custom message in the email that will be sent to the signers.. [optional]  # noqa: E501
             metadata ({str: (bool, date, datetime, dict, float, int, list, str, none_type)}): Key-value data that should be attached to the signature request. This metadata is included in all API responses and events involving the signature request. For example, use the metadata field to store a signer's order number for look up when receiving events for the signature request.  Each request can include up to 10 metadata keys, with key names up to 40 characters long and values up to 1000 characters long.. [optional]  # noqa: E501
             show_preview (bool): This allows the requester to enable the editor/preview experience.  - `show_preview=true`: Allows requesters to enable the editor/preview experience. - `show_preview=false`: Allows requesters to disable the editor/preview experience.. [optional]  # noqa: E501
-            signers ([SubUnclaimedDraftEmbeddedSigner]): Add Signers to your Unclaimed Draft Signature Request.. [optional]  # noqa: E501
+            signers ([SubUnclaimedDraftSigner]): Add Signers to your Unclaimed Draft Signature Request.. [optional]  # noqa: E501
             signing_options (SubSigningOptions): [optional]  # noqa: E501
             signing_redirect_url (str): The URL you want signers redirected to after they successfully sign.. [optional]  # noqa: E501
             skip_me_now (bool): Disables the \"Me (Now)\" option for the person preparing the document. Does not work with type `send_document`. Defaults to `false`.. [optional] if omitted the server will use the default value of False  # noqa: E501
@@ -365,7 +365,7 @@ class UnclaimedDraftCreateEmbeddedRequest(ModelNormal):
             message (str): The custom message in the email that will be sent to the signers.. [optional]  # noqa: E501
             metadata ({str: (bool, date, datetime, dict, float, int, list, str, none_type)}): Key-value data that should be attached to the signature request. This metadata is included in all API responses and events involving the signature request. For example, use the metadata field to store a signer's order number for look up when receiving events for the signature request.  Each request can include up to 10 metadata keys, with key names up to 40 characters long and values up to 1000 characters long.. [optional]  # noqa: E501
             show_preview (bool): This allows the requester to enable the editor/preview experience.  - `show_preview=true`: Allows requesters to enable the editor/preview experience. - `show_preview=false`: Allows requesters to disable the editor/preview experience.. [optional]  # noqa: E501
-            signers ([SubUnclaimedDraftEmbeddedSigner]): Add Signers to your Unclaimed Draft Signature Request.. [optional]  # noqa: E501
+            signers ([SubUnclaimedDraftSigner]): Add Signers to your Unclaimed Draft Signature Request.. [optional]  # noqa: E501
             signing_options (SubSigningOptions): [optional]  # noqa: E501
             signing_redirect_url (str): The URL you want signers redirected to after they successfully sign.. [optional]  # noqa: E501
             skip_me_now (bool): Disables the \"Me (Now)\" option for the person preparing the document. Does not work with type `send_document`. Defaults to `false`.. [optional] if omitted the server will use the default value of False  # noqa: E501

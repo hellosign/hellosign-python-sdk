@@ -34,11 +34,9 @@ def lazy_import():
     from hellosign_sdk.model.signature_request_response_custom_field import SignatureRequestResponseCustomField
     from hellosign_sdk.model.signature_request_response_data import SignatureRequestResponseData
     from hellosign_sdk.model.signature_request_response_signatures import SignatureRequestResponseSignatures
-    from hellosign_sdk.model.warning_response import WarningResponse
     globals()['SignatureRequestResponseCustomField'] = SignatureRequestResponseCustomField
     globals()['SignatureRequestResponseData'] = SignatureRequestResponseData
     globals()['SignatureRequestResponseSignatures'] = SignatureRequestResponseSignatures
-    globals()['WarningResponse'] = WarningResponse
 
 
 class SignatureRequestResponse(ModelNormal):
@@ -115,7 +113,6 @@ class SignatureRequestResponse(ModelNormal):
             'custom_fields': ([SignatureRequestResponseCustomField], none_type,),  # noqa: E501
             'response_data': ([SignatureRequestResponseData], none_type,),  # noqa: E501
             'signatures': ([SignatureRequestResponseSignatures],),  # noqa: E501
-            'warnings': ([WarningResponse],),  # noqa: E501
         }
 
     @cached_property
@@ -145,7 +142,6 @@ class SignatureRequestResponse(ModelNormal):
         'custom_fields': 'custom_fields',  # noqa: E501
         'response_data': 'response_data',  # noqa: E501
         'signatures': 'signatures',  # noqa: E501
-        'warnings': 'warnings',  # noqa: E501
     }
 
     read_only_vars = {
@@ -210,7 +206,6 @@ class SignatureRequestResponse(ModelNormal):
             custom_fields ([SignatureRequestResponseCustomField], none_type): [optional]  # noqa: E501
             response_data ([SignatureRequestResponseData], none_type): [optional]  # noqa: E501
             signatures ([SignatureRequestResponseSignatures]): [optional]  # noqa: E501
-            warnings ([WarningResponse]): [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -313,7 +308,6 @@ class SignatureRequestResponse(ModelNormal):
             custom_fields ([SignatureRequestResponseCustomField], none_type): [optional]  # noqa: E501
             response_data ([SignatureRequestResponseData], none_type): [optional]  # noqa: E501
             signatures ([SignatureRequestResponseSignatures]): [optional]  # noqa: E501
-            warnings ([WarningResponse]): [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)

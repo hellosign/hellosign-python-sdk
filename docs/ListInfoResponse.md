@@ -7,7 +7,6 @@
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | `num_pages` | ```int``` |  Total number of pages available  |  |
-| `num_response` | ```int, none_type``` |  Total number of objects available  |  |
 | `num_results` | ```int, none_type``` |  Total number of objects available  |  |
 | `page` | ```int``` |  Number of the page being returned  |  |
 | `page_size` | ```int``` |  Objects returned per page  |  |

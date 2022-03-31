@@ -35,6 +35,7 @@ docs/EmbeddedEditUrlResponseEmbedded.md
 docs/EmbeddedSignUrlResponse.md
 docs/EmbeddedSignUrlResponseEmbedded.md
 docs/ErrorResponse.md
+docs/ErrorResponseError.md
 docs/EventCallbackAccountRequest.md
 docs/EventCallbackAccountRequestPayload.md
 docs/EventCallbackApiAppRequest.md
@@ -69,7 +70,6 @@ docs/SignatureRequestUpdateRequest.md
 docs/SubAttachment.md
 docs/SubBulkSignerList.md
 docs/SubBulkSignerListCustomField.md
-docs/SubBulkSignerListSigner.md
 docs/SubCC.md
 docs/SubCustomField.md
 docs/SubEditorOptions.md
@@ -93,15 +93,12 @@ docs/SubFormFieldsPerDocumentTypeEnum.md
 docs/SubMergeField.md
 docs/SubOAuth.md
 docs/SubOptions.md
-docs/SubSignatureRequestEmbeddedSigner.md
-docs/SubSignatureRequestEmbeddedTemplateSigner.md
 docs/SubSignatureRequestSigner.md
 docs/SubSignatureRequestTemplateSigner.md
 docs/SubSigningOptions.md
 docs/SubTemplateRole.md
-docs/SubUnclaimedDraftEmbeddedSigner.md
-docs/SubUnclaimedDraftEmbeddedTemplateSigner.md
 docs/SubUnclaimedDraftSigner.md
+docs/SubUnclaimedDraftTemplateSigner.md
 docs/SubWhiteLabelingOptions.md
 docs/TeamAddMemberRequest.md
 docs/TeamApi.md
@@ -188,6 +185,7 @@ hellosign_sdk/model/embedded_edit_url_response_embedded.py
 hellosign_sdk/model/embedded_sign_url_response.py
 hellosign_sdk/model/embedded_sign_url_response_embedded.py
 hellosign_sdk/model/error_response.py
+hellosign_sdk/model/error_response_error.py
 hellosign_sdk/model/event_callback_account_request.py
 hellosign_sdk/model/event_callback_account_request_payload.py
 hellosign_sdk/model/event_callback_api_app_request.py
@@ -219,7 +217,6 @@ hellosign_sdk/model/signature_request_update_request.py
 hellosign_sdk/model/sub_attachment.py
 hellosign_sdk/model/sub_bulk_signer_list.py
 hellosign_sdk/model/sub_bulk_signer_list_custom_field.py
-hellosign_sdk/model/sub_bulk_signer_list_signer.py
 hellosign_sdk/model/sub_cc.py
 hellosign_sdk/model/sub_custom_field.py
 hellosign_sdk/model/sub_editor_options.py
@@ -243,15 +240,12 @@ hellosign_sdk/model/sub_form_fields_per_document_type_enum.py
 hellosign_sdk/model/sub_merge_field.py
 hellosign_sdk/model/sub_o_auth.py
 hellosign_sdk/model/sub_options.py
-hellosign_sdk/model/sub_signature_request_embedded_signer.py
-hellosign_sdk/model/sub_signature_request_embedded_template_signer.py
 hellosign_sdk/model/sub_signature_request_signer.py
 hellosign_sdk/model/sub_signature_request_template_signer.py
 hellosign_sdk/model/sub_signing_options.py
 hellosign_sdk/model/sub_template_role.py
-hellosign_sdk/model/sub_unclaimed_draft_embedded_signer.py
-hellosign_sdk/model/sub_unclaimed_draft_embedded_template_signer.py
 hellosign_sdk/model/sub_unclaimed_draft_signer.py
+hellosign_sdk/model/sub_unclaimed_draft_template_signer.py
 hellosign_sdk/model/sub_white_labeling_options.py
 hellosign_sdk/model/team_add_member_request.py
 hellosign_sdk/model/team_create_request.py

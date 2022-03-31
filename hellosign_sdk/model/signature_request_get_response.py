@@ -32,7 +32,9 @@ from hellosign_sdk.exceptions import ApiAttributeError
 
 def lazy_import():
     from hellosign_sdk.model.signature_request_response import SignatureRequestResponse
+    from hellosign_sdk.model.warning_response import WarningResponse
     globals()['SignatureRequestResponse'] = SignatureRequestResponse
+    globals()['WarningResponse'] = WarningResponse
 
 
 class SignatureRequestGetResponse(ModelNormal):
@@ -89,6 +91,7 @@ class SignatureRequestGetResponse(ModelNormal):
         lazy_import()
         return {
             'signature_request': (SignatureRequestResponse,),  # noqa: E501
+            'warnings': ([WarningResponse],),  # noqa: E501
         }
 
     @cached_property
@@ -98,6 +101,7 @@ class SignatureRequestGetResponse(ModelNormal):
 
     attribute_map = {
         'signature_request': 'signature_request',  # noqa: E501
+        'warnings': 'warnings',  # noqa: E501
     }
 
     read_only_vars = {
@@ -142,6 +146,7 @@ class SignatureRequestGetResponse(ModelNormal):
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
             signature_request (SignatureRequestResponse): [optional]  # noqa: E501
+            warnings ([WarningResponse]): [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -224,6 +229,7 @@ class SignatureRequestGetResponse(ModelNormal):
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
             signature_request (SignatureRequestResponse): [optional]  # noqa: E501
+            warnings ([WarningResponse]): [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)

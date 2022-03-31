@@ -36,13 +36,13 @@ def lazy_import():
     from hellosign_sdk.model.sub_editor_options import SubEditorOptions
     from hellosign_sdk.model.sub_field_options import SubFieldOptions
     from hellosign_sdk.model.sub_signing_options import SubSigningOptions
-    from hellosign_sdk.model.sub_unclaimed_draft_embedded_template_signer import SubUnclaimedDraftEmbeddedTemplateSigner
+    from hellosign_sdk.model.sub_unclaimed_draft_template_signer import SubUnclaimedDraftTemplateSigner
     globals()['SubCC'] = SubCC
     globals()['SubCustomField'] = SubCustomField
     globals()['SubEditorOptions'] = SubEditorOptions
     globals()['SubFieldOptions'] = SubFieldOptions
     globals()['SubSigningOptions'] = SubSigningOptions
-    globals()['SubUnclaimedDraftEmbeddedTemplateSigner'] = SubUnclaimedDraftEmbeddedTemplateSigner
+    globals()['SubUnclaimedDraftTemplateSigner'] = SubUnclaimedDraftTemplateSigner
 
 
 class UnclaimedDraftCreateEmbeddedWithTemplateRequest(ModelNormal):
@@ -127,7 +127,7 @@ class UnclaimedDraftCreateEmbeddedWithTemplateRequest(ModelNormal):
             'preview_only': (bool,),  # noqa: E501
             'requesting_redirect_url': (str,),  # noqa: E501
             'show_preview': (bool,),  # noqa: E501
-            'signers': ([SubUnclaimedDraftEmbeddedTemplateSigner],),  # noqa: E501
+            'signers': ([SubUnclaimedDraftTemplateSigner],),  # noqa: E501
             'signing_options': (SubSigningOptions,),  # noqa: E501
             'signing_redirect_url': (str,),  # noqa: E501
             'skip_me_now': (bool,),  # noqa: E501
@@ -230,7 +230,7 @@ class UnclaimedDraftCreateEmbeddedWithTemplateRequest(ModelNormal):
             preview_only (bool): This allows the requester to enable the preview experience experience.  - `preview_only=true`: Allows requesters to enable the preview only experience. - `preview_only=false`: Allows requesters to disable the preview only experience.  **Note**: This parameter overwrites `show_preview=1` (if set).. [optional] if omitted the server will use the default value of False  # noqa: E501
             requesting_redirect_url (str): The URL you want signers redirected to after they successfully request a signature.. [optional]  # noqa: E501
             show_preview (bool): This allows the requester to enable the editor/preview experience.  - `show_preview=true`: Allows requesters to enable the editor/preview experience. - `show_preview=false`: Allows requesters to disable the editor/preview experience.. [optional] if omitted the server will use the default value of False  # noqa: E501
-            signers ([SubUnclaimedDraftEmbeddedTemplateSigner]): Add Signers to your Templated-based Signature Request.. [optional]  # noqa: E501
+            signers ([SubUnclaimedDraftTemplateSigner]): Add Signers to your Templated-based Signature Request.. [optional]  # noqa: E501
             signing_options (SubSigningOptions): [optional]  # noqa: E501
             signing_redirect_url (str): The URL you want signers redirected to after they successfully sign.. [optional]  # noqa: E501
             skip_me_now (bool): Disables the \"Me (Now)\" option for the person preparing the document. Does not work with type `send_document`. Defaults to `false`.. [optional] if omitted the server will use the default value of False  # noqa: E501
@@ -341,7 +341,7 @@ class UnclaimedDraftCreateEmbeddedWithTemplateRequest(ModelNormal):
             preview_only (bool): This allows the requester to enable the preview experience experience.  - `preview_only=true`: Allows requesters to enable the preview only experience. - `preview_only=false`: Allows requesters to disable the preview only experience.  **Note**: This parameter overwrites `show_preview=1` (if set).. [optional] if omitted the server will use the default value of False  # noqa: E501
             requesting_redirect_url (str): The URL you want signers redirected to after they successfully request a signature.. [optional]  # noqa: E501
             show_preview (bool): This allows the requester to enable the editor/preview experience.  - `show_preview=true`: Allows requesters to enable the editor/preview experience. - `show_preview=false`: Allows requesters to disable the editor/preview experience.. [optional] if omitted the server will use the default value of False  # noqa: E501
-            signers ([SubUnclaimedDraftEmbeddedTemplateSigner]): Add Signers to your Templated-based Signature Request.. [optional]  # noqa: E501
+            signers ([SubUnclaimedDraftTemplateSigner]): Add Signers to your Templated-based Signature Request.. [optional]  # noqa: E501
             signing_options (SubSigningOptions): [optional]  # noqa: E501
             signing_redirect_url (str): The URL you want signers redirected to after they successfully sign.. [optional]  # noqa: E501
             skip_me_now (bool): Disables the \"Me (Now)\" option for the person preparing the document. Does not work with type `send_document`. Defaults to `false`.. [optional] if omitted the server will use the default value of False  # noqa: E501

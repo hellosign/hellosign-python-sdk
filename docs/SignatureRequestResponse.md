@@ -27,7 +27,6 @@
 | `custom_fields` | [```[SignatureRequestResponseCustomField], none_type```](SignatureRequestResponseCustomField.md) |    |  |
 | `response_data` | [```[SignatureRequestResponseData], none_type```](SignatureRequestResponseData.md) |    |  |
 | `signatures` | [```[SignatureRequestResponseSignatures]```](SignatureRequestResponseSignatures.md) |    |  |
-| `warnings` | [```[WarningResponse]```](WarningResponse.md) |    |  |
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

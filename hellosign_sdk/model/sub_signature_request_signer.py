@@ -88,7 +88,6 @@ class SubSignatureRequestSigner(ModelNormal):
         return {
             'name': (str,),  # noqa: E501
             'email_address': (str,),  # noqa: E501
-            'group': (str,),  # noqa: E501
             'order': (int,),  # noqa: E501
             'pin': (str,),  # noqa: E501
             'sms_phone_number': (str,),  # noqa: E501
@@ -102,7 +101,6 @@ class SubSignatureRequestSigner(ModelNormal):
     attribute_map = {
         'name': 'name',  # noqa: E501
         'email_address': 'email_address',  # noqa: E501
-        'group': 'group',  # noqa: E501
         'order': 'order',  # noqa: E501
         'pin': 'pin',  # noqa: E501
         'sms_phone_number': 'sms_phone_number',  # noqa: E501
@@ -153,10 +151,9 @@ class SubSignatureRequestSigner(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            group (str): Name of group. Use this value across multiple signers to group them together. Any of the signers is eligible to sign for the entire group.  Grouped signers will not use the `order`, `pin`, or `sms_phone_number` fields.. [optional]  # noqa: E501
             order (int): The order the signer is required to sign in.. [optional]  # noqa: E501
             pin (str): The 4- to 12-character access code that will secure this signer's signature page.. [optional]  # noqa: E501
-            sms_phone_number (str): An E.164 formatted phone number that will receive a code via SMS to access this signer's signature page.  **Note**: Not available in test mode and requires a Platinum plan or higher.. [optional]  # noqa: E501
+            sms_phone_number (str): An E.164 formatted phone number that will receive a code via SMS to access this signer's signature page.  **Note**: Not available in test mode and requires a Standard plan or higher.. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -244,10 +241,9 @@ class SubSignatureRequestSigner(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            group (str): Name of group. Use this value across multiple signers to group them together. Any of the signers is eligible to sign for the entire group.  Grouped signers will not use the `order`, `pin`, or `sms_phone_number` fields.. [optional]  # noqa: E501
             order (int): The order the signer is required to sign in.. [optional]  # noqa: E501
             pin (str): The 4- to 12-character access code that will secure this signer's signature page.. [optional]  # noqa: E501
-            sms_phone_number (str): An E.164 formatted phone number that will receive a code via SMS to access this signer's signature page.  **Note**: Not available in test mode and requires a Platinum plan or higher.. [optional]  # noqa: E501
+            sms_phone_number (str): An E.164 formatted phone number that will receive a code via SMS to access this signer's signature page.  **Note**: Not available in test mode and requires a Standard plan or higher.. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)

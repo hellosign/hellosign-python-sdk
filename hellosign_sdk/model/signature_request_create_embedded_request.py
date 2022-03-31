@@ -37,7 +37,7 @@ def lazy_import():
     from hellosign_sdk.model.sub_form_field_group import SubFormFieldGroup
     from hellosign_sdk.model.sub_form_field_rule import SubFormFieldRule
     from hellosign_sdk.model.sub_form_fields_per_document_base import SubFormFieldsPerDocumentBase
-    from hellosign_sdk.model.sub_signature_request_embedded_signer import SubSignatureRequestEmbeddedSigner
+    from hellosign_sdk.model.sub_signature_request_signer import SubSignatureRequestSigner
     from hellosign_sdk.model.sub_signing_options import SubSigningOptions
     globals()['SubAttachment'] = SubAttachment
     globals()['SubCustomField'] = SubCustomField
@@ -45,7 +45,7 @@ def lazy_import():
     globals()['SubFormFieldGroup'] = SubFormFieldGroup
     globals()['SubFormFieldRule'] = SubFormFieldRule
     globals()['SubFormFieldsPerDocumentBase'] = SubFormFieldsPerDocumentBase
-    globals()['SubSignatureRequestEmbeddedSigner'] = SubSignatureRequestEmbeddedSigner
+    globals()['SubSignatureRequestSigner'] = SubSignatureRequestSigner
     globals()['SubSigningOptions'] = SubSigningOptions
 
 
@@ -127,7 +127,7 @@ class SignatureRequestCreateEmbeddedRequest(ModelNormal):
             'form_fields_per_document': ([[SubFormFieldsPerDocumentBase]],),  # noqa: E501
             'message': (str,),  # noqa: E501
             'metadata': ({str: (bool, date, datetime, dict, float, int, list, str, none_type)},),  # noqa: E501
-            'signers': ([SubSignatureRequestEmbeddedSigner],),  # noqa: E501
+            'signers': ([SubSignatureRequestSigner],),  # noqa: E501
             'signing_options': (SubSigningOptions,),  # noqa: E501
             'subject': (str,),  # noqa: E501
             'test_mode': (bool,),  # noqa: E501
@@ -220,7 +220,7 @@ class SignatureRequestCreateEmbeddedRequest(ModelNormal):
             form_fields_per_document ([[SubFormFieldsPerDocumentBase]]): The fields that should appear on the document, expressed as a 2-dimensional JSON array serialized to a string. The main array represents documents, with each containing an array of form fields. One document array is required for each file provided by the `file[]` parameter. In the case of a file with no fields, an empty list must be specified.  **NOTE**: Fields like **text**, **dropdown**, **checkbox**, **radio**, and **hyperlink** have additional required and optional parameters. Check out the list of [additional parameters](https://app.hellosign.com/api/reference#FormFieldsPerDocument) for these field types.  * Text Field use `SubFormFieldsPerDocumentText` * Dropdown Field use `SubFormFieldsPerDocumentDropdown` * Hyperlink Field use `SubFormFieldsPerDocumentHyperlink` * Checkbox Field use `SubFormFieldsPerDocumentCheckbox` * Radio Field use `SubFormFieldsPerDocumentRadio` * Signature Field use `SubFormFieldsPerDocumentSignature` * Date Signed Field use `SubFormFieldsPerDocumentDateSigned` * Initials Field use `SubFormFieldsPerDocumentInitials` * Text Merge Field use `SubFormFieldsPerDocumentTextMerge` * Checkbox Merge Field use `SubFormFieldsPerDocumentCheckboxMerge`. [optional]  # noqa: E501
             message (str): The custom message in the email that will be sent to the signers.. [optional]  # noqa: E501
             metadata ({str: (bool, date, datetime, dict, float, int, list, str, none_type)}): Key-value data that should be attached to the signature request. This metadata is included in all API responses and events involving the signature request. For example, use the metadata field to store a signer's order number for look up when receiving events for the signature request.  Each request can include up to 10 metadata keys, with key names up to 40 characters long and values up to 1000 characters long.. [optional]  # noqa: E501
-            signers ([SubSignatureRequestEmbeddedSigner]): Add Signers to your Signature Request.. [optional]  # noqa: E501
+            signers ([SubSignatureRequestSigner]): Add Signers to your Signature Request.. [optional]  # noqa: E501
             signing_options (SubSigningOptions): [optional]  # noqa: E501
             subject (str): The subject in the email that will be sent to the signers.. [optional]  # noqa: E501
             test_mode (bool): Whether this is a test, the signature request will not be legally binding if set to `true`. Defaults to `false`.. [optional] if omitted the server will use the default value of False  # noqa: E501
@@ -324,7 +324,7 @@ class SignatureRequestCreateEmbeddedRequest(ModelNormal):
             form_fields_per_document ([[SubFormFieldsPerDocumentBase]]): The fields that should appear on the document, expressed as a 2-dimensional JSON array serialized to a string. The main array represents documents, with each containing an array of form fields. One document array is required for each file provided by the `file[]` parameter. In the case of a file with no fields, an empty list must be specified.  **NOTE**: Fields like **text**, **dropdown**, **checkbox**, **radio**, and **hyperlink** have additional required and optional parameters. Check out the list of [additional parameters](https://app.hellosign.com/api/reference#FormFieldsPerDocument) for these field types.  * Text Field use `SubFormFieldsPerDocumentText` * Dropdown Field use `SubFormFieldsPerDocumentDropdown` * Hyperlink Field use `SubFormFieldsPerDocumentHyperlink` * Checkbox Field use `SubFormFieldsPerDocumentCheckbox` * Radio Field use `SubFormFieldsPerDocumentRadio` * Signature Field use `SubFormFieldsPerDocumentSignature` * Date Signed Field use `SubFormFieldsPerDocumentDateSigned` * Initials Field use `SubFormFieldsPerDocumentInitials` * Text Merge Field use `SubFormFieldsPerDocumentTextMerge` * Checkbox Merge Field use `SubFormFieldsPerDocumentCheckboxMerge`. [optional]  # noqa: E501
             message (str): The custom message in the email that will be sent to the signers.. [optional]  # noqa: E501
             metadata ({str: (bool, date, datetime, dict, float, int, list, str, none_type)}): Key-value data that should be attached to the signature request. This metadata is included in all API responses and events involving the signature request. For example, use the metadata field to store a signer's order number for look up when receiving events for the signature request.  Each request can include up to 10 metadata keys, with key names up to 40 characters long and values up to 1000 characters long.. [optional]  # noqa: E501
-            signers ([SubSignatureRequestEmbeddedSigner]): Add Signers to your Signature Request.. [optional]  # noqa: E501
+            signers ([SubSignatureRequestSigner]): Add Signers to your Signature Request.. [optional]  # noqa: E501
             signing_options (SubSigningOptions): [optional]  # noqa: E501
             subject (str): The subject in the email that will be sent to the signers.. [optional]  # noqa: E501
             test_mode (bool): Whether this is a test, the signature request will not be legally binding if set to `true`. Defaults to `false`.. [optional] if omitted the server will use the default value of False  # noqa: E501

@@ -151,7 +151,7 @@ class BulkSendJobApi(object):
         bulk_send_job_id,
         **kwargs
     ):
-        """Gets a BulkSendJob that includes all SignatureRequests it has sent.  # noqa: E501
+        """Get Bulk Send Job  # noqa: E501
 
         Returns the status of the BulkSendJob and its SignatureRequests specified by the `bulk_send_job_id` parameter.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
@@ -228,7 +228,7 @@ class BulkSendJobApi(object):
         self,
         **kwargs
     ):
-        """Lists the BulkSendJob that you have access to.  # noqa: E501
+        """List Bulk Send Jobs  # noqa: E501
 
         Returns a list of BulkSendJob that you can access.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an

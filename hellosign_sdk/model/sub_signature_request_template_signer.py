@@ -117,7 +117,7 @@ class SubSignatureRequestTemplateSigner(ModelNormal):
         """SubSignatureRequestTemplateSigner - a model defined in OpenAPI
 
         Args:
-            role (str): Must match an existing role in chosen Template(s). If multiple signers share the same `role` name they will be grouped together. Any of these grouped signers is eligible to sign for the entire group.  Grouped signers will not use the `pin` or `sms_phone_number` fields.
+            role (str): Must match an existing role in chosen Template(s).
             name (str): The name of the signer.
             email_address (str): The email address of the signer.
 
@@ -153,7 +153,7 @@ class SubSignatureRequestTemplateSigner(ModelNormal):
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
             pin (str): The 4- to 12-character access code that will secure this signer's signature page.. [optional]  # noqa: E501
-            sms_phone_number (str): An E.164 formatted phone number that will receive a code via SMS to access this signer's signature page.  **Note**: Not available in test mode and requires a Platinum plan or higher.. [optional]  # noqa: E501
+            sms_phone_number (str): An E.164 formatted phone number that will receive a code via SMS to access this signer's signature page.  **Note**: Not available in test mode and requires a Standard plan or higher.. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -208,7 +208,7 @@ class SubSignatureRequestTemplateSigner(ModelNormal):
         """SubSignatureRequestTemplateSigner - a model defined in OpenAPI
 
         Args:
-            role (str): Must match an existing role in chosen Template(s). If multiple signers share the same `role` name they will be grouped together. Any of these grouped signers is eligible to sign for the entire group.  Grouped signers will not use the `pin` or `sms_phone_number` fields.
+            role (str): Must match an existing role in chosen Template(s).
             name (str): The name of the signer.
             email_address (str): The email address of the signer.
 
@@ -244,7 +244,7 @@ class SubSignatureRequestTemplateSigner(ModelNormal):
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
             pin (str): The 4- to 12-character access code that will secure this signer's signature page.. [optional]  # noqa: E501
-            sms_phone_number (str): An E.164 formatted phone number that will receive a code via SMS to access this signer's signature page.  **Note**: Not available in test mode and requires a Platinum plan or higher.. [optional]  # noqa: E501
+            sms_phone_number (str): An E.164 formatted phone number that will receive a code via SMS to access this signer's signature page.  **Note**: Not available in test mode and requires a Standard plan or higher.. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)

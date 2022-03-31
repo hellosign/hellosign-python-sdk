@@ -4,14 +4,14 @@ All URIs are relative to *https://api.hellosign.com/v3*
 
 |Method | HTTP request | Description|
 |------------- | ------------- | -------------|
-|[```bulk_send_job_get```](BulkSendJobApi.md#bulk_send_job_get) | ```GET /bulk_send_job/{bulk_send_job_id}``` | Gets a BulkSendJob that includes all SignatureRequests it has sent.|
-|[```bulk_send_job_list```](BulkSendJobApi.md#bulk_send_job_list) | ```GET /bulk_send_job/list``` | Lists the BulkSendJob that you have access to.|
+|[```bulk_send_job_get```](BulkSendJobApi.md#bulk_send_job_get) | ```GET /bulk_send_job/{bulk_send_job_id}``` | Get Bulk Send Job|
+|[```bulk_send_job_list```](BulkSendJobApi.md#bulk_send_job_list) | ```GET /bulk_send_job/list``` | List Bulk Send Jobs|
 
 
 # ```bulk_send_job_get```
 > ```BulkSendJobGetResponse bulk_send_job_get(bulk_send_job_id)```
 
-Gets a BulkSendJob that includes all SignatureRequests it has sent.
+Get Bulk Send Job
 
 Returns the status of the BulkSendJob and its SignatureRequests specified by the `bulk_send_job_id` parameter.
 
@@ -80,7 +80,7 @@ with ApiClient(configuration) as api_client:
 # ```bulk_send_job_list```
 > ```BulkSendJobListResponse bulk_send_job_list()```
 
-Lists the BulkSendJob that you have access to.
+List Bulk Send Jobs
 
 Returns a list of BulkSendJob that you can access.
 

@@ -4,14 +4,14 @@ All URIs are relative to *https://api.hellosign.com/v3*
 
 |Method | HTTP request | Description|
 |------------- | ------------- | -------------|
-|[```embedded_edit_url```](EmbeddedApi.md#embedded_edit_url) | ```POST /embedded/edit_url/{template_id}``` | Retrieves an embedded template object.|
-|[```embedded_sign_url```](EmbeddedApi.md#embedded_sign_url) | ```GET /embedded/sign_url/{signature_id}``` | Retrieves an embedded signing object.|
+|[```embedded_edit_url```](EmbeddedApi.md#embedded_edit_url) | ```POST /embedded/edit_url/{template_id}``` | Get Embedded Template Edit URL|
+|[```embedded_sign_url```](EmbeddedApi.md#embedded_sign_url) | ```GET /embedded/sign_url/{signature_id}``` | Get Embedded Sign URL|
 
 
 # ```embedded_edit_url```
 > ```EmbeddedEditUrlResponse embedded_edit_url(template_id, embedded_edit_url_request)```
 
-Retrieves an embedded template object.
+Get Embedded Template Edit URL
 
 Retrieves an embedded object containing a template url that can be opened in an iFrame. Note that only templates created via the embedded template process are available to be edited with this endpoint.
 
@@ -86,7 +86,7 @@ with ApiClient(configuration) as api_client:
 # ```embedded_sign_url```
 > ```EmbeddedSignUrlResponse embedded_sign_url(signature_id)```
 
-Retrieves an embedded signing object.
+Get Embedded Sign URL
 
 Retrieves an embedded object containing a signature url that can be opened in an iFrame. Note that templates created via the embedded template process will only be accessible through the API.
 

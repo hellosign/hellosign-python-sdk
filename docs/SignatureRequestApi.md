@@ -4,26 +4,26 @@ All URIs are relative to *https://api.hellosign.com/v3*
 
 |Method | HTTP request | Description|
 |------------- | ------------- | -------------|
-|[```signature_request_bulk_create_embedded_with_template```](SignatureRequestApi.md#signature_request_bulk_create_embedded_with_template) | ```POST /signature_request/bulk_create_embedded_with_template``` | Creates BulkSendJob which sends SignatureRequests in bulk based off of the provided Template(s) to be signed in an embedded window.|
-|[```signature_request_bulk_send_with_template```](SignatureRequestApi.md#signature_request_bulk_send_with_template) | ```POST /signature_request/bulk_send_with_template``` | Creates BulkSendJob which sends SignatureRequests in bulk based off of the provided Template(s).|
-|[```signature_request_cancel```](SignatureRequestApi.md#signature_request_cancel) | ```POST /signature_request/cancel/{signature_request_id}``` | Cancels an incomplete SignatureRequest.|
-|[```signature_request_create_embedded```](SignatureRequestApi.md#signature_request_create_embedded) | ```POST /signature_request/create_embedded``` | Creates a new SignatureRequest to be signed in an embedded window.|
-|[```signature_request_create_embedded_with_template```](SignatureRequestApi.md#signature_request_create_embedded_with_template) | ```POST /signature_request/create_embedded_with_template``` | Creates and sends a new SignatureRequest based off of the provided Template(s).|
-|[```signature_request_files```](SignatureRequestApi.md#signature_request_files) | ```GET /signature_request/files/{signature_request_id}``` | Obtain a copy of the current documents.|
-|[```signature_request_get```](SignatureRequestApi.md#signature_request_get) | ```GET /signature_request/{signature_request_id}``` | Gets a SignatureRequest that includes the current status for each signer.|
-|[```signature_request_list```](SignatureRequestApi.md#signature_request_list) | ```GET /signature_request/list``` | Lists the SignatureRequests (both inbound and outbound) that you have access to.|
-|[```signature_request_release_hold```](SignatureRequestApi.md#signature_request_release_hold) | ```POST /signature_request/release_hold/{signature_request_id}``` | Releases a SignatureRequest from hold.|
-|[```signature_request_remind```](SignatureRequestApi.md#signature_request_remind) | ```POST /signature_request/remind/{signature_request_id}``` | Sends an email to the signer reminding them to sign the signature request.|
-|[```signature_request_remove```](SignatureRequestApi.md#signature_request_remove) | ```POST /signature_request/remove/{signature_request_id}``` | Remove access to a completed SignatureRequest.|
-|[```signature_request_send```](SignatureRequestApi.md#signature_request_send) | ```POST /signature_request/send``` | Creates and sends a new SignatureRequest with the submitted documents.|
-|[```signature_request_send_with_template```](SignatureRequestApi.md#signature_request_send_with_template) | ```POST /signature_request/send_with_template``` | Creates and sends a new SignatureRequest based off of one or more Templates.|
-|[```signature_request_update```](SignatureRequestApi.md#signature_request_update) | ```POST /signature_request/update/{signature_request_id}``` | Update an email address on a signature request.|
+|[```signature_request_bulk_create_embedded_with_template```](SignatureRequestApi.md#signature_request_bulk_create_embedded_with_template) | ```POST /signature_request/bulk_create_embedded_with_template``` | Embedded Bulk Send with Template|
+|[```signature_request_bulk_send_with_template```](SignatureRequestApi.md#signature_request_bulk_send_with_template) | ```POST /signature_request/bulk_send_with_template``` | Bulk Send with Template|
+|[```signature_request_cancel```](SignatureRequestApi.md#signature_request_cancel) | ```POST /signature_request/cancel/{signature_request_id}``` | Cancel Incomplete Signature Request|
+|[```signature_request_create_embedded```](SignatureRequestApi.md#signature_request_create_embedded) | ```POST /signature_request/create_embedded``` | Create Embedded Signature Request|
+|[```signature_request_create_embedded_with_template```](SignatureRequestApi.md#signature_request_create_embedded_with_template) | ```POST /signature_request/create_embedded_with_template``` | Create Embedded Signature Request with Template|
+|[```signature_request_files```](SignatureRequestApi.md#signature_request_files) | ```GET /signature_request/files/{signature_request_id}``` | Download Files|
+|[```signature_request_get```](SignatureRequestApi.md#signature_request_get) | ```GET /signature_request/{signature_request_id}``` | Get Signature Request|
+|[```signature_request_list```](SignatureRequestApi.md#signature_request_list) | ```GET /signature_request/list``` | List Signature Requests|
+|[```signature_request_release_hold```](SignatureRequestApi.md#signature_request_release_hold) | ```POST /signature_request/release_hold/{signature_request_id}``` | Release On-Hold Signature Request|
+|[```signature_request_remind```](SignatureRequestApi.md#signature_request_remind) | ```POST /signature_request/remind/{signature_request_id}``` | Send Request Reminder|
+|[```signature_request_remove```](SignatureRequestApi.md#signature_request_remove) | ```POST /signature_request/remove/{signature_request_id}``` | Remove Signature Request Access|
+|[```signature_request_send```](SignatureRequestApi.md#signature_request_send) | ```POST /signature_request/send``` | Send Signature Request|
+|[```signature_request_send_with_template```](SignatureRequestApi.md#signature_request_send_with_template) | ```POST /signature_request/send_with_template``` | Send with Template|
+|[```signature_request_update```](SignatureRequestApi.md#signature_request_update) | ```POST /signature_request/update/{signature_request_id}``` | Update Signature Request|
 
 
 # ```signature_request_bulk_create_embedded_with_template```
 > ```BulkSendJobSendResponse signature_request_bulk_create_embedded_with_template(signature_request_bulk_create_embedded_with_template_request)```
 
-Creates BulkSendJob which sends SignatureRequests in bulk based off of the provided Template(s) to be signed in an embedded window.
+Embedded Bulk Send with Template
 
 Creates BulkSendJob which sends up to 250 SignatureRequests in bulk based off of the provided Template(s) specified with the `template_ids` parameter to be signed in an embedded iFrame. These embedded signature requests can only be signed in embedded iFrames whereas normal signature requests can only be signed on HelloSign.  **NOTE**: Only available for Gold plan and higher.
 
@@ -48,7 +48,7 @@ configuration = Configuration(
 with ApiClient(configuration) as api_client:
     api = apis.SignatureRequestApi(api_client)
 
-    signer_list_1_signer = models.SubBulkSignerListSigner(
+    signer_list_1_signer = models.SubSignatureRequestTemplateSigner(
         role="Client",
         name="George",
         email_address="george@example.com",
@@ -65,7 +65,7 @@ with ApiClient(configuration) as api_client:
         custom_fields=[signer_list_1_custom_fields],
     )
 
-    signer_list_2_signer = models.SubBulkSignerListSigner(
+    signer_list_2_signer = models.SubSignatureRequestTemplateSigner(
         role="Client",
         name="Mary",
         email_address="mary@example.com",
@@ -138,7 +138,7 @@ with ApiClient(configuration) as api_client:
 # ```signature_request_bulk_send_with_template```
 > ```BulkSendJobSendResponse signature_request_bulk_send_with_template(signature_request_bulk_send_with_template_request)```
 
-Creates BulkSendJob which sends SignatureRequests in bulk based off of the provided Template(s).
+Bulk Send with Template
 
 Creates BulkSendJob which sends up to 250 SignatureRequests in bulk based off of the provided Template(s) specified with the `template_ids` parameter.  **NOTE**: Only available for Gold plan and higher.
 
@@ -164,7 +164,7 @@ configuration = Configuration(
 with ApiClient(configuration) as api_client:
     api = apis.SignatureRequestApi(api_client)
 
-    signer_list_1_signer = models.SubBulkSignerListSigner(
+    signer_list_1_signer = models.SubSignatureRequestTemplateSigner(
         role="Client",
         name="George",
         email_address="george@example.com",
@@ -181,7 +181,7 @@ with ApiClient(configuration) as api_client:
         custom_fields=[signer_list_1_custom_fields],
     )
 
-    signer_list_2_signer = models.SubBulkSignerListSigner(
+    signer_list_2_signer = models.SubSignatureRequestTemplateSigner(
         role="Client",
         name="Mary",
         email_address="mary@example.com",
@@ -254,7 +254,7 @@ with ApiClient(configuration) as api_client:
 # ```signature_request_cancel```
 > ```signature_request_cancel(signature_request_id)```
 
-Cancels an incomplete SignatureRequest.
+Cancel Incomplete Signature Request
 
 Cancels an incomplete signature request. This action is **not reversible**.  The request will be canceled and signers will no longer be able to sign. If they try to access the signature request they will receive a HTTP 410 status code indicating that the resource has been deleted. Cancelation is asynchronous and a successful call to this endpoint will return an empty 200 OK response if the signature request is eligible to be canceled and has been successfully queued.  This 200 OK response does not indicate a successful cancelation of the signature request itself. The cancelation is confirmed via the `signature_request_canceled` event. It is recommended that a  [callback handler](https://app.hellosign.com/api/eventsAndCallbacksWalkthrough) be implemented to listen for the `signature_request_canceled` event. This callback will be sent only when the cancelation has completed successfully. If a callback handler has been configured and the event has not been received within 60 minutes of making the call, check the status of the request in the [API Dashboard](https://app.hellosign.com/apidashboard) and retry the cancelation if necessary.  To be eligible for cancelation, a signature request must have been sent successfully, must not yet have been signed by all signers, and you must either be the sender or own the API app under which it was sent. A partially signed signature request can be canceled.  **NOTE**: To remove your access to a completed signature request, use the endpoint: `POST /signature_request/remove/[:signature_request_id]`.
 
@@ -323,7 +323,7 @@ void (empty response body)
 # ```signature_request_create_embedded```
 > ```SignatureRequestGetResponse signature_request_create_embedded(signature_request_create_embedded_request)```
 
-Creates a new SignatureRequest to be signed in an embedded window.
+Create Embedded Signature Request
 
 Creates a new SignatureRequest with the submitted documents to be signed in an embedded iFrame. If form_fields_per_document is not specified, a signature page will be affixed where all signers will be required to add their signature, signifying their agreement to all contained documents. <u>Note</u> that embedded signature requests can only be signed in embedded iFrames whereas normal signature requests can only be signed on HelloSign.
 
@@ -349,13 +349,13 @@ configuration = Configuration(
 with ApiClient(configuration) as api_client:
     api = apis.SignatureRequestApi(api_client)
 
-    signer_1 = models.SubSignatureRequestEmbeddedSigner(
+    signer_1 = models.SubSignatureRequestSigner(
         email_address="jack@example.com",
         name="Jack",
         order=0,
     )
 
-    signer_2 = models.SubSignatureRequestEmbeddedSigner(
+    signer_2 = models.SubSignatureRequestSigner(
         email_address="jill@example.com",
         name="Jill",
         order=1,
@@ -422,7 +422,7 @@ with ApiClient(configuration) as api_client:
 # ```signature_request_create_embedded_with_template```
 > ```SignatureRequestGetResponse signature_request_create_embedded_with_template(signature_request_create_embedded_with_template_request)```
 
-Creates and sends a new SignatureRequest based off of the provided Template(s).
+Create Embedded Signature Request with Template
 
 Creates a new SignatureRequest based on the given Template(s) to be signed in an embedded iFrame. <u>Note</u> that embedded signature requests can only be signed in embedded iFrames whereas normal signature requests can only be signed on HelloSign.
 
@@ -448,7 +448,7 @@ configuration = Configuration(
 with ApiClient(configuration) as api_client:
     api = apis.SignatureRequestApi(api_client)
 
-    signer_1 = models.SubSignatureRequestEmbeddedTemplateSigner(
+    signer_1 = models.SubSignatureRequestTemplateSigner(
         role="Client",
         email_address="jack@example.com",
         name="Jack",
@@ -513,7 +513,7 @@ with ApiClient(configuration) as api_client:
 # ```signature_request_files```
 > ```FileResponse signature_request_files(signature_request_id)```
 
-Obtain a copy of the current documents.
+Download Files
 
 Obtain a copy of the current documents specified by the `signature_request_id` parameter.  Returns a PDF or ZIP file, or if `get_url` is set, a JSON object with a url to the file (PDFs only). If `get_data_uri` is set, a JSON object with a `data_uri` representing the base64 encoded file (PDFs only) is returned.  If the files are currently being prepared, a status code of `409` will be returned instead.
 
@@ -585,7 +585,7 @@ with ApiClient(configuration) as api_client:
 # ```signature_request_get```
 > ```SignatureRequestGetResponse signature_request_get(signature_request_id)```
 
-Gets a SignatureRequest that includes the current status for each signer.
+Get Signature Request
 
 Returns the status of the SignatureRequest specified by the `signature_request_id` parameter.
 
@@ -654,7 +654,7 @@ with ApiClient(configuration) as api_client:
 # ```signature_request_list```
 > ```SignatureRequestListResponse signature_request_list()```
 
-Lists the SignatureRequests (both inbound and outbound) that you have access to.
+List Signature Requests
 
 Returns a list of SignatureRequests that you can access. This includes SignatureRequests you have sent as well as received, but not ones that you have been CCed on.  Take a look at our [search guide](https://app.hellosign.com/api/reference#Search) to learn more about querying signature requests.
 
@@ -730,7 +730,7 @@ with ApiClient(configuration) as api_client:
 # ```signature_request_release_hold```
 > ```SignatureRequestGetResponse signature_request_release_hold(signature_request_id)```
 
-Releases a SignatureRequest from hold.
+Release On-Hold Signature Request
 
 Releases a held SignatureRequest that was claimed and prepared from an [UnclaimedDraft](https://app.hellosign.com/api/reference#UnclaimedDraft). The owner of the Draft must indicate at Draft creation that the SignatureRequest created from the Draft should be held. Releasing the SignatureRequest will send requests to all signers.
 
@@ -799,7 +799,7 @@ with ApiClient(configuration) as api_client:
 # ```signature_request_remind```
 > ```SignatureRequestGetResponse signature_request_remind(signature_request_id, signature_request_remind_request)```
 
-Sends an email to the signer reminding them to sign the signature request.
+Send Request Reminder
 
 Sends an email to the signer reminding them to sign the signature request. You cannot send a reminder within 1 hour of the last reminder that was sent. This includes manual AND automatic reminders.  **NOTE**: This action can **not** be used with embedded signature requests.
 
@@ -873,7 +873,7 @@ with ApiClient(configuration) as api_client:
 # ```signature_request_remove```
 > ```signature_request_remove(signature_request_id)```
 
-Remove access to a completed SignatureRequest.
+Remove Signature Request Access
 
 Removes your access to a completed signature request. This action is **not reversible**.  The signature request must be fully executed by all parties (signed or declined to sign). Other parties will continue to maintain access to the completed signature request document(s).  Unlike /signature_request/cancel, this endpoint is synchronous and your access will be immediately removed. Upon successful removal, this endpoint will return a 200 OK response.
 
@@ -941,7 +941,7 @@ void (empty response body)
 # ```signature_request_send```
 > ```SignatureRequestGetResponse signature_request_send(signature_request_send_request)```
 
-Creates and sends a new SignatureRequest with the submitted documents.
+Send Signature Request
 
 Creates and sends a new SignatureRequest with the submitted documents. If `form_fields_per_document` is not specified, a signature page will be affixed where all signers will be required to add their signature, signifying their agreement to all contained documents.
 
@@ -1051,7 +1051,7 @@ with ApiClient(configuration) as api_client:
 # ```signature_request_send_with_template```
 > ```SignatureRequestGetResponse signature_request_send_with_template(signature_request_send_with_template_request)```
 
-Creates and sends a new SignatureRequest based off of one or more Templates.
+Send with Template
 
 Creates and sends a new SignatureRequest based off of the Template(s) specified with the `template_ids` parameter.
 
@@ -1155,7 +1155,7 @@ with ApiClient(configuration) as api_client:
 # ```signature_request_update```
 > ```SignatureRequestGetResponse signature_request_update(signature_request_id, signature_request_update_request)```
 
-Update an email address on a signature request.
+Update Signature Request
 
 Updates the email address and/or the name for a given signer on a signature request. You can listen for the `signature_request_email_bounce` event on your app or account to detect bounced emails, and respond with this method.  **NOTE**: This action cannot be performed on a signature request with an appended signature page.
 

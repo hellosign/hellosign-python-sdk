@@ -14,7 +14,7 @@ configuration = Configuration(
 with ApiClient(configuration) as api_client:
     api = apis.SignatureRequestApi(api_client)
 
-    signer_list_1_signer = models.SubBulkSignerListSigner(
+    signer_list_1_signer = models.SubSignatureRequestTemplateSigner(
         role="Client",
         name="George",
         email_address="george@example.com",
@@ -31,7 +31,7 @@ with ApiClient(configuration) as api_client:
         custom_fields=[signer_list_1_custom_fields],
     )
 
-    signer_list_2_signer = models.SubBulkSignerListSigner(
+    signer_list_2_signer = models.SubSignatureRequestTemplateSigner(
         role="Client",
         name="Mary",
         email_address="mary@example.com",

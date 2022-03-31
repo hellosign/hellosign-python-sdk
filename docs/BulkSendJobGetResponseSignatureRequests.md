@@ -27,7 +27,6 @@
 | `custom_fields` | [```[SignatureRequestResponseCustomField], none_type```](SignatureRequestResponseCustomField.md) |    |  |
 | `response_data` | [```[SignatureRequestResponseData], none_type```](SignatureRequestResponseData.md) |    |  |
 | `signatures` | [```[SignatureRequestResponseSignatures]```](SignatureRequestResponseSignatures.md) |    |  |
-| `warnings` | [```[WarningResponse]```](WarningResponse.md) |    |  |
 | `bulk_send_job_id` | ```str``` |  The id of the BulkSendJob.  |  |
 
 

@@ -252,7 +252,7 @@ class AccountApi(object):
         account_create_request,
         **kwargs
     ):
-        """Signs up for a new HelloSign Account.  # noqa: E501
+        """Create Account  # noqa: E501
 
         Creates a new HelloSign Account that is associated with the specified `email_address`.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
@@ -329,7 +329,7 @@ class AccountApi(object):
         self,
         **kwargs
     ):
-        """Returns your Account settings.  # noqa: E501
+        """Get Account  # noqa: E501
 
         Returns the properties and settings of your Account.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
@@ -403,7 +403,7 @@ class AccountApi(object):
         account_update_request,
         **kwargs
     ):
-        """Updates your Account's settings.  # noqa: E501
+        """Update Account  # noqa: E501
 
         Updates the properties and settings of your Account.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
@@ -481,7 +481,7 @@ class AccountApi(object):
         account_verify_request,
         **kwargs
     ):
-        """Verify whether a HelloSign Account exists.  # noqa: E501
+        """Verify Account  # noqa: E501
 
         Verifies whether an HelloSign Account exists for the given email address.  **NOTE** This method is restricted to paid API users.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an

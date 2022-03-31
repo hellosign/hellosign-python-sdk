@@ -33,11 +33,11 @@ from hellosign_sdk.exceptions import ApiAttributeError
 def lazy_import():
     from hellosign_sdk.model.sub_cc import SubCC
     from hellosign_sdk.model.sub_custom_field import SubCustomField
-    from hellosign_sdk.model.sub_signature_request_embedded_template_signer import SubSignatureRequestEmbeddedTemplateSigner
+    from hellosign_sdk.model.sub_signature_request_template_signer import SubSignatureRequestTemplateSigner
     from hellosign_sdk.model.sub_signing_options import SubSigningOptions
     globals()['SubCC'] = SubCC
     globals()['SubCustomField'] = SubCustomField
-    globals()['SubSignatureRequestEmbeddedTemplateSigner'] = SubSignatureRequestEmbeddedTemplateSigner
+    globals()['SubSignatureRequestTemplateSigner'] = SubSignatureRequestTemplateSigner
     globals()['SubSigningOptions'] = SubSigningOptions
 
 
@@ -114,7 +114,7 @@ class SignatureRequestCreateEmbeddedWithTemplateRequest(ModelNormal):
             'file_url': ([str],),  # noqa: E501
             'message': (str,),  # noqa: E501
             'metadata': ({str: (bool, date, datetime, dict, float, int, list, str, none_type)},),  # noqa: E501
-            'signers': ([SubSignatureRequestEmbeddedTemplateSigner],),  # noqa: E501
+            'signers': ([SubSignatureRequestTemplateSigner],),  # noqa: E501
             'signing_options': (SubSigningOptions,),  # noqa: E501
             'subject': (str,),  # noqa: E501
             'test_mode': (bool,),  # noqa: E501
@@ -195,7 +195,7 @@ class SignatureRequestCreateEmbeddedWithTemplateRequest(ModelNormal):
             file_url ([str]): **file_url** or **file** is required, but not both.  Use `file_url[]` to have HelloSign download the file(s) to send for signature.  Currently we only support use of either the `file[]` parameter or `file_url[]` parameter, not both.. [optional]  # noqa: E501
             message (str): The custom message in the email that will be sent to the signers.. [optional]  # noqa: E501
             metadata ({str: (bool, date, datetime, dict, float, int, list, str, none_type)}): Key-value data that should be attached to the signature request. This metadata is included in all API responses and events involving the signature request. For example, use the metadata field to store a signer's order number for look up when receiving events for the signature request.  Each request can include up to 10 metadata keys, with key names up to 40 characters long and values up to 1000 characters long.. [optional]  # noqa: E501
-            signers ([SubSignatureRequestEmbeddedTemplateSigner]): Add Signers to your Templated-based Signature Request.. [optional]  # noqa: E501
+            signers ([SubSignatureRequestTemplateSigner]): Add Signers to your Templated-based Signature Request.. [optional]  # noqa: E501
             signing_options (SubSigningOptions): [optional]  # noqa: E501
             subject (str): The subject in the email that will be sent to the signers.. [optional]  # noqa: E501
             test_mode (bool): Whether this is a test, the signature request will not be legally binding if set to `true`. Defaults to `false`.. [optional] if omitted the server will use the default value of False  # noqa: E501
@@ -294,7 +294,7 @@ class SignatureRequestCreateEmbeddedWithTemplateRequest(ModelNormal):
             file_url ([str]): **file_url** or **file** is required, but not both.  Use `file_url[]` to have HelloSign download the file(s) to send for signature.  Currently we only support use of either the `file[]` parameter or `file_url[]` parameter, not both.. [optional]  # noqa: E501
             message (str): The custom message in the email that will be sent to the signers.. [optional]  # noqa: E501
             metadata ({str: (bool, date, datetime, dict, float, int, list, str, none_type)}): Key-value data that should be attached to the signature request. This metadata is included in all API responses and events involving the signature request. For example, use the metadata field to store a signer's order number for look up when receiving events for the signature request.  Each request can include up to 10 metadata keys, with key names up to 40 characters long and values up to 1000 characters long.. [optional]  # noqa: E501
-            signers ([SubSignatureRequestEmbeddedTemplateSigner]): Add Signers to your Templated-based Signature Request.. [optional]  # noqa: E501
+            signers ([SubSignatureRequestTemplateSigner]): Add Signers to your Templated-based Signature Request.. [optional]  # noqa: E501
             signing_options (SubSigningOptions): [optional]  # noqa: E501
             subject (str): The subject in the email that will be sent to the signers.. [optional]  # noqa: E501
             test_mode (bool): Whether this is a test, the signature request will not be legally binding if set to `true`. Defaults to `false`.. [optional] if omitted the server will use the default value of False  # noqa: E501
