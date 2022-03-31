@@ -11,8 +11,9 @@
 
 import re  # noqa: F401
 import sys  # noqa: F401
+from metadict import MetaDict
 
-from hellosign_sdk.api_client import ApiClient, Endpoint as _Endpoint
+from hellosign_sdk.api_client import ApiClient, ApiException, Endpoint as _Endpoint
 from hellosign_sdk.model_utils import (  # noqa: F401
     check_allowed_values,
     check_validations,
@@ -606,7 +607,29 @@ class TemplateApi(object):
             template_id
         kwargs['template_add_user_request'] = \
             template_add_user_request
-        return self.template_add_user_endpoint.call_with_http_info(**kwargs)
+        try:
+            return self.template_add_user_endpoint.call_with_http_info(**kwargs)
+        except ApiException as e:
+            if e.status == 200:
+                e.body = self.api_client.deserialize(
+                    response=MetaDict({'data': e.body}),
+                    response_type=[TemplateGetResponse],
+                    _check_type=True,
+                )
+
+                raise e
+            range_code = "4XX"[0]
+            range_code_left = int(f"{range_code}00")
+            range_code_right = int(f"{range_code}99")
+
+            if range_code_left <= e.status <= range_code_right:
+                e.body = self.api_client.deserialize(
+                    response=MetaDict({'data': e.body}),
+                    response_type=[ErrorResponse],
+                    _check_type=True,
+                )
+
+                raise e
 
     def template_create_embedded_draft(
         self,
@@ -684,7 +707,29 @@ class TemplateApi(object):
         kwargs['_host_index'] = kwargs.get('_host_index')
         kwargs['template_create_embedded_draft_request'] = \
             template_create_embedded_draft_request
-        return self.template_create_embedded_draft_endpoint.call_with_http_info(**kwargs)
+        try:
+            return self.template_create_embedded_draft_endpoint.call_with_http_info(**kwargs)
+        except ApiException as e:
+            if e.status == 200:
+                e.body = self.api_client.deserialize(
+                    response=MetaDict({'data': e.body}),
+                    response_type=[TemplateCreateEmbeddedDraftResponse],
+                    _check_type=True,
+                )
+
+                raise e
+            range_code = "4XX"[0]
+            range_code_left = int(f"{range_code}00")
+            range_code_right = int(f"{range_code}99")
+
+            if range_code_left <= e.status <= range_code_right:
+                e.body = self.api_client.deserialize(
+                    response=MetaDict({'data': e.body}),
+                    response_type=[ErrorResponse],
+                    _check_type=True,
+                )
+
+                raise e
 
     def template_delete(
         self,
@@ -843,7 +888,29 @@ class TemplateApi(object):
         kwargs['_host_index'] = kwargs.get('_host_index')
         kwargs['template_id'] = \
             template_id
-        return self.template_files_endpoint.call_with_http_info(**kwargs)
+        try:
+            return self.template_files_endpoint.call_with_http_info(**kwargs)
+        except ApiException as e:
+            if e.status == 200:
+                e.body = self.api_client.deserialize(
+                    response=MetaDict({'data': e.body}),
+                    response_type=[FileResponse],
+                    _check_type=True,
+                )
+
+                raise e
+            range_code = "4XX"[0]
+            range_code_left = int(f"{range_code}00")
+            range_code_right = int(f"{range_code}99")
+
+            if range_code_left <= e.status <= range_code_right:
+                e.body = self.api_client.deserialize(
+                    response=MetaDict({'data': e.body}),
+                    response_type=[ErrorResponse],
+                    _check_type=True,
+                )
+
+                raise e
 
     def template_get(
         self,
@@ -921,7 +988,29 @@ class TemplateApi(object):
         kwargs['_host_index'] = kwargs.get('_host_index')
         kwargs['template_id'] = \
             template_id
-        return self.template_get_endpoint.call_with_http_info(**kwargs)
+        try:
+            return self.template_get_endpoint.call_with_http_info(**kwargs)
+        except ApiException as e:
+            if e.status == 200:
+                e.body = self.api_client.deserialize(
+                    response=MetaDict({'data': e.body}),
+                    response_type=[TemplateGetResponse],
+                    _check_type=True,
+                )
+
+                raise e
+            range_code = "4XX"[0]
+            range_code_left = int(f"{range_code}00")
+            range_code_right = int(f"{range_code}99")
+
+            if range_code_left <= e.status <= range_code_right:
+                e.body = self.api_client.deserialize(
+                    response=MetaDict({'data': e.body}),
+                    response_type=[ErrorResponse],
+                    _check_type=True,
+                )
+
+                raise e
 
     def template_list(
         self,
@@ -998,7 +1087,29 @@ class TemplateApi(object):
         kwargs['_content_type'] = kwargs.get(
             '_content_type')
         kwargs['_host_index'] = kwargs.get('_host_index')
-        return self.template_list_endpoint.call_with_http_info(**kwargs)
+        try:
+            return self.template_list_endpoint.call_with_http_info(**kwargs)
+        except ApiException as e:
+            if e.status == 200:
+                e.body = self.api_client.deserialize(
+                    response=MetaDict({'data': e.body}),
+                    response_type=[TemplateListResponse],
+                    _check_type=True,
+                )
+
+                raise e
+            range_code = "4XX"[0]
+            range_code_left = int(f"{range_code}00")
+            range_code_right = int(f"{range_code}99")
+
+            if range_code_left <= e.status <= range_code_right:
+                e.body = self.api_client.deserialize(
+                    response=MetaDict({'data': e.body}),
+                    response_type=[ErrorResponse],
+                    _check_type=True,
+                )
+
+                raise e
 
     def template_remove_user(
         self,
@@ -1080,7 +1191,29 @@ class TemplateApi(object):
             template_id
         kwargs['template_remove_user_request'] = \
             template_remove_user_request
-        return self.template_remove_user_endpoint.call_with_http_info(**kwargs)
+        try:
+            return self.template_remove_user_endpoint.call_with_http_info(**kwargs)
+        except ApiException as e:
+            if e.status == 200:
+                e.body = self.api_client.deserialize(
+                    response=MetaDict({'data': e.body}),
+                    response_type=[TemplateGetResponse],
+                    _check_type=True,
+                )
+
+                raise e
+            range_code = "4XX"[0]
+            range_code_left = int(f"{range_code}00")
+            range_code_right = int(f"{range_code}99")
+
+            if range_code_left <= e.status <= range_code_right:
+                e.body = self.api_client.deserialize(
+                    response=MetaDict({'data': e.body}),
+                    response_type=[ErrorResponse],
+                    _check_type=True,
+                )
+
+                raise e
 
     def template_update_files(
         self,
@@ -1162,5 +1295,27 @@ class TemplateApi(object):
             template_id
         kwargs['template_update_files_request'] = \
             template_update_files_request
-        return self.template_update_files_endpoint.call_with_http_info(**kwargs)
+        try:
+            return self.template_update_files_endpoint.call_with_http_info(**kwargs)
+        except ApiException as e:
+            if e.status == 200:
+                e.body = self.api_client.deserialize(
+                    response=MetaDict({'data': e.body}),
+                    response_type=[TemplateUpdateFilesResponse],
+                    _check_type=True,
+                )
+
+                raise e
+            range_code = "4XX"[0]
+            range_code_left = int(f"{range_code}00")
+            range_code_right = int(f"{range_code}99")
+
+            if range_code_left <= e.status <= range_code_right:
+                e.body = self.api_client.deserialize(
+                    response=MetaDict({'data': e.body}),
+                    response_type=[ErrorResponse],
+                    _check_type=True,
+                )
+
+                raise e
 

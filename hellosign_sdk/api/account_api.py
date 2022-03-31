@@ -11,8 +11,9 @@
 
 import re  # noqa: F401
 import sys  # noqa: F401
+from metadict import MetaDict
 
-from hellosign_sdk.api_client import ApiClient, Endpoint as _Endpoint
+from hellosign_sdk.api_client import ApiClient, ApiException, Endpoint as _Endpoint
 from hellosign_sdk.model_utils import (  # noqa: F401
     check_allowed_values,
     check_validations,
@@ -323,7 +324,29 @@ class AccountApi(object):
         kwargs['_host_index'] = kwargs.get('_host_index')
         kwargs['account_create_request'] = \
             account_create_request
-        return self.account_create_endpoint.call_with_http_info(**kwargs)
+        try:
+            return self.account_create_endpoint.call_with_http_info(**kwargs)
+        except ApiException as e:
+            if e.status == 200:
+                e.body = self.api_client.deserialize(
+                    response=MetaDict({'data': e.body}),
+                    response_type=[AccountCreateResponse],
+                    _check_type=True,
+                )
+
+                raise e
+            range_code = "4XX"[0]
+            range_code_left = int(f"{range_code}00")
+            range_code_right = int(f"{range_code}99")
+
+            if range_code_left <= e.status <= range_code_right:
+                e.body = self.api_client.deserialize(
+                    response=MetaDict({'data': e.body}),
+                    response_type=[ErrorResponse],
+                    _check_type=True,
+                )
+
+                raise e
 
     def account_get(
         self,
@@ -396,7 +419,29 @@ class AccountApi(object):
         kwargs['_content_type'] = kwargs.get(
             '_content_type')
         kwargs['_host_index'] = kwargs.get('_host_index')
-        return self.account_get_endpoint.call_with_http_info(**kwargs)
+        try:
+            return self.account_get_endpoint.call_with_http_info(**kwargs)
+        except ApiException as e:
+            if e.status == 200:
+                e.body = self.api_client.deserialize(
+                    response=MetaDict({'data': e.body}),
+                    response_type=[AccountGetResponse],
+                    _check_type=True,
+                )
+
+                raise e
+            range_code = "4XX"[0]
+            range_code_left = int(f"{range_code}00")
+            range_code_right = int(f"{range_code}99")
+
+            if range_code_left <= e.status <= range_code_right:
+                e.body = self.api_client.deserialize(
+                    response=MetaDict({'data': e.body}),
+                    response_type=[ErrorResponse],
+                    _check_type=True,
+                )
+
+                raise e
 
     def account_update(
         self,
@@ -474,7 +519,29 @@ class AccountApi(object):
         kwargs['_host_index'] = kwargs.get('_host_index')
         kwargs['account_update_request'] = \
             account_update_request
-        return self.account_update_endpoint.call_with_http_info(**kwargs)
+        try:
+            return self.account_update_endpoint.call_with_http_info(**kwargs)
+        except ApiException as e:
+            if e.status == 200:
+                e.body = self.api_client.deserialize(
+                    response=MetaDict({'data': e.body}),
+                    response_type=[AccountGetResponse],
+                    _check_type=True,
+                )
+
+                raise e
+            range_code = "4XX"[0]
+            range_code_left = int(f"{range_code}00")
+            range_code_right = int(f"{range_code}99")
+
+            if range_code_left <= e.status <= range_code_right:
+                e.body = self.api_client.deserialize(
+                    response=MetaDict({'data': e.body}),
+                    response_type=[ErrorResponse],
+                    _check_type=True,
+                )
+
+                raise e
 
     def account_verify(
         self,
@@ -552,5 +619,27 @@ class AccountApi(object):
         kwargs['_host_index'] = kwargs.get('_host_index')
         kwargs['account_verify_request'] = \
             account_verify_request
-        return self.account_verify_endpoint.call_with_http_info(**kwargs)
+        try:
+            return self.account_verify_endpoint.call_with_http_info(**kwargs)
+        except ApiException as e:
+            if e.status == 200:
+                e.body = self.api_client.deserialize(
+                    response=MetaDict({'data': e.body}),
+                    response_type=[AccountVerifyResponse],
+                    _check_type=True,
+                )
+
+                raise e
+            range_code = "4XX"[0]
+            range_code_left = int(f"{range_code}00")
+            range_code_right = int(f"{range_code}99")
+
+            if range_code_left <= e.status <= range_code_right:
+                e.body = self.api_client.deserialize(
+                    response=MetaDict({'data': e.body}),
+                    response_type=[ErrorResponse],
+                    _check_type=True,
+                )
+
+                raise e
 

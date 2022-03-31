@@ -1,6 +1,7 @@
 import unittest
+import random
 
-from hellosign_sdk import ApiClient, Configuration, apis
+from hellosign_sdk import ApiClient, ApiException, Configuration, apis
 from test_utils import get_fixture_data, MockPoolManager, deserialize
 
 
@@ -12,6 +13,30 @@ class TestAccountApi(unittest.TestCase):
         self.api_client.rest_client.pool_manager = self.mock_pool
 
         self.api = apis.AccountApi(self.api_client)
+
+    def test_http_code_range(self):
+        request_class = 'AccountCreateRequest'
+        request_data = get_fixture_data(request_class)['default']
+
+        response_class = 'ErrorResponse'
+        response_data = get_fixture_data(response_class)['default']
+
+        code = random.randrange(400, 499)
+
+        self.mock_pool.expect_request(
+            content_type='application/json',
+            data=request_data,
+            response=response_data,
+            status=code,
+        )
+        expected = deserialize(response_data, f'models.{response_class}')
+        obj = deserialize(request_data, f'models.{request_class}')
+
+        try:
+            self.api.account_create(obj)
+        except ApiException as e:
+            self.assertEqual(e.body.__class__.__name__, response_class)
+            self.assertEqual(e.body, expected)
 
     def test_account_create(self):
         request_class = 'AccountCreateRequest'

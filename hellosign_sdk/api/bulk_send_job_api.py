@@ -11,8 +11,9 @@
 
 import re  # noqa: F401
 import sys  # noqa: F401
+from metadict import MetaDict
 
-from hellosign_sdk.api_client import ApiClient, Endpoint as _Endpoint
+from hellosign_sdk.api_client import ApiClient, ApiException, Endpoint as _Endpoint
 from hellosign_sdk.model_utils import (  # noqa: F401
     check_allowed_values,
     check_validations,
@@ -222,7 +223,29 @@ class BulkSendJobApi(object):
         kwargs['_host_index'] = kwargs.get('_host_index')
         kwargs['bulk_send_job_id'] = \
             bulk_send_job_id
-        return self.bulk_send_job_get_endpoint.call_with_http_info(**kwargs)
+        try:
+            return self.bulk_send_job_get_endpoint.call_with_http_info(**kwargs)
+        except ApiException as e:
+            if e.status == 200:
+                e.body = self.api_client.deserialize(
+                    response=MetaDict({'data': e.body}),
+                    response_type=[BulkSendJobGetResponse],
+                    _check_type=True,
+                )
+
+                raise e
+            range_code = "4XX"[0]
+            range_code_left = int(f"{range_code}00")
+            range_code_right = int(f"{range_code}99")
+
+            if range_code_left <= e.status <= range_code_right:
+                e.body = self.api_client.deserialize(
+                    response=MetaDict({'data': e.body}),
+                    response_type=[ErrorResponse],
+                    _check_type=True,
+                )
+
+                raise e
 
     def bulk_send_job_list(
         self,
@@ -297,5 +320,27 @@ class BulkSendJobApi(object):
         kwargs['_content_type'] = kwargs.get(
             '_content_type')
         kwargs['_host_index'] = kwargs.get('_host_index')
-        return self.bulk_send_job_list_endpoint.call_with_http_info(**kwargs)
+        try:
+            return self.bulk_send_job_list_endpoint.call_with_http_info(**kwargs)
+        except ApiException as e:
+            if e.status == 200:
+                e.body = self.api_client.deserialize(
+                    response=MetaDict({'data': e.body}),
+                    response_type=[BulkSendJobListResponse],
+                    _check_type=True,
+                )
+
+                raise e
+            range_code = "4XX"[0]
+            range_code_left = int(f"{range_code}00")
+            range_code_right = int(f"{range_code}99")
+
+            if range_code_left <= e.status <= range_code_right:
+                e.body = self.api_client.deserialize(
+                    response=MetaDict({'data': e.body}),
+                    response_type=[ErrorResponse],
+                    _check_type=True,
+                )
+
+                raise e
 

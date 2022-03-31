@@ -11,8 +11,9 @@
 
 import re  # noqa: F401
 import sys  # noqa: F401
+from metadict import MetaDict
 
-from hellosign_sdk.api_client import ApiClient, Endpoint as _Endpoint
+from hellosign_sdk.api_client import ApiClient, ApiException, Endpoint as _Endpoint
 from hellosign_sdk.model_utils import (  # noqa: F401
     check_allowed_values,
     check_validations,
@@ -911,7 +912,29 @@ class SignatureRequestApi(object):
         kwargs['_host_index'] = kwargs.get('_host_index')
         kwargs['signature_request_bulk_create_embedded_with_template_request'] = \
             signature_request_bulk_create_embedded_with_template_request
-        return self.signature_request_bulk_create_embedded_with_template_endpoint.call_with_http_info(**kwargs)
+        try:
+            return self.signature_request_bulk_create_embedded_with_template_endpoint.call_with_http_info(**kwargs)
+        except ApiException as e:
+            if e.status == 200:
+                e.body = self.api_client.deserialize(
+                    response=MetaDict({'data': e.body}),
+                    response_type=[BulkSendJobSendResponse],
+                    _check_type=True,
+                )
+
+                raise e
+            range_code = "4XX"[0]
+            range_code_left = int(f"{range_code}00")
+            range_code_right = int(f"{range_code}99")
+
+            if range_code_left <= e.status <= range_code_right:
+                e.body = self.api_client.deserialize(
+                    response=MetaDict({'data': e.body}),
+                    response_type=[ErrorResponse],
+                    _check_type=True,
+                )
+
+                raise e
 
     def signature_request_bulk_send_with_template(
         self,
@@ -989,7 +1012,29 @@ class SignatureRequestApi(object):
         kwargs['_host_index'] = kwargs.get('_host_index')
         kwargs['signature_request_bulk_send_with_template_request'] = \
             signature_request_bulk_send_with_template_request
-        return self.signature_request_bulk_send_with_template_endpoint.call_with_http_info(**kwargs)
+        try:
+            return self.signature_request_bulk_send_with_template_endpoint.call_with_http_info(**kwargs)
+        except ApiException as e:
+            if e.status == 200:
+                e.body = self.api_client.deserialize(
+                    response=MetaDict({'data': e.body}),
+                    response_type=[BulkSendJobSendResponse],
+                    _check_type=True,
+                )
+
+                raise e
+            range_code = "4XX"[0]
+            range_code_left = int(f"{range_code}00")
+            range_code_right = int(f"{range_code}99")
+
+            if range_code_left <= e.status <= range_code_right:
+                e.body = self.api_client.deserialize(
+                    response=MetaDict({'data': e.body}),
+                    response_type=[ErrorResponse],
+                    _check_type=True,
+                )
+
+                raise e
 
     def signature_request_cancel(
         self,
@@ -1145,7 +1190,29 @@ class SignatureRequestApi(object):
         kwargs['_host_index'] = kwargs.get('_host_index')
         kwargs['signature_request_create_embedded_request'] = \
             signature_request_create_embedded_request
-        return self.signature_request_create_embedded_endpoint.call_with_http_info(**kwargs)
+        try:
+            return self.signature_request_create_embedded_endpoint.call_with_http_info(**kwargs)
+        except ApiException as e:
+            if e.status == 200:
+                e.body = self.api_client.deserialize(
+                    response=MetaDict({'data': e.body}),
+                    response_type=[SignatureRequestGetResponse],
+                    _check_type=True,
+                )
+
+                raise e
+            range_code = "4XX"[0]
+            range_code_left = int(f"{range_code}00")
+            range_code_right = int(f"{range_code}99")
+
+            if range_code_left <= e.status <= range_code_right:
+                e.body = self.api_client.deserialize(
+                    response=MetaDict({'data': e.body}),
+                    response_type=[ErrorResponse],
+                    _check_type=True,
+                )
+
+                raise e
 
     def signature_request_create_embedded_with_template(
         self,
@@ -1223,7 +1290,29 @@ class SignatureRequestApi(object):
         kwargs['_host_index'] = kwargs.get('_host_index')
         kwargs['signature_request_create_embedded_with_template_request'] = \
             signature_request_create_embedded_with_template_request
-        return self.signature_request_create_embedded_with_template_endpoint.call_with_http_info(**kwargs)
+        try:
+            return self.signature_request_create_embedded_with_template_endpoint.call_with_http_info(**kwargs)
+        except ApiException as e:
+            if e.status == 200:
+                e.body = self.api_client.deserialize(
+                    response=MetaDict({'data': e.body}),
+                    response_type=[SignatureRequestGetResponse],
+                    _check_type=True,
+                )
+
+                raise e
+            range_code = "4XX"[0]
+            range_code_left = int(f"{range_code}00")
+            range_code_right = int(f"{range_code}99")
+
+            if range_code_left <= e.status <= range_code_right:
+                e.body = self.api_client.deserialize(
+                    response=MetaDict({'data': e.body}),
+                    response_type=[ErrorResponse],
+                    _check_type=True,
+                )
+
+                raise e
 
     def signature_request_files(
         self,
@@ -1304,7 +1393,29 @@ class SignatureRequestApi(object):
         kwargs['_host_index'] = kwargs.get('_host_index')
         kwargs['signature_request_id'] = \
             signature_request_id
-        return self.signature_request_files_endpoint.call_with_http_info(**kwargs)
+        try:
+            return self.signature_request_files_endpoint.call_with_http_info(**kwargs)
+        except ApiException as e:
+            if e.status == 200:
+                e.body = self.api_client.deserialize(
+                    response=MetaDict({'data': e.body}),
+                    response_type=[FileResponse],
+                    _check_type=True,
+                )
+
+                raise e
+            range_code = "4XX"[0]
+            range_code_left = int(f"{range_code}00")
+            range_code_right = int(f"{range_code}99")
+
+            if range_code_left <= e.status <= range_code_right:
+                e.body = self.api_client.deserialize(
+                    response=MetaDict({'data': e.body}),
+                    response_type=[ErrorResponse],
+                    _check_type=True,
+                )
+
+                raise e
 
     def signature_request_get(
         self,
@@ -1382,7 +1493,29 @@ class SignatureRequestApi(object):
         kwargs['_host_index'] = kwargs.get('_host_index')
         kwargs['signature_request_id'] = \
             signature_request_id
-        return self.signature_request_get_endpoint.call_with_http_info(**kwargs)
+        try:
+            return self.signature_request_get_endpoint.call_with_http_info(**kwargs)
+        except ApiException as e:
+            if e.status == 200:
+                e.body = self.api_client.deserialize(
+                    response=MetaDict({'data': e.body}),
+                    response_type=[SignatureRequestGetResponse],
+                    _check_type=True,
+                )
+
+                raise e
+            range_code = "4XX"[0]
+            range_code_left = int(f"{range_code}00")
+            range_code_right = int(f"{range_code}99")
+
+            if range_code_left <= e.status <= range_code_right:
+                e.body = self.api_client.deserialize(
+                    response=MetaDict({'data': e.body}),
+                    response_type=[ErrorResponse],
+                    _check_type=True,
+                )
+
+                raise e
 
     def signature_request_list(
         self,
@@ -1459,7 +1592,29 @@ class SignatureRequestApi(object):
         kwargs['_content_type'] = kwargs.get(
             '_content_type')
         kwargs['_host_index'] = kwargs.get('_host_index')
-        return self.signature_request_list_endpoint.call_with_http_info(**kwargs)
+        try:
+            return self.signature_request_list_endpoint.call_with_http_info(**kwargs)
+        except ApiException as e:
+            if e.status == 200:
+                e.body = self.api_client.deserialize(
+                    response=MetaDict({'data': e.body}),
+                    response_type=[SignatureRequestListResponse],
+                    _check_type=True,
+                )
+
+                raise e
+            range_code = "4XX"[0]
+            range_code_left = int(f"{range_code}00")
+            range_code_right = int(f"{range_code}99")
+
+            if range_code_left <= e.status <= range_code_right:
+                e.body = self.api_client.deserialize(
+                    response=MetaDict({'data': e.body}),
+                    response_type=[ErrorResponse],
+                    _check_type=True,
+                )
+
+                raise e
 
     def signature_request_release_hold(
         self,
@@ -1537,7 +1692,29 @@ class SignatureRequestApi(object):
         kwargs['_host_index'] = kwargs.get('_host_index')
         kwargs['signature_request_id'] = \
             signature_request_id
-        return self.signature_request_release_hold_endpoint.call_with_http_info(**kwargs)
+        try:
+            return self.signature_request_release_hold_endpoint.call_with_http_info(**kwargs)
+        except ApiException as e:
+            if e.status == 200:
+                e.body = self.api_client.deserialize(
+                    response=MetaDict({'data': e.body}),
+                    response_type=[SignatureRequestGetResponse],
+                    _check_type=True,
+                )
+
+                raise e
+            range_code = "4XX"[0]
+            range_code_left = int(f"{range_code}00")
+            range_code_right = int(f"{range_code}99")
+
+            if range_code_left <= e.status <= range_code_right:
+                e.body = self.api_client.deserialize(
+                    response=MetaDict({'data': e.body}),
+                    response_type=[ErrorResponse],
+                    _check_type=True,
+                )
+
+                raise e
 
     def signature_request_remind(
         self,
@@ -1619,7 +1796,29 @@ class SignatureRequestApi(object):
             signature_request_id
         kwargs['signature_request_remind_request'] = \
             signature_request_remind_request
-        return self.signature_request_remind_endpoint.call_with_http_info(**kwargs)
+        try:
+            return self.signature_request_remind_endpoint.call_with_http_info(**kwargs)
+        except ApiException as e:
+            if e.status == 200:
+                e.body = self.api_client.deserialize(
+                    response=MetaDict({'data': e.body}),
+                    response_type=[SignatureRequestGetResponse],
+                    _check_type=True,
+                )
+
+                raise e
+            range_code = "4XX"[0]
+            range_code_left = int(f"{range_code}00")
+            range_code_right = int(f"{range_code}99")
+
+            if range_code_left <= e.status <= range_code_right:
+                e.body = self.api_client.deserialize(
+                    response=MetaDict({'data': e.body}),
+                    response_type=[ErrorResponse],
+                    _check_type=True,
+                )
+
+                raise e
 
     def signature_request_remove(
         self,
@@ -1775,7 +1974,29 @@ class SignatureRequestApi(object):
         kwargs['_host_index'] = kwargs.get('_host_index')
         kwargs['signature_request_send_request'] = \
             signature_request_send_request
-        return self.signature_request_send_endpoint.call_with_http_info(**kwargs)
+        try:
+            return self.signature_request_send_endpoint.call_with_http_info(**kwargs)
+        except ApiException as e:
+            if e.status == 200:
+                e.body = self.api_client.deserialize(
+                    response=MetaDict({'data': e.body}),
+                    response_type=[SignatureRequestGetResponse],
+                    _check_type=True,
+                )
+
+                raise e
+            range_code = "4XX"[0]
+            range_code_left = int(f"{range_code}00")
+            range_code_right = int(f"{range_code}99")
+
+            if range_code_left <= e.status <= range_code_right:
+                e.body = self.api_client.deserialize(
+                    response=MetaDict({'data': e.body}),
+                    response_type=[ErrorResponse],
+                    _check_type=True,
+                )
+
+                raise e
 
     def signature_request_send_with_template(
         self,
@@ -1853,7 +2074,29 @@ class SignatureRequestApi(object):
         kwargs['_host_index'] = kwargs.get('_host_index')
         kwargs['signature_request_send_with_template_request'] = \
             signature_request_send_with_template_request
-        return self.signature_request_send_with_template_endpoint.call_with_http_info(**kwargs)
+        try:
+            return self.signature_request_send_with_template_endpoint.call_with_http_info(**kwargs)
+        except ApiException as e:
+            if e.status == 200:
+                e.body = self.api_client.deserialize(
+                    response=MetaDict({'data': e.body}),
+                    response_type=[SignatureRequestGetResponse],
+                    _check_type=True,
+                )
+
+                raise e
+            range_code = "4XX"[0]
+            range_code_left = int(f"{range_code}00")
+            range_code_right = int(f"{range_code}99")
+
+            if range_code_left <= e.status <= range_code_right:
+                e.body = self.api_client.deserialize(
+                    response=MetaDict({'data': e.body}),
+                    response_type=[ErrorResponse],
+                    _check_type=True,
+                )
+
+                raise e
 
     def signature_request_update(
         self,
@@ -1935,5 +2178,27 @@ class SignatureRequestApi(object):
             signature_request_id
         kwargs['signature_request_update_request'] = \
             signature_request_update_request
-        return self.signature_request_update_endpoint.call_with_http_info(**kwargs)
+        try:
+            return self.signature_request_update_endpoint.call_with_http_info(**kwargs)
+        except ApiException as e:
+            if e.status == 200:
+                e.body = self.api_client.deserialize(
+                    response=MetaDict({'data': e.body}),
+                    response_type=[SignatureRequestGetResponse],
+                    _check_type=True,
+                )
+
+                raise e
+            range_code = "4XX"[0]
+            range_code_left = int(f"{range_code}00")
+            range_code_right = int(f"{range_code}99")
+
+            if range_code_left <= e.status <= range_code_right:
+                e.body = self.api_client.deserialize(
+                    response=MetaDict({'data': e.body}),
+                    response_type=[ErrorResponse],
+                    _check_type=True,
+                )
+
+                raise e
 

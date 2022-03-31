@@ -11,8 +11,9 @@
 
 import re  # noqa: F401
 import sys  # noqa: F401
+from metadict import MetaDict
 
-from hellosign_sdk.api_client import ApiClient, Endpoint as _Endpoint
+from hellosign_sdk.api_client import ApiClient, ApiException, Endpoint as _Endpoint
 from hellosign_sdk.model_utils import (  # noqa: F401
     check_allowed_values,
     check_validations,
@@ -225,7 +226,17 @@ class OAuthApi(object):
         kwargs['_host_index'] = kwargs.get('_host_index')
         kwargs['o_auth_token_generate_request'] = \
             o_auth_token_generate_request
-        return self.oauth_token_generate_endpoint.call_with_http_info(**kwargs)
+        try:
+            return self.oauth_token_generate_endpoint.call_with_http_info(**kwargs)
+        except ApiException as e:
+            if e.status == 200:
+                e.body = self.api_client.deserialize(
+                    response=MetaDict({'data': e.body}),
+                    response_type=[OAuthTokenResponse],
+                    _check_type=True,
+                )
+
+                raise e
 
     def oauth_token_refresh(
         self,
@@ -303,5 +314,15 @@ class OAuthApi(object):
         kwargs['_host_index'] = kwargs.get('_host_index')
         kwargs['o_auth_token_refresh_request'] = \
             o_auth_token_refresh_request
-        return self.oauth_token_refresh_endpoint.call_with_http_info(**kwargs)
+        try:
+            return self.oauth_token_refresh_endpoint.call_with_http_info(**kwargs)
+        except ApiException as e:
+            if e.status == 200:
+                e.body = self.api_client.deserialize(
+                    response=MetaDict({'data': e.body}),
+                    response_type=[OAuthTokenResponse],
+                    _check_type=True,
+                )
+
+                raise e
 
