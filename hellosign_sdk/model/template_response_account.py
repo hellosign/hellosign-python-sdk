@@ -93,7 +93,7 @@ class TemplateResponseAccount(ModelNormal):
             'is_locked': (bool,),  # noqa: E501
             'is_paid_hs': (bool,),  # noqa: E501
             'is_paid_hf': (bool,),  # noqa: E501
-            'quotas': ([TemplateResponseAccountQuota],),  # noqa: E501
+            'quotas': (TemplateResponseAccountQuota,),  # noqa: E501
         }
 
     @cached_property
@@ -156,7 +156,7 @@ class TemplateResponseAccount(ModelNormal):
             is_locked (bool): Returns true if the user has been locked out of their account by a team admin.. [optional]  # noqa: E501
             is_paid_hs (bool): Returns true if the user has a paid HelloSign account.. [optional]  # noqa: E501
             is_paid_hf (bool): Returns true if the user has a paid HelloFax account.. [optional]  # noqa: E501
-            quotas ([TemplateResponseAccountQuota]): [optional]  # noqa: E501
+            quotas (TemplateResponseAccountQuota): [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -243,7 +243,7 @@ class TemplateResponseAccount(ModelNormal):
             is_locked (bool): Returns true if the user has been locked out of their account by a team admin.. [optional]  # noqa: E501
             is_paid_hs (bool): Returns true if the user has a paid HelloSign account.. [optional]  # noqa: E501
             is_paid_hf (bool): Returns true if the user has a paid HelloFax account.. [optional]  # noqa: E501
-            quotas ([TemplateResponseAccountQuota]): [optional]  # noqa: E501
+            quotas (TemplateResponseAccountQuota): [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
