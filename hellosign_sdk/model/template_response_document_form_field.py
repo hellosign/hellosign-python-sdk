@@ -165,7 +165,7 @@ class TemplateResponseDocumentFormField(ModelNormal):
                                 _visited_composed_classes = (Animal,)
             api_id (str): A unique id for the form field.. [optional]  # noqa: E501
             name (str): The name of the form field.. [optional]  # noqa: E501
-            type (str): The type of this form field. See [field types](https://app.hellosign.com/api/reference#FieldTypes).. [optional]  # noqa: E501
+            type (str): The type of this form field. See [field types](/api/reference/constants/#field-types).. [optional]  # noqa: E501
             x (int): The horizontal offset in pixels for this form field.. [optional]  # noqa: E501
             y (int): The vertical offset in pixels for this form field.. [optional]  # noqa: E501
             width (int): The width in pixels of this form field.. [optional]  # noqa: E501
@@ -255,7 +255,7 @@ class TemplateResponseDocumentFormField(ModelNormal):
                                 _visited_composed_classes = (Animal,)
             api_id (str): A unique id for the form field.. [optional]  # noqa: E501
             name (str): The name of the form field.. [optional]  # noqa: E501
-            type (str): The type of this form field. See [field types](https://app.hellosign.com/api/reference#FieldTypes).. [optional]  # noqa: E501
+            type (str): The type of this form field. See [field types](/api/reference/constants/#field-types).. [optional]  # noqa: E501
             x (int): The horizontal offset in pixels for this form field.. [optional]  # noqa: E501
             y (int): The vertical offset in pixels for this form field.. [optional]  # noqa: E501
             width (int): The width in pixels of this form field.. [optional]  # noqa: E501

@@ -8,7 +8,7 @@ An array of Form Field objects containing the name and type of each named textbo
 | ---- | ---- | ----------- | ----- |
 | `api_id` | ```str``` |  A unique id for the form field.  |  |
 | `name` | ```str``` |  The name of the form field.  |  |
-| `type` | ```str``` |  The type of this form field. See [field types](https://app.hellosign.com/api/reference#FieldTypes).  |  |
+| `type` | ```str``` |  The type of this form field. See [field types](/api/reference/constants/#field-types).  |  |
 | `x` | ```int``` |  The horizontal offset in pixels for this form field.  |  |
 | `y` | ```int``` |  The vertical offset in pixels for this form field.  |  |
 | `width` | ```int``` |  The width in pixels of this form field.  |  |

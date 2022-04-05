@@ -138,7 +138,7 @@ class TemplateResponseDocumentFieldGroup(ModelNormal):
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
             name (str): The name of the form field group.. [optional]  # noqa: E501
-            rule (str): The rule used to validate checkboxes in the form field group. See [checkbox field grouping](https://app.hellosign.com/api/reference#CheckboxFieldGrouping).. [optional]  # noqa: E501
+            rule (str): The rule used to validate checkboxes in the form field group. See [checkbox field grouping](/api/reference/constants/#checkbox-field-grouping).. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -221,7 +221,7 @@ class TemplateResponseDocumentFieldGroup(ModelNormal):
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
             name (str): The name of the form field group.. [optional]  # noqa: E501
-            rule (str): The rule used to validate checkboxes in the form field group. See [checkbox field grouping](https://app.hellosign.com/api/reference#CheckboxFieldGrouping).. [optional]  # noqa: E501
+            rule (str): The rule used to validate checkboxes in the form field group. See [checkbox field grouping](/api/reference/constants/#checkbox-field-grouping).. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
