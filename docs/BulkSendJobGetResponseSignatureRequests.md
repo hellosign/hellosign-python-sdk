@@ -24,7 +24,9 @@
 | `details_url` | ```str``` |  The URL where the requester and the signers can view the current status of the SignatureRequest.  |  |
 | `cc_email_addresses` | ```[str]``` |  A list of email addresses that were CCed on the SignatureRequest. They will receive a copy of the final PDF once all the signers have signed.  |  |
 | `signing_redirect_url` | ```str, none_type``` |  The URL you want the signer redirected to after they successfully sign.  |  |
+| `template_ids` | ```[str]``` |  Templates IDs used in this SignatureRequest (if any).  |  |
 | `custom_fields` | [```[SignatureRequestResponseCustomField], none_type```](SignatureRequestResponseCustomField.md) |    |  |
+| `attachments` | [```[SignatureRequestResponseAttachment], none_type```](SignatureRequestResponseAttachment.md) |    |  |
 | `response_data` | [```[SignatureRequestResponseData], none_type```](SignatureRequestResponseData.md) |    |  |
 | `signatures` | [```[SignatureRequestResponseSignatures]```](SignatureRequestResponseSignatures.md) |    |  |
 | `bulk_send_job_id` | ```str``` |  The id of the BulkSendJob.  |  |

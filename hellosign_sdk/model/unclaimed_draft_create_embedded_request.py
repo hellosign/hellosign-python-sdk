@@ -128,6 +128,8 @@ class UnclaimedDraftCreateEmbeddedRequest(ModelNormal):
             'custom_fields': ([SubCustomField],),  # noqa: E501
             'editor_options': (SubEditorOptions,),  # noqa: E501
             'field_options': (SubFieldOptions,),  # noqa: E501
+            'force_signer_page': (bool,),  # noqa: E501
+            'force_subject_message': (bool,),  # noqa: E501
             'form_field_groups': ([SubFormFieldGroup],),  # noqa: E501
             'form_field_rules': ([SubFormFieldRule],),  # noqa: E501
             'form_fields_per_document': ([[SubFormFieldsPerDocumentBase]],),  # noqa: E501
@@ -136,7 +138,9 @@ class UnclaimedDraftCreateEmbeddedRequest(ModelNormal):
             'is_for_embedded_signing': (bool,),  # noqa: E501
             'message': (str,),  # noqa: E501
             'metadata': ({str: (bool, date, datetime, dict, float, int, list, str, none_type)},),  # noqa: E501
+            'requesting_redirect_url': (str,),  # noqa: E501
             'show_preview': (bool,),  # noqa: E501
+            'show_progress_stepper': (bool,),  # noqa: E501
             'signers': ([SubUnclaimedDraftSigner],),  # noqa: E501
             'signing_options': (SubSigningOptions,),  # noqa: E501
             'signing_redirect_url': (str,),  # noqa: E501
@@ -166,6 +170,8 @@ class UnclaimedDraftCreateEmbeddedRequest(ModelNormal):
         'custom_fields': 'custom_fields',  # noqa: E501
         'editor_options': 'editor_options',  # noqa: E501
         'field_options': 'field_options',  # noqa: E501
+        'force_signer_page': 'force_signer_page',  # noqa: E501
+        'force_subject_message': 'force_subject_message',  # noqa: E501
         'form_field_groups': 'form_field_groups',  # noqa: E501
         'form_field_rules': 'form_field_rules',  # noqa: E501
         'form_fields_per_document': 'form_fields_per_document',  # noqa: E501
@@ -174,7 +180,9 @@ class UnclaimedDraftCreateEmbeddedRequest(ModelNormal):
         'is_for_embedded_signing': 'is_for_embedded_signing',  # noqa: E501
         'message': 'message',  # noqa: E501
         'metadata': 'metadata',  # noqa: E501
+        'requesting_redirect_url': 'requesting_redirect_url',  # noqa: E501
         'show_preview': 'show_preview',  # noqa: E501
+        'show_progress_stepper': 'show_progress_stepper',  # noqa: E501
         'signers': 'signers',  # noqa: E501
         'signing_options': 'signing_options',  # noqa: E501
         'signing_redirect_url': 'signing_redirect_url',  # noqa: E501
@@ -241,6 +249,8 @@ class UnclaimedDraftCreateEmbeddedRequest(ModelNormal):
             custom_fields ([SubCustomField]): An array defining values and options for custom fields. Required when defining pre-set values in `form_fields_per_document` or [Text Tags](https://app.hellosign.com/api/textTagsWalkthrough#TextTagIntro).. [optional]  # noqa: E501
             editor_options (SubEditorOptions): [optional]  # noqa: E501
             field_options (SubFieldOptions): [optional]  # noqa: E501
+            force_signer_page (bool): Provide users the ability to review/edit the signers.. [optional] if omitted the server will use the default value of False  # noqa: E501
+            force_subject_message (bool): Provide users the ability to review/edit the subject and message.. [optional] if omitted the server will use the default value of False  # noqa: E501
             form_field_groups ([SubFormFieldGroup]): Group information for fields defined in `form_fields_per_document`. String-indexed JSON array with `group_label` and `requirement` keys. `form_fields_per_document` must contain fields referencing a group defined in `form_field_groups`.. [optional]  # noqa: E501
             form_field_rules ([SubFormFieldRule]): Conditional Logic rules for fields defined in `form_fields_per_document`.. [optional]  # noqa: E501
             form_fields_per_document ([[SubFormFieldsPerDocumentBase]]): The fields that should appear on the document, expressed as a 2-dimensional JSON array serialized to a string. The main array represents documents, with each containing an array of form fields. One document array is required for each file provided by the `file[]` parameter. In the case of a file with no fields, an empty list must be specified.  **NOTE**: Fields like **text**, **dropdown**, **checkbox**, **radio**, and **hyperlink** have additional required and optional parameters. Check out the list of [additional parameters](/api/reference/constants/#form-fields-per-document) for these field types.  * Text Field use `SubFormFieldsPerDocumentText` * Dropdown Field use `SubFormFieldsPerDocumentDropdown` * Hyperlink Field use `SubFormFieldsPerDocumentHyperlink` * Checkbox Field use `SubFormFieldsPerDocumentCheckbox` * Radio Field use `SubFormFieldsPerDocumentRadio` * Signature Field use `SubFormFieldsPerDocumentSignature` * Date Signed Field use `SubFormFieldsPerDocumentDateSigned` * Initials Field use `SubFormFieldsPerDocumentInitials` * Text Merge Field use `SubFormFieldsPerDocumentTextMerge` * Checkbox Merge Field use `SubFormFieldsPerDocumentCheckboxMerge`. [optional]  # noqa: E501
@@ -249,7 +259,9 @@ class UnclaimedDraftCreateEmbeddedRequest(ModelNormal):
             is_for_embedded_signing (bool): The request created from this draft will also be signable in embedded mode if set to `true`. Defaults to `false`.. [optional] if omitted the server will use the default value of False  # noqa: E501
             message (str): The custom message in the email that will be sent to the signers.. [optional]  # noqa: E501
             metadata ({str: (bool, date, datetime, dict, float, int, list, str, none_type)}): Key-value data that should be attached to the signature request. This metadata is included in all API responses and events involving the signature request. For example, use the metadata field to store a signer's order number for look up when receiving events for the signature request.  Each request can include up to 10 metadata keys, with key names up to 40 characters long and values up to 1000 characters long.. [optional]  # noqa: E501
+            requesting_redirect_url (str): The URL you want signers redirected to after they successfully request a signature.. [optional]  # noqa: E501
             show_preview (bool): This allows the requester to enable the editor/preview experience.  - `show_preview=true`: Allows requesters to enable the editor/preview experience. - `show_preview=false`: Allows requesters to disable the editor/preview experience.. [optional]  # noqa: E501
+            show_progress_stepper (bool): When only one step remains in the signature request process and this parameter is set to `false` then the progress stepper will be hidden.. [optional] if omitted the server will use the default value of True  # noqa: E501
             signers ([SubUnclaimedDraftSigner]): Add Signers to your Unclaimed Draft Signature Request.. [optional]  # noqa: E501
             signing_options (SubSigningOptions): [optional]  # noqa: E501
             signing_redirect_url (str): The URL you want signers redirected to after they successfully sign.. [optional]  # noqa: E501
@@ -356,6 +368,8 @@ class UnclaimedDraftCreateEmbeddedRequest(ModelNormal):
             custom_fields ([SubCustomField]): An array defining values and options for custom fields. Required when defining pre-set values in `form_fields_per_document` or [Text Tags](https://app.hellosign.com/api/textTagsWalkthrough#TextTagIntro).. [optional]  # noqa: E501
             editor_options (SubEditorOptions): [optional]  # noqa: E501
             field_options (SubFieldOptions): [optional]  # noqa: E501
+            force_signer_page (bool): Provide users the ability to review/edit the signers.. [optional] if omitted the server will use the default value of False  # noqa: E501
+            force_subject_message (bool): Provide users the ability to review/edit the subject and message.. [optional] if omitted the server will use the default value of False  # noqa: E501
             form_field_groups ([SubFormFieldGroup]): Group information for fields defined in `form_fields_per_document`. String-indexed JSON array with `group_label` and `requirement` keys. `form_fields_per_document` must contain fields referencing a group defined in `form_field_groups`.. [optional]  # noqa: E501
             form_field_rules ([SubFormFieldRule]): Conditional Logic rules for fields defined in `form_fields_per_document`.. [optional]  # noqa: E501
             form_fields_per_document ([[SubFormFieldsPerDocumentBase]]): The fields that should appear on the document, expressed as a 2-dimensional JSON array serialized to a string. The main array represents documents, with each containing an array of form fields. One document array is required for each file provided by the `file[]` parameter. In the case of a file with no fields, an empty list must be specified.  **NOTE**: Fields like **text**, **dropdown**, **checkbox**, **radio**, and **hyperlink** have additional required and optional parameters. Check out the list of [additional parameters](/api/reference/constants/#form-fields-per-document) for these field types.  * Text Field use `SubFormFieldsPerDocumentText` * Dropdown Field use `SubFormFieldsPerDocumentDropdown` * Hyperlink Field use `SubFormFieldsPerDocumentHyperlink` * Checkbox Field use `SubFormFieldsPerDocumentCheckbox` * Radio Field use `SubFormFieldsPerDocumentRadio` * Signature Field use `SubFormFieldsPerDocumentSignature` * Date Signed Field use `SubFormFieldsPerDocumentDateSigned` * Initials Field use `SubFormFieldsPerDocumentInitials` * Text Merge Field use `SubFormFieldsPerDocumentTextMerge` * Checkbox Merge Field use `SubFormFieldsPerDocumentCheckboxMerge`. [optional]  # noqa: E501
@@ -364,7 +378,9 @@ class UnclaimedDraftCreateEmbeddedRequest(ModelNormal):
             is_for_embedded_signing (bool): The request created from this draft will also be signable in embedded mode if set to `true`. Defaults to `false`.. [optional] if omitted the server will use the default value of False  # noqa: E501
             message (str): The custom message in the email that will be sent to the signers.. [optional]  # noqa: E501
             metadata ({str: (bool, date, datetime, dict, float, int, list, str, none_type)}): Key-value data that should be attached to the signature request. This metadata is included in all API responses and events involving the signature request. For example, use the metadata field to store a signer's order number for look up when receiving events for the signature request.  Each request can include up to 10 metadata keys, with key names up to 40 characters long and values up to 1000 characters long.. [optional]  # noqa: E501
+            requesting_redirect_url (str): The URL you want signers redirected to after they successfully request a signature.. [optional]  # noqa: E501
             show_preview (bool): This allows the requester to enable the editor/preview experience.  - `show_preview=true`: Allows requesters to enable the editor/preview experience. - `show_preview=false`: Allows requesters to disable the editor/preview experience.. [optional]  # noqa: E501
+            show_progress_stepper (bool): When only one step remains in the signature request process and this parameter is set to `false` then the progress stepper will be hidden.. [optional] if omitted the server will use the default value of True  # noqa: E501
             signers ([SubUnclaimedDraftSigner]): Add Signers to your Unclaimed Draft Signature Request.. [optional]  # noqa: E501
             signing_options (SubSigningOptions): [optional]  # noqa: E501
             signing_redirect_url (str): The URL you want signers redirected to after they successfully sign.. [optional]  # noqa: E501

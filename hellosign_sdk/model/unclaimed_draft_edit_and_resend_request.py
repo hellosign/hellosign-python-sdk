@@ -93,6 +93,7 @@ class UnclaimedDraftEditAndResendRequest(ModelNormal):
             'is_for_embedded_signing': (bool,),  # noqa: E501
             'requester_email_address': (str,),  # noqa: E501
             'requesting_redirect_url': (str,),  # noqa: E501
+            'show_progress_stepper': (bool,),  # noqa: E501
             'signing_redirect_url': (str,),  # noqa: E501
             'test_mode': (bool,),  # noqa: E501
         }
@@ -108,6 +109,7 @@ class UnclaimedDraftEditAndResendRequest(ModelNormal):
         'is_for_embedded_signing': 'is_for_embedded_signing',  # noqa: E501
         'requester_email_address': 'requester_email_address',  # noqa: E501
         'requesting_redirect_url': 'requesting_redirect_url',  # noqa: E501
+        'show_progress_stepper': 'show_progress_stepper',  # noqa: E501
         'signing_redirect_url': 'signing_redirect_url',  # noqa: E501
         'test_mode': 'test_mode',  # noqa: E501
     }
@@ -157,9 +159,10 @@ class UnclaimedDraftEditAndResendRequest(ModelNormal):
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
             editor_options (SubEditorOptions): [optional]  # noqa: E501
-            is_for_embedded_signing (bool): The request created from this draft will also be signable in embedded mode if set to `true`. Defaults to `false`.. [optional] if omitted the server will use the default value of False  # noqa: E501
+            is_for_embedded_signing (bool): The request created from this draft will also be signable in embedded mode if set to `true`.. [optional]  # noqa: E501
             requester_email_address (str): The email address of the user that should be designated as the requester of this draft. If not set, original requester's email address will be used.. [optional]  # noqa: E501
             requesting_redirect_url (str): The URL you want signers redirected to after they successfully request a signature.. [optional]  # noqa: E501
+            show_progress_stepper (bool): When only one step remains in the signature request process and this parameter is set to `false` then the progress stepper will be hidden.. [optional] if omitted the server will use the default value of True  # noqa: E501
             signing_redirect_url (str): The URL you want signers redirected to after they successfully sign.. [optional]  # noqa: E501
             test_mode (bool): Whether this is a test, the signature request created from this draft will not be legally binding if set to `true`. Defaults to `false`.. [optional] if omitted the server will use the default value of False  # noqa: E501
         """
@@ -248,9 +251,10 @@ class UnclaimedDraftEditAndResendRequest(ModelNormal):
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
             editor_options (SubEditorOptions): [optional]  # noqa: E501
-            is_for_embedded_signing (bool): The request created from this draft will also be signable in embedded mode if set to `true`. Defaults to `false`.. [optional] if omitted the server will use the default value of False  # noqa: E501
+            is_for_embedded_signing (bool): The request created from this draft will also be signable in embedded mode if set to `true`.. [optional]  # noqa: E501
             requester_email_address (str): The email address of the user that should be designated as the requester of this draft. If not set, original requester's email address will be used.. [optional]  # noqa: E501
             requesting_redirect_url (str): The URL you want signers redirected to after they successfully request a signature.. [optional]  # noqa: E501
+            show_progress_stepper (bool): When only one step remains in the signature request process and this parameter is set to `false` then the progress stepper will be hidden.. [optional] if omitted the server will use the default value of True  # noqa: E501
             signing_redirect_url (str): The URL you want signers redirected to after they successfully sign.. [optional]  # noqa: E501
             test_mode (bool): Whether this is a test, the signature request created from this draft will not be legally binding if set to `true`. Defaults to `false`.. [optional] if omitted the server will use the default value of False  # noqa: E501
         """

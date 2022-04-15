@@ -120,6 +120,8 @@ class UnclaimedDraftCreateEmbeddedWithTemplateRequest(ModelNormal):
             'field_options': (SubFieldOptions,),  # noqa: E501
             'file': ([file_type],),  # noqa: E501
             'file_url': ([str],),  # noqa: E501
+            'force_signer_roles': (bool,),  # noqa: E501
+            'force_subject_message': (bool,),  # noqa: E501
             'hold_request': (bool,),  # noqa: E501
             'is_for_embedded_signing': (bool,),  # noqa: E501
             'message': (str,),  # noqa: E501
@@ -127,6 +129,7 @@ class UnclaimedDraftCreateEmbeddedWithTemplateRequest(ModelNormal):
             'preview_only': (bool,),  # noqa: E501
             'requesting_redirect_url': (str,),  # noqa: E501
             'show_preview': (bool,),  # noqa: E501
+            'show_progress_stepper': (bool,),  # noqa: E501
             'signers': ([SubUnclaimedDraftTemplateSigner],),  # noqa: E501
             'signing_options': (SubSigningOptions,),  # noqa: E501
             'signing_redirect_url': (str,),  # noqa: E501
@@ -153,6 +156,8 @@ class UnclaimedDraftCreateEmbeddedWithTemplateRequest(ModelNormal):
         'field_options': 'field_options',  # noqa: E501
         'file': 'file',  # noqa: E501
         'file_url': 'file_url',  # noqa: E501
+        'force_signer_roles': 'force_signer_roles',  # noqa: E501
+        'force_subject_message': 'force_subject_message',  # noqa: E501
         'hold_request': 'hold_request',  # noqa: E501
         'is_for_embedded_signing': 'is_for_embedded_signing',  # noqa: E501
         'message': 'message',  # noqa: E501
@@ -160,6 +165,7 @@ class UnclaimedDraftCreateEmbeddedWithTemplateRequest(ModelNormal):
         'preview_only': 'preview_only',  # noqa: E501
         'requesting_redirect_url': 'requesting_redirect_url',  # noqa: E501
         'show_preview': 'show_preview',  # noqa: E501
+        'show_progress_stepper': 'show_progress_stepper',  # noqa: E501
         'signers': 'signers',  # noqa: E501
         'signing_options': 'signing_options',  # noqa: E501
         'signing_redirect_url': 'signing_redirect_url',  # noqa: E501
@@ -223,13 +229,16 @@ class UnclaimedDraftCreateEmbeddedWithTemplateRequest(ModelNormal):
             field_options (SubFieldOptions): [optional]  # noqa: E501
             file ([file_type]): **file** or **file_url** is required, but not both.  Append additional files to the signature request. HelloSign will parse the files for [text tags](https://app.hellosign.com/api/textTagsWalkthrough). Text tags for signers not on the template(s) will be ignored.  Use `file[]` to pass the uploaded file(s).  Currently we only support use of either the `file[]` parameter or `file_url[]` parameter, not both.. [optional]  # noqa: E501
             file_url ([str]): **file** or **file_url** is required, but not both.  Append additional files to the signature request. HelloSign will parse the files for [text tags](https://app.hellosign.com/api/textTagsWalkthrough). Text tags for signers not on the template(s) will be ignored.  Use `file_url[]` to have HelloSign download the file(s).  Currently we only support use of either the `file[]` parameter or `file_url[]` parameter, not both.. [optional]  # noqa: E501
+            force_signer_roles (bool): Provide users the ability to review/edit the template signer roles.. [optional] if omitted the server will use the default value of False  # noqa: E501
+            force_subject_message (bool): Provide users the ability to review/edit the template subject and message.. [optional] if omitted the server will use the default value of False  # noqa: E501
             hold_request (bool): The request from this draft will not automatically send to signers post-claim if set to 1. Requester must [release](/api/reference/operation/signatureRequestReleaseHold/) the request from hold when ready to send. Defaults to `false`.. [optional] if omitted the server will use the default value of False  # noqa: E501
             is_for_embedded_signing (bool): The request created from this draft will also be signable in embedded mode if set to `true`. Defaults to `false`.. [optional] if omitted the server will use the default value of False  # noqa: E501
             message (str): The custom message in the email that will be sent to the signers.. [optional]  # noqa: E501
             metadata ({str: (bool, date, datetime, dict, float, int, list, str, none_type)}): Key-value data that should be attached to the signature request. This metadata is included in all API responses and events involving the signature request. For example, use the metadata field to store a signer's order number for look up when receiving events for the signature request.  Each request can include up to 10 metadata keys, with key names up to 40 characters long and values up to 1000 characters long.. [optional]  # noqa: E501
-            preview_only (bool): This allows the requester to enable the preview experience experience.  - `preview_only=true`: Allows requesters to enable the preview only experience. - `preview_only=false`: Allows requesters to disable the preview only experience.  **Note**: This parameter overwrites `show_preview=1` (if set).. [optional] if omitted the server will use the default value of False  # noqa: E501
+            preview_only (bool): This allows the requester to enable the preview experience (i.e. does not allow the requester's end user to add any additional fields via the editor).  - `preview_only=true`: Allows requesters to enable the preview only experience. - `preview_only=false`: Allows requesters to disable the preview only experience.  **Note**: This parameter overwrites `show_preview=1` (if set).. [optional] if omitted the server will use the default value of False  # noqa: E501
             requesting_redirect_url (str): The URL you want signers redirected to after they successfully request a signature.. [optional]  # noqa: E501
             show_preview (bool): This allows the requester to enable the editor/preview experience.  - `show_preview=true`: Allows requesters to enable the editor/preview experience. - `show_preview=false`: Allows requesters to disable the editor/preview experience.. [optional] if omitted the server will use the default value of False  # noqa: E501
+            show_progress_stepper (bool): When only one step remains in the signature request process and this parameter is set to `false` then the progress stepper will be hidden.. [optional] if omitted the server will use the default value of True  # noqa: E501
             signers ([SubUnclaimedDraftTemplateSigner]): Add Signers to your Templated-based Signature Request.. [optional]  # noqa: E501
             signing_options (SubSigningOptions): [optional]  # noqa: E501
             signing_redirect_url (str): The URL you want signers redirected to after they successfully sign.. [optional]  # noqa: E501
@@ -334,13 +343,16 @@ class UnclaimedDraftCreateEmbeddedWithTemplateRequest(ModelNormal):
             field_options (SubFieldOptions): [optional]  # noqa: E501
             file ([file_type]): **file** or **file_url** is required, but not both.  Append additional files to the signature request. HelloSign will parse the files for [text tags](https://app.hellosign.com/api/textTagsWalkthrough). Text tags for signers not on the template(s) will be ignored.  Use `file[]` to pass the uploaded file(s).  Currently we only support use of either the `file[]` parameter or `file_url[]` parameter, not both.. [optional]  # noqa: E501
             file_url ([str]): **file** or **file_url** is required, but not both.  Append additional files to the signature request. HelloSign will parse the files for [text tags](https://app.hellosign.com/api/textTagsWalkthrough). Text tags for signers not on the template(s) will be ignored.  Use `file_url[]` to have HelloSign download the file(s).  Currently we only support use of either the `file[]` parameter or `file_url[]` parameter, not both.. [optional]  # noqa: E501
+            force_signer_roles (bool): Provide users the ability to review/edit the template signer roles.. [optional] if omitted the server will use the default value of False  # noqa: E501
+            force_subject_message (bool): Provide users the ability to review/edit the template subject and message.. [optional] if omitted the server will use the default value of False  # noqa: E501
             hold_request (bool): The request from this draft will not automatically send to signers post-claim if set to 1. Requester must [release](/api/reference/operation/signatureRequestReleaseHold/) the request from hold when ready to send. Defaults to `false`.. [optional] if omitted the server will use the default value of False  # noqa: E501
             is_for_embedded_signing (bool): The request created from this draft will also be signable in embedded mode if set to `true`. Defaults to `false`.. [optional] if omitted the server will use the default value of False  # noqa: E501
             message (str): The custom message in the email that will be sent to the signers.. [optional]  # noqa: E501
             metadata ({str: (bool, date, datetime, dict, float, int, list, str, none_type)}): Key-value data that should be attached to the signature request. This metadata is included in all API responses and events involving the signature request. For example, use the metadata field to store a signer's order number for look up when receiving events for the signature request.  Each request can include up to 10 metadata keys, with key names up to 40 characters long and values up to 1000 characters long.. [optional]  # noqa: E501
-            preview_only (bool): This allows the requester to enable the preview experience experience.  - `preview_only=true`: Allows requesters to enable the preview only experience. - `preview_only=false`: Allows requesters to disable the preview only experience.  **Note**: This parameter overwrites `show_preview=1` (if set).. [optional] if omitted the server will use the default value of False  # noqa: E501
+            preview_only (bool): This allows the requester to enable the preview experience (i.e. does not allow the requester's end user to add any additional fields via the editor).  - `preview_only=true`: Allows requesters to enable the preview only experience. - `preview_only=false`: Allows requesters to disable the preview only experience.  **Note**: This parameter overwrites `show_preview=1` (if set).. [optional] if omitted the server will use the default value of False  # noqa: E501
             requesting_redirect_url (str): The URL you want signers redirected to after they successfully request a signature.. [optional]  # noqa: E501
             show_preview (bool): This allows the requester to enable the editor/preview experience.  - `show_preview=true`: Allows requesters to enable the editor/preview experience. - `show_preview=false`: Allows requesters to disable the editor/preview experience.. [optional] if omitted the server will use the default value of False  # noqa: E501
+            show_progress_stepper (bool): When only one step remains in the signature request process and this parameter is set to `false` then the progress stepper will be hidden.. [optional] if omitted the server will use the default value of True  # noqa: E501
             signers ([SubUnclaimedDraftTemplateSigner]): Add Signers to your Templated-based Signature Request.. [optional]  # noqa: E501
             signing_options (SubSigningOptions): [optional]  # noqa: E501
             signing_redirect_url (str): The URL you want signers redirected to after they successfully sign.. [optional]  # noqa: E501

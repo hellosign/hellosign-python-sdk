@@ -61,6 +61,7 @@ docs/SignatureRequestGetResponse.md
 docs/SignatureRequestListResponse.md
 docs/SignatureRequestRemindRequest.md
 docs/SignatureRequestResponse.md
+docs/SignatureRequestResponseAttachment.md
 docs/SignatureRequestResponseCustomField.md
 docs/SignatureRequestResponseData.md
 docs/SignatureRequestResponseSignatures.md
@@ -208,6 +209,7 @@ hellosign_sdk/model/signature_request_get_response.py
 hellosign_sdk/model/signature_request_list_response.py
 hellosign_sdk/model/signature_request_remind_request.py
 hellosign_sdk/model/signature_request_response.py
+hellosign_sdk/model/signature_request_response_attachment.py
 hellosign_sdk/model/signature_request_response_custom_field.py
 hellosign_sdk/model/signature_request_response_data.py
 hellosign_sdk/model/signature_request_response_signatures.py

@@ -108,6 +108,7 @@ class SignatureRequestBulkSendWithTemplateRequest(ModelNormal):
             'signer_list': ([SubBulkSignerList],),  # noqa: E501
             'allow_decline': (bool,),  # noqa: E501
             'ccs': ([SubCC],),  # noqa: E501
+            'client_id': (str,),  # noqa: E501
             'custom_fields': ([SubCustomField],),  # noqa: E501
             'message': (str,),  # noqa: E501
             'metadata': ({str: (bool, date, datetime, dict, float, int, list, str, none_type)},),  # noqa: E501
@@ -128,6 +129,7 @@ class SignatureRequestBulkSendWithTemplateRequest(ModelNormal):
         'signer_list': 'signer_list',  # noqa: E501
         'allow_decline': 'allow_decline',  # noqa: E501
         'ccs': 'ccs',  # noqa: E501
+        'client_id': 'client_id',  # noqa: E501
         'custom_fields': 'custom_fields',  # noqa: E501
         'message': 'message',  # noqa: E501
         'metadata': 'metadata',  # noqa: E501
@@ -185,6 +187,7 @@ class SignatureRequestBulkSendWithTemplateRequest(ModelNormal):
             signer_list ([SubBulkSignerList]): `signer_list` is an array defining values and options for signer fields. Required unless a `signer_file` is used, you may not use both.. [optional]  # noqa: E501
             allow_decline (bool): Allows signers to decline to sign a document if `true`. Defaults to `false`.. [optional] if omitted the server will use the default value of False  # noqa: E501
             ccs ([SubCC]): Add CC email recipients. Required when a CC role exists for the Template.. [optional]  # noqa: E501
+            client_id (str): The client ID of the Api App you want to associate with this request.. [optional]  # noqa: E501
             custom_fields ([SubCustomField]): An array defining values and options for custom fields. Required when defining pre-set values in `form_fields_per_document` or [Text Tags](https://app.hellosign.com/api/textTagsWalkthrough#TextTagIntro).. [optional]  # noqa: E501
             message (str): The custom message in the email that will be sent to the signers.. [optional]  # noqa: E501
             metadata ({str: (bool, date, datetime, dict, float, int, list, str, none_type)}): Key-value data that should be attached to the signature request. This metadata is included in all API responses and events involving the signature request. For example, use the metadata field to store a signer's order number for look up when receiving events for the signature request.  Each request can include up to 10 metadata keys, with key names up to 40 characters long and values up to 1000 characters long.. [optional]  # noqa: E501
@@ -281,6 +284,7 @@ class SignatureRequestBulkSendWithTemplateRequest(ModelNormal):
             signer_list ([SubBulkSignerList]): `signer_list` is an array defining values and options for signer fields. Required unless a `signer_file` is used, you may not use both.. [optional]  # noqa: E501
             allow_decline (bool): Allows signers to decline to sign a document if `true`. Defaults to `false`.. [optional] if omitted the server will use the default value of False  # noqa: E501
             ccs ([SubCC]): Add CC email recipients. Required when a CC role exists for the Template.. [optional]  # noqa: E501
+            client_id (str): The client ID of the Api App you want to associate with this request.. [optional]  # noqa: E501
             custom_fields ([SubCustomField]): An array defining values and options for custom fields. Required when defining pre-set values in `form_fields_per_document` or [Text Tags](https://app.hellosign.com/api/textTagsWalkthrough#TextTagIntro).. [optional]  # noqa: E501
             message (str): The custom message in the email that will be sent to the signers.. [optional]  # noqa: E501
             metadata ({str: (bool, date, datetime, dict, float, int, list, str, none_type)}): Key-value data that should be attached to the signature request. This metadata is included in all API responses and events involving the signature request. For example, use the metadata field to store a signer's order number for look up when receiving events for the signature request.  Each request can include up to 10 metadata keys, with key names up to 40 characters long and values up to 1000 characters long.. [optional]  # noqa: E501

@@ -824,7 +824,7 @@ class TemplateApi(object):
         >>> result = thread.get()
 
         Args:
-            template_id (str): The id of the Template to delete.
+            template_id (str): The id of the template files to retrieve.
 
         Keyword Args:
             file_type (str): Set to `pdf` for a single merged document or `zip` for a collection of individual documents.. [optional]

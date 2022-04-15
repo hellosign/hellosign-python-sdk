@@ -127,6 +127,7 @@ class UnclaimedDraftCreateRequest(ModelNormal):
             'hide_text_tags': (bool,),  # noqa: E501
             'message': (str,),  # noqa: E501
             'metadata': ({str: (bool, date, datetime, dict, float, int, list, str, none_type)},),  # noqa: E501
+            'show_progress_stepper': (bool,),  # noqa: E501
             'signers': ([SubUnclaimedDraftSigner],),  # noqa: E501
             'signing_options': (SubSigningOptions,),  # noqa: E501
             'signing_redirect_url': (str,),  # noqa: E501
@@ -156,6 +157,7 @@ class UnclaimedDraftCreateRequest(ModelNormal):
         'hide_text_tags': 'hide_text_tags',  # noqa: E501
         'message': 'message',  # noqa: E501
         'metadata': 'metadata',  # noqa: E501
+        'show_progress_stepper': 'show_progress_stepper',  # noqa: E501
         'signers': 'signers',  # noqa: E501
         'signing_options': 'signing_options',  # noqa: E501
         'signing_redirect_url': 'signing_redirect_url',  # noqa: E501
@@ -220,6 +222,7 @@ class UnclaimedDraftCreateRequest(ModelNormal):
             hide_text_tags (bool): Send with a value of `true` if you wish to enable automatic Text Tag removal. Defaults to `false`. When using Text Tags it is preferred that you set this to `false` and hide your tags with white text or something similar because the automatic removal system can cause unwanted clipping. See the [Text Tags](https://app.hellosign.com/api/textTagsWalkthrough#TextTagIntro) walkthrough for more details.. [optional] if omitted the server will use the default value of False  # noqa: E501
             message (str): The custom message in the email that will be sent to the signers.. [optional]  # noqa: E501
             metadata ({str: (bool, date, datetime, dict, float, int, list, str, none_type)}): Key-value data that should be attached to the signature request. This metadata is included in all API responses and events involving the signature request. For example, use the metadata field to store a signer's order number for look up when receiving events for the signature request.  Each request can include up to 10 metadata keys, with key names up to 40 characters long and values up to 1000 characters long.. [optional]  # noqa: E501
+            show_progress_stepper (bool): When only one step remains in the signature request process and this parameter is set to `false` then the progress stepper will be hidden.. [optional] if omitted the server will use the default value of True  # noqa: E501
             signers ([SubUnclaimedDraftSigner]): Add Signers to your Unclaimed Draft Signature Request.. [optional]  # noqa: E501
             signing_options (SubSigningOptions): [optional]  # noqa: E501
             signing_redirect_url (str): The URL you want signers redirected to after they successfully sign.. [optional]  # noqa: E501
@@ -322,6 +325,7 @@ class UnclaimedDraftCreateRequest(ModelNormal):
             hide_text_tags (bool): Send with a value of `true` if you wish to enable automatic Text Tag removal. Defaults to `false`. When using Text Tags it is preferred that you set this to `false` and hide your tags with white text or something similar because the automatic removal system can cause unwanted clipping. See the [Text Tags](https://app.hellosign.com/api/textTagsWalkthrough#TextTagIntro) walkthrough for more details.. [optional] if omitted the server will use the default value of False  # noqa: E501
             message (str): The custom message in the email that will be sent to the signers.. [optional]  # noqa: E501
             metadata ({str: (bool, date, datetime, dict, float, int, list, str, none_type)}): Key-value data that should be attached to the signature request. This metadata is included in all API responses and events involving the signature request. For example, use the metadata field to store a signer's order number for look up when receiving events for the signature request.  Each request can include up to 10 metadata keys, with key names up to 40 characters long and values up to 1000 characters long.. [optional]  # noqa: E501
+            show_progress_stepper (bool): When only one step remains in the signature request process and this parameter is set to `false` then the progress stepper will be hidden.. [optional] if omitted the server will use the default value of True  # noqa: E501
             signers ([SubUnclaimedDraftSigner]): Add Signers to your Unclaimed Draft Signature Request.. [optional]  # noqa: E501
             signing_options (SubSigningOptions): [optional]  # noqa: E501
             signing_redirect_url (str): The URL you want signers redirected to after they successfully sign.. [optional]  # noqa: E501

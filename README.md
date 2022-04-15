@@ -235,6 +235,7 @@ All URIs are relative to *https://api.hellosign.com/v3*
  - [SignatureRequestListResponse](docs/SignatureRequestListResponse.md)
  - [SignatureRequestRemindRequest](docs/SignatureRequestRemindRequest.md)
  - [SignatureRequestResponse](docs/SignatureRequestResponse.md)
+ - [SignatureRequestResponseAttachment](docs/SignatureRequestResponseAttachment.md)
  - [SignatureRequestResponseCustomField](docs/SignatureRequestResponseCustomField.md)
  - [SignatureRequestResponseData](docs/SignatureRequestResponseData.md)
  - [SignatureRequestResponseSignatures](docs/SignatureRequestResponseSignatures.md)

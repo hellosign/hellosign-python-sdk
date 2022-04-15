@@ -32,10 +32,12 @@ from hellosign_sdk.exceptions import ApiAttributeError
 
 def lazy_import():
     from hellosign_sdk.model.signature_request_response import SignatureRequestResponse
+    from hellosign_sdk.model.signature_request_response_attachment import SignatureRequestResponseAttachment
     from hellosign_sdk.model.signature_request_response_custom_field import SignatureRequestResponseCustomField
     from hellosign_sdk.model.signature_request_response_data import SignatureRequestResponseData
     from hellosign_sdk.model.signature_request_response_signatures import SignatureRequestResponseSignatures
     globals()['SignatureRequestResponse'] = SignatureRequestResponse
+    globals()['SignatureRequestResponseAttachment'] = SignatureRequestResponseAttachment
     globals()['SignatureRequestResponseCustomField'] = SignatureRequestResponseCustomField
     globals()['SignatureRequestResponseData'] = SignatureRequestResponseData
     globals()['SignatureRequestResponseSignatures'] = SignatureRequestResponseSignatures
@@ -112,7 +114,9 @@ class BulkSendJobGetResponseSignatureRequests(ModelComposed):
             'details_url': (str,),  # noqa: E501
             'cc_email_addresses': ([str],),  # noqa: E501
             'signing_redirect_url': (str, none_type,),  # noqa: E501
+            'template_ids': ([str],),  # noqa: E501
             'custom_fields': ([SignatureRequestResponseCustomField], none_type,),  # noqa: E501
+            'attachments': ([SignatureRequestResponseAttachment], none_type,),  # noqa: E501
             'response_data': ([SignatureRequestResponseData], none_type,),  # noqa: E501
             'signatures': ([SignatureRequestResponseSignatures],),  # noqa: E501
             'bulk_send_job_id': (str,),  # noqa: E501
@@ -142,7 +146,9 @@ class BulkSendJobGetResponseSignatureRequests(ModelComposed):
         'details_url': 'details_url',  # noqa: E501
         'cc_email_addresses': 'cc_email_addresses',  # noqa: E501
         'signing_redirect_url': 'signing_redirect_url',  # noqa: E501
+        'template_ids': 'template_ids',  # noqa: E501
         'custom_fields': 'custom_fields',  # noqa: E501
+        'attachments': 'attachments',  # noqa: E501
         'response_data': 'response_data',  # noqa: E501
         'signatures': 'signatures',  # noqa: E501
         'bulk_send_job_id': 'bulk_send_job_id',  # noqa: E501
@@ -205,7 +211,9 @@ class BulkSendJobGetResponseSignatureRequests(ModelComposed):
             details_url (str): The URL where the requester and the signers can view the current status of the SignatureRequest.. [optional]  # noqa: E501
             cc_email_addresses ([str]): A list of email addresses that were CCed on the SignatureRequest. They will receive a copy of the final PDF once all the signers have signed.. [optional]  # noqa: E501
             signing_redirect_url (str, none_type): The URL you want the signer redirected to after they successfully sign.. [optional]  # noqa: E501
+            template_ids ([str]): Templates IDs used in this SignatureRequest (if any).. [optional]  # noqa: E501
             custom_fields ([SignatureRequestResponseCustomField], none_type): [optional]  # noqa: E501
+            attachments ([SignatureRequestResponseAttachment], none_type): [optional]  # noqa: E501
             response_data ([SignatureRequestResponseData], none_type): [optional]  # noqa: E501
             signatures ([SignatureRequestResponseSignatures]): [optional]  # noqa: E501
             bulk_send_job_id (str): The id of the BulkSendJob.. [optional]  # noqa: E501
@@ -326,7 +334,9 @@ class BulkSendJobGetResponseSignatureRequests(ModelComposed):
             details_url (str): The URL where the requester and the signers can view the current status of the SignatureRequest.. [optional]  # noqa: E501
             cc_email_addresses ([str]): A list of email addresses that were CCed on the SignatureRequest. They will receive a copy of the final PDF once all the signers have signed.. [optional]  # noqa: E501
             signing_redirect_url (str, none_type): The URL you want the signer redirected to after they successfully sign.. [optional]  # noqa: E501
+            template_ids ([str]): Templates IDs used in this SignatureRequest (if any).. [optional]  # noqa: E501
             custom_fields ([SignatureRequestResponseCustomField], none_type): [optional]  # noqa: E501
+            attachments ([SignatureRequestResponseAttachment], none_type): [optional]  # noqa: E501
             response_data ([SignatureRequestResponseData], none_type): [optional]  # noqa: E501
             signatures ([SignatureRequestResponseSignatures]): [optional]  # noqa: E501
             bulk_send_job_id (str): The id of the BulkSendJob.. [optional]  # noqa: E501
