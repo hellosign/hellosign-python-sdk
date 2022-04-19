@@ -11,7 +11,7 @@
 | `signer_list` | [```[SubBulkSignerList]```](SubBulkSignerList.md) |  `signer_list` is an array defining values and options for signer fields. Required unless a `signer_file` is used, you may not use both.  |  |
 | `allow_decline` | ```bool``` |  Allows signers to decline to sign a document if `true`. Defaults to `false`.  |  [default to False] |
 | `ccs` | [```[SubCC]```](SubCC.md) |  Add CC email recipients. Required when a CC role exists for the Template.  |  |
-| `client_id` | ```str``` |  The client ID of the Api App you want to associate with this request.  |  |
+| `client_id` | ```str``` |  The client id of the Api App you want to associate with this request. Used to apply the branding and callback url defined for the app.  |  |
 | `custom_fields` | [```[SubCustomField]```](SubCustomField.md) |  An array defining values and options for custom fields. Required when defining pre-set values in `form_fields_per_document` or [Text Tags](https://app.hellosign.com/api/textTagsWalkthrough#TextTagIntro).  |  |
 | `message` | ```str``` |  The custom message in the email that will be sent to the signers.  |  |
 | `metadata` | ```{str: (bool, date, datetime, dict, float, int, list, str, none_type)}``` |  Key-value data that should be attached to the signature request. This metadata is included in all API responses and events involving the signature request. For example, use the metadata field to store a signer&#39;s order number for look up when receiving events for the signature request.<br><br>Each request can include up to 10 metadata keys, with key names up to 40 characters long and values up to 1000 characters long.  |  |

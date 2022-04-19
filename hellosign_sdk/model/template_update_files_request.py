@@ -151,7 +151,7 @@ class TemplateUpdateFilesRequest(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            client_id (str): Client ID of the app you're using to create this template.. [optional]  # noqa: E501
+            client_id (str): Client id of the app you're using to update this template.. [optional]  # noqa: E501
             file ([file_type]): **file** or **file_url** is required, but not both.  Use `file[]` to indicate the uploaded file(s) to use for the template  Currently we only support use of either the `file[]` parameter or `file_url[]` parameter, not both.. [optional]  # noqa: E501
             file_url ([str]): **file_url** or **file** is required, but not both.  Use `file_url[]` to have HelloSign download the file(s) to use for the template.  Currently we only support use of either the `file[]` parameter or `file_url[]` parameter, not both.. [optional]  # noqa: E501
             message (str): The new default template email message.. [optional]  # noqa: E501
@@ -238,7 +238,7 @@ class TemplateUpdateFilesRequest(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            client_id (str): Client ID of the app you're using to create this template.. [optional]  # noqa: E501
+            client_id (str): Client id of the app you're using to update this template.. [optional]  # noqa: E501
             file ([file_type]): **file** or **file_url** is required, but not both.  Use `file[]` to indicate the uploaded file(s) to use for the template  Currently we only support use of either the `file[]` parameter or `file_url[]` parameter, not both.. [optional]  # noqa: E501
             file_url ([str]): **file_url** or **file** is required, but not both.  Use `file_url[]` to have HelloSign download the file(s) to use for the template.  Currently we only support use of either the `file[]` parameter or `file_url[]` parameter, not both.. [optional]  # noqa: E501
             message (str): The new default template email message.. [optional]  # noqa: E501

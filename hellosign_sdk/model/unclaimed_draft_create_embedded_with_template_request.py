@@ -186,7 +186,7 @@ class UnclaimedDraftCreateEmbeddedWithTemplateRequest(ModelNormal):
         """UnclaimedDraftCreateEmbeddedWithTemplateRequest - a model defined in OpenAPI
 
         Args:
-            client_id (str): Client id of the app you're using to create this draft. Visit our [embedded page](https://app.hellosign.com/api/embeddedSigningWalkthrough) to learn more about this parameter.
+            client_id (str): Client id of the app used to create the draft. Used to apply the branding and callback url defined for the app.
             requester_email_address (str): The email address of the user that should be designated as the requester of this draft, if the draft type is `request_signature`.
             template_ids ([str]): Use `template_ids` to create a SignatureRequest from one or more templates, in the order in which the templates will be used.
 
@@ -300,7 +300,7 @@ class UnclaimedDraftCreateEmbeddedWithTemplateRequest(ModelNormal):
         """UnclaimedDraftCreateEmbeddedWithTemplateRequest - a model defined in OpenAPI
 
         Args:
-            client_id (str): Client id of the app you're using to create this draft. Visit our [embedded page](https://app.hellosign.com/api/embeddedSigningWalkthrough) to learn more about this parameter.
+            client_id (str): Client id of the app used to create the draft. Used to apply the branding and callback url defined for the app.
             requester_email_address (str): The email address of the user that should be designated as the requester of this draft, if the draft type is `request_signature`.
             template_ids ([str]): Use `template_ids` to create a SignatureRequest from one or more templates, in the order in which the templates will be used.
 

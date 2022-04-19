@@ -113,7 +113,7 @@ class OAuthTokenGenerateRequest(ModelNormal):
         """OAuthTokenGenerateRequest - a model defined in OpenAPI
 
         Args:
-            client_id (str): The client id of your app.
+            client_id (str): The client id of the app requesting authorization.
             client_secret (str): The secret token of your app.
             code (str): The code passed to your callback when the user granted access.
             state (str): Same as the state you specified earlier.
@@ -207,7 +207,7 @@ class OAuthTokenGenerateRequest(ModelNormal):
         """OAuthTokenGenerateRequest - a model defined in OpenAPI
 
         Args:
-            client_id (str): The client id of your app.
+            client_id (str): The client id of the app requesting authorization.
             client_secret (str): The secret token of your app.
             code (str): The code passed to your callback when the user granted access.
             state (str): Same as the state you specified earlier.

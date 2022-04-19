@@ -83,6 +83,7 @@ class AccountUpdateRequest(ModelNormal):
         """
         return {
             'callback_url': (str,),  # noqa: E501
+            'locale': (str,),  # noqa: E501
         }
 
     @cached_property
@@ -92,6 +93,7 @@ class AccountUpdateRequest(ModelNormal):
 
     attribute_map = {
         'callback_url': 'callback_url',  # noqa: E501
+        'locale': 'locale',  # noqa: E501
     }
 
     read_only_vars = {
@@ -136,6 +138,7 @@ class AccountUpdateRequest(ModelNormal):
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
             callback_url (str): The URL that HelloSign should POST events to.. [optional]  # noqa: E501
+            locale (str): The locale used in this Account.. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -218,6 +221,7 @@ class AccountUpdateRequest(ModelNormal):
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
             callback_url (str): The URL that HelloSign should POST events to.. [optional]  # noqa: E501
+            locale (str): The locale used in this Account.. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)

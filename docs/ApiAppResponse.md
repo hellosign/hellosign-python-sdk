@@ -7,7 +7,7 @@
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | `callback_url` | ```str, none_type``` |  The app&#39;s callback URL (for events)  |  |
-| `client_id` | ```str``` |  The app&#39;s client ID  |  |
+| `client_id` | ```str``` |  The app&#39;s client id  |  |
 | `created_at` | ```int``` |  The time that the app was created  |  |
 | `domain` | ```str``` |  The domain name associated with the app  |  |
 | `name` | ```str``` |  The name of the app  |  |

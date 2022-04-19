@@ -54,7 +54,6 @@ with ApiClient(configuration) as api_client:
     )
 
     data = models.SignatureRequestBulkSendWithTemplateRequest(
-        client_id="1a659d9ad95bccd307ecad78d72192f8",
         template_ids=["c26b8a16784a872da37ea946b9ddec7c1e11dff6"],
         subject="Purchase Order",
         message="Glad we could come to an agreement.",

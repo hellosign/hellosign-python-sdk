@@ -7,7 +7,7 @@ Calls SignatureRequestSend in controller
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | `template_ids`<sup>*_required_</sup> | ```[str]``` |  Use `template_ids` to create a SignatureRequest from one or more templates, in the order in which the template will be used.  |  |
-| `client_id`<sup>*_required_</sup> | ```str``` |  Client id of the app you&#39;re using to create this embedded signature request. Visit our [embedded page](https://app.hellosign.com/api/embeddedSigningWalkthrough) to learn more about this parameter.  |  |
+| `client_id`<sup>*_required_</sup> | ```str``` |  Client id of the app you&#39;re using to create this embedded signature request. Used for security purposes.  |  |
 | `allow_decline` | ```bool``` |  Allows signers to decline to sign a document if `true`. Defaults to `false`.  |  [default to False] |
 | `ccs` | [```[SubCC]```](SubCC.md) |  Add CC email recipients. Required when a CC role exists for the Template.  |  |
 | `custom_fields` | [```[SubCustomField]```](SubCustomField.md) |  An array defining values and options for custom fields. Required when defining when a custom field exists in the Template.  |  |

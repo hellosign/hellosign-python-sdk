@@ -194,7 +194,7 @@ class SignatureRequestSendWithTemplateRequest(ModelNormal):
                                 _visited_composed_classes = (Animal,)
             allow_decline (bool): Allows signers to decline to sign a document if `true`. Defaults to `false`.. [optional] if omitted the server will use the default value of False  # noqa: E501
             ccs ([SubCC]): Add CC email recipients. Required when a CC role exists for the Template.. [optional]  # noqa: E501
-            client_id (str): The client ID of the ApiApp you want to associate with this request.. [optional]  # noqa: E501
+            client_id (str): Client id of the app to associate with the signature request. Used to apply the branding and callback url defined for the app.. [optional]  # noqa: E501
             custom_fields ([SubCustomField]): An array defining values and options for custom fields. Required when defining when a custom field exists in the Template.. [optional]  # noqa: E501
             file ([file_type]): **file** or **file_url** is required, but not both.  Use `file[]` to indicate the uploaded file(s) to send for signature.  Currently we only support use of either the `file[]` parameter or `file_url[]` parameter, not both.. [optional]  # noqa: E501
             file_url ([str]): **file_url** or **file** is required, but not both.  Use `file_url[]` to have HelloSign download the file(s) to send for signature.  Currently we only support use of either the `file[]` parameter or `file_url[]` parameter, not both.. [optional]  # noqa: E501
@@ -295,7 +295,7 @@ class SignatureRequestSendWithTemplateRequest(ModelNormal):
                                 _visited_composed_classes = (Animal,)
             allow_decline (bool): Allows signers to decline to sign a document if `true`. Defaults to `false`.. [optional] if omitted the server will use the default value of False  # noqa: E501
             ccs ([SubCC]): Add CC email recipients. Required when a CC role exists for the Template.. [optional]  # noqa: E501
-            client_id (str): The client ID of the ApiApp you want to associate with this request.. [optional]  # noqa: E501
+            client_id (str): Client id of the app to associate with the signature request. Used to apply the branding and callback url defined for the app.. [optional]  # noqa: E501
             custom_fields ([SubCustomField]): An array defining values and options for custom fields. Required when defining when a custom field exists in the Template.. [optional]  # noqa: E501
             file ([file_type]): **file** or **file_url** is required, but not both.  Use `file[]` to indicate the uploaded file(s) to send for signature.  Currently we only support use of either the `file[]` parameter or `file_url[]` parameter, not both.. [optional]  # noqa: E501
             file_url ([str]): **file_url** or **file** is required, but not both.  Use `file_url[]` to have HelloSign download the file(s) to send for signature.  Currently we only support use of either the `file[]` parameter or `file_url[]` parameter, not both.. [optional]  # noqa: E501

@@ -174,7 +174,7 @@ class SignatureRequestCreateEmbeddedRequest(ModelNormal):
         """SignatureRequestCreateEmbeddedRequest - a model defined in OpenAPI
 
         Args:
-            client_id (str): Client id of the app you're using to create this embedded signature request. Visit our [embedded page](https://app.hellosign.com/api/embeddedSigningWalkthrough) to learn more about this parameter.
+            client_id (str): Client id of the app you're using to create this embedded signature request. Used for security purposes.
 
         Keyword Args:
             _check_type (bool): if True, values for parameters in openapi_types
@@ -278,7 +278,7 @@ class SignatureRequestCreateEmbeddedRequest(ModelNormal):
         """SignatureRequestCreateEmbeddedRequest - a model defined in OpenAPI
 
         Args:
-            client_id (str): Client id of the app you're using to create this embedded signature request. Visit our [embedded page](https://app.hellosign.com/api/embeddedSigningWalkthrough) to learn more about this parameter.
+            client_id (str): Client id of the app you're using to create this embedded signature request. Used for security purposes.
 
         Keyword Args:
             _check_type (bool): if True, values for parameters in openapi_types

@@ -155,7 +155,7 @@ class SignatureRequestCreateEmbeddedWithTemplateRequest(ModelNormal):
 
         Args:
             template_ids ([str]): Use `template_ids` to create a SignatureRequest from one or more templates, in the order in which the template will be used.
-            client_id (str): Client id of the app you're using to create this embedded signature request. Visit our [embedded page](https://app.hellosign.com/api/embeddedSigningWalkthrough) to learn more about this parameter.
+            client_id (str): Client id of the app you're using to create this embedded signature request. Used for security purposes.
 
         Keyword Args:
             _check_type (bool): if True, values for parameters in openapi_types
@@ -254,7 +254,7 @@ class SignatureRequestCreateEmbeddedWithTemplateRequest(ModelNormal):
 
         Args:
             template_ids ([str]): Use `template_ids` to create a SignatureRequest from one or more templates, in the order in which the template will be used.
-            client_id (str): Client id of the app you're using to create this embedded signature request. Visit our [embedded page](https://app.hellosign.com/api/embeddedSigningWalkthrough) to learn more about this parameter.
+            client_id (str): Client id of the app you're using to create this embedded signature request. Used for security purposes.
 
         Keyword Args:
             _check_type (bool): if True, values for parameters in openapi_types

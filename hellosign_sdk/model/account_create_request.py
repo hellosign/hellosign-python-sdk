@@ -85,6 +85,7 @@ class AccountCreateRequest(ModelNormal):
             'email_address': (str,),  # noqa: E501
             'client_id': (str,),  # noqa: E501
             'client_secret': (str,),  # noqa: E501
+            'locale': (str,),  # noqa: E501
         }
 
     @cached_property
@@ -96,6 +97,7 @@ class AccountCreateRequest(ModelNormal):
         'email_address': 'email_address',  # noqa: E501
         'client_id': 'client_id',  # noqa: E501
         'client_secret': 'client_secret',  # noqa: E501
+        'locale': 'locale',  # noqa: E501
     }
 
     read_only_vars = {
@@ -144,6 +146,7 @@ class AccountCreateRequest(ModelNormal):
                                 _visited_composed_classes = (Animal,)
             client_id (str): Used when creating a new account and requesting OAuth authorization.  See [OAuth 2.0 Authorization](https://app.hellosign.com/api/oauthWalkthrough#OAuthAuthorization). [optional]  # noqa: E501
             client_secret (str): Used when creating a new account and requesting OAuth authorization.  See [OAuth 2.0 Authorization](https://app.hellosign.com/api/oauthWalkthrough#OAuthAuthorization). [optional]  # noqa: E501
+            locale (str): The locale used in this Account.. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -231,6 +234,7 @@ class AccountCreateRequest(ModelNormal):
                                 _visited_composed_classes = (Animal,)
             client_id (str): Used when creating a new account and requesting OAuth authorization.  See [OAuth 2.0 Authorization](https://app.hellosign.com/api/oauthWalkthrough#OAuthAuthorization). [optional]  # noqa: E501
             client_secret (str): Used when creating a new account and requesting OAuth authorization.  See [OAuth 2.0 Authorization](https://app.hellosign.com/api/oauthWalkthrough#OAuthAuthorization). [optional]  # noqa: E501
+            locale (str): The locale used in this Account.. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)

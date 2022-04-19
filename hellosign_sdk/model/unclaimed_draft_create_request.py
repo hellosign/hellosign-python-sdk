@@ -119,6 +119,7 @@ class UnclaimedDraftCreateRequest(ModelNormal):
             'allow_decline': (bool,),  # noqa: E501
             'attachments': ([SubAttachment],),  # noqa: E501
             'cc_email_addresses': ([str],),  # noqa: E501
+            'client_id': (str,),  # noqa: E501
             'custom_fields': ([SubCustomField],),  # noqa: E501
             'field_options': (SubFieldOptions,),  # noqa: E501
             'form_field_groups': ([SubFormFieldGroup],),  # noqa: E501
@@ -149,6 +150,7 @@ class UnclaimedDraftCreateRequest(ModelNormal):
         'allow_decline': 'allow_decline',  # noqa: E501
         'attachments': 'attachments',  # noqa: E501
         'cc_email_addresses': 'cc_email_addresses',  # noqa: E501
+        'client_id': 'client_id',  # noqa: E501
         'custom_fields': 'custom_fields',  # noqa: E501
         'field_options': 'field_options',  # noqa: E501
         'form_field_groups': 'form_field_groups',  # noqa: E501
@@ -214,6 +216,7 @@ class UnclaimedDraftCreateRequest(ModelNormal):
             allow_decline (bool): Allows signers to decline to sign a document if `true`. Defaults to `false`.. [optional] if omitted the server will use the default value of False  # noqa: E501
             attachments ([SubAttachment]): [optional]  # noqa: E501
             cc_email_addresses ([str]): The email addresses that should be CCed.. [optional]  # noqa: E501
+            client_id (str): Client id of the app used to create the draft. Used to apply the branding and callback url defined for the app.. [optional]  # noqa: E501
             custom_fields ([SubCustomField]): An array defining values and options for custom fields. Required when defining pre-set values in `form_fields_per_document` or [Text Tags](https://app.hellosign.com/api/textTagsWalkthrough#TextTagIntro).. [optional]  # noqa: E501
             field_options (SubFieldOptions): [optional]  # noqa: E501
             form_field_groups ([SubFormFieldGroup]): Group information for fields defined in `form_fields_per_document`. String-indexed JSON array with `group_label` and `requirement` keys. `form_fields_per_document` must contain fields referencing a group defined in `form_field_groups`.. [optional]  # noqa: E501
@@ -317,6 +320,7 @@ class UnclaimedDraftCreateRequest(ModelNormal):
             allow_decline (bool): Allows signers to decline to sign a document if `true`. Defaults to `false`.. [optional] if omitted the server will use the default value of False  # noqa: E501
             attachments ([SubAttachment]): [optional]  # noqa: E501
             cc_email_addresses ([str]): The email addresses that should be CCed.. [optional]  # noqa: E501
+            client_id (str): Client id of the app used to create the draft. Used to apply the branding and callback url defined for the app.. [optional]  # noqa: E501
             custom_fields ([SubCustomField]): An array defining values and options for custom fields. Required when defining pre-set values in `form_fields_per_document` or [Text Tags](https://app.hellosign.com/api/textTagsWalkthrough#TextTagIntro).. [optional]  # noqa: E501
             field_options (SubFieldOptions): [optional]  # noqa: E501
             form_field_groups ([SubFormFieldGroup]): Group information for fields defined in `form_fields_per_document`. String-indexed JSON array with `group_label` and `requirement` keys. `form_fields_per_document` must contain fields referencing a group defined in `form_field_groups`.. [optional]  # noqa: E501

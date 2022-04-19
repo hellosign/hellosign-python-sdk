@@ -181,7 +181,7 @@ class TemplateCreateEmbeddedDraftRequest(ModelNormal):
         """TemplateCreateEmbeddedDraftRequest - a model defined in OpenAPI
 
         Args:
-            client_id (str): Client id of the app you're using to create this draft.
+            client_id (str): Client id of the app you're using to create this draft. Used to apply the branding and callback url defined for the app.
 
         Keyword Args:
             _check_type (bool): if True, values for parameters in openapi_types
@@ -290,7 +290,7 @@ class TemplateCreateEmbeddedDraftRequest(ModelNormal):
         """TemplateCreateEmbeddedDraftRequest - a model defined in OpenAPI
 
         Args:
-            client_id (str): Client id of the app you're using to create this draft.
+            client_id (str): Client id of the app you're using to create this draft. Used to apply the branding and callback url defined for the app.
 
         Keyword Args:
             _check_type (bool): if True, values for parameters in openapi_types

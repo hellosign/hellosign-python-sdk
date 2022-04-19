@@ -170,7 +170,7 @@ class ApiAppResponse(ModelNormal):
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
             callback_url (str, none_type): The app's callback URL (for events). [optional]  # noqa: E501
-            client_id (str): The app's client ID. [optional]  # noqa: E501
+            client_id (str): The app's client id. [optional]  # noqa: E501
             created_at (int): The time that the app was created. [optional]  # noqa: E501
             domain (str): The domain name associated with the app. [optional]  # noqa: E501
             name (str): The name of the app. [optional]  # noqa: E501
@@ -262,7 +262,7 @@ class ApiAppResponse(ModelNormal):
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
             callback_url (str, none_type): The app's callback URL (for events). [optional]  # noqa: E501
-            client_id (str): The app's client ID. [optional]  # noqa: E501
+            client_id (str): The app's client id. [optional]  # noqa: E501
             created_at (int): The time that the app was created. [optional]  # noqa: E501
             domain (str): The domain name associated with the app. [optional]  # noqa: E501
             name (str): The name of the app. [optional]  # noqa: E501

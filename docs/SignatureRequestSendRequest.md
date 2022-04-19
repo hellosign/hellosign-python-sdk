@@ -13,7 +13,7 @@
 | `allow_reassign` | ```bool``` |  Allows signers to reassign their signature requests to other signers if set to `true`. Defaults to `false`.<br><br>**Note**: Only available for Gold plan and higher.  |  [default to False] |
 | `attachments` | [```[SubAttachment]```](SubAttachment.md) |    |  |
 | `cc_email_addresses` | ```[str]``` |  The email addresses that should be CCed.  |  |
-| `client_id` | ```str``` |  The client ID of the ApiApp you want to associate with this request.  |  |
+| `client_id` | ```str``` |  The client id of the Api App you want to associate with this request. Used to apply the branding and callback url defined for the app.  |  |
 | `custom_fields` | [```[SubCustomField]```](SubCustomField.md) |  An array defining values and options for custom fields. Required when defining pre-set values in `form_fields_per_document` or [Text Tags](https://app.hellosign.com/api/textTagsWalkthrough#TextTagIntro).  |  |
 | `field_options` | [```SubFieldOptions```](SubFieldOptions.md) |    |  |
 | `form_field_groups` | [```[SubFormFieldGroup]```](SubFormFieldGroup.md) |  Group information for fields defined in `form_fields_per_document`. String-indexed JSON array with `group_label` and `requirement` keys. `form_fields_per_document` must contain fields referencing a group defined in `form_field_groups`.  |  |

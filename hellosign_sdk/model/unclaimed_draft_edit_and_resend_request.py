@@ -125,7 +125,7 @@ class UnclaimedDraftEditAndResendRequest(ModelNormal):
         """UnclaimedDraftEditAndResendRequest - a model defined in OpenAPI
 
         Args:
-            client_id (str): Client id of the app you're using to create this draft. Visit our [embedded page](https://app.hellosign.com/api/embeddedSigningWalkthrough) to learn more about this parameter.
+            client_id (str): Client id of the app used to create the draft. Used to apply the branding and callback url defined for the app.
 
         Keyword Args:
             _check_type (bool): if True, values for parameters in openapi_types
@@ -217,7 +217,7 @@ class UnclaimedDraftEditAndResendRequest(ModelNormal):
         """UnclaimedDraftEditAndResendRequest - a model defined in OpenAPI
 
         Args:
-            client_id (str): Client id of the app you're using to create this draft. Visit our [embedded page](https://app.hellosign.com/api/embeddedSigningWalkthrough) to learn more about this parameter.
+            client_id (str): Client id of the app used to create the draft. Used to apply the branding and callback url defined for the app.
 
         Keyword Args:
             _check_type (bool): if True, values for parameters in openapi_types

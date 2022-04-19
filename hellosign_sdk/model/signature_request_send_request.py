@@ -219,7 +219,7 @@ class SignatureRequestSendRequest(ModelNormal):
             allow_reassign (bool): Allows signers to reassign their signature requests to other signers if set to `true`. Defaults to `false`.  **Note**: Only available for Gold plan and higher.. [optional] if omitted the server will use the default value of False  # noqa: E501
             attachments ([SubAttachment]): [optional]  # noqa: E501
             cc_email_addresses ([str]): The email addresses that should be CCed.. [optional]  # noqa: E501
-            client_id (str): The client ID of the ApiApp you want to associate with this request.. [optional]  # noqa: E501
+            client_id (str): The client id of the Api App you want to associate with this request. Used to apply the branding and callback url defined for the app.. [optional]  # noqa: E501
             custom_fields ([SubCustomField]): An array defining values and options for custom fields. Required when defining pre-set values in `form_fields_per_document` or [Text Tags](https://app.hellosign.com/api/textTagsWalkthrough#TextTagIntro).. [optional]  # noqa: E501
             field_options (SubFieldOptions): [optional]  # noqa: E501
             form_field_groups ([SubFormFieldGroup]): Group information for fields defined in `form_fields_per_document`. String-indexed JSON array with `group_label` and `requirement` keys. `form_fields_per_document` must contain fields referencing a group defined in `form_field_groups`.. [optional]  # noqa: E501
@@ -326,7 +326,7 @@ class SignatureRequestSendRequest(ModelNormal):
             allow_reassign (bool): Allows signers to reassign their signature requests to other signers if set to `true`. Defaults to `false`.  **Note**: Only available for Gold plan and higher.. [optional] if omitted the server will use the default value of False  # noqa: E501
             attachments ([SubAttachment]): [optional]  # noqa: E501
             cc_email_addresses ([str]): The email addresses that should be CCed.. [optional]  # noqa: E501
-            client_id (str): The client ID of the ApiApp you want to associate with this request.. [optional]  # noqa: E501
+            client_id (str): The client id of the Api App you want to associate with this request. Used to apply the branding and callback url defined for the app.. [optional]  # noqa: E501
             custom_fields ([SubCustomField]): An array defining values and options for custom fields. Required when defining pre-set values in `form_fields_per_document` or [Text Tags](https://app.hellosign.com/api/textTagsWalkthrough#TextTagIntro).. [optional]  # noqa: E501
             field_options (SubFieldOptions): [optional]  # noqa: E501
             form_field_groups ([SubFormFieldGroup]): Group information for fields defined in `form_fields_per_document`. String-indexed JSON array with `group_label` and `requirement` keys. `form_fields_per_document` must contain fields referencing a group defined in `form_field_groups`.. [optional]  # noqa: E501
