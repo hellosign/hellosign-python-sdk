@@ -86,8 +86,8 @@ class SignatureRequestResponseAttachment(ModelNormal):
             'signer': (str,),  # noqa: E501
             'name': (str,),  # noqa: E501
             'required': (bool,),  # noqa: E501
-            'instructions': (str,),  # noqa: E501
-            'uploaded_at': (int,),  # noqa: E501
+            'instructions': (str, none_type,),  # noqa: E501
+            'uploaded_at': (int, none_type,),  # noqa: E501
         }
 
     @cached_property
@@ -151,8 +151,8 @@ class SignatureRequestResponseAttachment(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            instructions (str): Instructions for Signer.. [optional]  # noqa: E501
-            uploaded_at (int): Timestamp when attachment was uploaded by Signer.. [optional]  # noqa: E501
+            instructions (str, none_type): Instructions for Signer.. [optional]  # noqa: E501
+            uploaded_at (int, none_type): Timestamp when attachment was uploaded by Signer.. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -244,8 +244,8 @@ class SignatureRequestResponseAttachment(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            instructions (str): Instructions for Signer.. [optional]  # noqa: E501
-            uploaded_at (int): Timestamp when attachment was uploaded by Signer.. [optional]  # noqa: E501
+            instructions (str, none_type): Instructions for Signer.. [optional]  # noqa: E501
+            uploaded_at (int, none_type): Timestamp when attachment was uploaded by Signer.. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)

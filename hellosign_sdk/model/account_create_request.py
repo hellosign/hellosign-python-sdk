@@ -146,7 +146,7 @@ class AccountCreateRequest(ModelNormal):
                                 _visited_composed_classes = (Animal,)
             client_id (str): Used when creating a new account and requesting OAuth authorization.  See [OAuth 2.0 Authorization](https://app.hellosign.com/api/oauthWalkthrough#OAuthAuthorization). [optional]  # noqa: E501
             client_secret (str): Used when creating a new account and requesting OAuth authorization.  See [OAuth 2.0 Authorization](https://app.hellosign.com/api/oauthWalkthrough#OAuthAuthorization). [optional]  # noqa: E501
-            locale (str): The locale used in this Account.. [optional]  # noqa: E501
+            locale (str): The locale used in this Account. Check out the list of [supported locales](/api/reference/constants/#supported-locales) to learn more about the possible values.. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -234,7 +234,7 @@ class AccountCreateRequest(ModelNormal):
                                 _visited_composed_classes = (Animal,)
             client_id (str): Used when creating a new account and requesting OAuth authorization.  See [OAuth 2.0 Authorization](https://app.hellosign.com/api/oauthWalkthrough#OAuthAuthorization). [optional]  # noqa: E501
             client_secret (str): Used when creating a new account and requesting OAuth authorization.  See [OAuth 2.0 Authorization](https://app.hellosign.com/api/oauthWalkthrough#OAuthAuthorization). [optional]  # noqa: E501
-            locale (str): The locale used in this Account.. [optional]  # noqa: E501
+            locale (str): The locale used in this Account. Check out the list of [supported locales](/api/reference/constants/#supported-locales) to learn more about the possible values.. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
