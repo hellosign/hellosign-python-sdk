@@ -114,7 +114,7 @@ class BulkSendJobGetResponseSignatureRequests(ModelComposed):
             'details_url': (str,),  # noqa: E501
             'cc_email_addresses': ([str],),  # noqa: E501
             'signing_redirect_url': (str, none_type,),  # noqa: E501
-            'template_ids': ([str],),  # noqa: E501
+            'template_ids': ([str], none_type,),  # noqa: E501
             'custom_fields': ([SignatureRequestResponseCustomField], none_type,),  # noqa: E501
             'attachments': ([SignatureRequestResponseAttachment], none_type,),  # noqa: E501
             'response_data': ([SignatureRequestResponseData], none_type,),  # noqa: E501
@@ -211,7 +211,7 @@ class BulkSendJobGetResponseSignatureRequests(ModelComposed):
             details_url (str): The URL where the requester and the signers can view the current status of the SignatureRequest.. [optional]  # noqa: E501
             cc_email_addresses ([str]): A list of email addresses that were CCed on the SignatureRequest. They will receive a copy of the final PDF once all the signers have signed.. [optional]  # noqa: E501
             signing_redirect_url (str, none_type): The URL you want the signer redirected to after they successfully sign.. [optional]  # noqa: E501
-            template_ids ([str]): Templates IDs used in this SignatureRequest (if any).. [optional]  # noqa: E501
+            template_ids ([str], none_type): Templates IDs used in this SignatureRequest (if any).. [optional]  # noqa: E501
             custom_fields ([SignatureRequestResponseCustomField], none_type): [optional]  # noqa: E501
             attachments ([SignatureRequestResponseAttachment], none_type): [optional]  # noqa: E501
             response_data ([SignatureRequestResponseData], none_type): [optional]  # noqa: E501
@@ -334,7 +334,7 @@ class BulkSendJobGetResponseSignatureRequests(ModelComposed):
             details_url (str): The URL where the requester and the signers can view the current status of the SignatureRequest.. [optional]  # noqa: E501
             cc_email_addresses ([str]): A list of email addresses that were CCed on the SignatureRequest. They will receive a copy of the final PDF once all the signers have signed.. [optional]  # noqa: E501
             signing_redirect_url (str, none_type): The URL you want the signer redirected to after they successfully sign.. [optional]  # noqa: E501
-            template_ids ([str]): Templates IDs used in this SignatureRequest (if any).. [optional]  # noqa: E501
+            template_ids ([str], none_type): Templates IDs used in this SignatureRequest (if any).. [optional]  # noqa: E501
             custom_fields ([SignatureRequestResponseCustomField], none_type): [optional]  # noqa: E501
             attachments ([SignatureRequestResponseAttachment], none_type): [optional]  # noqa: E501
             response_data ([SignatureRequestResponseData], none_type): [optional]  # noqa: E501
