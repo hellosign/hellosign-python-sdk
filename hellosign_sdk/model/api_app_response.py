@@ -99,7 +99,7 @@ class ApiAppResponse(ModelNormal):
             'callback_url': (str, none_type,),  # noqa: E501
             'client_id': (str,),  # noqa: E501
             'created_at': (int,),  # noqa: E501
-            'domain': (str,),  # noqa: E501
+            'domains': ([str],),  # noqa: E501
             'name': (str,),  # noqa: E501
             'is_approved': (bool,),  # noqa: E501
             'oauth': (ApiAppResponseOAuth,),  # noqa: E501
@@ -118,7 +118,7 @@ class ApiAppResponse(ModelNormal):
         'callback_url': 'callback_url',  # noqa: E501
         'client_id': 'client_id',  # noqa: E501
         'created_at': 'created_at',  # noqa: E501
-        'domain': 'domain',  # noqa: E501
+        'domains': 'domains',  # noqa: E501
         'name': 'name',  # noqa: E501
         'is_approved': 'is_approved',  # noqa: E501
         'oauth': 'oauth',  # noqa: E501
@@ -172,7 +172,7 @@ class ApiAppResponse(ModelNormal):
             callback_url (str, none_type): The app's callback URL (for events). [optional]  # noqa: E501
             client_id (str): The app's client id. [optional]  # noqa: E501
             created_at (int): The time that the app was created. [optional]  # noqa: E501
-            domain (str): The domain name associated with the app. [optional]  # noqa: E501
+            domains ([str]): The domain name(s) associated with the app. [optional]  # noqa: E501
             name (str): The name of the app. [optional]  # noqa: E501
             is_approved (bool): Boolean to indicate if the app has been approved. [optional]  # noqa: E501
             oauth (ApiAppResponseOAuth): [optional]  # noqa: E501
@@ -264,7 +264,7 @@ class ApiAppResponse(ModelNormal):
             callback_url (str, none_type): The app's callback URL (for events). [optional]  # noqa: E501
             client_id (str): The app's client id. [optional]  # noqa: E501
             created_at (int): The time that the app was created. [optional]  # noqa: E501
-            domain (str): The domain name associated with the app. [optional]  # noqa: E501
+            domains ([str]): The domain name(s) associated with the app. [optional]  # noqa: E501
             name (str): The name of the app. [optional]  # noqa: E501
             is_approved (bool): Boolean to indicate if the app has been approved. [optional]  # noqa: E501
             oauth (ApiAppResponseOAuth): [optional]  # noqa: E501

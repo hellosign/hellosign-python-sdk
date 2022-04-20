@@ -100,6 +100,7 @@ class SubWhiteLabelingOptions(ModelNormal):
             'secondary_button_text_color_hover': (str,),  # noqa: E501
             'text_color1': (str,),  # noqa: E501
             'text_color2': (str,),  # noqa: E501
+            'reset_to_default': (bool,),  # noqa: E501
         }
 
     @cached_property
@@ -122,6 +123,7 @@ class SubWhiteLabelingOptions(ModelNormal):
         'secondary_button_text_color_hover': 'secondary_button_text_color_hover',  # noqa: E501
         'text_color1': 'text_color1',  # noqa: E501
         'text_color2': 'text_color2',  # noqa: E501
+        'reset_to_default': 'reset_to_default',  # noqa: E501
     }
 
     read_only_vars = {
@@ -179,6 +181,7 @@ class SubWhiteLabelingOptions(ModelNormal):
             secondary_button_text_color_hover (str): [optional] if omitted the server will use the default value of "#00B3E6"  # noqa: E501
             text_color1 (str): [optional] if omitted the server will use the default value of "#808080"  # noqa: E501
             text_color2 (str): [optional] if omitted the server will use the default value of "#FFFFFF"  # noqa: E501
+            reset_to_default (bool): Resets white labeling options to defaults. Only useful when updating an API App.. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -274,6 +277,7 @@ class SubWhiteLabelingOptions(ModelNormal):
             secondary_button_text_color_hover (str): [optional] if omitted the server will use the default value of "#00B3E6"  # noqa: E501
             text_color1 (str): [optional] if omitted the server will use the default value of "#808080"  # noqa: E501
             text_color2 (str): [optional] if omitted the server will use the default value of "#FFFFFF"  # noqa: E501
+            reset_to_default (bool): Resets white labeling options to defaults. Only useful when updating an API App.. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)

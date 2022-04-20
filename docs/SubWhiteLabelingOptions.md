@@ -22,6 +22,7 @@ Take a look at our [white labeling guide](/api/reference/white-labeling/) to lea
 | `secondary_button_text_color_hover` | ```str``` |    |  [default to "#00B3E6"] |
 | `text_color1` | ```str``` |    |  [default to "#808080"] |
 | `text_color2` | ```str``` |    |  [default to "#FFFFFF"] |
+| `reset_to_default` | ```bool``` |  Resets white labeling options to defaults. Only useful when updating an API App.  |  |
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

@@ -9,7 +9,7 @@
 | `callback_url` | ```str, none_type``` |  The app&#39;s callback URL (for events)  |  |
 | `client_id` | ```str``` |  The app&#39;s client id  |  |
 | `created_at` | ```int``` |  The time that the app was created  |  |
-| `domain` | ```str``` |  The domain name associated with the app  |  |
+| `domains` | ```[str]``` |  The domain name(s) associated with the app  |  |
 | `name` | ```str``` |  The name of the app  |  |
 | `is_approved` | ```bool``` |  Boolean to indicate if the app has been approved  |  |
 | `oauth` | [```ApiAppResponseOAuth```](ApiAppResponseOAuth.md) |    |  |
