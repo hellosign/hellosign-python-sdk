@@ -300,7 +300,7 @@ class HSClient(object):
         ''' Get a list of SignatureRequests that you can access
 
         This includes SignatureRequests you have sent as well as received, but
-        not ones that you have been CCed on. 
+        not ones that you have been CCed on.
 
         Args:
 
