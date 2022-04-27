@@ -296,12 +296,11 @@ class HSClient(object):
         return request.get(self.SIGNATURE_REQUEST_INFO_URL + signature_request_id, parameters=parameters)
 
     @api_resource_list(SignatureRequest)
-    def get_signature_request_list(self, page=1, page_size=None, account_id=None):
+    def get_signature_request_list(self, page=1, page_size=None, account_id=None, query=None):
         ''' Get a list of SignatureRequests that you can access
 
         This includes SignatureRequests you have sent as well as received, but
-        not ones that you have been CCed on. Optionally specify account id to 
-        list SignatureRequests for another team member's account.
+        not ones that you have been CCed on. 
 
         Args:
 
@@ -311,6 +310,8 @@ class HSClient(object):
             account_id (str, optional): Which account to return SignatureRequests for. Must be a team 
                                         member. Use "all" to indicate all team members. Defaults to 
                                         your account.
+            query (str, optional): String that includes search terms and/or fields to be used to filter
+                                   the SignatureRequest objects.
 
         Returns:
             A ResourceList object
@@ -321,7 +322,8 @@ class HSClient(object):
         parameters = {
             "page": page,
             "page_size": page_size,
-            "account_id": account_id
+            "account_id": account_id,
+            "query" : query
         }
 
         return request.get(self.SIGNATURE_REQUEST_LIST_URL, parameters=parameters)
