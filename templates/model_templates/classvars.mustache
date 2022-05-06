@@ -67,6 +67,11 @@
         This must be a method because a model may have properties that are
         of type self, this must run after the class is loaded
         """
+{{#discriminator}}
+{{^imports}}
+        lazy_import()
+{{/imports}}
+{{/discriminator}}
 {{#imports}}
 {{#-first}}
         lazy_import()
@@ -90,6 +95,11 @@
             openapi_types (dict): The key is attribute name
                 and the value is attribute type.
         """
+{{#discriminator}}
+{{^imports}}
+        lazy_import()
+{{/imports}}
+{{/discriminator}}
 {{#imports}}
 {{#-first}}
         lazy_import()
@@ -119,15 +129,7 @@
         return None
 {{/discriminator}}
 {{#discriminator}}
-{{#mappedModels}}
-{{#-first}}
-{{#imports}}
-{{#-first}}
         lazy_import()
-{{/-first}}
-{{/imports}}
-{{/-first}}
-{{/mappedModels}}
         val = {
 {{#mappedModels}}
             '{{mappingName}}': {{{modelName}}},

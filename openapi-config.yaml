@@ -5,6 +5,7 @@ additionalProperties:
   packageName: hellosign_sdk
   projectName: hellosign-python-sdk
   sortModelPropertiesByRequiredFlag: true
+  legacyDiscriminatorBehavior: true
 files:
   event_callback_helper.mustache:
     templateType: SupportingFiles

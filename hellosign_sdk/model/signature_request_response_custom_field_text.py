@@ -32,11 +32,7 @@ from hellosign_sdk.exceptions import ApiAttributeError
 
 def lazy_import():
     from hellosign_sdk.model.signature_request_response_custom_field_base import SignatureRequestResponseCustomFieldBase
-    from hellosign_sdk.model.signature_request_response_custom_field_checkbox import SignatureRequestResponseCustomFieldCheckbox
-    from hellosign_sdk.model.signature_request_response_custom_field_text import SignatureRequestResponseCustomFieldText
     globals()['SignatureRequestResponseCustomFieldBase'] = SignatureRequestResponseCustomFieldBase
-    globals()['SignatureRequestResponseCustomFieldCheckbox'] = SignatureRequestResponseCustomFieldCheckbox
-    globals()['SignatureRequestResponseCustomFieldText'] = SignatureRequestResponseCustomFieldText
 
 
 class SignatureRequestResponseCustomFieldText(ModelComposed):
@@ -102,14 +98,8 @@ class SignatureRequestResponseCustomFieldText(ModelComposed):
 
     @cached_property
     def discriminator():
-        lazy_import()
-        val = {
-            'checkbox': SignatureRequestResponseCustomFieldCheckbox,
-            'text': SignatureRequestResponseCustomFieldText,
-        }
-        if not val:
-            return None
-        return {'type': val}
+        return None
+
 
     attribute_map = {
         'type': 'type',  # noqa: E501

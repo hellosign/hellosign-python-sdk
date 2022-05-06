@@ -29,18 +29,17 @@ from hellosign_sdk.model_utils import (  # noqa: F401
 )
 from hellosign_sdk.exceptions import ApiAttributeError
 
-
 def lazy_import():
-    from hellosign_sdk.model.sub_form_fields_per_document_checkbox import SubFormFieldsPerDocumentCheckbox
-    from hellosign_sdk.model.sub_form_fields_per_document_checkbox_merge import SubFormFieldsPerDocumentCheckboxMerge
-    from hellosign_sdk.model.sub_form_fields_per_document_date_signed import SubFormFieldsPerDocumentDateSigned
-    from hellosign_sdk.model.sub_form_fields_per_document_dropdown import SubFormFieldsPerDocumentDropdown
-    from hellosign_sdk.model.sub_form_fields_per_document_hyperlink import SubFormFieldsPerDocumentHyperlink
-    from hellosign_sdk.model.sub_form_fields_per_document_initials import SubFormFieldsPerDocumentInitials
-    from hellosign_sdk.model.sub_form_fields_per_document_radio import SubFormFieldsPerDocumentRadio
-    from hellosign_sdk.model.sub_form_fields_per_document_signature import SubFormFieldsPerDocumentSignature
-    from hellosign_sdk.model.sub_form_fields_per_document_text import SubFormFieldsPerDocumentText
-    from hellosign_sdk.model.sub_form_fields_per_document_text_merge import SubFormFieldsPerDocumentTextMerge
+    from hellosign_sdk.models import SubFormFieldsPerDocumentCheckbox
+    from hellosign_sdk.models import SubFormFieldsPerDocumentCheckboxMerge
+    from hellosign_sdk.models import SubFormFieldsPerDocumentDateSigned
+    from hellosign_sdk.models import SubFormFieldsPerDocumentDropdown
+    from hellosign_sdk.models import SubFormFieldsPerDocumentHyperlink
+    from hellosign_sdk.models import SubFormFieldsPerDocumentInitials
+    from hellosign_sdk.models import SubFormFieldsPerDocumentRadio
+    from hellosign_sdk.models import SubFormFieldsPerDocumentSignature
+    from hellosign_sdk.models import SubFormFieldsPerDocumentText
+    from hellosign_sdk.models import SubFormFieldsPerDocumentTextMerge
     globals()['SubFormFieldsPerDocumentCheckbox'] = SubFormFieldsPerDocumentCheckbox
     globals()['SubFormFieldsPerDocumentCheckboxMerge'] = SubFormFieldsPerDocumentCheckboxMerge
     globals()['SubFormFieldsPerDocumentDateSigned'] = SubFormFieldsPerDocumentDateSigned
@@ -123,16 +122,6 @@ class SubFormFieldsPerDocumentBase(ModelNormal):
     def discriminator():
         lazy_import()
         val = {
-            'SubFormFieldsPerDocumentCheckbox': SubFormFieldsPerDocumentCheckbox,
-            'SubFormFieldsPerDocumentCheckboxMerge': SubFormFieldsPerDocumentCheckboxMerge,
-            'SubFormFieldsPerDocumentDateSigned': SubFormFieldsPerDocumentDateSigned,
-            'SubFormFieldsPerDocumentDropdown': SubFormFieldsPerDocumentDropdown,
-            'SubFormFieldsPerDocumentHyperlink': SubFormFieldsPerDocumentHyperlink,
-            'SubFormFieldsPerDocumentInitials': SubFormFieldsPerDocumentInitials,
-            'SubFormFieldsPerDocumentRadio': SubFormFieldsPerDocumentRadio,
-            'SubFormFieldsPerDocumentSignature': SubFormFieldsPerDocumentSignature,
-            'SubFormFieldsPerDocumentText': SubFormFieldsPerDocumentText,
-            'SubFormFieldsPerDocumentTextMerge': SubFormFieldsPerDocumentTextMerge,
             'checkbox': SubFormFieldsPerDocumentCheckbox,
             'checkbox-merge': SubFormFieldsPerDocumentCheckboxMerge,
             'date_signed': SubFormFieldsPerDocumentDateSigned,
