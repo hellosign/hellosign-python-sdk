@@ -121,7 +121,9 @@ with ApiClient(configuration) as api_client:
 
 ### Parameters
 
-This endpoint does not need any parameter.
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| `account_id` | **str** | Account ID | [optional] |
 
 ### Return type
 

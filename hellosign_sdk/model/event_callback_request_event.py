@@ -139,9 +139,9 @@ class EventCallbackRequestEvent(ModelNormal):
         """EventCallbackRequestEvent - a model defined in OpenAPI
 
         Args:
-            event_time (str):
-            event_type (str):
-            event_hash (str):
+            event_time (str): Time the event was created (using Unix time).
+            event_type (str): Type of callback event that was triggered.
+            event_hash (str): Generated hash used to verify source of event data.
             event_metadata (EventCallbackRequestEventMetadata):
 
         Keyword Args:
@@ -230,9 +230,9 @@ class EventCallbackRequestEvent(ModelNormal):
         """EventCallbackRequestEvent - a model defined in OpenAPI
 
         Args:
-            event_time (str):
-            event_type (str):
-            event_hash (str):
+            event_time (str): Time the event was created (using Unix time).
+            event_type (str): Type of callback event that was triggered.
+            event_hash (str): Generated hash used to verify source of event data.
             event_metadata (EventCallbackRequestEventMetadata):
 
         Keyword Args:

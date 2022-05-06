@@ -32,11 +32,11 @@ from hellosign_sdk.exceptions import ApiAttributeError
 
 def lazy_import():
     from hellosign_sdk.model.signature_request_response_attachment import SignatureRequestResponseAttachment
-    from hellosign_sdk.model.signature_request_response_custom_field import SignatureRequestResponseCustomField
+    from hellosign_sdk.model.signature_request_response_custom_field_base import SignatureRequestResponseCustomFieldBase
     from hellosign_sdk.model.signature_request_response_data import SignatureRequestResponseData
     from hellosign_sdk.model.signature_request_response_signatures import SignatureRequestResponseSignatures
     globals()['SignatureRequestResponseAttachment'] = SignatureRequestResponseAttachment
-    globals()['SignatureRequestResponseCustomField'] = SignatureRequestResponseCustomField
+    globals()['SignatureRequestResponseCustomFieldBase'] = SignatureRequestResponseCustomFieldBase
     globals()['SignatureRequestResponseData'] = SignatureRequestResponseData
     globals()['SignatureRequestResponseSignatures'] = SignatureRequestResponseSignatures
 
@@ -113,7 +113,7 @@ class SignatureRequestResponse(ModelNormal):
             'cc_email_addresses': ([str],),  # noqa: E501
             'signing_redirect_url': (str, none_type,),  # noqa: E501
             'template_ids': ([str], none_type,),  # noqa: E501
-            'custom_fields': ([SignatureRequestResponseCustomField], none_type,),  # noqa: E501
+            'custom_fields': ([SignatureRequestResponseCustomFieldBase], none_type,),  # noqa: E501
             'attachments': ([SignatureRequestResponseAttachment], none_type,),  # noqa: E501
             'response_data': ([SignatureRequestResponseData], none_type,),  # noqa: E501
             'signatures': ([SignatureRequestResponseSignatures],),  # noqa: E501
@@ -210,7 +210,7 @@ class SignatureRequestResponse(ModelNormal):
             cc_email_addresses ([str]): A list of email addresses that were CCed on the SignatureRequest. They will receive a copy of the final PDF once all the signers have signed.. [optional]  # noqa: E501
             signing_redirect_url (str, none_type): The URL you want the signer redirected to after they successfully sign.. [optional]  # noqa: E501
             template_ids ([str], none_type): Templates IDs used in this SignatureRequest (if any).. [optional]  # noqa: E501
-            custom_fields ([SignatureRequestResponseCustomField], none_type): [optional]  # noqa: E501
+            custom_fields ([SignatureRequestResponseCustomFieldBase], none_type): An array of Custom Field objects containing the name and type of each custom field.  * Text Field uses `SignatureRequestResponseCustomFieldText` * Checkbox Field uses `SignatureRequestResponseCustomFieldCheckbox`. [optional]  # noqa: E501
             attachments ([SignatureRequestResponseAttachment], none_type): [optional]  # noqa: E501
             response_data ([SignatureRequestResponseData], none_type): [optional]  # noqa: E501
             signatures ([SignatureRequestResponseSignatures]): [optional]  # noqa: E501
@@ -314,7 +314,7 @@ class SignatureRequestResponse(ModelNormal):
             cc_email_addresses ([str]): A list of email addresses that were CCed on the SignatureRequest. They will receive a copy of the final PDF once all the signers have signed.. [optional]  # noqa: E501
             signing_redirect_url (str, none_type): The URL you want the signer redirected to after they successfully sign.. [optional]  # noqa: E501
             template_ids ([str], none_type): Templates IDs used in this SignatureRequest (if any).. [optional]  # noqa: E501
-            custom_fields ([SignatureRequestResponseCustomField], none_type): [optional]  # noqa: E501
+            custom_fields ([SignatureRequestResponseCustomFieldBase], none_type): An array of Custom Field objects containing the name and type of each custom field.  * Text Field uses `SignatureRequestResponseCustomFieldText` * Checkbox Field uses `SignatureRequestResponseCustomFieldCheckbox`. [optional]  # noqa: E501
             attachments ([SignatureRequestResponseAttachment], none_type): [optional]  # noqa: E501
             response_data ([SignatureRequestResponseData], none_type): [optional]  # noqa: E501
             signatures ([SignatureRequestResponseSignatures]): [optional]  # noqa: E501

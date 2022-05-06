@@ -35,12 +35,10 @@ def lazy_import():
     from hellosign_sdk.model.api_app_response_options import ApiAppResponseOptions
     from hellosign_sdk.model.api_app_response_owner_account import ApiAppResponseOwnerAccount
     from hellosign_sdk.model.api_app_response_white_labeling_options import ApiAppResponseWhiteLabelingOptions
-    from hellosign_sdk.model.warning_response import WarningResponse
     globals()['ApiAppResponseOAuth'] = ApiAppResponseOAuth
     globals()['ApiAppResponseOptions'] = ApiAppResponseOptions
     globals()['ApiAppResponseOwnerAccount'] = ApiAppResponseOwnerAccount
     globals()['ApiAppResponseWhiteLabelingOptions'] = ApiAppResponseWhiteLabelingOptions
-    globals()['WarningResponse'] = WarningResponse
 
 
 class ApiAppResponse(ModelNormal):
@@ -106,7 +104,6 @@ class ApiAppResponse(ModelNormal):
             'options': (ApiAppResponseOptions,),  # noqa: E501
             'owner_account': (ApiAppResponseOwnerAccount,),  # noqa: E501
             'white_labeling_options': (ApiAppResponseWhiteLabelingOptions,),  # noqa: E501
-            'warnings': ([WarningResponse],),  # noqa: E501
         }
 
     @cached_property
@@ -125,7 +122,6 @@ class ApiAppResponse(ModelNormal):
         'options': 'options',  # noqa: E501
         'owner_account': 'owner_account',  # noqa: E501
         'white_labeling_options': 'white_labeling_options',  # noqa: E501
-        'warnings': 'warnings',  # noqa: E501
     }
 
     read_only_vars = {
@@ -179,7 +175,6 @@ class ApiAppResponse(ModelNormal):
             options (ApiAppResponseOptions): [optional]  # noqa: E501
             owner_account (ApiAppResponseOwnerAccount): [optional]  # noqa: E501
             white_labeling_options (ApiAppResponseWhiteLabelingOptions): [optional]  # noqa: E501
-            warnings ([WarningResponse]): [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -271,7 +266,6 @@ class ApiAppResponse(ModelNormal):
             options (ApiAppResponseOptions): [optional]  # noqa: E501
             owner_account (ApiAppResponseOwnerAccount): [optional]  # noqa: E501
             white_labeling_options (ApiAppResponseWhiteLabelingOptions): [optional]  # noqa: E501
-            warnings ([WarningResponse]): [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)

@@ -93,8 +93,6 @@ class EventCallbackAccountRequestPayload(ModelNormal):
         lazy_import()
         return {
             'event': (EventCallbackRequestEvent,),  # noqa: E501
-            'account_guid': (str,),  # noqa: E501
-            'client_id': (str, none_type,),  # noqa: E501
             'signature_request': (SignatureRequestResponse,),  # noqa: E501
             'template': (TemplateResponse,),  # noqa: E501
         }
@@ -106,8 +104,6 @@ class EventCallbackAccountRequestPayload(ModelNormal):
 
     attribute_map = {
         'event': 'event',  # noqa: E501
-        'account_guid': 'account_guid',  # noqa: E501
-        'client_id': 'client_id',  # noqa: E501
         'signature_request': 'signature_request',  # noqa: E501
         'template': 'template',  # noqa: E501
     }
@@ -156,8 +152,6 @@ class EventCallbackAccountRequestPayload(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            account_guid (str): [optional]  # noqa: E501
-            client_id (str, none_type): [optional]  # noqa: E501
             signature_request (SignatureRequestResponse): [optional]  # noqa: E501
             template (TemplateResponse): [optional]  # noqa: E501
         """
@@ -245,8 +239,6 @@ class EventCallbackAccountRequestPayload(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            account_guid (str): [optional]  # noqa: E501
-            client_id (str, none_type): [optional]  # noqa: E501
             signature_request (SignatureRequestResponse): [optional]  # noqa: E501
             template (TemplateResponse): [optional]  # noqa: E501
         """

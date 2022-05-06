@@ -222,7 +222,7 @@ class UnclaimedDraftCreateEmbeddedWithTemplateRequest(ModelNormal):
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
             allow_decline (bool): Allows signers to decline to sign a document if `true`. Defaults to `false`.. [optional] if omitted the server will use the default value of False  # noqa: E501
-            allow_reassign (bool): Allows signers to reassign their signature requests to other signers if set to `true`. Defaults to `false`.  **Note**: Only available for Gold plan and higher.. [optional] if omitted the server will use the default value of False  # noqa: E501
+            allow_reassign (bool): Allows signers to reassign their signature requests to other signers if set to `true`. Defaults to `false`.  **Note**: Only available for Premium plan and higher.. [optional] if omitted the server will use the default value of False  # noqa: E501
             ccs ([SubCC]): Add CC email recipients. Required when a CC role exists for the Template.. [optional]  # noqa: E501
             custom_fields ([SubCustomField]): An array defining values and options for custom fields. Required when defining when a custom field exists in the Template.. [optional]  # noqa: E501
             editor_options (SubEditorOptions): [optional]  # noqa: E501
@@ -336,7 +336,7 @@ class UnclaimedDraftCreateEmbeddedWithTemplateRequest(ModelNormal):
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
             allow_decline (bool): Allows signers to decline to sign a document if `true`. Defaults to `false`.. [optional] if omitted the server will use the default value of False  # noqa: E501
-            allow_reassign (bool): Allows signers to reassign their signature requests to other signers if set to `true`. Defaults to `false`.  **Note**: Only available for Gold plan and higher.. [optional] if omitted the server will use the default value of False  # noqa: E501
+            allow_reassign (bool): Allows signers to reassign their signature requests to other signers if set to `true`. Defaults to `false`.  **Note**: Only available for Premium plan and higher.. [optional] if omitted the server will use the default value of False  # noqa: E501
             ccs ([SubCC]): Add CC email recipients. Required when a CC role exists for the Template.. [optional]  # noqa: E501
             custom_fields ([SubCustomField]): An array defining values and options for custom fields. Required when defining when a custom field exists in the Template.. [optional]  # noqa: E501
             editor_options (SubEditorOptions): [optional]  # noqa: E501

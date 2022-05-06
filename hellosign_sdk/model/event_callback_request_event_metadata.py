@@ -141,10 +141,10 @@ class EventCallbackRequestEventMetadata(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            related_signature_id (str, none_type): [optional]  # noqa: E501
-            reported_for_account_id (str, none_type): [optional]  # noqa: E501
-            reported_for_app_id (str, none_type): [optional]  # noqa: E501
-            event_message (str, none_type): [optional]  # noqa: E501
+            related_signature_id (str, none_type): Signature ID for a specific signer. Applicable to `signature_request_signed` and `signature_request_viewed` events.. [optional]  # noqa: E501
+            reported_for_account_id (str, none_type): Account ID the event was reported for.. [optional]  # noqa: E501
+            reported_for_app_id (str, none_type): App ID the event was reported for.. [optional]  # noqa: E501
+            event_message (str, none_type): Message about a declined or failed (due to error) signature flow.. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -226,10 +226,10 @@ class EventCallbackRequestEventMetadata(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            related_signature_id (str, none_type): [optional]  # noqa: E501
-            reported_for_account_id (str, none_type): [optional]  # noqa: E501
-            reported_for_app_id (str, none_type): [optional]  # noqa: E501
-            event_message (str, none_type): [optional]  # noqa: E501
+            related_signature_id (str, none_type): Signature ID for a specific signer. Applicable to `signature_request_signed` and `signature_request_viewed` events.. [optional]  # noqa: E501
+            reported_for_account_id (str, none_type): Account ID the event was reported for.. [optional]  # noqa: E501
+            reported_for_app_id (str, none_type): App ID the event was reported for.. [optional]  # noqa: E501
+            event_message (str, none_type): Message about a declined or failed (due to error) signature flow.. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)

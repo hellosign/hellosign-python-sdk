@@ -36,13 +36,11 @@ def lazy_import():
     from hellosign_sdk.model.template_response_custom_field import TemplateResponseCustomField
     from hellosign_sdk.model.template_response_document import TemplateResponseDocument
     from hellosign_sdk.model.template_response_signer_role import TemplateResponseSignerRole
-    from hellosign_sdk.model.warning_response import WarningResponse
     globals()['TemplateResponseAccount'] = TemplateResponseAccount
     globals()['TemplateResponseCCRole'] = TemplateResponseCCRole
     globals()['TemplateResponseCustomField'] = TemplateResponseCustomField
     globals()['TemplateResponseDocument'] = TemplateResponseDocument
     globals()['TemplateResponseSignerRole'] = TemplateResponseSignerRole
-    globals()['WarningResponse'] = WarningResponse
 
 
 class TemplateResponse(ModelNormal):
@@ -112,7 +110,6 @@ class TemplateResponse(ModelNormal):
             'documents': ([TemplateResponseDocument],),  # noqa: E501
             'custom_fields': ([TemplateResponseCustomField], none_type,),  # noqa: E501
             'accounts': ([TemplateResponseAccount], none_type,),  # noqa: E501
-            'warnings': ([WarningResponse],),  # noqa: E501
         }
 
     @cached_property
@@ -135,7 +132,6 @@ class TemplateResponse(ModelNormal):
         'documents': 'documents',  # noqa: E501
         'custom_fields': 'custom_fields',  # noqa: E501
         'accounts': 'accounts',  # noqa: E501
-        'warnings': 'warnings',  # noqa: E501
     }
 
     read_only_vars = {
@@ -193,7 +189,6 @@ class TemplateResponse(ModelNormal):
             documents ([TemplateResponseDocument]): [optional]  # noqa: E501
             custom_fields ([TemplateResponseCustomField], none_type): [optional]  # noqa: E501
             accounts ([TemplateResponseAccount], none_type): [optional]  # noqa: E501
-            warnings ([WarningResponse]): [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -289,7 +284,6 @@ class TemplateResponse(ModelNormal):
             documents ([TemplateResponseDocument]): [optional]  # noqa: E501
             custom_fields ([TemplateResponseCustomField], none_type): [optional]  # noqa: E501
             accounts ([TemplateResponseAccount], none_type): [optional]  # noqa: E501
-            warnings ([WarningResponse]): [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)

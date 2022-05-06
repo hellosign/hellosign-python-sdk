@@ -84,6 +84,7 @@ class TemplateAddUserRequest(ModelNormal):
         return {
             'account_id': (str,),  # noqa: E501
             'email_address': (str,),  # noqa: E501
+            'skip_notification': (bool,),  # noqa: E501
         }
 
     @cached_property
@@ -94,6 +95,7 @@ class TemplateAddUserRequest(ModelNormal):
     attribute_map = {
         'account_id': 'account_id',  # noqa: E501
         'email_address': 'email_address',  # noqa: E501
+        'skip_notification': 'skip_notification',  # noqa: E501
     }
 
     read_only_vars = {
@@ -139,6 +141,7 @@ class TemplateAddUserRequest(ModelNormal):
                                 _visited_composed_classes = (Animal,)
             account_id (str): The id or email address of the Account to give access to the Template. The account id prevails if both are provided.. [optional]  # noqa: E501
             email_address (str): The id or email address of the Account to give access to the Template. The account id prevails if both are provided.. [optional]  # noqa: E501
+            skip_notification (bool): If set to `true`, the user does not receive an email notification when a template has been shared with them. Defaults to `false`.. [optional] if omitted the server will use the default value of False  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -222,6 +225,7 @@ class TemplateAddUserRequest(ModelNormal):
                                 _visited_composed_classes = (Animal,)
             account_id (str): The id or email address of the Account to give access to the Template. The account id prevails if both are provided.. [optional]  # noqa: E501
             email_address (str): The id or email address of the Account to give access to the Template. The account id prevails if both are provided.. [optional]  # noqa: E501
+            skip_notification (bool): If set to `true`, the user does not receive an email notification when a template has been shared with them. Defaults to `false`.. [optional] if omitted the server will use the default value of False  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)

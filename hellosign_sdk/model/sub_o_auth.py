@@ -57,19 +57,13 @@ class SubOAuth(ModelNormal):
 
     allowed_values = {
         ('scopes',): {
-            'ACCESS_DOCS': "access_docs",
-            'ACCESS_REUSABLE_FORMS': "access_reusable_forms",
-            'MANAGE_DOCS': "manage_docs",
             'REQUEST_SIGNATURE': "request_signature",
-            'SEND_DOCS': "send_docs",
             'BASIC_ACCOUNT_INFO': "basic_account_info",
-            'SIGNATURES': "signatures",
             'ACCOUNT_ACCESS': "account_access",
             'SIGNATURE_REQUEST_ACCESS': "signature_request_access",
             'TEMPLATE_ACCESS': "template_access",
             'TEAM_ACCESS': "team_access",
             'API_APP_ACCESS': "api_app_access",
-            'UNIVERSAL_SIGNATURE_REQUEST_ACCESS': "universal_signature_request_access",
             'EMPTY': "",
         },
     }
@@ -154,7 +148,7 @@ class SubOAuth(ModelNormal):
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
             callback_url (str): The callback URL to be used for OAuth flows. (Required if `oauth[scopes]` is provided). [optional]  # noqa: E501
-            scopes ([str]): A list of OAuth scopes to be granted to the app. (Required if `oauth[callback_url]` is provided).. [optional]  # noqa: E501
+            scopes ([str]): A list of [OAuth scopes](/api/reference/tag/OAuth) to be granted to the app. (Required if `oauth[callback_url]` is provided).. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -237,7 +231,7 @@ class SubOAuth(ModelNormal):
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
             callback_url (str): The callback URL to be used for OAuth flows. (Required if `oauth[scopes]` is provided). [optional]  # noqa: E501
-            scopes ([str]): A list of OAuth scopes to be granted to the app. (Required if `oauth[callback_url]` is provided).. [optional]  # noqa: E501
+            scopes ([str]): A list of [OAuth scopes](/api/reference/tag/OAuth) to be granted to the app. (Required if `oauth[callback_url]` is provided).. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)

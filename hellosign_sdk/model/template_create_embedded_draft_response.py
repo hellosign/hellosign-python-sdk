@@ -32,7 +32,9 @@ from hellosign_sdk.exceptions import ApiAttributeError
 
 def lazy_import():
     from hellosign_sdk.model.template_create_embedded_draft_response_template import TemplateCreateEmbeddedDraftResponseTemplate
+    from hellosign_sdk.model.warning_response import WarningResponse
     globals()['TemplateCreateEmbeddedDraftResponseTemplate'] = TemplateCreateEmbeddedDraftResponseTemplate
+    globals()['WarningResponse'] = WarningResponse
 
 
 class TemplateCreateEmbeddedDraftResponse(ModelNormal):
@@ -89,6 +91,7 @@ class TemplateCreateEmbeddedDraftResponse(ModelNormal):
         lazy_import()
         return {
             'template': (TemplateCreateEmbeddedDraftResponseTemplate,),  # noqa: E501
+            'warnings': ([WarningResponse],),  # noqa: E501
         }
 
     @cached_property
@@ -98,6 +101,7 @@ class TemplateCreateEmbeddedDraftResponse(ModelNormal):
 
     attribute_map = {
         'template': 'template',  # noqa: E501
+        'warnings': 'warnings',  # noqa: E501
     }
 
     read_only_vars = {
@@ -142,6 +146,7 @@ class TemplateCreateEmbeddedDraftResponse(ModelNormal):
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
             template (TemplateCreateEmbeddedDraftResponseTemplate): [optional]  # noqa: E501
+            warnings ([WarningResponse]): [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -224,6 +229,7 @@ class TemplateCreateEmbeddedDraftResponse(ModelNormal):
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
             template (TemplateCreateEmbeddedDraftResponseTemplate): [optional]  # noqa: E501
+            warnings ([WarningResponse]): [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)

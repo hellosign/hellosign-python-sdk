@@ -13,6 +13,7 @@
 | `is_paid_hf` | ```bool``` |    |  |
 | `quotas` | [```AccountResponseQuotas```](AccountResponseQuotas.md) |    |  |
 | `callback_url` | ```str, none_type``` |    |  |
+| `should_send_outbound_conf_emails` | ```bool``` |    |  |
 | `role_code` | ```str, none_type``` |    |  |
 
 

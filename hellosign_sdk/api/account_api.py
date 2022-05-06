@@ -110,6 +110,7 @@ class AccountApi(object):
             },
             params_map={
                 'all': [
+                    'account_id',
                 ],
                 'required': [],
                 'nullable': [
@@ -125,10 +126,14 @@ class AccountApi(object):
                 'allowed_values': {
                 },
                 'openapi_types': {
+                    'account_id':
+                        (str,),
                 },
                 'attribute_map': {
+                    'account_id': 'account_id',
                 },
                 'location_map': {
+                    'account_id': 'query',
                 },
                 'collection_format_map': {
                 }
@@ -363,6 +368,7 @@ class AccountApi(object):
 
 
         Keyword Args:
+            account_id (str): Account ID. [optional]
             _return_http_data_only (bool): response data without head status
                 code and headers. Default is True.
             _preload_content (bool): if False, the urllib3.HTTPResponse object

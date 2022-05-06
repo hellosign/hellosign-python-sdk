@@ -139,8 +139,8 @@ class TeamRemoveMemberRequest(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            account_id (str): The ID or email address of the Account to remove from your Team. The account ID prevails if both are provided.. [optional]  # noqa: E501
-            email_address (str): The ID or email address of the Account to remove from your Team. The account ID prevails if both are provided.. [optional]  # noqa: E501
+            account_id (str): **account_id** or **email_address** is required. If both are provided, the account id prevails.   Account id to remove from your Team.. [optional]  # noqa: E501
+            email_address (str): **account_id** or **email_address** is required. If both are provided, the account id prevails.   Email address of the Account to remove from your Team.. [optional]  # noqa: E501
             new_owner_email_address (str): The email address of an Account on this Team to receive all documents, templates, and API apps (if applicable) from the removed Account. If not provided, and on an Enterprise plan, this data will remain with the removed Account.  **Note**: Only available for Enterprise plans.. [optional]  # noqa: E501
         """
 
@@ -223,8 +223,8 @@ class TeamRemoveMemberRequest(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            account_id (str): The ID or email address of the Account to remove from your Team. The account ID prevails if both are provided.. [optional]  # noqa: E501
-            email_address (str): The ID or email address of the Account to remove from your Team. The account ID prevails if both are provided.. [optional]  # noqa: E501
+            account_id (str): **account_id** or **email_address** is required. If both are provided, the account id prevails.   Account id to remove from your Team.. [optional]  # noqa: E501
+            email_address (str): **account_id** or **email_address** is required. If both are provided, the account id prevails.   Email address of the Account to remove from your Team.. [optional]  # noqa: E501
             new_owner_email_address (str): The email address of an Account on this Team to receive all documents, templates, and API apps (if applicable) from the removed Account. If not provided, and on an Enterprise plan, this data will remain with the removed Account.  **Note**: Only available for Enterprise plans.. [optional]  # noqa: E501
         """
 

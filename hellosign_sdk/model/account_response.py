@@ -95,6 +95,7 @@ class AccountResponse(ModelNormal):
             'is_paid_hf': (bool,),  # noqa: E501
             'quotas': (AccountResponseQuotas,),  # noqa: E501
             'callback_url': (str, none_type,),  # noqa: E501
+            'should_send_outbound_conf_emails': (bool,),  # noqa: E501
             'role_code': (str, none_type,),  # noqa: E501
         }
 
@@ -111,6 +112,7 @@ class AccountResponse(ModelNormal):
         'is_paid_hf': 'is_paid_hf',  # noqa: E501
         'quotas': 'quotas',  # noqa: E501
         'callback_url': 'callback_url',  # noqa: E501
+        'should_send_outbound_conf_emails': 'should_send_outbound_conf_emails',  # noqa: E501
         'role_code': 'role_code',  # noqa: E501
     }
 
@@ -162,6 +164,7 @@ class AccountResponse(ModelNormal):
             is_paid_hf (bool): [optional]  # noqa: E501
             quotas (AccountResponseQuotas): [optional]  # noqa: E501
             callback_url (str, none_type): [optional]  # noqa: E501
+            should_send_outbound_conf_emails (bool): [optional]  # noqa: E501
             role_code (str, none_type): [optional]  # noqa: E501
         """
 
@@ -251,6 +254,7 @@ class AccountResponse(ModelNormal):
             is_paid_hf (bool): [optional]  # noqa: E501
             quotas (AccountResponseQuotas): [optional]  # noqa: E501
             callback_url (str, none_type): [optional]  # noqa: E501
+            should_send_outbound_conf_emails (bool): [optional]  # noqa: E501
             role_code (str, none_type): [optional]  # noqa: E501
         """
 
