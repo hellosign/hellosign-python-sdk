@@ -22,6 +22,15 @@ from {{packageName}}.exceptions import ApiAttributeError
 
 {{#models}}
 {{#model}}
+{{#discriminator}}
+def lazy_import():
+{{#discriminator.mappedModels}}
+    from {{packageName}}.models import {{modelName}}
+{{/discriminator.mappedModels}}
+{{#discriminator.mappedModels}}
+    globals()['{{modelName}}'] = {{modelName}}
+{{/discriminator.mappedModels}}
+{{/discriminator}}
 {{#imports}}
 {{#-first}}
 

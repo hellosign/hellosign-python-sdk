@@ -29,10 +29,9 @@ from hellosign_sdk.model_utils import (  # noqa: F401
 )
 from hellosign_sdk.exceptions import ApiAttributeError
 
-
 def lazy_import():
-    from hellosign_sdk.model.signature_request_response_custom_field_checkbox import SignatureRequestResponseCustomFieldCheckbox
-    from hellosign_sdk.model.signature_request_response_custom_field_text import SignatureRequestResponseCustomFieldText
+    from hellosign_sdk.models import SignatureRequestResponseCustomFieldCheckbox
+    from hellosign_sdk.models import SignatureRequestResponseCustomFieldText
     globals()['SignatureRequestResponseCustomFieldCheckbox'] = SignatureRequestResponseCustomFieldCheckbox
     globals()['SignatureRequestResponseCustomFieldText'] = SignatureRequestResponseCustomFieldText
 
@@ -101,8 +100,6 @@ class SignatureRequestResponseCustomFieldBase(ModelNormal):
     def discriminator():
         lazy_import()
         val = {
-            'SignatureRequestResponseCustomFieldCheckbox': SignatureRequestResponseCustomFieldCheckbox,
-            'SignatureRequestResponseCustomFieldText': SignatureRequestResponseCustomFieldText,
             'checkbox': SignatureRequestResponseCustomFieldCheckbox,
             'text': SignatureRequestResponseCustomFieldText,
         }

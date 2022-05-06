@@ -29,18 +29,17 @@ from hellosign_sdk.model_utils import (  # noqa: F401
 )
 from hellosign_sdk.exceptions import ApiAttributeError
 
-
 def lazy_import():
-    from hellosign_sdk.model.sub_form_fields_per_document_checkbox import SubFormFieldsPerDocumentCheckbox
-    from hellosign_sdk.model.sub_form_fields_per_document_checkbox_merge import SubFormFieldsPerDocumentCheckboxMerge
-    from hellosign_sdk.model.sub_form_fields_per_document_date_signed import SubFormFieldsPerDocumentDateSigned
-    from hellosign_sdk.model.sub_form_fields_per_document_dropdown import SubFormFieldsPerDocumentDropdown
-    from hellosign_sdk.model.sub_form_fields_per_document_hyperlink import SubFormFieldsPerDocumentHyperlink
-    from hellosign_sdk.model.sub_form_fields_per_document_initials import SubFormFieldsPerDocumentInitials
-    from hellosign_sdk.model.sub_form_fields_per_document_radio import SubFormFieldsPerDocumentRadio
-    from hellosign_sdk.model.sub_form_fields_per_document_signature import SubFormFieldsPerDocumentSignature
-    from hellosign_sdk.model.sub_form_fields_per_document_text import SubFormFieldsPerDocumentText
-    from hellosign_sdk.model.sub_form_fields_per_document_text_merge import SubFormFieldsPerDocumentTextMerge
+    from hellosign_sdk.models import SubFormFieldsPerDocumentCheckbox
+    from hellosign_sdk.models import SubFormFieldsPerDocumentCheckboxMerge
+    from hellosign_sdk.models import SubFormFieldsPerDocumentDateSigned
+    from hellosign_sdk.models import SubFormFieldsPerDocumentDropdown
+    from hellosign_sdk.models import SubFormFieldsPerDocumentHyperlink
+    from hellosign_sdk.models import SubFormFieldsPerDocumentInitials
+    from hellosign_sdk.models import SubFormFieldsPerDocumentRadio
+    from hellosign_sdk.models import SubFormFieldsPerDocumentSignature
+    from hellosign_sdk.models import SubFormFieldsPerDocumentText
+    from hellosign_sdk.models import SubFormFieldsPerDocumentTextMerge
     globals()['SubFormFieldsPerDocumentCheckbox'] = SubFormFieldsPerDocumentCheckbox
     globals()['SubFormFieldsPerDocumentCheckboxMerge'] = SubFormFieldsPerDocumentCheckboxMerge
     globals()['SubFormFieldsPerDocumentDateSigned'] = SubFormFieldsPerDocumentDateSigned
@@ -106,6 +105,7 @@ class SubFormFieldsPerDocumentBase(ModelNormal):
         """
         lazy_import()
         return {
+            'document_index': (int,),  # noqa: E501
             'height': (int,),  # noqa: E501
             'signer': (str,),  # noqa: E501
             'type': (str,),  # noqa: E501
@@ -122,16 +122,6 @@ class SubFormFieldsPerDocumentBase(ModelNormal):
     def discriminator():
         lazy_import()
         val = {
-            'SubFormFieldsPerDocumentCheckbox': SubFormFieldsPerDocumentCheckbox,
-            'SubFormFieldsPerDocumentCheckboxMerge': SubFormFieldsPerDocumentCheckboxMerge,
-            'SubFormFieldsPerDocumentDateSigned': SubFormFieldsPerDocumentDateSigned,
-            'SubFormFieldsPerDocumentDropdown': SubFormFieldsPerDocumentDropdown,
-            'SubFormFieldsPerDocumentHyperlink': SubFormFieldsPerDocumentHyperlink,
-            'SubFormFieldsPerDocumentInitials': SubFormFieldsPerDocumentInitials,
-            'SubFormFieldsPerDocumentRadio': SubFormFieldsPerDocumentRadio,
-            'SubFormFieldsPerDocumentSignature': SubFormFieldsPerDocumentSignature,
-            'SubFormFieldsPerDocumentText': SubFormFieldsPerDocumentText,
-            'SubFormFieldsPerDocumentTextMerge': SubFormFieldsPerDocumentTextMerge,
             'checkbox': SubFormFieldsPerDocumentCheckbox,
             'checkbox-merge': SubFormFieldsPerDocumentCheckboxMerge,
             'date_signed': SubFormFieldsPerDocumentDateSigned,
@@ -148,6 +138,7 @@ class SubFormFieldsPerDocumentBase(ModelNormal):
         return {'type': val}
 
     attribute_map = {
+        'document_index': 'document_index',  # noqa: E501
         'height': 'height',  # noqa: E501
         'signer': 'signer',  # noqa: E501
         'type': 'type',  # noqa: E501
@@ -167,10 +158,11 @@ class SubFormFieldsPerDocumentBase(ModelNormal):
 
     @classmethod
     @convert_js_args_to_python_args
-    def _from_openapi_data(cls, height, signer, type, width, x, y, *args, **kwargs):  # noqa: E501
+    def _from_openapi_data(cls, document_index, height, signer, type, width, x, y, *args, **kwargs):  # noqa: E501
         """SubFormFieldsPerDocumentBase - a model defined in OpenAPI
 
         Args:
+            document_index (int): Represents the integer index of the `file` or `file_url` document the field should be attached to.
             height (int): Size of the field in pixels.
             signer (str): Signer index identified by the offset `%i%` in the `signers[%i%]` parameter, indicating which signer should fill out the field. If your type is `text-merge` you can set this to `sender`, so the field is non-editable by any signer.
             type (str):
@@ -240,6 +232,7 @@ class SubFormFieldsPerDocumentBase(ModelNormal):
         self._configuration = _configuration
         self._visited_composed_classes = _visited_composed_classes + (self.__class__,)
 
+        self.document_index = document_index
         self.height = height
         self.signer = signer
         self.type = type
@@ -266,10 +259,11 @@ class SubFormFieldsPerDocumentBase(ModelNormal):
     ])
 
     @convert_js_args_to_python_args
-    def __init__(self, height, signer, type, width, x, y, *args, **kwargs):  # noqa: E501
+    def __init__(self, document_index, height, signer, type, width, x, y, *args, **kwargs):  # noqa: E501
         """SubFormFieldsPerDocumentBase - a model defined in OpenAPI
 
         Args:
+            document_index (int): Represents the integer index of the `file` or `file_url` document the field should be attached to.
             height (int): Size of the field in pixels.
             signer (str): Signer index identified by the offset `%i%` in the `signers[%i%]` parameter, indicating which signer should fill out the field. If your type is `text-merge` you can set this to `sender`, so the field is non-editable by any signer.
             type (str):
@@ -337,6 +331,7 @@ class SubFormFieldsPerDocumentBase(ModelNormal):
         self._configuration = _configuration
         self._visited_composed_classes = _visited_composed_classes + (self.__class__,)
 
+        self.document_index = document_index
         self.height = height
         self.signer = signer
         self.type = type

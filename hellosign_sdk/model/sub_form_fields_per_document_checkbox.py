@@ -32,27 +32,7 @@ from hellosign_sdk.exceptions import ApiAttributeError
 
 def lazy_import():
     from hellosign_sdk.model.sub_form_fields_per_document_base import SubFormFieldsPerDocumentBase
-    from hellosign_sdk.model.sub_form_fields_per_document_checkbox import SubFormFieldsPerDocumentCheckbox
-    from hellosign_sdk.model.sub_form_fields_per_document_checkbox_merge import SubFormFieldsPerDocumentCheckboxMerge
-    from hellosign_sdk.model.sub_form_fields_per_document_date_signed import SubFormFieldsPerDocumentDateSigned
-    from hellosign_sdk.model.sub_form_fields_per_document_dropdown import SubFormFieldsPerDocumentDropdown
-    from hellosign_sdk.model.sub_form_fields_per_document_hyperlink import SubFormFieldsPerDocumentHyperlink
-    from hellosign_sdk.model.sub_form_fields_per_document_initials import SubFormFieldsPerDocumentInitials
-    from hellosign_sdk.model.sub_form_fields_per_document_radio import SubFormFieldsPerDocumentRadio
-    from hellosign_sdk.model.sub_form_fields_per_document_signature import SubFormFieldsPerDocumentSignature
-    from hellosign_sdk.model.sub_form_fields_per_document_text import SubFormFieldsPerDocumentText
-    from hellosign_sdk.model.sub_form_fields_per_document_text_merge import SubFormFieldsPerDocumentTextMerge
     globals()['SubFormFieldsPerDocumentBase'] = SubFormFieldsPerDocumentBase
-    globals()['SubFormFieldsPerDocumentCheckbox'] = SubFormFieldsPerDocumentCheckbox
-    globals()['SubFormFieldsPerDocumentCheckboxMerge'] = SubFormFieldsPerDocumentCheckboxMerge
-    globals()['SubFormFieldsPerDocumentDateSigned'] = SubFormFieldsPerDocumentDateSigned
-    globals()['SubFormFieldsPerDocumentDropdown'] = SubFormFieldsPerDocumentDropdown
-    globals()['SubFormFieldsPerDocumentHyperlink'] = SubFormFieldsPerDocumentHyperlink
-    globals()['SubFormFieldsPerDocumentInitials'] = SubFormFieldsPerDocumentInitials
-    globals()['SubFormFieldsPerDocumentRadio'] = SubFormFieldsPerDocumentRadio
-    globals()['SubFormFieldsPerDocumentSignature'] = SubFormFieldsPerDocumentSignature
-    globals()['SubFormFieldsPerDocumentText'] = SubFormFieldsPerDocumentText
-    globals()['SubFormFieldsPerDocumentTextMerge'] = SubFormFieldsPerDocumentTextMerge
 
 
 class SubFormFieldsPerDocumentCheckbox(ModelComposed):
@@ -110,6 +90,7 @@ class SubFormFieldsPerDocumentCheckbox(ModelComposed):
         return {
             'type': (str,),  # noqa: E501
             'checked': (bool,),  # noqa: E501
+            'document_index': (int,),  # noqa: E501
             'height': (int,),  # noqa: E501
             'signer': (str,),  # noqa: E501
             'width': (int,),  # noqa: E501
@@ -124,26 +105,13 @@ class SubFormFieldsPerDocumentCheckbox(ModelComposed):
 
     @cached_property
     def discriminator():
-        lazy_import()
-        val = {
-            'checkbox': SubFormFieldsPerDocumentCheckbox,
-            'checkbox-merge': SubFormFieldsPerDocumentCheckboxMerge,
-            'date_signed': SubFormFieldsPerDocumentDateSigned,
-            'dropdown': SubFormFieldsPerDocumentDropdown,
-            'hyperlink': SubFormFieldsPerDocumentHyperlink,
-            'initials': SubFormFieldsPerDocumentInitials,
-            'radio': SubFormFieldsPerDocumentRadio,
-            'signature': SubFormFieldsPerDocumentSignature,
-            'text': SubFormFieldsPerDocumentText,
-            'text-merge': SubFormFieldsPerDocumentTextMerge,
-        }
-        if not val:
-            return None
-        return {'type': val}
+        return None
+
 
     attribute_map = {
         'type': 'type',  # noqa: E501
         'checked': 'checked',  # noqa: E501
+        'document_index': 'document_index',  # noqa: E501
         'height': 'height',  # noqa: E501
         'signer': 'signer',  # noqa: E501
         'width': 'width',  # noqa: E501
@@ -167,6 +135,7 @@ class SubFormFieldsPerDocumentCheckbox(ModelComposed):
         Keyword Args:
             type (str): A yes/no checkbox. Use the `SubFormFieldsPerDocumentCheckbox` class.. defaults to "checkbox"  # noqa: E501
             checked (bool): `true` for checking the checkbox field by default, otherwise `false`.
+            document_index (int): Represents the integer index of the `file` or `file_url` document the field should be attached to.
             height (int): Size of the field in pixels.
             signer (str): Signer index identified by the offset `%i%` in the `signers[%i%]` parameter, indicating which signer should fill out the field. If your type is `text-merge` you can set this to `sender`, so the field is non-editable by any signer.
             width (int): Size of the field in pixels.
@@ -279,6 +248,7 @@ class SubFormFieldsPerDocumentCheckbox(ModelComposed):
         Keyword Args:
             type (str): A yes/no checkbox. Use the `SubFormFieldsPerDocumentCheckbox` class.. defaults to "checkbox"  # noqa: E501
             checked (bool): `true` for checking the checkbox field by default, otherwise `false`.
+            document_index (int): Represents the integer index of the `file` or `file_url` document the field should be attached to.
             height (int): Size of the field in pixels.
             signer (str): Signer index identified by the offset `%i%` in the `signers[%i%]` parameter, indicating which signer should fill out the field. If your type is `text-merge` you can set this to `sender`, so the field is non-editable by any signer.
             width (int): Size of the field in pixels.
