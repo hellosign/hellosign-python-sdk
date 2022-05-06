@@ -110,6 +110,7 @@ class SubFormFieldsPerDocumentCheckbox(ModelComposed):
         return {
             'type': (str,),  # noqa: E501
             'checked': (bool,),  # noqa: E501
+            'document_index': (int,),  # noqa: E501
             'height': (int,),  # noqa: E501
             'signer': (str,),  # noqa: E501
             'width': (int,),  # noqa: E501
@@ -144,6 +145,7 @@ class SubFormFieldsPerDocumentCheckbox(ModelComposed):
     attribute_map = {
         'type': 'type',  # noqa: E501
         'checked': 'checked',  # noqa: E501
+        'document_index': 'document_index',  # noqa: E501
         'height': 'height',  # noqa: E501
         'signer': 'signer',  # noqa: E501
         'width': 'width',  # noqa: E501
@@ -167,6 +169,7 @@ class SubFormFieldsPerDocumentCheckbox(ModelComposed):
         Keyword Args:
             type (str): A yes/no checkbox. Use the `SubFormFieldsPerDocumentCheckbox` class.. defaults to "checkbox"  # noqa: E501
             checked (bool): `true` for checking the checkbox field by default, otherwise `false`.
+            document_index (int): Represents the integer index of the `file` or `file_url` document the field should be attached to.
             height (int): Size of the field in pixels.
             signer (str): Signer index identified by the offset `%i%` in the `signers[%i%]` parameter, indicating which signer should fill out the field. If your type is `text-merge` you can set this to `sender`, so the field is non-editable by any signer.
             width (int): Size of the field in pixels.
@@ -279,6 +282,7 @@ class SubFormFieldsPerDocumentCheckbox(ModelComposed):
         Keyword Args:
             type (str): A yes/no checkbox. Use the `SubFormFieldsPerDocumentCheckbox` class.. defaults to "checkbox"  # noqa: E501
             checked (bool): `true` for checking the checkbox field by default, otherwise `false`.
+            document_index (int): Represents the integer index of the `file` or `file_url` document the field should be attached to.
             height (int): Size of the field in pixels.
             signer (str): Signer index identified by the offset `%i%` in the `signers[%i%]` parameter, indicating which signer should fill out the field. If your type is `text-merge` you can set this to `sender`, so the field is non-editable by any signer.
             width (int): Size of the field in pixels.

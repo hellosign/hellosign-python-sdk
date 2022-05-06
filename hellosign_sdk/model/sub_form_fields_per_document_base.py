@@ -106,6 +106,7 @@ class SubFormFieldsPerDocumentBase(ModelNormal):
         """
         lazy_import()
         return {
+            'document_index': (int,),  # noqa: E501
             'height': (int,),  # noqa: E501
             'signer': (str,),  # noqa: E501
             'type': (str,),  # noqa: E501
@@ -148,6 +149,7 @@ class SubFormFieldsPerDocumentBase(ModelNormal):
         return {'type': val}
 
     attribute_map = {
+        'document_index': 'document_index',  # noqa: E501
         'height': 'height',  # noqa: E501
         'signer': 'signer',  # noqa: E501
         'type': 'type',  # noqa: E501
@@ -167,10 +169,11 @@ class SubFormFieldsPerDocumentBase(ModelNormal):
 
     @classmethod
     @convert_js_args_to_python_args
-    def _from_openapi_data(cls, height, signer, type, width, x, y, *args, **kwargs):  # noqa: E501
+    def _from_openapi_data(cls, document_index, height, signer, type, width, x, y, *args, **kwargs):  # noqa: E501
         """SubFormFieldsPerDocumentBase - a model defined in OpenAPI
 
         Args:
+            document_index (int): Represents the integer index of the `file` or `file_url` document the field should be attached to.
             height (int): Size of the field in pixels.
             signer (str): Signer index identified by the offset `%i%` in the `signers[%i%]` parameter, indicating which signer should fill out the field. If your type is `text-merge` you can set this to `sender`, so the field is non-editable by any signer.
             type (str):
@@ -240,6 +243,7 @@ class SubFormFieldsPerDocumentBase(ModelNormal):
         self._configuration = _configuration
         self._visited_composed_classes = _visited_composed_classes + (self.__class__,)
 
+        self.document_index = document_index
         self.height = height
         self.signer = signer
         self.type = type
@@ -266,10 +270,11 @@ class SubFormFieldsPerDocumentBase(ModelNormal):
     ])
 
     @convert_js_args_to_python_args
-    def __init__(self, height, signer, type, width, x, y, *args, **kwargs):  # noqa: E501
+    def __init__(self, document_index, height, signer, type, width, x, y, *args, **kwargs):  # noqa: E501
         """SubFormFieldsPerDocumentBase - a model defined in OpenAPI
 
         Args:
+            document_index (int): Represents the integer index of the `file` or `file_url` document the field should be attached to.
             height (int): Size of the field in pixels.
             signer (str): Signer index identified by the offset `%i%` in the `signers[%i%]` parameter, indicating which signer should fill out the field. If your type is `text-merge` you can set this to `sender`, so the field is non-editable by any signer.
             type (str):
@@ -337,6 +342,7 @@ class SubFormFieldsPerDocumentBase(ModelNormal):
         self._configuration = _configuration
         self._visited_composed_classes = _visited_composed_classes + (self.__class__,)
 
+        self.document_index = document_index
         self.height = height
         self.signer = signer
         self.type = type

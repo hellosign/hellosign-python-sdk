@@ -17,7 +17,7 @@ class TestSubFormFieldsPerDocumentBase(unittest.TestCase):
         for ftype, data in fixture_data.items():
             payload = {
                 'signers': [],
-                'form_fields_per_document': [[data]]
+                'form_fields_per_document': [data]
             }
 
             obj = api_client.deserialize(
@@ -26,7 +26,7 @@ class TestSubFormFieldsPerDocumentBase(unittest.TestCase):
                 _check_type=True,
             )
 
-            form_fields_per_document = obj.form_fields_per_document[0][0]
+            form_fields_per_document = obj.form_fields_per_document[0]
             class_type = eval(f'models.{ftype}')
 
             self.assertEqual(form_fields_per_document.__class__.__name__, class_type.__name__)
