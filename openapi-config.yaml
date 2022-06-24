@@ -1,7 +1,7 @@
 generatorName: python
 typeMappings: {}
 additionalProperties:
-  generatorLanguageVersion: 3.7
+  generatorLanguageVersion: ">=3.7"
   packageName: hellosign_sdk
   projectName: hellosign-python-sdk
   sortModelPropertiesByRequiredFlag: true
