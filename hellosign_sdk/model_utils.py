@@ -1112,6 +1112,10 @@ def remove_uncoercible(required_types_classes, current_item, spec_property_namin
             elif issubclass(required_type_class_simplified, ModelSimple):
                 required_type_class_simplified = ModelSimple
 
+        # leave ints as-is
+        if type(current_item) is int and required_type_class_simplified == current_type_simple:
+            results_classes.append(int)
+
         if required_type_class_simplified == current_type_simple:
             # don't consider converting to one's own class
             continue

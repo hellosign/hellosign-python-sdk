@@ -114,6 +114,7 @@ class SignatureRequestCreateEmbeddedRequest(ModelNormal):
         lazy_import()
         return {
             'client_id': (str,),  # noqa: E501
+            'signers': ([SubSignatureRequestSigner],),  # noqa: E501
             'file': ([file_type],),  # noqa: E501
             'file_url': ([str],),  # noqa: E501
             'allow_decline': (bool,),  # noqa: E501
@@ -128,7 +129,6 @@ class SignatureRequestCreateEmbeddedRequest(ModelNormal):
             'hide_text_tags': (bool,),  # noqa: E501
             'message': (str,),  # noqa: E501
             'metadata': ({str: (bool, date, datetime, dict, float, int, list, str, none_type)},),  # noqa: E501
-            'signers': ([SubSignatureRequestSigner],),  # noqa: E501
             'signing_options': (SubSigningOptions,),  # noqa: E501
             'subject': (str,),  # noqa: E501
             'test_mode': (bool,),  # noqa: E501
@@ -143,6 +143,7 @@ class SignatureRequestCreateEmbeddedRequest(ModelNormal):
 
     attribute_map = {
         'client_id': 'client_id',  # noqa: E501
+        'signers': 'signers',  # noqa: E501
         'file': 'file',  # noqa: E501
         'file_url': 'file_url',  # noqa: E501
         'allow_decline': 'allow_decline',  # noqa: E501
@@ -157,7 +158,6 @@ class SignatureRequestCreateEmbeddedRequest(ModelNormal):
         'hide_text_tags': 'hide_text_tags',  # noqa: E501
         'message': 'message',  # noqa: E501
         'metadata': 'metadata',  # noqa: E501
-        'signers': 'signers',  # noqa: E501
         'signing_options': 'signing_options',  # noqa: E501
         'subject': 'subject',  # noqa: E501
         'test_mode': 'test_mode',  # noqa: E501
@@ -172,11 +172,12 @@ class SignatureRequestCreateEmbeddedRequest(ModelNormal):
 
     @classmethod
     @convert_js_args_to_python_args
-    def _from_openapi_data(cls, client_id, *args, **kwargs):  # noqa: E501
+    def _from_openapi_data(cls, client_id, signers, *args, **kwargs):  # noqa: E501
         """SignatureRequestCreateEmbeddedRequest - a model defined in OpenAPI
 
         Args:
             client_id (str): Client id of the app you're using to create this embedded signature request. Used for security purposes.
+            signers ([SubSignatureRequestSigner]): Add Signers to your Signature Request.
 
         Keyword Args:
             _check_type (bool): if True, values for parameters in openapi_types
@@ -209,21 +210,20 @@ class SignatureRequestCreateEmbeddedRequest(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            file ([file_type]): **file** or **file_url** is required, but not both.  Use `file[]` to indicate the uploaded file(s) to send for signature.  Currently we only support use of either the `file[]` parameter or `file_url[]` parameter, not both.. [optional]  # noqa: E501
-            file_url ([str]): **file_url** or **file** is required, but not both.  Use `file_url[]` to have HelloSign download the file(s) to send for signature.  Currently we only support use of either the `file[]` parameter or `file_url[]` parameter, not both.. [optional]  # noqa: E501
+            file ([file_type]): Use `file[]` to indicate the uploaded file(s) to send for signature.  This endpoint requires either **file** or **file_url[]**, but not both.. [optional]  # noqa: E501
+            file_url ([str]): Use `file_url[]` to have HelloSign download the file(s) to send for signature.  This endpoint requires either **file** or **file_url[]**, but not both.. [optional]  # noqa: E501
             allow_decline (bool): Allows signers to decline to sign a document if `true`. Defaults to `false`.. [optional] if omitted the server will use the default value of False  # noqa: E501
             allow_reassign (bool): Allows signers to reassign their signature requests to other signers if set to `true`. Defaults to `false`.  **Note**: Only available for Premium plan.. [optional] if omitted the server will use the default value of False  # noqa: E501
-            attachments ([SubAttachment]): [optional]  # noqa: E501
+            attachments ([SubAttachment]): A list describing the attachments. [optional]  # noqa: E501
             cc_email_addresses ([str]): The email addresses that should be CCed.. [optional]  # noqa: E501
-            custom_fields ([SubCustomField]): An array defining values and options for custom fields. Required when defining pre-set values in `form_fields_per_document` or [Text Tags](https://app.hellosign.com/api/textTagsWalkthrough#TextTagIntro).. [optional]  # noqa: E501
+            custom_fields ([SubCustomField]): When used together with merge fields, `custom_fields` allows users to add pre-filled data to their signature requests.  Pre-filled data can be used with \"send-once\" signature requests by adding merge fields with `form_fields_per_document` or [Text Tags](https://app.hellosign.com/api/textTagsWalkthrough#TextTagIntro) while passing values back with `custom_fields` together in one API call.  For using pre-filled on repeatable signature requests, merge fields are added to templates in the HelloSign UI or by calling [/template/create_embedded_draft](/api/reference/operation/templateCreateEmbeddedDraft) and then passing `custom_fields` on subsequent signature requests referencing that template.. [optional]  # noqa: E501
             field_options (SubFieldOptions): [optional]  # noqa: E501
             form_field_groups ([SubFormFieldGroup]): Group information for fields defined in `form_fields_per_document`. String-indexed JSON array with `group_label` and `requirement` keys. `form_fields_per_document` must contain fields referencing a group defined in `form_field_groups`.. [optional]  # noqa: E501
             form_field_rules ([SubFormFieldRule]): Conditional Logic rules for fields defined in `form_fields_per_document`.. [optional]  # noqa: E501
             form_fields_per_document ([SubFormFieldsPerDocumentBase]): The fields that should appear on the document, expressed as an array of objects.  **NOTE**: Fields like **text**, **dropdown**, **checkbox**, **radio**, and **hyperlink** have additional required and optional parameters. Check out the list of [additional parameters](/api/reference/constants/#form-fields-per-document) for these field types.  * Text Field use `SubFormFieldsPerDocumentText` * Dropdown Field use `SubFormFieldsPerDocumentDropdown` * Hyperlink Field use `SubFormFieldsPerDocumentHyperlink` * Checkbox Field use `SubFormFieldsPerDocumentCheckbox` * Radio Field use `SubFormFieldsPerDocumentRadio` * Signature Field use `SubFormFieldsPerDocumentSignature` * Date Signed Field use `SubFormFieldsPerDocumentDateSigned` * Initials Field use `SubFormFieldsPerDocumentInitials` * Text Merge Field use `SubFormFieldsPerDocumentTextMerge` * Checkbox Merge Field use `SubFormFieldsPerDocumentCheckboxMerge`. [optional]  # noqa: E501
-            hide_text_tags (bool): Send with a value of `true` if you wish to enable automatic Text Tag removal. Defaults to disabled, or `false`. When using Text Tags it is preferred that you set this to `false` and hide your tags with white text or something similar because the automatic removal system can cause unwanted clipping. See the [Text Tags](https://app.hellosign.com/api/textTagsWalkthrough#TextTagIntro) walkthrough for more details.. [optional] if omitted the server will use the default value of False  # noqa: E501
+            hide_text_tags (bool): Enables automatic Text Tag removal when set to true.  **NOTE**: Removing text tags this way can cause unwanted clipping. We recommend leaving this setting on `false` and instead hiding your text tags using white text or a similar approach. See the [Text Tags Walkthrough](https://app.hellosign.com/api/textTagsWalkthrough#TextTagIntro) for more information.. [optional] if omitted the server will use the default value of False  # noqa: E501
             message (str): The custom message in the email that will be sent to the signers.. [optional]  # noqa: E501
             metadata ({str: (bool, date, datetime, dict, float, int, list, str, none_type)}): Key-value data that should be attached to the signature request. This metadata is included in all API responses and events involving the signature request. For example, use the metadata field to store a signer's order number for look up when receiving events for the signature request.  Each request can include up to 10 metadata keys, with key names up to 40 characters long and values up to 1000 characters long.. [optional]  # noqa: E501
-            signers ([SubSignatureRequestSigner]): Add Signers to your Signature Request.. [optional]  # noqa: E501
             signing_options (SubSigningOptions): [optional]  # noqa: E501
             subject (str): The subject in the email that will be sent to the signers.. [optional]  # noqa: E501
             test_mode (bool): Whether this is a test, the signature request will not be legally binding if set to `true`. Defaults to `false`.. [optional] if omitted the server will use the default value of False  # noqa: E501
@@ -257,6 +257,7 @@ class SignatureRequestCreateEmbeddedRequest(ModelNormal):
         self._visited_composed_classes = _visited_composed_classes + (self.__class__,)
 
         self.client_id = client_id
+        self.signers = signers
         for var_name, var_value in kwargs.items():
             if var_name not in self.attribute_map and \
                         self._configuration is not None and \
@@ -277,11 +278,12 @@ class SignatureRequestCreateEmbeddedRequest(ModelNormal):
     ])
 
     @convert_js_args_to_python_args
-    def __init__(self, client_id, *args, **kwargs):  # noqa: E501
+    def __init__(self, client_id, signers, *args, **kwargs):  # noqa: E501
         """SignatureRequestCreateEmbeddedRequest - a model defined in OpenAPI
 
         Args:
             client_id (str): Client id of the app you're using to create this embedded signature request. Used for security purposes.
+            signers ([SubSignatureRequestSigner]): Add Signers to your Signature Request.
 
         Keyword Args:
             _check_type (bool): if True, values for parameters in openapi_types
@@ -314,21 +316,20 @@ class SignatureRequestCreateEmbeddedRequest(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            file ([file_type]): **file** or **file_url** is required, but not both.  Use `file[]` to indicate the uploaded file(s) to send for signature.  Currently we only support use of either the `file[]` parameter or `file_url[]` parameter, not both.. [optional]  # noqa: E501
-            file_url ([str]): **file_url** or **file** is required, but not both.  Use `file_url[]` to have HelloSign download the file(s) to send for signature.  Currently we only support use of either the `file[]` parameter or `file_url[]` parameter, not both.. [optional]  # noqa: E501
+            file ([file_type]): Use `file[]` to indicate the uploaded file(s) to send for signature.  This endpoint requires either **file** or **file_url[]**, but not both.. [optional]  # noqa: E501
+            file_url ([str]): Use `file_url[]` to have HelloSign download the file(s) to send for signature.  This endpoint requires either **file** or **file_url[]**, but not both.. [optional]  # noqa: E501
             allow_decline (bool): Allows signers to decline to sign a document if `true`. Defaults to `false`.. [optional] if omitted the server will use the default value of False  # noqa: E501
             allow_reassign (bool): Allows signers to reassign their signature requests to other signers if set to `true`. Defaults to `false`.  **Note**: Only available for Premium plan.. [optional] if omitted the server will use the default value of False  # noqa: E501
-            attachments ([SubAttachment]): [optional]  # noqa: E501
+            attachments ([SubAttachment]): A list describing the attachments. [optional]  # noqa: E501
             cc_email_addresses ([str]): The email addresses that should be CCed.. [optional]  # noqa: E501
-            custom_fields ([SubCustomField]): An array defining values and options for custom fields. Required when defining pre-set values in `form_fields_per_document` or [Text Tags](https://app.hellosign.com/api/textTagsWalkthrough#TextTagIntro).. [optional]  # noqa: E501
+            custom_fields ([SubCustomField]): When used together with merge fields, `custom_fields` allows users to add pre-filled data to their signature requests.  Pre-filled data can be used with \"send-once\" signature requests by adding merge fields with `form_fields_per_document` or [Text Tags](https://app.hellosign.com/api/textTagsWalkthrough#TextTagIntro) while passing values back with `custom_fields` together in one API call.  For using pre-filled on repeatable signature requests, merge fields are added to templates in the HelloSign UI or by calling [/template/create_embedded_draft](/api/reference/operation/templateCreateEmbeddedDraft) and then passing `custom_fields` on subsequent signature requests referencing that template.. [optional]  # noqa: E501
             field_options (SubFieldOptions): [optional]  # noqa: E501
             form_field_groups ([SubFormFieldGroup]): Group information for fields defined in `form_fields_per_document`. String-indexed JSON array with `group_label` and `requirement` keys. `form_fields_per_document` must contain fields referencing a group defined in `form_field_groups`.. [optional]  # noqa: E501
             form_field_rules ([SubFormFieldRule]): Conditional Logic rules for fields defined in `form_fields_per_document`.. [optional]  # noqa: E501
             form_fields_per_document ([SubFormFieldsPerDocumentBase]): The fields that should appear on the document, expressed as an array of objects.  **NOTE**: Fields like **text**, **dropdown**, **checkbox**, **radio**, and **hyperlink** have additional required and optional parameters. Check out the list of [additional parameters](/api/reference/constants/#form-fields-per-document) for these field types.  * Text Field use `SubFormFieldsPerDocumentText` * Dropdown Field use `SubFormFieldsPerDocumentDropdown` * Hyperlink Field use `SubFormFieldsPerDocumentHyperlink` * Checkbox Field use `SubFormFieldsPerDocumentCheckbox` * Radio Field use `SubFormFieldsPerDocumentRadio` * Signature Field use `SubFormFieldsPerDocumentSignature` * Date Signed Field use `SubFormFieldsPerDocumentDateSigned` * Initials Field use `SubFormFieldsPerDocumentInitials` * Text Merge Field use `SubFormFieldsPerDocumentTextMerge` * Checkbox Merge Field use `SubFormFieldsPerDocumentCheckboxMerge`. [optional]  # noqa: E501
-            hide_text_tags (bool): Send with a value of `true` if you wish to enable automatic Text Tag removal. Defaults to disabled, or `false`. When using Text Tags it is preferred that you set this to `false` and hide your tags with white text or something similar because the automatic removal system can cause unwanted clipping. See the [Text Tags](https://app.hellosign.com/api/textTagsWalkthrough#TextTagIntro) walkthrough for more details.. [optional] if omitted the server will use the default value of False  # noqa: E501
+            hide_text_tags (bool): Enables automatic Text Tag removal when set to true.  **NOTE**: Removing text tags this way can cause unwanted clipping. We recommend leaving this setting on `false` and instead hiding your text tags using white text or a similar approach. See the [Text Tags Walkthrough](https://app.hellosign.com/api/textTagsWalkthrough#TextTagIntro) for more information.. [optional] if omitted the server will use the default value of False  # noqa: E501
             message (str): The custom message in the email that will be sent to the signers.. [optional]  # noqa: E501
             metadata ({str: (bool, date, datetime, dict, float, int, list, str, none_type)}): Key-value data that should be attached to the signature request. This metadata is included in all API responses and events involving the signature request. For example, use the metadata field to store a signer's order number for look up when receiving events for the signature request.  Each request can include up to 10 metadata keys, with key names up to 40 characters long and values up to 1000 characters long.. [optional]  # noqa: E501
-            signers ([SubSignatureRequestSigner]): Add Signers to your Signature Request.. [optional]  # noqa: E501
             signing_options (SubSigningOptions): [optional]  # noqa: E501
             subject (str): The subject in the email that will be sent to the signers.. [optional]  # noqa: E501
             test_mode (bool): Whether this is a test, the signature request will not be legally binding if set to `true`. Defaults to `false`.. [optional] if omitted the server will use the default value of False  # noqa: E501
@@ -360,6 +361,7 @@ class SignatureRequestCreateEmbeddedRequest(ModelNormal):
         self._visited_composed_classes = _visited_composed_classes + (self.__class__,)
 
         self.client_id = client_id
+        self.signers = signers
         for var_name, var_value in kwargs.items():
             if var_name not in self.attribute_map and \
                         self._configuration is not None and \

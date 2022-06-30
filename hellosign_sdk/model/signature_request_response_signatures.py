@@ -94,6 +94,8 @@ class SignatureRequestResponseSignatures(ModelNormal):
             'last_reminded_at': (int, none_type,),  # noqa: E501
             'has_pin': (bool,),  # noqa: E501
             'has_sms_auth': (bool, none_type,),  # noqa: E501
+            'has_sms_delivery': (bool, none_type,),  # noqa: E501
+            'sms_phone_number': (str, none_type,),  # noqa: E501
             'reassigned_by': (str, none_type,),  # noqa: E501
             'reassignment_reason': (str, none_type,),  # noqa: E501
             'error': (str, none_type,),  # noqa: E501
@@ -117,6 +119,8 @@ class SignatureRequestResponseSignatures(ModelNormal):
         'last_reminded_at': 'last_reminded_at',  # noqa: E501
         'has_pin': 'has_pin',  # noqa: E501
         'has_sms_auth': 'has_sms_auth',  # noqa: E501
+        'has_sms_delivery': 'has_sms_delivery',  # noqa: E501
+        'sms_phone_number': 'sms_phone_number',  # noqa: E501
         'reassigned_by': 'reassigned_by',  # noqa: E501
         'reassignment_reason': 'reassignment_reason',  # noqa: E501
         'error': 'error',  # noqa: E501
@@ -175,6 +179,8 @@ class SignatureRequestResponseSignatures(ModelNormal):
             last_reminded_at (int, none_type): The time the last reminder email was sent to the signer or null.. [optional]  # noqa: E501
             has_pin (bool): Boolean to indicate whether this signature requires a PIN to access.. [optional]  # noqa: E501
             has_sms_auth (bool, none_type): Boolean to indicate whether this signature has SMS authentication enabled.. [optional]  # noqa: E501
+            has_sms_delivery (bool, none_type): Boolean to indicate whether this signature has SMS delivery enabled.. [optional]  # noqa: E501
+            sms_phone_number (str, none_type): The SMS phone number used for authentication or signature request delivery.. [optional]  # noqa: E501
             reassigned_by (str, none_type): Email address of original signer who reassigned to this signer.. [optional]  # noqa: E501
             reassignment_reason (str, none_type): Reason provided by original signer who reassigned to this signer.. [optional]  # noqa: E501
             error (str, none_type): Error message pertaining to this signer, or null.. [optional]  # noqa: E501
@@ -271,6 +277,8 @@ class SignatureRequestResponseSignatures(ModelNormal):
             last_reminded_at (int, none_type): The time the last reminder email was sent to the signer or null.. [optional]  # noqa: E501
             has_pin (bool): Boolean to indicate whether this signature requires a PIN to access.. [optional]  # noqa: E501
             has_sms_auth (bool, none_type): Boolean to indicate whether this signature has SMS authentication enabled.. [optional]  # noqa: E501
+            has_sms_delivery (bool, none_type): Boolean to indicate whether this signature has SMS delivery enabled.. [optional]  # noqa: E501
+            sms_phone_number (str, none_type): The SMS phone number used for authentication or signature request delivery.. [optional]  # noqa: E501
             reassigned_by (str, none_type): Email address of original signer who reassigned to this signer.. [optional]  # noqa: E501
             reassignment_reason (str, none_type): Reason provided by original signer who reassigned to this signer.. [optional]  # noqa: E501
             error (str, none_type): Error message pertaining to this signer, or null.. [optional]  # noqa: E501

@@ -85,6 +85,7 @@ class AccountResponseQuotas(ModelNormal):
             'api_signature_requests_left': (int, none_type,),  # noqa: E501
             'documents_left': (int, none_type,),  # noqa: E501
             'templates_left': (int, none_type,),  # noqa: E501
+            'sms_verifications_left': (int, none_type,),  # noqa: E501
         }
 
     @cached_property
@@ -96,6 +97,7 @@ class AccountResponseQuotas(ModelNormal):
         'api_signature_requests_left': 'api_signature_requests_left',  # noqa: E501
         'documents_left': 'documents_left',  # noqa: E501
         'templates_left': 'templates_left',  # noqa: E501
+        'sms_verifications_left': 'sms_verifications_left',  # noqa: E501
     }
 
     read_only_vars = {
@@ -139,9 +141,10 @@ class AccountResponseQuotas(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            api_signature_requests_left (int, none_type): [optional]  # noqa: E501
-            documents_left (int, none_type): [optional]  # noqa: E501
-            templates_left (int, none_type): [optional]  # noqa: E501
+            api_signature_requests_left (int, none_type): API signature requests remaining.. [optional]  # noqa: E501
+            documents_left (int, none_type): Signature requests remaining.. [optional]  # noqa: E501
+            templates_left (int, none_type): API templates remaining.. [optional]  # noqa: E501
+            sms_verifications_left (int, none_type): SMS verifications  remaining.. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -223,9 +226,10 @@ class AccountResponseQuotas(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            api_signature_requests_left (int, none_type): [optional]  # noqa: E501
-            documents_left (int, none_type): [optional]  # noqa: E501
-            templates_left (int, none_type): [optional]  # noqa: E501
+            api_signature_requests_left (int, none_type): API signature requests remaining.. [optional]  # noqa: E501
+            documents_left (int, none_type): Signature requests remaining.. [optional]  # noqa: E501
+            templates_left (int, none_type): API templates remaining.. [optional]  # noqa: E501
+            sms_verifications_left (int, none_type): SMS verifications  remaining.. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)

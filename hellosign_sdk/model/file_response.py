@@ -137,8 +137,8 @@ class FileResponse(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            file_url (str): [optional]  # noqa: E501
-            expires_at (int): [optional]  # noqa: E501
+            file_url (str): URL to the file.. [optional]  # noqa: E501
+            expires_at (int): When the link expires.. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -220,8 +220,8 @@ class FileResponse(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            file_url (str): [optional]  # noqa: E501
-            expires_at (int): [optional]  # noqa: E501
+            file_url (str): URL to the file.. [optional]  # noqa: E501
+            expires_at (int): When the link expires.. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)

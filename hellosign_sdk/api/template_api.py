@@ -816,7 +816,7 @@ class TemplateApi(object):
     ):
         """Get Template Files  # noqa: E501
 
-        Obtain a copy of the current documents specified by the `template_id` parameter.  Returns a PDF or ZIP file, or if `get_url` is set, a JSON object with a url to the file (PDFs only). If `get_data_uri` is set, a JSON object with a `data_uri` representing the base64 encoded file (PDFs only) is returned.  If the files are currently being prepared, a status code of `409` will be returned instead.  # noqa: E501
+        Obtain a copy of the current documents specified by the `template_id` parameter.  Returns a PDF or ZIP file, or if `get_url` is set, a JSON object with a url to the file (PDFs only). If `get_data_uri` is set, a JSON object with a `data_uri` representing the base64 encoded file (PDFs only) is returned.  If the files are currently being prepared, a status code of `409` will be returned instead. In this case please wait for the `template_created` callback event.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -919,7 +919,7 @@ class TemplateApi(object):
     ):
         """Get Template  # noqa: E501
 
-        Returns the Template specified by the id parameter.  # noqa: E501
+        Returns the Template specified by the `id` parameter.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -1029,7 +1029,7 @@ class TemplateApi(object):
         Keyword Args:
             account_id (str): Which account to return Templates for. Must be a team member. Use `all` to indicate all team members. Defaults to your account.. [optional]
             page (int): Which page number of the Template List to return. Defaults to `1`.. [optional] if omitted the server will use the default value of 1
-            page_size (int): `Number of objects to be returned per page. Must be between `1` and `100`. Default is `20`.. [optional] if omitted the server will use the default value of 20
+            page_size (int): Number of objects to be returned per page. Must be between `1` and `100`. Default is `20`.. [optional] if omitted the server will use the default value of 20
             query (str): String that includes search terms and/or fields to be used to filter the Template objects.. [optional]
             _return_http_data_only (bool): response data without head status
                 code and headers. Default is True.
@@ -1223,7 +1223,7 @@ class TemplateApi(object):
     ):
         """Update Template Files  # noqa: E501
 
-        Overlays a new file with the overlay of an existing template. The new file(s) must:  1. have the same or higher page count 2. the same orientation as the file(s) being replaced.  This will not overwrite or in any way affect the existing template. Both the existing template and new template will be available for use after executing this endpoint. Also note that this will decrement your template quota.  Overlaying new files is asynchronous and a successful call to this endpoint will return an empty 200 OK response if the request passes initial validation checks.  It is recommended that a callback be implemented to listen for the callback event. A `template_created` event will be sent when the files are updated or a `template_error` event will be sent if there was a problem while updating the files. If a callback handler has been configured and the event has not been received within 60 minutes of making the call, check the status of the request in the API dashboard and retry the request if necessary.  If the page orientation or page count is different from the original template document, we will notify you with a `template_error` [callback event](https://app.hellosign.com/api/eventsAndCallbacksWalkthrough).  # noqa: E501
+        Overlays a new file with the overlay of an existing template. The new file(s) must:  1. have the same or higher page count 2. the same orientation as the file(s) being replaced.  This will not overwrite or in any way affect the existing template. Both the existing template and new template will be available for use after executing this endpoint. Also note that this will decrement your template quota.  Overlaying new files is asynchronous and a successful call to this endpoint will return 200 OK response if the request passes initial validation checks.  It is recommended that a callback be implemented to listen for the callback event. A `template_created` event will be sent when the files are updated or a `template_error` event will be sent if there was a problem while updating the files. If a callback handler has been configured and the event has not been received within 60 minutes of making the call, check the status of the request in the API dashboard and retry the request if necessary.  If the page orientation or page count is different from the original template document, we will notify you with a `template_error` [callback event](https://app.hellosign.com/api/eventsAndCallbacksWalkthrough).  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 

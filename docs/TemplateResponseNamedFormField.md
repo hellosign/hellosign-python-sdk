@@ -1,4 +1,4 @@
-# TemplateResponseDocumentCustomField
+# TemplateResponseNamedFormField
 
 
 
@@ -6,9 +6,9 @@
 
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
-| `name` | ```str``` |  The name of the Custom Field.  |  |
-| `type` | ```str``` |  The type of this Custom Field. Only `text` and `checkbox` are currently supported.  |  |
-| `signer` | ```str``` |  The signer of the Custom Field.  |  |
+| `name` | ```str``` |  The name of the Named Form Field.  |  |
+| `type` | ```str``` |  The type of this Named Form Field. Only `text` and `checkbox` are currently supported.  |  |
+| `signer` | ```str``` |  The signer of the Named Form Field.  |  |
 | `x` | ```int``` |  The horizontal offset in pixels for this form field.  |  |
 | `y` | ```int``` |  The vertical offset in pixels for this form field.  |  |
 | `width` | ```int``` |  The width in pixels of this form field.  |  |
@@ -20,8 +20,6 @@
 | `is_multiline` | ```bool, none_type``` |  Whether this form field is multiline text.  |  |
 | `original_font_size` | ```int, none_type``` |  Original font size used in this form field&#39;s text.  |  |
 | `font_family` | ```str, none_type``` |  Font family used in this form field&#39;s text.  |  |
-| `named_form_fields` | [```{str: (bool, date, datetime, dict, float, int, list, str, none_type)}, none_type```](.md) |  _t__TemplateResponseDocumentCustomField::NAMED_FORM_FIELDS  |  |
-| `reusable_form_id` | ```str, none_type``` |    |  |
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

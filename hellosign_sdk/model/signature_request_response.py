@@ -106,7 +106,6 @@ class SignatureRequestResponse(ModelNormal):
             'is_complete': (bool,),  # noqa: E501
             'is_declined': (bool,),  # noqa: E501
             'has_error': (bool,),  # noqa: E501
-            'final_copy_uri': (str,),  # noqa: E501
             'files_url': (str,),  # noqa: E501
             'signing_url': (str, none_type,),  # noqa: E501
             'details_url': (str,),  # noqa: E501
@@ -137,7 +136,6 @@ class SignatureRequestResponse(ModelNormal):
         'is_complete': 'is_complete',  # noqa: E501
         'is_declined': 'is_declined',  # noqa: E501
         'has_error': 'has_error',  # noqa: E501
-        'final_copy_uri': 'final_copy_uri',  # noqa: E501
         'files_url': 'files_url',  # noqa: E501
         'signing_url': 'signing_url',  # noqa: E501
         'details_url': 'details_url',  # noqa: E501
@@ -203,7 +201,6 @@ class SignatureRequestResponse(ModelNormal):
             is_complete (bool): Whether or not the SignatureRequest has been fully executed by all signers.. [optional]  # noqa: E501
             is_declined (bool): Whether or not the SignatureRequest has been declined by a signer.. [optional]  # noqa: E501
             has_error (bool): Whether or not an error occurred (either during the creation of the SignatureRequest or during one of the signings).. [optional]  # noqa: E501
-            final_copy_uri (str): (Deprecated) The relative URI where the PDF copy of the finalized documents can be downloaded. Only present when `is_complete = true`. This will be removed at some point; use the files_url instead.. [optional]  # noqa: E501
             files_url (str): The URL where a copy of the request's documents can be downloaded.. [optional]  # noqa: E501
             signing_url (str, none_type): The URL where a signer, after authenticating, can sign the documents. This should only be used by users with existing HelloSign accounts as they will be required to log in before signing.. [optional]  # noqa: E501
             details_url (str): The URL where the requester and the signers can view the current status of the SignatureRequest.. [optional]  # noqa: E501
@@ -211,9 +208,9 @@ class SignatureRequestResponse(ModelNormal):
             signing_redirect_url (str, none_type): The URL you want the signer redirected to after they successfully sign.. [optional]  # noqa: E501
             template_ids ([str], none_type): Templates IDs used in this SignatureRequest (if any).. [optional]  # noqa: E501
             custom_fields ([SignatureRequestResponseCustomFieldBase], none_type): An array of Custom Field objects containing the name and type of each custom field.  * Text Field uses `SignatureRequestResponseCustomFieldText` * Checkbox Field uses `SignatureRequestResponseCustomFieldCheckbox`. [optional]  # noqa: E501
-            attachments ([SignatureRequestResponseAttachment], none_type): [optional]  # noqa: E501
-            response_data ([SignatureRequestResponseData], none_type): [optional]  # noqa: E501
-            signatures ([SignatureRequestResponseSignatures]): [optional]  # noqa: E501
+            attachments ([SignatureRequestResponseAttachment], none_type): Signer attachments.. [optional]  # noqa: E501
+            response_data ([SignatureRequestResponseData], none_type): An array of form field objects containing the name, value, and type of each textbox or checkmark field filled in by the signers.. [optional]  # noqa: E501
+            signatures ([SignatureRequestResponseSignatures]): An array of signature objects, 1 for each signer.. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -307,7 +304,6 @@ class SignatureRequestResponse(ModelNormal):
             is_complete (bool): Whether or not the SignatureRequest has been fully executed by all signers.. [optional]  # noqa: E501
             is_declined (bool): Whether or not the SignatureRequest has been declined by a signer.. [optional]  # noqa: E501
             has_error (bool): Whether or not an error occurred (either during the creation of the SignatureRequest or during one of the signings).. [optional]  # noqa: E501
-            final_copy_uri (str): (Deprecated) The relative URI where the PDF copy of the finalized documents can be downloaded. Only present when `is_complete = true`. This will be removed at some point; use the files_url instead.. [optional]  # noqa: E501
             files_url (str): The URL where a copy of the request's documents can be downloaded.. [optional]  # noqa: E501
             signing_url (str, none_type): The URL where a signer, after authenticating, can sign the documents. This should only be used by users with existing HelloSign accounts as they will be required to log in before signing.. [optional]  # noqa: E501
             details_url (str): The URL where the requester and the signers can view the current status of the SignatureRequest.. [optional]  # noqa: E501
@@ -315,9 +311,9 @@ class SignatureRequestResponse(ModelNormal):
             signing_redirect_url (str, none_type): The URL you want the signer redirected to after they successfully sign.. [optional]  # noqa: E501
             template_ids ([str], none_type): Templates IDs used in this SignatureRequest (if any).. [optional]  # noqa: E501
             custom_fields ([SignatureRequestResponseCustomFieldBase], none_type): An array of Custom Field objects containing the name and type of each custom field.  * Text Field uses `SignatureRequestResponseCustomFieldText` * Checkbox Field uses `SignatureRequestResponseCustomFieldCheckbox`. [optional]  # noqa: E501
-            attachments ([SignatureRequestResponseAttachment], none_type): [optional]  # noqa: E501
-            response_data ([SignatureRequestResponseData], none_type): [optional]  # noqa: E501
-            signatures ([SignatureRequestResponseSignatures]): [optional]  # noqa: E501
+            attachments ([SignatureRequestResponseAttachment], none_type): Signer attachments.. [optional]  # noqa: E501
+            response_data ([SignatureRequestResponseData], none_type): An array of form field objects containing the name, value, and type of each textbox or checkmark field filled in by the signers.. [optional]  # noqa: E501
+            signatures ([SignatureRequestResponseSignatures]): An array of signature objects, 1 for each signer.. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)

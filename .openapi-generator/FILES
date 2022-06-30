@@ -127,9 +127,11 @@ docs/TemplateResponseCCRole.md
 docs/TemplateResponseCustomField.md
 docs/TemplateResponseDocument.md
 docs/TemplateResponseDocumentCustomField.md
-docs/TemplateResponseDocumentCustomFieldAvgTextLength.md
 docs/TemplateResponseDocumentFieldGroup.md
 docs/TemplateResponseDocumentFormField.md
+docs/TemplateResponseDocumentStaticField.md
+docs/TemplateResponseFieldAvgTextLength.md
+docs/TemplateResponseNamedFormField.md
 docs/TemplateResponseSignerRole.md
 docs/TemplateUpdateFilesRequest.md
 docs/TemplateUpdateFilesResponse.md
@@ -276,9 +278,11 @@ hellosign_sdk/model/template_response_cc_role.py
 hellosign_sdk/model/template_response_custom_field.py
 hellosign_sdk/model/template_response_document.py
 hellosign_sdk/model/template_response_document_custom_field.py
-hellosign_sdk/model/template_response_document_custom_field_avg_text_length.py
 hellosign_sdk/model/template_response_document_field_group.py
 hellosign_sdk/model/template_response_document_form_field.py
+hellosign_sdk/model/template_response_document_static_field.py
+hellosign_sdk/model/template_response_field_avg_text_length.py
+hellosign_sdk/model/template_response_named_form_field.py
 hellosign_sdk/model/template_response_signer_role.py
 hellosign_sdk/model/template_update_files_request.py
 hellosign_sdk/model/template_update_files_response.py

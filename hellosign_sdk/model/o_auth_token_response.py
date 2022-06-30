@@ -146,7 +146,7 @@ class OAuthTokenResponse(ModelNormal):
             access_token (str): [optional]  # noqa: E501
             token_type (str): [optional]  # noqa: E501
             refresh_token (str): [optional]  # noqa: E501
-            expires_in (int): in seconds. [optional]  # noqa: E501
+            expires_in (int): Number of seconds until the `access_token` expires. Uses epoch time.. [optional]  # noqa: E501
             state (str, none_type): [optional]  # noqa: E501
         """
 
@@ -232,7 +232,7 @@ class OAuthTokenResponse(ModelNormal):
             access_token (str): [optional]  # noqa: E501
             token_type (str): [optional]  # noqa: E501
             refresh_token (str): [optional]  # noqa: E501
-            expires_in (int): in seconds. [optional]  # noqa: E501
+            expires_in (int): Number of seconds until the `access_token` expires. Uses epoch time.. [optional]  # noqa: E501
             state (str, none_type): [optional]  # noqa: E501
         """
 

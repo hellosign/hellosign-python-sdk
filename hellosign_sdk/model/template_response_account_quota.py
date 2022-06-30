@@ -85,6 +85,7 @@ class TemplateResponseAccountQuota(ModelNormal):
             'templates_left': (int,),  # noqa: E501
             'api_signature_requests_left': (int,),  # noqa: E501
             'documents_left': (int,),  # noqa: E501
+            'sms_verifications_left': (int,),  # noqa: E501
         }
 
     @cached_property
@@ -96,6 +97,7 @@ class TemplateResponseAccountQuota(ModelNormal):
         'templates_left': 'templates_left',  # noqa: E501
         'api_signature_requests_left': 'api_signature_requests_left',  # noqa: E501
         'documents_left': 'documents_left',  # noqa: E501
+        'sms_verifications_left': 'sms_verifications_left',  # noqa: E501
     }
 
     read_only_vars = {
@@ -142,6 +144,7 @@ class TemplateResponseAccountQuota(ModelNormal):
             templates_left (int): API templates remaining.. [optional]  # noqa: E501
             api_signature_requests_left (int): API signature requests remaining.. [optional]  # noqa: E501
             documents_left (int): Signature requests remaining.. [optional]  # noqa: E501
+            sms_verifications_left (int): SMS verifications remaining.. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -226,6 +229,7 @@ class TemplateResponseAccountQuota(ModelNormal):
             templates_left (int): API templates remaining.. [optional]  # noqa: E501
             api_signature_requests_left (int): API signature requests remaining.. [optional]  # noqa: E501
             documents_left (int): Signature requests remaining.. [optional]  # noqa: E501
+            sms_verifications_left (int): SMS verifications remaining.. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)

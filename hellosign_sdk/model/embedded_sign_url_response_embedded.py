@@ -137,8 +137,8 @@ class EmbeddedSignUrlResponseEmbedded(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            sign_url (str): [optional]  # noqa: E501
-            expires_at (int): [optional]  # noqa: E501
+            sign_url (str): A signature url that can be opened in an iFrame.. [optional]  # noqa: E501
+            expires_at (int): The specific time that the the `sign_url` link expires, in epoch.. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -220,8 +220,8 @@ class EmbeddedSignUrlResponseEmbedded(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            sign_url (str): [optional]  # noqa: E501
-            expires_at (int): [optional]  # noqa: E501
+            sign_url (str): A signature url that can be opened in an iFrame.. [optional]  # noqa: E501
+            expires_at (int): The specific time that the the `sign_url` link expires, in epoch.. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)

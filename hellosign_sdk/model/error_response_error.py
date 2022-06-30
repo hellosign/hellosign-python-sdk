@@ -109,8 +109,8 @@ class ErrorResponseError(ModelNormal):
         """ErrorResponseError - a model defined in OpenAPI
 
         Args:
-            error_msg (str):
-            error_name (str):
+            error_msg (str): Message describing an error.
+            error_name (str): Name of the error.
 
         Keyword Args:
             _check_type (bool): if True, values for parameters in openapi_types
@@ -143,7 +143,7 @@ class ErrorResponseError(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            error_path (str): [optional]  # noqa: E501
+            error_path (str): Path at which an error occurred.. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -197,8 +197,8 @@ class ErrorResponseError(ModelNormal):
         """ErrorResponseError - a model defined in OpenAPI
 
         Args:
-            error_msg (str):
-            error_name (str):
+            error_msg (str): Message describing an error.
+            error_name (str): Name of the error.
 
         Keyword Args:
             _check_type (bool): if True, values for parameters in openapi_types
@@ -231,7 +231,7 @@ class ErrorResponseError(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            error_path (str): [optional]  # noqa: E501
+            error_path (str): Path at which an error occurred.. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)

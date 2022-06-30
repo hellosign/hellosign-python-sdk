@@ -148,9 +148,9 @@ class TemplateCreateEmbeddedDraftResponseTemplate(ModelNormal):
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
             template_id (str): The id of the Template.. [optional]  # noqa: E501
-            edit_url (str): [optional]  # noqa: E501
-            expires_at (int): [optional]  # noqa: E501
-            warnings ([WarningResponse]): [optional]  # noqa: E501
+            edit_url (str): Link to edit the template.. [optional]  # noqa: E501
+            expires_at (int): When the link expires.. [optional]  # noqa: E501
+            warnings ([WarningResponse]): A list of warnings.. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -233,9 +233,9 @@ class TemplateCreateEmbeddedDraftResponseTemplate(ModelNormal):
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
             template_id (str): The id of the Template.. [optional]  # noqa: E501
-            edit_url (str): [optional]  # noqa: E501
-            expires_at (int): [optional]  # noqa: E501
-            warnings ([WarningResponse]): [optional]  # noqa: E501
+            edit_url (str): Link to edit the template.. [optional]  # noqa: E501
+            expires_at (int): When the link expires.. [optional]  # noqa: E501
+            warnings ([WarningResponse]): A list of warnings.. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)

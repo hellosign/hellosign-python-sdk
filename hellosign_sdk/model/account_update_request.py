@@ -139,7 +139,7 @@ class AccountUpdateRequest(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            account_id (str, none_type): Account ID.. [optional]  # noqa: E501
+            account_id (str, none_type): The ID of the Account. [optional]  # noqa: E501
             callback_url (str): The URL that HelloSign should POST events to.. [optional]  # noqa: E501
             locale (str): The locale used in this Account. Check out the list of [supported locales](/api/reference/constants/#supported-locales) to learn more about the possible values.. [optional]  # noqa: E501
         """
@@ -223,7 +223,7 @@ class AccountUpdateRequest(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            account_id (str, none_type): Account ID.. [optional]  # noqa: E501
+            account_id (str, none_type): The ID of the Account. [optional]  # noqa: E501
             callback_url (str): The URL that HelloSign should POST events to.. [optional]  # noqa: E501
             locale (str): The locale used in this Account. Check out the list of [supported locales](/api/reference/constants/#supported-locales) to learn more about the possible values.. [optional]  # noqa: E501
         """

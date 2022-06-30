@@ -155,8 +155,8 @@ class BulkSendJobGetResponse(ModelNormal):
                                 _visited_composed_classes = (Animal,)
             bulk_send_job (BulkSendJobResponse): [optional]  # noqa: E501
             list_info (ListInfoResponse): [optional]  # noqa: E501
-            signature_requests ([BulkSendJobGetResponseSignatureRequests]): [optional]  # noqa: E501
-            warnings ([WarningResponse]): [optional]  # noqa: E501
+            signature_requests ([BulkSendJobGetResponseSignatureRequests]): Contains information about the Signature Requests sent in bulk.. [optional]  # noqa: E501
+            warnings ([WarningResponse]): A list of warnings.. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -240,8 +240,8 @@ class BulkSendJobGetResponse(ModelNormal):
                                 _visited_composed_classes = (Animal,)
             bulk_send_job (BulkSendJobResponse): [optional]  # noqa: E501
             list_info (ListInfoResponse): [optional]  # noqa: E501
-            signature_requests ([BulkSendJobGetResponseSignatureRequests]): [optional]  # noqa: E501
-            warnings ([WarningResponse]): [optional]  # noqa: E501
+            signature_requests ([BulkSendJobGetResponseSignatureRequests]): Contains information about the Signature Requests sent in bulk.. [optional]  # noqa: E501
+            warnings ([WarningResponse]): A list of warnings.. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)

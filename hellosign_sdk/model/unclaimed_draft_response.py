@@ -84,7 +84,6 @@ class UnclaimedDraftResponse(ModelNormal):
         return {
             'signature_request_id': (str, none_type,),  # noqa: E501
             'claim_url': (str,),  # noqa: E501
-            'one_click_url': (str,),  # noqa: E501
             'signing_redirect_url': (str, none_type,),  # noqa: E501
             'requesting_redirect_url': (str, none_type,),  # noqa: E501
             'expires_at': (int, none_type,),  # noqa: E501
@@ -99,7 +98,6 @@ class UnclaimedDraftResponse(ModelNormal):
     attribute_map = {
         'signature_request_id': 'signature_request_id',  # noqa: E501
         'claim_url': 'claim_url',  # noqa: E501
-        'one_click_url': 'one_click_url',  # noqa: E501
         'signing_redirect_url': 'signing_redirect_url',  # noqa: E501
         'requesting_redirect_url': 'requesting_redirect_url',  # noqa: E501
         'expires_at': 'expires_at',  # noqa: E501
@@ -149,7 +147,6 @@ class UnclaimedDraftResponse(ModelNormal):
                                 _visited_composed_classes = (Animal,)
             signature_request_id (str, none_type): The ID of the signature request that is represented by this UnclaimedDraft.. [optional]  # noqa: E501
             claim_url (str): The URL to be used to claim this UnclaimedDraft.. [optional]  # noqa: E501
-            one_click_url (str): One-Click Login URL. [optional]  # noqa: E501
             signing_redirect_url (str, none_type): The URL you want signers redirected to after they successfully sign.. [optional]  # noqa: E501
             requesting_redirect_url (str, none_type): The URL you want signers redirected to after they successfully request a signature (Will only be returned in the response if it is applicable to the request.).. [optional]  # noqa: E501
             expires_at (int, none_type): When the link expires.. [optional]  # noqa: E501
@@ -237,7 +234,6 @@ class UnclaimedDraftResponse(ModelNormal):
                                 _visited_composed_classes = (Animal,)
             signature_request_id (str, none_type): The ID of the signature request that is represented by this UnclaimedDraft.. [optional]  # noqa: E501
             claim_url (str): The URL to be used to claim this UnclaimedDraft.. [optional]  # noqa: E501
-            one_click_url (str): One-Click Login URL. [optional]  # noqa: E501
             signing_redirect_url (str, none_type): The URL you want signers redirected to after they successfully sign.. [optional]  # noqa: E501
             requesting_redirect_url (str, none_type): The URL you want signers redirected to after they successfully request a signature (Will only be returned in the response if it is applicable to the request.).. [optional]  # noqa: E501
             expires_at (int, none_type): When the link expires.. [optional]  # noqa: E501

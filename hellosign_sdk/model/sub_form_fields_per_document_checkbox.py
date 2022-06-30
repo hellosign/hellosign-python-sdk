@@ -89,18 +89,18 @@ class SubFormFieldsPerDocumentCheckbox(ModelComposed):
         lazy_import()
         return {
             'type': (str,),  # noqa: E501
-            'checked': (bool,),  # noqa: E501
+            'is_checked': (bool,),  # noqa: E501
             'document_index': (int,),  # noqa: E501
+            'api_id': (str,),  # noqa: E501
             'height': (int,),  # noqa: E501
+            'required': (bool,),  # noqa: E501
             'signer': (str,),  # noqa: E501
             'width': (int,),  # noqa: E501
             'x': (int,),  # noqa: E501
             'y': (int,),  # noqa: E501
             'group': (str,),  # noqa: E501
-            'api_id': (str,),  # noqa: E501
             'name': (str,),  # noqa: E501
-            'page': (int,),  # noqa: E501
-            'required': (bool,),  # noqa: E501
+            'page': (int, none_type,),  # noqa: E501
         }
 
     @cached_property
@@ -110,18 +110,18 @@ class SubFormFieldsPerDocumentCheckbox(ModelComposed):
 
     attribute_map = {
         'type': 'type',  # noqa: E501
-        'checked': 'checked',  # noqa: E501
+        'is_checked': 'is_checked',  # noqa: E501
         'document_index': 'document_index',  # noqa: E501
+        'api_id': 'api_id',  # noqa: E501
         'height': 'height',  # noqa: E501
+        'required': 'required',  # noqa: E501
         'signer': 'signer',  # noqa: E501
         'width': 'width',  # noqa: E501
         'x': 'x',  # noqa: E501
         'y': 'y',  # noqa: E501
         'group': 'group',  # noqa: E501
-        'api_id': 'api_id',  # noqa: E501
         'name': 'name',  # noqa: E501
         'page': 'page',  # noqa: E501
-        'required': 'required',  # noqa: E501
     }
 
     read_only_vars = {
@@ -134,10 +134,12 @@ class SubFormFieldsPerDocumentCheckbox(ModelComposed):
 
         Keyword Args:
             type (str): A yes/no checkbox. Use the `SubFormFieldsPerDocumentCheckbox` class.. defaults to "checkbox"  # noqa: E501
-            checked (bool): `true` for checking the checkbox field by default, otherwise `false`.
+            is_checked (bool): `true` for checking the checkbox field by default, otherwise `false`.
             document_index (int): Represents the integer index of the `file` or `file_url` document the field should be attached to.
+            api_id (str): An identifier for the field that is unique across all documents in the request.
             height (int): Size of the field in pixels.
-            signer (str): Signer index identified by the offset `%i%` in the `signers[%i%]` parameter, indicating which signer should fill out the field. If your type is `text-merge` you can set this to `sender`, so the field is non-editable by any signer.
+            required (bool): Whether this field is required.
+            signer (str): Signer index identified by the offset in the signers parameter (0-based indexing), indicating which signer should fill out the field.  **NOTE**: If type is `text-merge` or `checkbox-merge`, you must set this to sender in order to use pre-filled data.
             width (int): Size of the field in pixels.
             x (int): Location coordinates of the field in pixels.
             y (int): Location coordinates of the field in pixels.
@@ -172,10 +174,8 @@ class SubFormFieldsPerDocumentCheckbox(ModelComposed):
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
             group (str): String referencing group defined in `form_field_groups` parameter.. [optional]  # noqa: E501
-            api_id (str): An identifier for the field that is unique across all documents in the request.. [optional]  # noqa: E501
             name (str): Display name for the field.. [optional]  # noqa: E501
-            page (int): Page in the document where the field should be placed (requires documents be PDF files).  - When the page number parameter is supplied, the API will use the new coordinate system. - Check out the differences between both [coordinate systems](https://faq.hellosign.com/hc/en-us/articles/217115577) and how to use them.. [optional]  # noqa: E501
-            required (bool): Whether this field is required.. [optional]  # noqa: E501
+            page (int, none_type): Page in the document where the field should be placed (requires documents be PDF files).  - When the page number parameter is supplied, the API will use the new coordinate system. - Check out the differences between both [coordinate systems](https://faq.hellosign.com/hc/en-us/articles/217115577) and how to use them.. [optional]  # noqa: E501
         """
 
         type = kwargs.get('type', "checkbox")
@@ -247,10 +247,12 @@ class SubFormFieldsPerDocumentCheckbox(ModelComposed):
 
         Keyword Args:
             type (str): A yes/no checkbox. Use the `SubFormFieldsPerDocumentCheckbox` class.. defaults to "checkbox"  # noqa: E501
-            checked (bool): `true` for checking the checkbox field by default, otherwise `false`.
+            is_checked (bool): `true` for checking the checkbox field by default, otherwise `false`.
             document_index (int): Represents the integer index of the `file` or `file_url` document the field should be attached to.
+            api_id (str): An identifier for the field that is unique across all documents in the request.
             height (int): Size of the field in pixels.
-            signer (str): Signer index identified by the offset `%i%` in the `signers[%i%]` parameter, indicating which signer should fill out the field. If your type is `text-merge` you can set this to `sender`, so the field is non-editable by any signer.
+            required (bool): Whether this field is required.
+            signer (str): Signer index identified by the offset in the signers parameter (0-based indexing), indicating which signer should fill out the field.  **NOTE**: If type is `text-merge` or `checkbox-merge`, you must set this to sender in order to use pre-filled data.
             width (int): Size of the field in pixels.
             x (int): Location coordinates of the field in pixels.
             y (int): Location coordinates of the field in pixels.
@@ -285,10 +287,8 @@ class SubFormFieldsPerDocumentCheckbox(ModelComposed):
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
             group (str): String referencing group defined in `form_field_groups` parameter.. [optional]  # noqa: E501
-            api_id (str): An identifier for the field that is unique across all documents in the request.. [optional]  # noqa: E501
             name (str): Display name for the field.. [optional]  # noqa: E501
-            page (int): Page in the document where the field should be placed (requires documents be PDF files).  - When the page number parameter is supplied, the API will use the new coordinate system. - Check out the differences between both [coordinate systems](https://faq.hellosign.com/hc/en-us/articles/217115577) and how to use them.. [optional]  # noqa: E501
-            required (bool): Whether this field is required.. [optional]  # noqa: E501
+            page (int, none_type): Page in the document where the field should be placed (requires documents be PDF files).  - When the page number parameter is supplied, the API will use the new coordinate system. - Check out the differences between both [coordinate systems](https://faq.hellosign.com/hc/en-us/articles/217115577) and how to use them.. [optional]  # noqa: E501
         """
 
         type = kwargs.get('type', "checkbox")

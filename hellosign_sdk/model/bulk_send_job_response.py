@@ -142,7 +142,7 @@ class BulkSendJobResponse(ModelNormal):
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
             bulk_send_job_id (str, none_type): The id of the BulkSendJob.. [optional]  # noqa: E501
-            total (int): The total amount of SignatureRequests queued for sending.. [optional]  # noqa: E501
+            total (int): The total amount of Signature Requests queued for sending.. [optional]  # noqa: E501
             is_creator (bool): True if you are the owner of this BulkSendJob, false if it's been shared with you by a team member.. [optional]  # noqa: E501
             created_at (int): Time that the BulkSendJob was created.. [optional]  # noqa: E501
         """
@@ -227,7 +227,7 @@ class BulkSendJobResponse(ModelNormal):
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
             bulk_send_job_id (str, none_type): The id of the BulkSendJob.. [optional]  # noqa: E501
-            total (int): The total amount of SignatureRequests queued for sending.. [optional]  # noqa: E501
+            total (int): The total amount of Signature Requests queued for sending.. [optional]  # noqa: E501
             is_creator (bool): True if you are the owner of this BulkSendJob, false if it's been shared with you by a team member.. [optional]  # noqa: E501
             created_at (int): Time that the BulkSendJob was created.. [optional]  # noqa: E501
         """

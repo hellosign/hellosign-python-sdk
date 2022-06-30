@@ -160,7 +160,7 @@ class ApiAppUpdateRequest(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            callback_url (str): The URL at which the Api App should receive event callbacks.. [optional]  # noqa: E501
+            callback_url (str): The URL at which the API App should receive event callbacks.. [optional]  # noqa: E501
             custom_logo_file (file_type): An image file to use as a custom logo in embedded contexts. (Only applies to some API plans). [optional]  # noqa: E501
             domains ([str]): The domain names the ApiApp will be associated with.. [optional]  # noqa: E501
             name (str): The name you want to assign to the ApiApp.. [optional]  # noqa: E501
@@ -248,7 +248,7 @@ class ApiAppUpdateRequest(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            callback_url (str): The URL at which the Api App should receive event callbacks.. [optional]  # noqa: E501
+            callback_url (str): The URL at which the API App should receive event callbacks.. [optional]  # noqa: E501
             custom_logo_file (file_type): An image file to use as a custom logo in embedded contexts. (Only applies to some API plans). [optional]  # noqa: E501
             domains ([str]): The domain names the ApiApp will be associated with.. [optional]  # noqa: E501
             name (str): The name you want to assign to the ApiApp.. [optional]  # noqa: E501

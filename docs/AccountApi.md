@@ -123,7 +123,7 @@ with ApiClient(configuration) as api_client:
 
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
-| `account_id` | **str** | Account ID | [optional] |
+| `account_id` | **str** | The ID of the Account | [optional] |
 
 ### Return type
 
@@ -153,7 +153,7 @@ with ApiClient(configuration) as api_client:
 
 Update Account
 
-Updates the properties and settings of your Account.
+Updates the properties and settings of your Account. Currently only allows for updates to the [Callback URL](/api/reference/tag/Callbacks-and-Events) and locale.
 
 ### Example
 
@@ -224,7 +224,7 @@ with ApiClient(configuration) as api_client:
 
 Verify Account
 
-Verifies whether an HelloSign Account exists for the given email address.  **NOTE** This method is restricted to paid API users.
+Verifies whether an HelloSign Account exists for the given email address.
 
 ### Example
 

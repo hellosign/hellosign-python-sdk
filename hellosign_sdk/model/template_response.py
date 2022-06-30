@@ -35,11 +35,13 @@ def lazy_import():
     from hellosign_sdk.model.template_response_cc_role import TemplateResponseCCRole
     from hellosign_sdk.model.template_response_custom_field import TemplateResponseCustomField
     from hellosign_sdk.model.template_response_document import TemplateResponseDocument
+    from hellosign_sdk.model.template_response_named_form_field import TemplateResponseNamedFormField
     from hellosign_sdk.model.template_response_signer_role import TemplateResponseSignerRole
     globals()['TemplateResponseAccount'] = TemplateResponseAccount
     globals()['TemplateResponseCCRole'] = TemplateResponseCCRole
     globals()['TemplateResponseCustomField'] = TemplateResponseCustomField
     globals()['TemplateResponseDocument'] = TemplateResponseDocument
+    globals()['TemplateResponseNamedFormField'] = TemplateResponseNamedFormField
     globals()['TemplateResponseSignerRole'] = TemplateResponseSignerRole
 
 
@@ -109,6 +111,7 @@ class TemplateResponse(ModelNormal):
             'cc_roles': ([TemplateResponseCCRole],),  # noqa: E501
             'documents': ([TemplateResponseDocument],),  # noqa: E501
             'custom_fields': ([TemplateResponseCustomField], none_type,),  # noqa: E501
+            'named_form_fields': ([TemplateResponseNamedFormField], none_type,),  # noqa: E501
             'accounts': ([TemplateResponseAccount], none_type,),  # noqa: E501
         }
 
@@ -131,6 +134,7 @@ class TemplateResponse(ModelNormal):
         'cc_roles': 'cc_roles',  # noqa: E501
         'documents': 'documents',  # noqa: E501
         'custom_fields': 'custom_fields',  # noqa: E501
+        'named_form_fields': 'named_form_fields',  # noqa: E501
         'accounts': 'accounts',  # noqa: E501
     }
 
@@ -182,13 +186,14 @@ class TemplateResponse(ModelNormal):
             is_embedded (bool, none_type): `true` if this template was created using an embedded flow, `false` if it was created on our website.. [optional]  # noqa: E501
             is_creator (bool, none_type): `true` if you are the owner of this template, `false` if it's been shared with you by a team member.. [optional]  # noqa: E501
             can_edit (bool, none_type): Indicates whether edit rights have been granted to you by the owner (always `true` if that's you).. [optional]  # noqa: E501
-            is_locked (bool, none_type): `true` if you exceed Template quota; these can only be used in test mode. `false` if the template is included with the Template quota; these can be used at any time.. [optional]  # noqa: E501
+            is_locked (bool, none_type): Indicates whether the template is locked.  If `true`, then the template was created outside your quota and can only be used in `test_mode`.  If `false`, then the template is within your quota and can be used to create signature requests.. [optional]  # noqa: E501
             metadata ({str: (bool, date, datetime, dict, float, int, list, str, none_type)}): The metadata attached to the template.. [optional]  # noqa: E501
-            signer_roles ([TemplateResponseSignerRole]): [optional]  # noqa: E501
-            cc_roles ([TemplateResponseCCRole]): [optional]  # noqa: E501
-            documents ([TemplateResponseDocument]): [optional]  # noqa: E501
-            custom_fields ([TemplateResponseCustomField], none_type): [optional]  # noqa: E501
-            accounts ([TemplateResponseAccount], none_type): [optional]  # noqa: E501
+            signer_roles ([TemplateResponseSignerRole]): An array of the designated signer roles that must be specified when sending a SignatureRequest using this Template.. [optional]  # noqa: E501
+            cc_roles ([TemplateResponseCCRole]): An array of the designated CC roles that must be specified when sending a SignatureRequest using this Template.. [optional]  # noqa: E501
+            documents ([TemplateResponseDocument]): An array describing each document associated with this Template. Includes form field data for each document.. [optional]  # noqa: E501
+            custom_fields ([TemplateResponseCustomField], none_type): An array of Custom Field objects.. [optional]  # noqa: E501
+            named_form_fields ([TemplateResponseNamedFormField], none_type): Use \"form_fields\" under the \"documents\" array instead.. [optional]  # noqa: E501
+            accounts ([TemplateResponseAccount], none_type): An array of the Accounts that can use this Template.. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -277,13 +282,14 @@ class TemplateResponse(ModelNormal):
             is_embedded (bool, none_type): `true` if this template was created using an embedded flow, `false` if it was created on our website.. [optional]  # noqa: E501
             is_creator (bool, none_type): `true` if you are the owner of this template, `false` if it's been shared with you by a team member.. [optional]  # noqa: E501
             can_edit (bool, none_type): Indicates whether edit rights have been granted to you by the owner (always `true` if that's you).. [optional]  # noqa: E501
-            is_locked (bool, none_type): `true` if you exceed Template quota; these can only be used in test mode. `false` if the template is included with the Template quota; these can be used at any time.. [optional]  # noqa: E501
+            is_locked (bool, none_type): Indicates whether the template is locked.  If `true`, then the template was created outside your quota and can only be used in `test_mode`.  If `false`, then the template is within your quota and can be used to create signature requests.. [optional]  # noqa: E501
             metadata ({str: (bool, date, datetime, dict, float, int, list, str, none_type)}): The metadata attached to the template.. [optional]  # noqa: E501
-            signer_roles ([TemplateResponseSignerRole]): [optional]  # noqa: E501
-            cc_roles ([TemplateResponseCCRole]): [optional]  # noqa: E501
-            documents ([TemplateResponseDocument]): [optional]  # noqa: E501
-            custom_fields ([TemplateResponseCustomField], none_type): [optional]  # noqa: E501
-            accounts ([TemplateResponseAccount], none_type): [optional]  # noqa: E501
+            signer_roles ([TemplateResponseSignerRole]): An array of the designated signer roles that must be specified when sending a SignatureRequest using this Template.. [optional]  # noqa: E501
+            cc_roles ([TemplateResponseCCRole]): An array of the designated CC roles that must be specified when sending a SignatureRequest using this Template.. [optional]  # noqa: E501
+            documents ([TemplateResponseDocument]): An array describing each document associated with this Template. Includes form field data for each document.. [optional]  # noqa: E501
+            custom_fields ([TemplateResponseCustomField], none_type): An array of Custom Field objects.. [optional]  # noqa: E501
+            named_form_fields ([TemplateResponseNamedFormField], none_type): Use \"form_fields\" under the \"documents\" array instead.. [optional]  # noqa: E501
+            accounts ([TemplateResponseAccount], none_type): An array of the Accounts that can use this Template.. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)

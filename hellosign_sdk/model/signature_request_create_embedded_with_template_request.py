@@ -107,6 +107,7 @@ class SignatureRequestCreateEmbeddedWithTemplateRequest(ModelNormal):
         return {
             'template_ids': ([str],),  # noqa: E501
             'client_id': (str,),  # noqa: E501
+            'signers': ([SubSignatureRequestTemplateSigner],),  # noqa: E501
             'allow_decline': (bool,),  # noqa: E501
             'ccs': ([SubCC],),  # noqa: E501
             'custom_fields': ([SubCustomField],),  # noqa: E501
@@ -114,7 +115,6 @@ class SignatureRequestCreateEmbeddedWithTemplateRequest(ModelNormal):
             'file_url': ([str],),  # noqa: E501
             'message': (str,),  # noqa: E501
             'metadata': ({str: (bool, date, datetime, dict, float, int, list, str, none_type)},),  # noqa: E501
-            'signers': ([SubSignatureRequestTemplateSigner],),  # noqa: E501
             'signing_options': (SubSigningOptions,),  # noqa: E501
             'subject': (str,),  # noqa: E501
             'test_mode': (bool,),  # noqa: E501
@@ -129,6 +129,7 @@ class SignatureRequestCreateEmbeddedWithTemplateRequest(ModelNormal):
     attribute_map = {
         'template_ids': 'template_ids',  # noqa: E501
         'client_id': 'client_id',  # noqa: E501
+        'signers': 'signers',  # noqa: E501
         'allow_decline': 'allow_decline',  # noqa: E501
         'ccs': 'ccs',  # noqa: E501
         'custom_fields': 'custom_fields',  # noqa: E501
@@ -136,7 +137,6 @@ class SignatureRequestCreateEmbeddedWithTemplateRequest(ModelNormal):
         'file_url': 'file_url',  # noqa: E501
         'message': 'message',  # noqa: E501
         'metadata': 'metadata',  # noqa: E501
-        'signers': 'signers',  # noqa: E501
         'signing_options': 'signing_options',  # noqa: E501
         'subject': 'subject',  # noqa: E501
         'test_mode': 'test_mode',  # noqa: E501
@@ -150,12 +150,13 @@ class SignatureRequestCreateEmbeddedWithTemplateRequest(ModelNormal):
 
     @classmethod
     @convert_js_args_to_python_args
-    def _from_openapi_data(cls, template_ids, client_id, *args, **kwargs):  # noqa: E501
+    def _from_openapi_data(cls, template_ids, client_id, signers, *args, **kwargs):  # noqa: E501
         """SignatureRequestCreateEmbeddedWithTemplateRequest - a model defined in OpenAPI
 
         Args:
             template_ids ([str]): Use `template_ids` to create a SignatureRequest from one or more templates, in the order in which the template will be used.
             client_id (str): Client id of the app you're using to create this embedded signature request. Used for security purposes.
+            signers ([SubSignatureRequestTemplateSigner]): Add Signers to your Templated-based Signature Request.
 
         Keyword Args:
             _check_type (bool): if True, values for parameters in openapi_types
@@ -190,12 +191,11 @@ class SignatureRequestCreateEmbeddedWithTemplateRequest(ModelNormal):
                                 _visited_composed_classes = (Animal,)
             allow_decline (bool): Allows signers to decline to sign a document if `true`. Defaults to `false`.. [optional] if omitted the server will use the default value of False  # noqa: E501
             ccs ([SubCC]): Add CC email recipients. Required when a CC role exists for the Template.. [optional]  # noqa: E501
-            custom_fields ([SubCustomField]): An array defining values and options for custom fields. Required when defining when a custom field exists in the Template.. [optional]  # noqa: E501
-            file ([file_type]): **file** or **file_url** is required, but not both.  Use `file[]` to indicate the uploaded file(s) to send for signature.  Currently we only support use of either the `file[]` parameter or `file_url[]` parameter, not both.. [optional]  # noqa: E501
-            file_url ([str]): **file_url** or **file** is required, but not both.  Use `file_url[]` to have HelloSign download the file(s) to send for signature.  Currently we only support use of either the `file[]` parameter or `file_url[]` parameter, not both.. [optional]  # noqa: E501
+            custom_fields ([SubCustomField]): An array defining values and options for custom fields. Required when a custom field exists in the Template.. [optional]  # noqa: E501
+            file ([file_type]): Use `file[]` to indicate the uploaded file(s) to send for signature.  This endpoint requires either **file** or **file_url[]**, but not both.. [optional]  # noqa: E501
+            file_url ([str]): Use `file_url[]` to have HelloSign download the file(s) to send for signature.  This endpoint requires either **file** or **file_url[]**, but not both.. [optional]  # noqa: E501
             message (str): The custom message in the email that will be sent to the signers.. [optional]  # noqa: E501
             metadata ({str: (bool, date, datetime, dict, float, int, list, str, none_type)}): Key-value data that should be attached to the signature request. This metadata is included in all API responses and events involving the signature request. For example, use the metadata field to store a signer's order number for look up when receiving events for the signature request.  Each request can include up to 10 metadata keys, with key names up to 40 characters long and values up to 1000 characters long.. [optional]  # noqa: E501
-            signers ([SubSignatureRequestTemplateSigner]): Add Signers to your Templated-based Signature Request.. [optional]  # noqa: E501
             signing_options (SubSigningOptions): [optional]  # noqa: E501
             subject (str): The subject in the email that will be sent to the signers.. [optional]  # noqa: E501
             test_mode (bool): Whether this is a test, the signature request will not be legally binding if set to `true`. Defaults to `false`.. [optional] if omitted the server will use the default value of False  # noqa: E501
@@ -229,6 +229,7 @@ class SignatureRequestCreateEmbeddedWithTemplateRequest(ModelNormal):
 
         self.template_ids = template_ids
         self.client_id = client_id
+        self.signers = signers
         for var_name, var_value in kwargs.items():
             if var_name not in self.attribute_map and \
                         self._configuration is not None and \
@@ -249,12 +250,13 @@ class SignatureRequestCreateEmbeddedWithTemplateRequest(ModelNormal):
     ])
 
     @convert_js_args_to_python_args
-    def __init__(self, template_ids, client_id, *args, **kwargs):  # noqa: E501
+    def __init__(self, template_ids, client_id, signers, *args, **kwargs):  # noqa: E501
         """SignatureRequestCreateEmbeddedWithTemplateRequest - a model defined in OpenAPI
 
         Args:
             template_ids ([str]): Use `template_ids` to create a SignatureRequest from one or more templates, in the order in which the template will be used.
             client_id (str): Client id of the app you're using to create this embedded signature request. Used for security purposes.
+            signers ([SubSignatureRequestTemplateSigner]): Add Signers to your Templated-based Signature Request.
 
         Keyword Args:
             _check_type (bool): if True, values for parameters in openapi_types
@@ -289,12 +291,11 @@ class SignatureRequestCreateEmbeddedWithTemplateRequest(ModelNormal):
                                 _visited_composed_classes = (Animal,)
             allow_decline (bool): Allows signers to decline to sign a document if `true`. Defaults to `false`.. [optional] if omitted the server will use the default value of False  # noqa: E501
             ccs ([SubCC]): Add CC email recipients. Required when a CC role exists for the Template.. [optional]  # noqa: E501
-            custom_fields ([SubCustomField]): An array defining values and options for custom fields. Required when defining when a custom field exists in the Template.. [optional]  # noqa: E501
-            file ([file_type]): **file** or **file_url** is required, but not both.  Use `file[]` to indicate the uploaded file(s) to send for signature.  Currently we only support use of either the `file[]` parameter or `file_url[]` parameter, not both.. [optional]  # noqa: E501
-            file_url ([str]): **file_url** or **file** is required, but not both.  Use `file_url[]` to have HelloSign download the file(s) to send for signature.  Currently we only support use of either the `file[]` parameter or `file_url[]` parameter, not both.. [optional]  # noqa: E501
+            custom_fields ([SubCustomField]): An array defining values and options for custom fields. Required when a custom field exists in the Template.. [optional]  # noqa: E501
+            file ([file_type]): Use `file[]` to indicate the uploaded file(s) to send for signature.  This endpoint requires either **file** or **file_url[]**, but not both.. [optional]  # noqa: E501
+            file_url ([str]): Use `file_url[]` to have HelloSign download the file(s) to send for signature.  This endpoint requires either **file** or **file_url[]**, but not both.. [optional]  # noqa: E501
             message (str): The custom message in the email that will be sent to the signers.. [optional]  # noqa: E501
             metadata ({str: (bool, date, datetime, dict, float, int, list, str, none_type)}): Key-value data that should be attached to the signature request. This metadata is included in all API responses and events involving the signature request. For example, use the metadata field to store a signer's order number for look up when receiving events for the signature request.  Each request can include up to 10 metadata keys, with key names up to 40 characters long and values up to 1000 characters long.. [optional]  # noqa: E501
-            signers ([SubSignatureRequestTemplateSigner]): Add Signers to your Templated-based Signature Request.. [optional]  # noqa: E501
             signing_options (SubSigningOptions): [optional]  # noqa: E501
             subject (str): The subject in the email that will be sent to the signers.. [optional]  # noqa: E501
             test_mode (bool): Whether this is a test, the signature request will not be legally binding if set to `true`. Defaults to `false`.. [optional] if omitted the server will use the default value of False  # noqa: E501
@@ -326,6 +327,7 @@ class SignatureRequestCreateEmbeddedWithTemplateRequest(ModelNormal):
 
         self.template_ids = template_ids
         self.client_id = client_id
+        self.signers = signers
         for var_name, var_value in kwargs.items():
             if var_name not in self.attribute_map and \
                         self._configuration is not None and \

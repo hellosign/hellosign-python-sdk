@@ -56,6 +56,10 @@ class SubSignatureRequestSigner(ModelNormal):
     """
 
     allowed_values = {
+        ('sms_phone_number_type',): {
+            'AUTHENTICATION': "authentication",
+            'DELIVERY': "delivery",
+        },
     }
 
     validations = {
@@ -88,9 +92,10 @@ class SubSignatureRequestSigner(ModelNormal):
         return {
             'name': (str,),  # noqa: E501
             'email_address': (str,),  # noqa: E501
-            'order': (int,),  # noqa: E501
+            'order': (int, none_type,),  # noqa: E501
             'pin': (str,),  # noqa: E501
             'sms_phone_number': (str,),  # noqa: E501
+            'sms_phone_number_type': (str,),  # noqa: E501
         }
 
     @cached_property
@@ -104,6 +109,7 @@ class SubSignatureRequestSigner(ModelNormal):
         'order': 'order',  # noqa: E501
         'pin': 'pin',  # noqa: E501
         'sms_phone_number': 'sms_phone_number',  # noqa: E501
+        'sms_phone_number_type': 'sms_phone_number_type',  # noqa: E501
     }
 
     read_only_vars = {
@@ -151,9 +157,10 @@ class SubSignatureRequestSigner(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            order (int): The order the signer is required to sign in.. [optional]  # noqa: E501
+            order (int, none_type): The order the signer is required to sign in.. [optional]  # noqa: E501
             pin (str): The 4- to 12-character access code that will secure this signer's signature page.. [optional]  # noqa: E501
-            sms_phone_number (str): An E.164 formatted phone number that will receive a code via SMS to access this signer's signature page.  **Note**: Not available in test mode and requires a Standard plan or higher.. [optional]  # noqa: E501
+            sms_phone_number (str): An E.164 formatted phone number.  **Note**: Not available in test mode and requires a Standard plan or higher.. [optional]  # noqa: E501
+            sms_phone_number_type (str): **Note**: This only works in non embedded endpoints.  If set, the value must be either `authentication` or `delivery`. Default `authentication`.   If `authentication` is set, `sms_phone_number` will receive a code via SMS to access this signer's signature page.  If `delivery` is set, signature request will be delivered to both email and `sms_phone_number`.. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -241,9 +248,10 @@ class SubSignatureRequestSigner(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            order (int): The order the signer is required to sign in.. [optional]  # noqa: E501
+            order (int, none_type): The order the signer is required to sign in.. [optional]  # noqa: E501
             pin (str): The 4- to 12-character access code that will secure this signer's signature page.. [optional]  # noqa: E501
-            sms_phone_number (str): An E.164 formatted phone number that will receive a code via SMS to access this signer's signature page.  **Note**: Not available in test mode and requires a Standard plan or higher.. [optional]  # noqa: E501
+            sms_phone_number (str): An E.164 formatted phone number.  **Note**: Not available in test mode and requires a Standard plan or higher.. [optional]  # noqa: E501
+            sms_phone_number_type (str): **Note**: This only works in non embedded endpoints.  If set, the value must be either `authentication` or `delivery`. Default `authentication`.   If `authentication` is set, `sms_phone_number` will receive a code via SMS to access this signer's signature page.  If `delivery` is set, signature request will be delivered to both email and `sms_phone_number`.. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)

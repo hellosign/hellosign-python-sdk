@@ -99,8 +99,6 @@ class EmbeddedEditUrlRequest(ModelNormal):
             'preview_only': (bool,),  # noqa: E501
             'show_preview': (bool,),  # noqa: E501
             'show_progress_stepper': (bool,),  # noqa: E501
-            'skip_signer_roles': (bool,),  # noqa: E501
-            'skip_subject_message': (bool,),  # noqa: E501
             'test_mode': (bool,),  # noqa: E501
         }
 
@@ -119,8 +117,6 @@ class EmbeddedEditUrlRequest(ModelNormal):
         'preview_only': 'preview_only',  # noqa: E501
         'show_preview': 'show_preview',  # noqa: E501
         'show_progress_stepper': 'show_progress_stepper',  # noqa: E501
-        'skip_signer_roles': 'skip_signer_roles',  # noqa: E501
-        'skip_subject_message': 'skip_subject_message',  # noqa: E501
         'test_mode': 'test_mode',  # noqa: E501
     }
 
@@ -174,8 +170,6 @@ class EmbeddedEditUrlRequest(ModelNormal):
             preview_only (bool): This allows the requester to enable the preview experience (i.e. does not allow the requester's end user to add any additional fields via the editor).  **Note**: This parameter overwrites `show_preview=true` (if set).. [optional] if omitted the server will use the default value of False  # noqa: E501
             show_preview (bool): This allows the requester to enable the editor/preview experience.. [optional] if omitted the server will use the default value of False  # noqa: E501
             show_progress_stepper (bool): When only one step remains in the signature request process and this parameter is set to `false` then the progress stepper will be hidden.. [optional] if omitted the server will use the default value of True  # noqa: E501
-            skip_signer_roles (bool): If signer roles are already provided, the user will not be prompted to edit them.  **Note**: this parameter will be deprecated in May 2020 and skipping the signer roles screen will become the default behavior. To enforce showing the signer roles screen, use the `force_signer_roles` parameter.. [optional] if omitted the server will use the default value of False  # noqa: E501
-            skip_subject_message (bool): If the subject and message has already been provided, the user will not be prompted to edit them.  **Note**: this parameter will be deprecated in May 2020 and skipping the subject message screen will become the default behavior. To enforce showing the subject message screen, use the `force_subject_message` parameter.. [optional] if omitted the server will use the default value of False  # noqa: E501
             test_mode (bool): Whether this is a test, locked templates will only be available for editing if this is set to `true`. Defaults to `false`.. [optional] if omitted the server will use the default value of False  # noqa: E501
         """
 
@@ -267,8 +261,6 @@ class EmbeddedEditUrlRequest(ModelNormal):
             preview_only (bool): This allows the requester to enable the preview experience (i.e. does not allow the requester's end user to add any additional fields via the editor).  **Note**: This parameter overwrites `show_preview=true` (if set).. [optional] if omitted the server will use the default value of False  # noqa: E501
             show_preview (bool): This allows the requester to enable the editor/preview experience.. [optional] if omitted the server will use the default value of False  # noqa: E501
             show_progress_stepper (bool): When only one step remains in the signature request process and this parameter is set to `false` then the progress stepper will be hidden.. [optional] if omitted the server will use the default value of True  # noqa: E501
-            skip_signer_roles (bool): If signer roles are already provided, the user will not be prompted to edit them.  **Note**: this parameter will be deprecated in May 2020 and skipping the signer roles screen will become the default behavior. To enforce showing the signer roles screen, use the `force_signer_roles` parameter.. [optional] if omitted the server will use the default value of False  # noqa: E501
-            skip_subject_message (bool): If the subject and message has already been provided, the user will not be prompted to edit them.  **Note**: this parameter will be deprecated in May 2020 and skipping the subject message screen will become the default behavior. To enforce showing the subject message screen, use the `force_subject_message` parameter.. [optional] if omitted the server will use the default value of False  # noqa: E501
             test_mode (bool): Whether this is a test, locked templates will only be available for editing if this is set to `true`. Defaults to `false`.. [optional] if omitted the server will use the default value of False  # noqa: E501
         """
 

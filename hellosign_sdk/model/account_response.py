@@ -95,8 +95,8 @@ class AccountResponse(ModelNormal):
             'is_paid_hf': (bool,),  # noqa: E501
             'quotas': (AccountResponseQuotas,),  # noqa: E501
             'callback_url': (str, none_type,),  # noqa: E501
-            'should_send_outbound_conf_emails': (bool,),  # noqa: E501
             'role_code': (str, none_type,),  # noqa: E501
+            'locale': (str, none_type,),  # noqa: E501
         }
 
     @cached_property
@@ -112,8 +112,8 @@ class AccountResponse(ModelNormal):
         'is_paid_hf': 'is_paid_hf',  # noqa: E501
         'quotas': 'quotas',  # noqa: E501
         'callback_url': 'callback_url',  # noqa: E501
-        'should_send_outbound_conf_emails': 'should_send_outbound_conf_emails',  # noqa: E501
         'role_code': 'role_code',  # noqa: E501
+        'locale': 'locale',  # noqa: E501
     }
 
     read_only_vars = {
@@ -157,15 +157,15 @@ class AccountResponse(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            account_id (str): [optional]  # noqa: E501
-            email_address (str): [optional]  # noqa: E501
-            is_locked (bool): [optional]  # noqa: E501
-            is_paid_hs (bool): [optional]  # noqa: E501
-            is_paid_hf (bool): [optional]  # noqa: E501
+            account_id (str): The ID of the Account. [optional]  # noqa: E501
+            email_address (str): The email address associated with the Account.. [optional]  # noqa: E501
+            is_locked (bool): Returns `true` if the user has been locked out of their account by a team admin.. [optional]  # noqa: E501
+            is_paid_hs (bool): Returns `true` if the user has a paid HelloSign account.. [optional]  # noqa: E501
+            is_paid_hf (bool): Returns `true` if the user has a paid HelloFax account.. [optional]  # noqa: E501
             quotas (AccountResponseQuotas): [optional]  # noqa: E501
-            callback_url (str, none_type): [optional]  # noqa: E501
-            should_send_outbound_conf_emails (bool): [optional]  # noqa: E501
-            role_code (str, none_type): [optional]  # noqa: E501
+            callback_url (str, none_type): The URL that HelloSign events will `POST` to.. [optional]  # noqa: E501
+            role_code (str, none_type): The membership role for the team.. [optional]  # noqa: E501
+            locale (str, none_type): The locale used in this Account. Check out the list of [supported locales](/api/reference/constants/#supported-locales) to learn more about the possible values.. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -247,15 +247,15 @@ class AccountResponse(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            account_id (str): [optional]  # noqa: E501
-            email_address (str): [optional]  # noqa: E501
-            is_locked (bool): [optional]  # noqa: E501
-            is_paid_hs (bool): [optional]  # noqa: E501
-            is_paid_hf (bool): [optional]  # noqa: E501
+            account_id (str): The ID of the Account. [optional]  # noqa: E501
+            email_address (str): The email address associated with the Account.. [optional]  # noqa: E501
+            is_locked (bool): Returns `true` if the user has been locked out of their account by a team admin.. [optional]  # noqa: E501
+            is_paid_hs (bool): Returns `true` if the user has a paid HelloSign account.. [optional]  # noqa: E501
+            is_paid_hf (bool): Returns `true` if the user has a paid HelloFax account.. [optional]  # noqa: E501
             quotas (AccountResponseQuotas): [optional]  # noqa: E501
-            callback_url (str, none_type): [optional]  # noqa: E501
-            should_send_outbound_conf_emails (bool): [optional]  # noqa: E501
-            role_code (str, none_type): [optional]  # noqa: E501
+            callback_url (str, none_type): The URL that HelloSign events will `POST` to.. [optional]  # noqa: E501
+            role_code (str, none_type): The membership role for the team.. [optional]  # noqa: E501
+            locale (str, none_type): The locale used in this Account. Check out the list of [supported locales](/api/reference/constants/#supported-locales) to learn more about the possible values.. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)

@@ -151,7 +151,7 @@ class AccountCreateResponse(ModelNormal):
                                 _visited_composed_classes = (Animal,)
             account (AccountResponse): [optional]  # noqa: E501
             oauth_data (OAuthTokenResponse): [optional]  # noqa: E501
-            warnings ([WarningResponse]): [optional]  # noqa: E501
+            warnings ([WarningResponse]): A list of warnings.. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -235,7 +235,7 @@ class AccountCreateResponse(ModelNormal):
                                 _visited_composed_classes = (Animal,)
             account (AccountResponse): [optional]  # noqa: E501
             oauth_data (OAuthTokenResponse): [optional]  # noqa: E501
-            warnings ([WarningResponse]): [optional]  # noqa: E501
+            warnings ([WarningResponse]): A list of warnings.. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)

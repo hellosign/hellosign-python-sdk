@@ -102,21 +102,22 @@ class SubFormFieldsPerDocumentText(ModelComposed):
         return {
             'type': (str,),  # noqa: E501
             'document_index': (int,),  # noqa: E501
+            'api_id': (str,),  # noqa: E501
             'height': (int,),  # noqa: E501
+            'required': (bool,),  # noqa: E501
             'signer': (str,),  # noqa: E501
             'width': (int,),  # noqa: E501
             'x': (int,),  # noqa: E501
             'y': (int,),  # noqa: E501
             'placeholder': (str,),  # noqa: E501
             'auto_fill_type': (str,),  # noqa: E501
+            'link_id': (str,),  # noqa: E501
             'masked': (bool,),  # noqa: E501
             'validation_type': (str,),  # noqa: E501
             'validation_custom_regex': (str,),  # noqa: E501
             'validation_custom_regex_format_label': (str,),  # noqa: E501
-            'api_id': (str,),  # noqa: E501
             'name': (str,),  # noqa: E501
-            'page': (int,),  # noqa: E501
-            'required': (bool,),  # noqa: E501
+            'page': (int, none_type,),  # noqa: E501
         }
 
     @cached_property
@@ -127,21 +128,22 @@ class SubFormFieldsPerDocumentText(ModelComposed):
     attribute_map = {
         'type': 'type',  # noqa: E501
         'document_index': 'document_index',  # noqa: E501
+        'api_id': 'api_id',  # noqa: E501
         'height': 'height',  # noqa: E501
+        'required': 'required',  # noqa: E501
         'signer': 'signer',  # noqa: E501
         'width': 'width',  # noqa: E501
         'x': 'x',  # noqa: E501
         'y': 'y',  # noqa: E501
         'placeholder': 'placeholder',  # noqa: E501
         'auto_fill_type': 'auto_fill_type',  # noqa: E501
+        'link_id': 'link_id',  # noqa: E501
         'masked': 'masked',  # noqa: E501
         'validation_type': 'validation_type',  # noqa: E501
         'validation_custom_regex': 'validation_custom_regex',  # noqa: E501
         'validation_custom_regex_format_label': 'validation_custom_regex_format_label',  # noqa: E501
-        'api_id': 'api_id',  # noqa: E501
         'name': 'name',  # noqa: E501
         'page': 'page',  # noqa: E501
-        'required': 'required',  # noqa: E501
     }
 
     read_only_vars = {
@@ -155,8 +157,10 @@ class SubFormFieldsPerDocumentText(ModelComposed):
         Keyword Args:
             type (str): A text input field. Use the `SubFormFieldsPerDocumentText` class.. defaults to "text"  # noqa: E501
             document_index (int): Represents the integer index of the `file` or `file_url` document the field should be attached to.
+            api_id (str): An identifier for the field that is unique across all documents in the request.
             height (int): Size of the field in pixels.
-            signer (str): Signer index identified by the offset `%i%` in the `signers[%i%]` parameter, indicating which signer should fill out the field. If your type is `text-merge` you can set this to `sender`, so the field is non-editable by any signer.
+            required (bool): Whether this field is required.
+            signer (str): Signer index identified by the offset in the signers parameter (0-based indexing), indicating which signer should fill out the field.  **NOTE**: If type is `text-merge` or `checkbox-merge`, you must set this to sender in order to use pre-filled data.
             width (int): Size of the field in pixels.
             x (int): Location coordinates of the field in pixels.
             y (int): Location coordinates of the field in pixels.
@@ -192,14 +196,13 @@ class SubFormFieldsPerDocumentText(ModelComposed):
                                 _visited_composed_classes = (Animal,)
             placeholder (str): Placeholder value for text field.. [optional]  # noqa: E501
             auto_fill_type (str): Auto fill type for populating fields automatically. Check out the list of [auto fill types](/api/reference/constants/#auto-fill-types) to learn more about the possible values.. [optional]  # noqa: E501
+            link_id (str): Link two or more text fields. Enter data into one linked text field, which automatically fill all other linked text fields.. [optional]  # noqa: E501
             masked (bool): Masks entered data. For more information see [Masking sensitive information](https://faq.hellosign.com/hc/en-us/articles/360040742811-Masking-sensitive-information). `true` for masking the data in a text field, otherwise `false`.. [optional]  # noqa: E501
             validation_type (str): Each text field may contain a `validation_type` parameter. Check out the list of [validation types](https://faq.hellosign.com/hc/en-us/articles/217115577) to learn more about the possible values.  **NOTE**: When using `custom_regex` you are required to pass a second parameter `validation_custom_regex` and you can optionally provide `validation_custom_regex_format_label` for the error message the user will see in case of an invalid value.. [optional]  # noqa: E501
             validation_custom_regex (str): [optional]  # noqa: E501
             validation_custom_regex_format_label (str): [optional]  # noqa: E501
-            api_id (str): An identifier for the field that is unique across all documents in the request.. [optional]  # noqa: E501
             name (str): Display name for the field.. [optional]  # noqa: E501
-            page (int): Page in the document where the field should be placed (requires documents be PDF files).  - When the page number parameter is supplied, the API will use the new coordinate system. - Check out the differences between both [coordinate systems](https://faq.hellosign.com/hc/en-us/articles/217115577) and how to use them.. [optional]  # noqa: E501
-            required (bool): Whether this field is required.. [optional]  # noqa: E501
+            page (int, none_type): Page in the document where the field should be placed (requires documents be PDF files).  - When the page number parameter is supplied, the API will use the new coordinate system. - Check out the differences between both [coordinate systems](https://faq.hellosign.com/hc/en-us/articles/217115577) and how to use them.. [optional]  # noqa: E501
         """
 
         type = kwargs.get('type', "text")
@@ -272,8 +275,10 @@ class SubFormFieldsPerDocumentText(ModelComposed):
         Keyword Args:
             type (str): A text input field. Use the `SubFormFieldsPerDocumentText` class.. defaults to "text"  # noqa: E501
             document_index (int): Represents the integer index of the `file` or `file_url` document the field should be attached to.
+            api_id (str): An identifier for the field that is unique across all documents in the request.
             height (int): Size of the field in pixels.
-            signer (str): Signer index identified by the offset `%i%` in the `signers[%i%]` parameter, indicating which signer should fill out the field. If your type is `text-merge` you can set this to `sender`, so the field is non-editable by any signer.
+            required (bool): Whether this field is required.
+            signer (str): Signer index identified by the offset in the signers parameter (0-based indexing), indicating which signer should fill out the field.  **NOTE**: If type is `text-merge` or `checkbox-merge`, you must set this to sender in order to use pre-filled data.
             width (int): Size of the field in pixels.
             x (int): Location coordinates of the field in pixels.
             y (int): Location coordinates of the field in pixels.
@@ -309,14 +314,13 @@ class SubFormFieldsPerDocumentText(ModelComposed):
                                 _visited_composed_classes = (Animal,)
             placeholder (str): Placeholder value for text field.. [optional]  # noqa: E501
             auto_fill_type (str): Auto fill type for populating fields automatically. Check out the list of [auto fill types](/api/reference/constants/#auto-fill-types) to learn more about the possible values.. [optional]  # noqa: E501
+            link_id (str): Link two or more text fields. Enter data into one linked text field, which automatically fill all other linked text fields.. [optional]  # noqa: E501
             masked (bool): Masks entered data. For more information see [Masking sensitive information](https://faq.hellosign.com/hc/en-us/articles/360040742811-Masking-sensitive-information). `true` for masking the data in a text field, otherwise `false`.. [optional]  # noqa: E501
             validation_type (str): Each text field may contain a `validation_type` parameter. Check out the list of [validation types](https://faq.hellosign.com/hc/en-us/articles/217115577) to learn more about the possible values.  **NOTE**: When using `custom_regex` you are required to pass a second parameter `validation_custom_regex` and you can optionally provide `validation_custom_regex_format_label` for the error message the user will see in case of an invalid value.. [optional]  # noqa: E501
             validation_custom_regex (str): [optional]  # noqa: E501
             validation_custom_regex_format_label (str): [optional]  # noqa: E501
-            api_id (str): An identifier for the field that is unique across all documents in the request.. [optional]  # noqa: E501
             name (str): Display name for the field.. [optional]  # noqa: E501
-            page (int): Page in the document where the field should be placed (requires documents be PDF files).  - When the page number parameter is supplied, the API will use the new coordinate system. - Check out the differences between both [coordinate systems](https://faq.hellosign.com/hc/en-us/articles/217115577) and how to use them.. [optional]  # noqa: E501
-            required (bool): Whether this field is required.. [optional]  # noqa: E501
+            page (int, none_type): Page in the document where the field should be placed (requires documents be PDF files).  - When the page number parameter is supplied, the API will use the new coordinate system. - Check out the differences between both [coordinate systems](https://faq.hellosign.com/hc/en-us/articles/217115577) and how to use them.. [optional]  # noqa: E501
         """
 
         type = kwargs.get('type', "text")

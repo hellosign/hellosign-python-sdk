@@ -214,11 +214,11 @@ class TemplateCreateEmbeddedDraftRequest(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            file ([file_type]): **file** or **file_url** is required, but not both.  Use `file[]` to indicate the uploaded file(s) to use for the template  Currently we only support use of either the `file[]` parameter or `file_url[]` parameter, not both.. [optional]  # noqa: E501
-            file_url ([str]): **file_url** or **file** is required, but not both.  Use `file_url[]` to have HelloSign download the file(s) to use for the template.  Currently we only support use of either the `file[]` parameter or `file_url[]` parameter, not both.. [optional]  # noqa: E501
+            file ([file_type]): Use `file[]` to indicate the uploaded file(s) to send for signature.  This endpoint requires either **file** or **file_url[]**, but not both.. [optional]  # noqa: E501
+            file_url ([str]): Use `file_url[]` to have HelloSign download the file(s) to send for signature.  This endpoint requires either **file** or **file_url[]**, but not both.. [optional]  # noqa: E501
             allow_ccs (bool): This allows the requester to specify whether the user is allowed to provide email addresses to CC when creating a template.. [optional] if omitted the server will use the default value of True  # noqa: E501
             allow_reassign (bool): Allows signers to reassign their signature requests to other signers if set to `true`. Defaults to `false`.  **Note**: Only available for Premium plan and higher.. [optional] if omitted the server will use the default value of False  # noqa: E501
-            attachments ([SubAttachment]): [optional]  # noqa: E501
+            attachments ([SubAttachment]): A list describing the attachments. [optional]  # noqa: E501
             cc_roles ([str]): The CC roles that must be assigned when using the template to send a signature request. [optional]  # noqa: E501
             editor_options (SubEditorOptions): [optional]  # noqa: E501
             field_options (SubFieldOptions): [optional]  # noqa: E501
@@ -232,7 +232,7 @@ class TemplateCreateEmbeddedDraftRequest(ModelNormal):
             metadata ({str: (bool, date, datetime, dict, float, int, list, str, none_type)}): Key-value data that should be attached to the signature request. This metadata is included in all API responses and events involving the signature request. For example, use the metadata field to store a signer's order number for look up when receiving events for the signature request.  Each request can include up to 10 metadata keys, with key names up to 40 characters long and values up to 1000 characters long.. [optional]  # noqa: E501
             show_preview (bool): This allows the requester to enable the editor/preview experience.  - `show_preview=true`: Allows requesters to enable the editor/preview experience. - `show_preview=false`: Allows requesters to disable the editor/preview experience.. [optional] if omitted the server will use the default value of False  # noqa: E501
             show_progress_stepper (bool): When only one step remains in the signature request process and this parameter is set to `false` then the progress stepper will be hidden.. [optional] if omitted the server will use the default value of True  # noqa: E501
-            signer_roles ([SubTemplateRole]): [optional]  # noqa: E501
+            signer_roles ([SubTemplateRole]): An array of the designated signer roles that must be specified when sending a SignatureRequest using this Template.. [optional]  # noqa: E501
             skip_me_now (bool): Disables the \"Me (Now)\" option for the person preparing the document. Does not work with type `send_document`. Defaults to `false`.. [optional] if omitted the server will use the default value of False  # noqa: E501
             subject (str): The template title (alias).. [optional]  # noqa: E501
             test_mode (bool): Whether this is a test, the signature request created from this draft will not be legally binding if set to `true`. Defaults to `false`.. [optional] if omitted the server will use the default value of False  # noqa: E501
@@ -323,11 +323,11 @@ class TemplateCreateEmbeddedDraftRequest(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            file ([file_type]): **file** or **file_url** is required, but not both.  Use `file[]` to indicate the uploaded file(s) to use for the template  Currently we only support use of either the `file[]` parameter or `file_url[]` parameter, not both.. [optional]  # noqa: E501
-            file_url ([str]): **file_url** or **file** is required, but not both.  Use `file_url[]` to have HelloSign download the file(s) to use for the template.  Currently we only support use of either the `file[]` parameter or `file_url[]` parameter, not both.. [optional]  # noqa: E501
+            file ([file_type]): Use `file[]` to indicate the uploaded file(s) to send for signature.  This endpoint requires either **file** or **file_url[]**, but not both.. [optional]  # noqa: E501
+            file_url ([str]): Use `file_url[]` to have HelloSign download the file(s) to send for signature.  This endpoint requires either **file** or **file_url[]**, but not both.. [optional]  # noqa: E501
             allow_ccs (bool): This allows the requester to specify whether the user is allowed to provide email addresses to CC when creating a template.. [optional] if omitted the server will use the default value of True  # noqa: E501
             allow_reassign (bool): Allows signers to reassign their signature requests to other signers if set to `true`. Defaults to `false`.  **Note**: Only available for Premium plan and higher.. [optional] if omitted the server will use the default value of False  # noqa: E501
-            attachments ([SubAttachment]): [optional]  # noqa: E501
+            attachments ([SubAttachment]): A list describing the attachments. [optional]  # noqa: E501
             cc_roles ([str]): The CC roles that must be assigned when using the template to send a signature request. [optional]  # noqa: E501
             editor_options (SubEditorOptions): [optional]  # noqa: E501
             field_options (SubFieldOptions): [optional]  # noqa: E501
@@ -341,7 +341,7 @@ class TemplateCreateEmbeddedDraftRequest(ModelNormal):
             metadata ({str: (bool, date, datetime, dict, float, int, list, str, none_type)}): Key-value data that should be attached to the signature request. This metadata is included in all API responses and events involving the signature request. For example, use the metadata field to store a signer's order number for look up when receiving events for the signature request.  Each request can include up to 10 metadata keys, with key names up to 40 characters long and values up to 1000 characters long.. [optional]  # noqa: E501
             show_preview (bool): This allows the requester to enable the editor/preview experience.  - `show_preview=true`: Allows requesters to enable the editor/preview experience. - `show_preview=false`: Allows requesters to disable the editor/preview experience.. [optional] if omitted the server will use the default value of False  # noqa: E501
             show_progress_stepper (bool): When only one step remains in the signature request process and this parameter is set to `false` then the progress stepper will be hidden.. [optional] if omitted the server will use the default value of True  # noqa: E501
-            signer_roles ([SubTemplateRole]): [optional]  # noqa: E501
+            signer_roles ([SubTemplateRole]): An array of the designated signer roles that must be specified when sending a SignatureRequest using this Template.. [optional]  # noqa: E501
             skip_me_now (bool): Disables the \"Me (Now)\" option for the person preparing the document. Does not work with type `send_document`. Defaults to `false`.. [optional] if omitted the server will use the default value of False  # noqa: E501
             subject (str): The template title (alias).. [optional]  # noqa: E501
             test_mode (bool): Whether this is a test, the signature request created from this draft will not be legally binding if set to `true`. Defaults to `false`.. [optional] if omitted the server will use the default value of False  # noqa: E501

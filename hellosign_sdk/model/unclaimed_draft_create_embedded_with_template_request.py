@@ -187,7 +187,7 @@ class UnclaimedDraftCreateEmbeddedWithTemplateRequest(ModelNormal):
 
         Args:
             client_id (str): Client id of the app used to create the draft. Used to apply the branding and callback url defined for the app.
-            requester_email_address (str): The email address of the user that should be designated as the requester of this draft, if the draft type is `request_signature`.
+            requester_email_address (str): The email address of the user that should be designated as the requester of this draft.
             template_ids ([str]): Use `template_ids` to create a SignatureRequest from one or more templates, in the order in which the templates will be used.
 
         Keyword Args:
@@ -224,11 +224,11 @@ class UnclaimedDraftCreateEmbeddedWithTemplateRequest(ModelNormal):
             allow_decline (bool): Allows signers to decline to sign a document if `true`. Defaults to `false`.. [optional] if omitted the server will use the default value of False  # noqa: E501
             allow_reassign (bool): Allows signers to reassign their signature requests to other signers if set to `true`. Defaults to `false`.  **Note**: Only available for Premium plan and higher.. [optional] if omitted the server will use the default value of False  # noqa: E501
             ccs ([SubCC]): Add CC email recipients. Required when a CC role exists for the Template.. [optional]  # noqa: E501
-            custom_fields ([SubCustomField]): An array defining values and options for custom fields. Required when defining when a custom field exists in the Template.. [optional]  # noqa: E501
+            custom_fields ([SubCustomField]): An array defining values and options for custom fields. Required when a custom field exists in the Template.. [optional]  # noqa: E501
             editor_options (SubEditorOptions): [optional]  # noqa: E501
             field_options (SubFieldOptions): [optional]  # noqa: E501
-            file ([file_type]): **file** or **file_url** is required, but not both.  Append additional files to the signature request. HelloSign will parse the files for [text tags](https://app.hellosign.com/api/textTagsWalkthrough). Text tags for signers not on the template(s) will be ignored.  Use `file[]` to pass the uploaded file(s).  Currently we only support use of either the `file[]` parameter or `file_url[]` parameter, not both.. [optional]  # noqa: E501
-            file_url ([str]): **file** or **file_url** is required, but not both.  Append additional files to the signature request. HelloSign will parse the files for [text tags](https://app.hellosign.com/api/textTagsWalkthrough). Text tags for signers not on the template(s) will be ignored.  Use `file_url[]` to have HelloSign download the file(s).  Currently we only support use of either the `file[]` parameter or `file_url[]` parameter, not both.. [optional]  # noqa: E501
+            file ([file_type]): Use `file[]` to append additional files to the signature request being created from the template. HelloSign will parse the files for [text tags](https://app.hellosign.com/api/textTagsWalkthrough) and append it to the signature request. Text tags for signers not on the template(s) will be ignored.  **file** or **file_url[]** is required, but not both.. [optional]  # noqa: E501
+            file_url ([str]): Use file_url[] to append additional files to the signature request being created from the template. HelloSign will download the file, then parse it for [text tags](https://app.hellosign.com/api/textTagsWalkthrough), and append to the signature request. Text tags for signers not on the template(s) will be ignored.  **file** or **file_url[]** is required, but not both.. [optional]  # noqa: E501
             force_signer_roles (bool): Provide users the ability to review/edit the template signer roles.. [optional] if omitted the server will use the default value of False  # noqa: E501
             force_subject_message (bool): Provide users the ability to review/edit the template subject and message.. [optional] if omitted the server will use the default value of False  # noqa: E501
             hold_request (bool): The request from this draft will not automatically send to signers post-claim if set to 1. Requester must [release](/api/reference/operation/signatureRequestReleaseHold/) the request from hold when ready to send. Defaults to `false`.. [optional] if omitted the server will use the default value of False  # noqa: E501
@@ -301,7 +301,7 @@ class UnclaimedDraftCreateEmbeddedWithTemplateRequest(ModelNormal):
 
         Args:
             client_id (str): Client id of the app used to create the draft. Used to apply the branding and callback url defined for the app.
-            requester_email_address (str): The email address of the user that should be designated as the requester of this draft, if the draft type is `request_signature`.
+            requester_email_address (str): The email address of the user that should be designated as the requester of this draft.
             template_ids ([str]): Use `template_ids` to create a SignatureRequest from one or more templates, in the order in which the templates will be used.
 
         Keyword Args:
@@ -338,11 +338,11 @@ class UnclaimedDraftCreateEmbeddedWithTemplateRequest(ModelNormal):
             allow_decline (bool): Allows signers to decline to sign a document if `true`. Defaults to `false`.. [optional] if omitted the server will use the default value of False  # noqa: E501
             allow_reassign (bool): Allows signers to reassign their signature requests to other signers if set to `true`. Defaults to `false`.  **Note**: Only available for Premium plan and higher.. [optional] if omitted the server will use the default value of False  # noqa: E501
             ccs ([SubCC]): Add CC email recipients. Required when a CC role exists for the Template.. [optional]  # noqa: E501
-            custom_fields ([SubCustomField]): An array defining values and options for custom fields. Required when defining when a custom field exists in the Template.. [optional]  # noqa: E501
+            custom_fields ([SubCustomField]): An array defining values and options for custom fields. Required when a custom field exists in the Template.. [optional]  # noqa: E501
             editor_options (SubEditorOptions): [optional]  # noqa: E501
             field_options (SubFieldOptions): [optional]  # noqa: E501
-            file ([file_type]): **file** or **file_url** is required, but not both.  Append additional files to the signature request. HelloSign will parse the files for [text tags](https://app.hellosign.com/api/textTagsWalkthrough). Text tags for signers not on the template(s) will be ignored.  Use `file[]` to pass the uploaded file(s).  Currently we only support use of either the `file[]` parameter or `file_url[]` parameter, not both.. [optional]  # noqa: E501
-            file_url ([str]): **file** or **file_url** is required, but not both.  Append additional files to the signature request. HelloSign will parse the files for [text tags](https://app.hellosign.com/api/textTagsWalkthrough). Text tags for signers not on the template(s) will be ignored.  Use `file_url[]` to have HelloSign download the file(s).  Currently we only support use of either the `file[]` parameter or `file_url[]` parameter, not both.. [optional]  # noqa: E501
+            file ([file_type]): Use `file[]` to append additional files to the signature request being created from the template. HelloSign will parse the files for [text tags](https://app.hellosign.com/api/textTagsWalkthrough) and append it to the signature request. Text tags for signers not on the template(s) will be ignored.  **file** or **file_url[]** is required, but not both.. [optional]  # noqa: E501
+            file_url ([str]): Use file_url[] to append additional files to the signature request being created from the template. HelloSign will download the file, then parse it for [text tags](https://app.hellosign.com/api/textTagsWalkthrough), and append to the signature request. Text tags for signers not on the template(s) will be ignored.  **file** or **file_url[]** is required, but not both.. [optional]  # noqa: E501
             force_signer_roles (bool): Provide users the ability to review/edit the template signer roles.. [optional] if omitted the server will use the default value of False  # noqa: E501
             force_subject_message (bool): Provide users the ability to review/edit the template subject and message.. [optional] if omitted the server will use the default value of False  # noqa: E501
             hold_request (bool): The request from this draft will not automatically send to signers post-claim if set to 1. Requester must [release](/api/reference/operation/signatureRequestReleaseHold/) the request from hold when ready to send. Defaults to `false`.. [optional] if omitted the server will use the default value of False  # noqa: E501

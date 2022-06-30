@@ -146,7 +146,7 @@ class AccountGetResponse(ModelNormal):
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
             account (AccountResponse): [optional]  # noqa: E501
-            warnings ([WarningResponse]): [optional]  # noqa: E501
+            warnings ([WarningResponse]): A list of warnings.. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -229,7 +229,7 @@ class AccountGetResponse(ModelNormal):
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
             account (AccountResponse): [optional]  # noqa: E501
-            warnings ([WarningResponse]): [optional]  # noqa: E501
+            warnings ([WarningResponse]): A list of warnings.. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)

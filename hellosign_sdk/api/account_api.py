@@ -368,7 +368,7 @@ class AccountApi(object):
 
 
         Keyword Args:
-            account_id (str): Account ID. [optional]
+            account_id (str): The ID of the Account. [optional]
             _return_http_data_only (bool): response data without head status
                 code and headers. Default is True.
             _preload_content (bool): if False, the urllib3.HTTPResponse object
@@ -456,7 +456,7 @@ class AccountApi(object):
     ):
         """Update Account  # noqa: E501
 
-        Updates the properties and settings of your Account.  # noqa: E501
+        Updates the properties and settings of your Account. Currently only allows for updates to the [Callback URL](/api/reference/tag/Callbacks-and-Events) and locale.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -556,7 +556,7 @@ class AccountApi(object):
     ):
         """Verify Account  # noqa: E501
 
-        Verifies whether an HelloSign Account exists for the given email address.  **NOTE** This method is restricted to paid API users.  # noqa: E501
+        Verifies whether an HelloSign Account exists for the given email address.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 

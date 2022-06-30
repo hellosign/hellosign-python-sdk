@@ -430,7 +430,7 @@ class ApiAppApi(object):
         >>> result = thread.get()
 
         Args:
-            client_id (str): The client id of the Api App to delete.
+            client_id (str): The client id of the API App to delete.
 
         Keyword Args:
             _return_http_data_only (bool): response data without head status
@@ -508,7 +508,7 @@ class ApiAppApi(object):
         >>> result = thread.get()
 
         Args:
-            client_id (str): The client id of the Api App to retrieve.
+            client_id (str): The client id of the API App to retrieve.
 
         Keyword Args:
             _return_http_data_only (bool): response data without head status
@@ -608,7 +608,7 @@ class ApiAppApi(object):
 
 
         Keyword Args:
-            page (int): Which page number of the Api App List to return. Defaults to `1`.. [optional] if omitted the server will use the default value of 1
+            page (int): Which page number of the API App List to return. Defaults to `1`.. [optional] if omitted the server will use the default value of 1
             page_size (int): Number of objects to be returned per page. Must be between `1` and `100`. Default is `20`.. [optional] if omitted the server will use the default value of 20
             _return_http_data_only (bool): response data without head status
                 code and headers. Default is True.
@@ -706,7 +706,7 @@ class ApiAppApi(object):
         >>> result = thread.get()
 
         Args:
-            client_id (str): The client id of the Api App to update.
+            client_id (str): The client id of the API App to update.
             api_app_update_request (ApiAppUpdateRequest):
 
         Keyword Args:

@@ -153,9 +153,9 @@ class TemplateResponseAccount(ModelNormal):
                                 _visited_composed_classes = (Animal,)
             account_id (str): The id of the Account.. [optional]  # noqa: E501
             email_address (str): The email address associated with the Account.. [optional]  # noqa: E501
-            is_locked (bool): Returns true if the user has been locked out of their account by a team admin.. [optional]  # noqa: E501
-            is_paid_hs (bool): Returns true if the user has a paid HelloSign account.. [optional]  # noqa: E501
-            is_paid_hf (bool): Returns true if the user has a paid HelloFax account.. [optional]  # noqa: E501
+            is_locked (bool): Returns `true` if the user has been locked out of their account by a team admin.. [optional]  # noqa: E501
+            is_paid_hs (bool): Returns `true` if the user has a paid HelloSign account.. [optional]  # noqa: E501
+            is_paid_hf (bool): Returns `true` if the user has a paid HelloFax account.. [optional]  # noqa: E501
             quotas (TemplateResponseAccountQuota): [optional]  # noqa: E501
         """
 
@@ -240,9 +240,9 @@ class TemplateResponseAccount(ModelNormal):
                                 _visited_composed_classes = (Animal,)
             account_id (str): The id of the Account.. [optional]  # noqa: E501
             email_address (str): The email address associated with the Account.. [optional]  # noqa: E501
-            is_locked (bool): Returns true if the user has been locked out of their account by a team admin.. [optional]  # noqa: E501
-            is_paid_hs (bool): Returns true if the user has a paid HelloSign account.. [optional]  # noqa: E501
-            is_paid_hf (bool): Returns true if the user has a paid HelloFax account.. [optional]  # noqa: E501
+            is_locked (bool): Returns `true` if the user has been locked out of their account by a team admin.. [optional]  # noqa: E501
+            is_paid_hs (bool): Returns `true` if the user has a paid HelloSign account.. [optional]  # noqa: E501
+            is_paid_hf (bool): Returns `true` if the user has a paid HelloFax account.. [optional]  # noqa: E501
             quotas (TemplateResponseAccountQuota): [optional]  # noqa: E501
         """
 

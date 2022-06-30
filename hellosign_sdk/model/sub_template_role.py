@@ -83,7 +83,7 @@ class SubTemplateRole(ModelNormal):
         """
         return {
             'name': (str,),  # noqa: E501
-            'order': (int,),  # noqa: E501
+            'order': (int, none_type,),  # noqa: E501
         }
 
     @cached_property
@@ -138,7 +138,7 @@ class SubTemplateRole(ModelNormal):
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
             name (str): The role name of the signer that will be displayed when the template is used to create a signature request.. [optional]  # noqa: E501
-            order (int): The order in which this signer role is required to sign.. [optional]  # noqa: E501
+            order (int, none_type): The order in which this signer role is required to sign.. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -221,7 +221,7 @@ class SubTemplateRole(ModelNormal):
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
             name (str): The role name of the signer that will be displayed when the template is used to create a signature request.. [optional]  # noqa: E501
-            order (int): The order in which this signer role is required to sign.. [optional]  # noqa: E501
+            order (int, none_type): The order in which this signer role is required to sign.. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)

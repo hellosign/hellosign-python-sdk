@@ -9,7 +9,7 @@
 | `access_token` | ```str``` |    |  |
 | `token_type` | ```str``` |    |  |
 | `refresh_token` | ```str``` |    |  |
-| `expires_in` | ```int``` |  in seconds  |  |
+| `expires_in` | ```int``` |  Number of seconds until the `access_token` expires. Uses epoch time.  |  |
 | `state` | ```str, none_type``` |    |  |
 
 

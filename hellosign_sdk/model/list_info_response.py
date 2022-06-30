@@ -141,10 +141,10 @@ class ListInfoResponse(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            num_pages (int): Total number of pages available. [optional]  # noqa: E501
-            num_results (int, none_type): Total number of objects available. [optional]  # noqa: E501
-            page (int): Number of the page being returned. [optional]  # noqa: E501
-            page_size (int): Objects returned per page. [optional]  # noqa: E501
+            num_pages (int): Total number of pages available.. [optional]  # noqa: E501
+            num_results (int, none_type): Total number of objects available.. [optional]  # noqa: E501
+            page (int): Number of the page being returned.. [optional]  # noqa: E501
+            page_size (int): Objects returned per page.. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -226,10 +226,10 @@ class ListInfoResponse(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            num_pages (int): Total number of pages available. [optional]  # noqa: E501
-            num_results (int, none_type): Total number of objects available. [optional]  # noqa: E501
-            page (int): Number of the page being returned. [optional]  # noqa: E501
-            page_size (int): Objects returned per page. [optional]  # noqa: E501
+            num_pages (int): Total number of pages available.. [optional]  # noqa: E501
+            num_results (int, none_type): Total number of objects available.. [optional]  # noqa: E501
+            page (int): Number of the page being returned.. [optional]  # noqa: E501
+            page_size (int): Objects returned per page.. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)

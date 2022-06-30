@@ -107,8 +107,8 @@ class WarningResponse(ModelNormal):
         """WarningResponse - a model defined in OpenAPI
 
         Args:
-            warning_msg (str):
-            warning_name (str):
+            warning_msg (str): Warning message
+            warning_name (str): Warning name
 
         Keyword Args:
             _check_type (bool): if True, values for parameters in openapi_types
@@ -194,8 +194,8 @@ class WarningResponse(ModelNormal):
         """WarningResponse - a model defined in OpenAPI
 
         Args:
-            warning_msg (str):
-            warning_name (str):
+            warning_msg (str): Warning message
+            warning_name (str): Warning name
 
         Keyword Args:
             _check_type (bool): if True, values for parameters in openapi_types

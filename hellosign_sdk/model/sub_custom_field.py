@@ -111,7 +111,7 @@ class SubCustomField(ModelNormal):
         """SubCustomField - a model defined in OpenAPI
 
         Args:
-            name (str): The name, or \"Field Label,\" of the custom field (the field's API ID can be used here as well).
+            name (str): The name of a custom field. When working with pre-filled data, the custom field's name must have a matching merge field name or the field will remain empty on the document during signing.
 
         Keyword Args:
             _check_type (bool): if True, values for parameters in openapi_types
@@ -144,9 +144,9 @@ class SubCustomField(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            editor (str): The RoleName allowed to edit the custom field (optional, but required if `required = true`).  **Note**: Editable `custom_fields` are only supported for single signer requests or the first signer of ordered signature requests. If more than one signer is assigned to the unordered signature request, any editor value is ignored and the field will not be editable.. [optional]  # noqa: E501
-            required (bool): A boolean describing if this field is required. [optional] if omitted the server will use the default value of False  # noqa: E501
-            value (str): The value of the custom field. [optional]  # noqa: E501
+            editor (str): Used to create editable merge fields. When the value matches a role passed in with `signers`, that role can edit the data that was pre-filled to that field. This field is optional, but required when this custom field object is set to `required = true`.  **Note**: Editable merge fields are only supported for single signer requests (or the first signer in ordered signature requests). If used when there are multiple signers in an unordered signature request, the editor value is ignored and the field won't be editable.. [optional]  # noqa: E501
+            required (bool): Used to set an editable merge field when working with pre-filled data. When `true`, the custom field must specify a signer role in `editor`.. [optional] if omitted the server will use the default value of False  # noqa: E501
+            value (str): The string that resolves (aka \"pre-fills\") to the merge field on the final document(s) used for signing.. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -199,7 +199,7 @@ class SubCustomField(ModelNormal):
         """SubCustomField - a model defined in OpenAPI
 
         Args:
-            name (str): The name, or \"Field Label,\" of the custom field (the field's API ID can be used here as well).
+            name (str): The name of a custom field. When working with pre-filled data, the custom field's name must have a matching merge field name or the field will remain empty on the document during signing.
 
         Keyword Args:
             _check_type (bool): if True, values for parameters in openapi_types
@@ -232,9 +232,9 @@ class SubCustomField(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            editor (str): The RoleName allowed to edit the custom field (optional, but required if `required = true`).  **Note**: Editable `custom_fields` are only supported for single signer requests or the first signer of ordered signature requests. If more than one signer is assigned to the unordered signature request, any editor value is ignored and the field will not be editable.. [optional]  # noqa: E501
-            required (bool): A boolean describing if this field is required. [optional] if omitted the server will use the default value of False  # noqa: E501
-            value (str): The value of the custom field. [optional]  # noqa: E501
+            editor (str): Used to create editable merge fields. When the value matches a role passed in with `signers`, that role can edit the data that was pre-filled to that field. This field is optional, but required when this custom field object is set to `required = true`.  **Note**: Editable merge fields are only supported for single signer requests (or the first signer in ordered signature requests). If used when there are multiple signers in an unordered signature request, the editor value is ignored and the field won't be editable.. [optional]  # noqa: E501
+            required (bool): Used to set an editable merge field when working with pre-filled data. When `true`, the custom field must specify a signer role in `editor`.. [optional] if omitted the server will use the default value of False  # noqa: E501
+            value (str): The string that resolves (aka \"pre-fills\") to the merge field on the final document(s) used for signing.. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)

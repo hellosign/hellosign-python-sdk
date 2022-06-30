@@ -111,7 +111,7 @@ class AccountCreateRequest(ModelNormal):
         """AccountCreateRequest - a model defined in OpenAPI
 
         Args:
-            email_address (str): The email address to create a new Account for.
+            email_address (str): The email address which will be associated with the new Account.
 
         Keyword Args:
             _check_type (bool): if True, values for parameters in openapi_types
@@ -144,8 +144,8 @@ class AccountCreateRequest(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            client_id (str): Used when creating a new account and requesting OAuth authorization.  See [OAuth 2.0 Authorization](https://app.hellosign.com/api/oauthWalkthrough#OAuthAuthorization). [optional]  # noqa: E501
-            client_secret (str): Used when creating a new account and requesting OAuth authorization.  See [OAuth 2.0 Authorization](https://app.hellosign.com/api/oauthWalkthrough#OAuthAuthorization). [optional]  # noqa: E501
+            client_id (str): Used when creating a new account with OAuth authorization.  See [OAuth 2.0 Authorization](https://app.hellosign.com/api/oauthWalkthrough#OAuthAuthorization). [optional]  # noqa: E501
+            client_secret (str): Used when creating a new account with OAuth authorization.  See [OAuth 2.0 Authorization](https://app.hellosign.com/api/oauthWalkthrough#OAuthAuthorization). [optional]  # noqa: E501
             locale (str): The locale used in this Account. Check out the list of [supported locales](/api/reference/constants/#supported-locales) to learn more about the possible values.. [optional]  # noqa: E501
         """
 
@@ -199,7 +199,7 @@ class AccountCreateRequest(ModelNormal):
         """AccountCreateRequest - a model defined in OpenAPI
 
         Args:
-            email_address (str): The email address to create a new Account for.
+            email_address (str): The email address which will be associated with the new Account.
 
         Keyword Args:
             _check_type (bool): if True, values for parameters in openapi_types
@@ -232,8 +232,8 @@ class AccountCreateRequest(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            client_id (str): Used when creating a new account and requesting OAuth authorization.  See [OAuth 2.0 Authorization](https://app.hellosign.com/api/oauthWalkthrough#OAuthAuthorization). [optional]  # noqa: E501
-            client_secret (str): Used when creating a new account and requesting OAuth authorization.  See [OAuth 2.0 Authorization](https://app.hellosign.com/api/oauthWalkthrough#OAuthAuthorization). [optional]  # noqa: E501
+            client_id (str): Used when creating a new account with OAuth authorization.  See [OAuth 2.0 Authorization](https://app.hellosign.com/api/oauthWalkthrough#OAuthAuthorization). [optional]  # noqa: E501
+            client_secret (str): Used when creating a new account with OAuth authorization.  See [OAuth 2.0 Authorization](https://app.hellosign.com/api/oauthWalkthrough#OAuthAuthorization). [optional]  # noqa: E501
             locale (str): The locale used in this Account. Check out the list of [supported locales](/api/reference/constants/#supported-locales) to learn more about the possible values.. [optional]  # noqa: E501
         """
 

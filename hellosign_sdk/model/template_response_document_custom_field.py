@@ -31,8 +31,8 @@ from hellosign_sdk.exceptions import ApiAttributeError
 
 
 def lazy_import():
-    from hellosign_sdk.model.template_response_document_custom_field_avg_text_length import TemplateResponseDocumentCustomFieldAvgTextLength
-    globals()['TemplateResponseDocumentCustomFieldAvgTextLength'] = TemplateResponseDocumentCustomFieldAvgTextLength
+    from hellosign_sdk.model.template_response_field_avg_text_length import TemplateResponseFieldAvgTextLength
+    globals()['TemplateResponseFieldAvgTextLength'] = TemplateResponseFieldAvgTextLength
 
 
 class TemplateResponseDocumentCustomField(ModelNormal):
@@ -94,13 +94,18 @@ class TemplateResponseDocumentCustomField(ModelNormal):
         return {
             'name': (str,),  # noqa: E501
             'type': (str,),  # noqa: E501
+            'signer': (str,),  # noqa: E501
             'x': (int,),  # noqa: E501
             'y': (int,),  # noqa: E501
             'width': (int,),  # noqa: E501
             'height': (int,),  # noqa: E501
             'required': (bool,),  # noqa: E501
+            'api_id': (str,),  # noqa: E501
             'group': (str, none_type,),  # noqa: E501
-            'avg_text_length': (TemplateResponseDocumentCustomFieldAvgTextLength,),  # noqa: E501
+            'avg_text_length': (TemplateResponseFieldAvgTextLength,),  # noqa: E501
+            'is_multiline': (bool, none_type,),  # noqa: E501
+            'original_font_size': (int, none_type,),  # noqa: E501
+            'font_family': (str, none_type,),  # noqa: E501
             'named_form_fields': ({str: (bool, date, datetime, dict, float, int, list, str, none_type)}, none_type,),  # noqa: E501
             'reusable_form_id': (str, none_type,),  # noqa: E501
         }
@@ -113,13 +118,18 @@ class TemplateResponseDocumentCustomField(ModelNormal):
     attribute_map = {
         'name': 'name',  # noqa: E501
         'type': 'type',  # noqa: E501
+        'signer': 'signer',  # noqa: E501
         'x': 'x',  # noqa: E501
         'y': 'y',  # noqa: E501
         'width': 'width',  # noqa: E501
         'height': 'height',  # noqa: E501
         'required': 'required',  # noqa: E501
+        'api_id': 'api_id',  # noqa: E501
         'group': 'group',  # noqa: E501
         'avg_text_length': 'avg_text_length',  # noqa: E501
+        'is_multiline': 'isMultiline',  # noqa: E501
+        'original_font_size': 'originalFontSize',  # noqa: E501
+        'font_family': 'fontFamily',  # noqa: E501
         'named_form_fields': 'named_form_fields',  # noqa: E501
         'reusable_form_id': 'reusable_form_id',  # noqa: E501
     }
@@ -167,14 +177,19 @@ class TemplateResponseDocumentCustomField(ModelNormal):
                                 _visited_composed_classes = (Animal,)
             name (str): The name of the Custom Field.. [optional]  # noqa: E501
             type (str): The type of this Custom Field. Only `text` and `checkbox` are currently supported.. [optional]  # noqa: E501
+            signer (str): The signer of the Custom Field.. [optional]  # noqa: E501
             x (int): The horizontal offset in pixels for this form field.. [optional]  # noqa: E501
             y (int): The vertical offset in pixels for this form field.. [optional]  # noqa: E501
             width (int): The width in pixels of this form field.. [optional]  # noqa: E501
             height (int): The height in pixels of this form field.. [optional]  # noqa: E501
             required (bool): Boolean showing whether or not this field is required.. [optional]  # noqa: E501
+            api_id (str): The unique ID for this field.. [optional]  # noqa: E501
             group (str, none_type): The name of the group this field is in. If this field is not a group, this defaults to `null`.. [optional]  # noqa: E501
-            avg_text_length (TemplateResponseDocumentCustomFieldAvgTextLength): [optional]  # noqa: E501
-            named_form_fields ({str: (bool, date, datetime, dict, float, int, list, str, none_type)}, none_type): Use `form_fields` under the `documents` array instead.. [optional]  # noqa: E501
+            avg_text_length (TemplateResponseFieldAvgTextLength): [optional]  # noqa: E501
+            is_multiline (bool, none_type): Whether this form field is multiline text.. [optional]  # noqa: E501
+            original_font_size (int, none_type): Original font size used in this form field's text.. [optional]  # noqa: E501
+            font_family (str, none_type): Font family used in this form field's text.. [optional]  # noqa: E501
+            named_form_fields ({str: (bool, date, datetime, dict, float, int, list, str, none_type)}, none_type): _t__TemplateResponseDocumentCustomField::NAMED_FORM_FIELDS. [optional]  # noqa: E501
             reusable_form_id (str, none_type): [optional]  # noqa: E501
         """
 
@@ -259,14 +274,19 @@ class TemplateResponseDocumentCustomField(ModelNormal):
                                 _visited_composed_classes = (Animal,)
             name (str): The name of the Custom Field.. [optional]  # noqa: E501
             type (str): The type of this Custom Field. Only `text` and `checkbox` are currently supported.. [optional]  # noqa: E501
+            signer (str): The signer of the Custom Field.. [optional]  # noqa: E501
             x (int): The horizontal offset in pixels for this form field.. [optional]  # noqa: E501
             y (int): The vertical offset in pixels for this form field.. [optional]  # noqa: E501
             width (int): The width in pixels of this form field.. [optional]  # noqa: E501
             height (int): The height in pixels of this form field.. [optional]  # noqa: E501
             required (bool): Boolean showing whether or not this field is required.. [optional]  # noqa: E501
+            api_id (str): The unique ID for this field.. [optional]  # noqa: E501
             group (str, none_type): The name of the group this field is in. If this field is not a group, this defaults to `null`.. [optional]  # noqa: E501
-            avg_text_length (TemplateResponseDocumentCustomFieldAvgTextLength): [optional]  # noqa: E501
-            named_form_fields ({str: (bool, date, datetime, dict, float, int, list, str, none_type)}, none_type): Use `form_fields` under the `documents` array instead.. [optional]  # noqa: E501
+            avg_text_length (TemplateResponseFieldAvgTextLength): [optional]  # noqa: E501
+            is_multiline (bool, none_type): Whether this form field is multiline text.. [optional]  # noqa: E501
+            original_font_size (int, none_type): Original font size used in this form field's text.. [optional]  # noqa: E501
+            font_family (str, none_type): Font family used in this form field's text.. [optional]  # noqa: E501
+            named_form_fields ({str: (bool, date, datetime, dict, float, int, list, str, none_type)}, none_type): _t__TemplateResponseDocumentCustomField::NAMED_FORM_FIELDS. [optional]  # noqa: E501
             reusable_form_id (str, none_type): [optional]  # noqa: E501
         """
 

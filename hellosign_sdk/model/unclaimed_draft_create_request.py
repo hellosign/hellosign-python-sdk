@@ -114,6 +114,7 @@ class UnclaimedDraftCreateRequest(ModelNormal):
         """
         lazy_import()
         return {
+            'type': (str,),  # noqa: E501
             'file': ([file_type],),  # noqa: E501
             'file_url': ([str],),  # noqa: E501
             'allow_decline': (bool,),  # noqa: E501
@@ -134,7 +135,6 @@ class UnclaimedDraftCreateRequest(ModelNormal):
             'signing_redirect_url': (str,),  # noqa: E501
             'subject': (str,),  # noqa: E501
             'test_mode': (bool,),  # noqa: E501
-            'type': (str,),  # noqa: E501
             'use_preexisting_fields': (bool,),  # noqa: E501
             'use_text_tags': (bool,),  # noqa: E501
         }
@@ -145,6 +145,7 @@ class UnclaimedDraftCreateRequest(ModelNormal):
 
 
     attribute_map = {
+        'type': 'type',  # noqa: E501
         'file': 'file',  # noqa: E501
         'file_url': 'file_url',  # noqa: E501
         'allow_decline': 'allow_decline',  # noqa: E501
@@ -165,7 +166,6 @@ class UnclaimedDraftCreateRequest(ModelNormal):
         'signing_redirect_url': 'signing_redirect_url',  # noqa: E501
         'subject': 'subject',  # noqa: E501
         'test_mode': 'test_mode',  # noqa: E501
-        'type': 'type',  # noqa: E501
         'use_preexisting_fields': 'use_preexisting_fields',  # noqa: E501
         'use_text_tags': 'use_text_tags',  # noqa: E501
     }
@@ -177,8 +177,11 @@ class UnclaimedDraftCreateRequest(ModelNormal):
 
     @classmethod
     @convert_js_args_to_python_args
-    def _from_openapi_data(cls, *args, **kwargs):  # noqa: E501
+    def _from_openapi_data(cls, type, *args, **kwargs):  # noqa: E501
         """UnclaimedDraftCreateRequest - a model defined in OpenAPI
+
+        Args:
+            type (str): The type of unclaimed draft to create. Use `send_document` to create a claimable file, and `request_signature` for a claimable signature request. If the type is `request_signature` then signers name and email_address are not optional.
 
         Keyword Args:
             _check_type (bool): if True, values for parameters in openapi_types
@@ -211,13 +214,13 @@ class UnclaimedDraftCreateRequest(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            file ([file_type]): **file** or **file_url** is required, but not both.  Use `file[]` to indicate the uploaded file(s) to send for signature.  Currently we only support use of either the `file[]` parameter or `file_url[]` parameter, not both.. [optional]  # noqa: E501
-            file_url ([str]): **file_url** or **file** is required, but not both.  Use `file_url[]` to have HelloSign download the file(s) to send for signature.  Currently we only support use of either the `file[]` parameter or `file_url[]` parameter, not both.. [optional]  # noqa: E501
+            file ([file_type]): Use `file[]` to indicate the uploaded file(s) to send for signature.  This endpoint requires either **file** or **file_url[]**, but not both.. [optional]  # noqa: E501
+            file_url ([str]): Use `file_url[]` to have HelloSign download the file(s) to send for signature.  This endpoint requires either **file** or **file_url[]**, but not both.. [optional]  # noqa: E501
             allow_decline (bool): Allows signers to decline to sign a document if `true`. Defaults to `false`.. [optional] if omitted the server will use the default value of False  # noqa: E501
-            attachments ([SubAttachment]): [optional]  # noqa: E501
+            attachments ([SubAttachment]): A list describing the attachments. [optional]  # noqa: E501
             cc_email_addresses ([str]): The email addresses that should be CCed.. [optional]  # noqa: E501
             client_id (str): Client id of the app used to create the draft. Used to apply the branding and callback url defined for the app.. [optional]  # noqa: E501
-            custom_fields ([SubCustomField]): An array defining values and options for custom fields. Required when defining pre-set values in `form_fields_per_document` or [Text Tags](https://app.hellosign.com/api/textTagsWalkthrough#TextTagIntro).. [optional]  # noqa: E501
+            custom_fields ([SubCustomField]): When used together with merge fields, `custom_fields` allows users to add pre-filled data to their signature requests.  Pre-filled data can be used with \"send-once\" signature requests by adding merge fields with `form_fields_per_document` or [Text Tags](https://app.hellosign.com/api/textTagsWalkthrough#TextTagIntro) while passing values back with `custom_fields` together in one API call.  For using pre-filled on repeatable signature requests, merge fields are added to templates in the HelloSign UI or by calling [/template/create_embedded_draft](/api/reference/operation/templateCreateEmbeddedDraft) and then passing `custom_fields` on subsequent signature requests referencing that template.. [optional]  # noqa: E501
             field_options (SubFieldOptions): [optional]  # noqa: E501
             form_field_groups ([SubFormFieldGroup]): Group information for fields defined in `form_fields_per_document`. String-indexed JSON array with `group_label` and `requirement` keys. `form_fields_per_document` must contain fields referencing a group defined in `form_field_groups`.. [optional]  # noqa: E501
             form_field_rules ([SubFormFieldRule]): Conditional Logic rules for fields defined in `form_fields_per_document`.. [optional]  # noqa: E501
@@ -231,7 +234,6 @@ class UnclaimedDraftCreateRequest(ModelNormal):
             signing_redirect_url (str): The URL you want signers redirected to after they successfully sign.. [optional]  # noqa: E501
             subject (str): The subject in the email that will be sent to the signers.. [optional]  # noqa: E501
             test_mode (bool): Whether this is a test, the signature request created from this draft will not be legally binding if set to `true`. Defaults to `false`.. [optional] if omitted the server will use the default value of False  # noqa: E501
-            type (str): The type of unclaimed draft to create. Use `send_document` to create a claimable file, and `request_signature` for a claimable signature request. If the type is `request_signature` then signers name and email_address are not optional.. [optional]  # noqa: E501
             use_preexisting_fields (bool): Set `use_text_tags` to `true` to enable [Text Tags](https://app.hellosign.com/api/textTagsWalkthrough#TextTagIntro) parsing in your document (defaults to disabled, or `false`). Alternatively, if your PDF contains pre-defined fields, enable the detection of these fields by setting the `use_preexisting_fields` to `true` (defaults to disabled, or `false`). Currently we only support use of either `use_text_tags` or `use_preexisting_fields` parameter, not both.. [optional] if omitted the server will use the default value of False  # noqa: E501
             use_text_tags (bool): Set `use_text_tags` to `true` to enable [Text Tags](https://app.hellosign.com/api/textTagsWalkthrough#TextTagIntro) parsing in your document (defaults to disabled, or `false`). Alternatively, if your PDF contains pre-defined fields, enable the detection of these fields by setting the `use_preexisting_fields` to `true` (defaults to disabled, or `false`). Currently we only support use of either `use_text_tags` or `use_preexisting_fields` parameter, not both.. [optional] if omitted the server will use the default value of False  # noqa: E501
         """
@@ -261,6 +263,7 @@ class UnclaimedDraftCreateRequest(ModelNormal):
         self._configuration = _configuration
         self._visited_composed_classes = _visited_composed_classes + (self.__class__,)
 
+        self.type = type
         for var_name, var_value in kwargs.items():
             if var_name not in self.attribute_map and \
                         self._configuration is not None and \
@@ -281,8 +284,11 @@ class UnclaimedDraftCreateRequest(ModelNormal):
     ])
 
     @convert_js_args_to_python_args
-    def __init__(self, *args, **kwargs):  # noqa: E501
+    def __init__(self, type, *args, **kwargs):  # noqa: E501
         """UnclaimedDraftCreateRequest - a model defined in OpenAPI
+
+        Args:
+            type (str): The type of unclaimed draft to create. Use `send_document` to create a claimable file, and `request_signature` for a claimable signature request. If the type is `request_signature` then signers name and email_address are not optional.
 
         Keyword Args:
             _check_type (bool): if True, values for parameters in openapi_types
@@ -315,13 +321,13 @@ class UnclaimedDraftCreateRequest(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            file ([file_type]): **file** or **file_url** is required, but not both.  Use `file[]` to indicate the uploaded file(s) to send for signature.  Currently we only support use of either the `file[]` parameter or `file_url[]` parameter, not both.. [optional]  # noqa: E501
-            file_url ([str]): **file_url** or **file** is required, but not both.  Use `file_url[]` to have HelloSign download the file(s) to send for signature.  Currently we only support use of either the `file[]` parameter or `file_url[]` parameter, not both.. [optional]  # noqa: E501
+            file ([file_type]): Use `file[]` to indicate the uploaded file(s) to send for signature.  This endpoint requires either **file** or **file_url[]**, but not both.. [optional]  # noqa: E501
+            file_url ([str]): Use `file_url[]` to have HelloSign download the file(s) to send for signature.  This endpoint requires either **file** or **file_url[]**, but not both.. [optional]  # noqa: E501
             allow_decline (bool): Allows signers to decline to sign a document if `true`. Defaults to `false`.. [optional] if omitted the server will use the default value of False  # noqa: E501
-            attachments ([SubAttachment]): [optional]  # noqa: E501
+            attachments ([SubAttachment]): A list describing the attachments. [optional]  # noqa: E501
             cc_email_addresses ([str]): The email addresses that should be CCed.. [optional]  # noqa: E501
             client_id (str): Client id of the app used to create the draft. Used to apply the branding and callback url defined for the app.. [optional]  # noqa: E501
-            custom_fields ([SubCustomField]): An array defining values and options for custom fields. Required when defining pre-set values in `form_fields_per_document` or [Text Tags](https://app.hellosign.com/api/textTagsWalkthrough#TextTagIntro).. [optional]  # noqa: E501
+            custom_fields ([SubCustomField]): When used together with merge fields, `custom_fields` allows users to add pre-filled data to their signature requests.  Pre-filled data can be used with \"send-once\" signature requests by adding merge fields with `form_fields_per_document` or [Text Tags](https://app.hellosign.com/api/textTagsWalkthrough#TextTagIntro) while passing values back with `custom_fields` together in one API call.  For using pre-filled on repeatable signature requests, merge fields are added to templates in the HelloSign UI or by calling [/template/create_embedded_draft](/api/reference/operation/templateCreateEmbeddedDraft) and then passing `custom_fields` on subsequent signature requests referencing that template.. [optional]  # noqa: E501
             field_options (SubFieldOptions): [optional]  # noqa: E501
             form_field_groups ([SubFormFieldGroup]): Group information for fields defined in `form_fields_per_document`. String-indexed JSON array with `group_label` and `requirement` keys. `form_fields_per_document` must contain fields referencing a group defined in `form_field_groups`.. [optional]  # noqa: E501
             form_field_rules ([SubFormFieldRule]): Conditional Logic rules for fields defined in `form_fields_per_document`.. [optional]  # noqa: E501
@@ -335,7 +341,6 @@ class UnclaimedDraftCreateRequest(ModelNormal):
             signing_redirect_url (str): The URL you want signers redirected to after they successfully sign.. [optional]  # noqa: E501
             subject (str): The subject in the email that will be sent to the signers.. [optional]  # noqa: E501
             test_mode (bool): Whether this is a test, the signature request created from this draft will not be legally binding if set to `true`. Defaults to `false`.. [optional] if omitted the server will use the default value of False  # noqa: E501
-            type (str): The type of unclaimed draft to create. Use `send_document` to create a claimable file, and `request_signature` for a claimable signature request. If the type is `request_signature` then signers name and email_address are not optional.. [optional]  # noqa: E501
             use_preexisting_fields (bool): Set `use_text_tags` to `true` to enable [Text Tags](https://app.hellosign.com/api/textTagsWalkthrough#TextTagIntro) parsing in your document (defaults to disabled, or `false`). Alternatively, if your PDF contains pre-defined fields, enable the detection of these fields by setting the `use_preexisting_fields` to `true` (defaults to disabled, or `false`). Currently we only support use of either `use_text_tags` or `use_preexisting_fields` parameter, not both.. [optional] if omitted the server will use the default value of False  # noqa: E501
             use_text_tags (bool): Set `use_text_tags` to `true` to enable [Text Tags](https://app.hellosign.com/api/textTagsWalkthrough#TextTagIntro) parsing in your document (defaults to disabled, or `false`). Alternatively, if your PDF contains pre-defined fields, enable the detection of these fields by setting the `use_preexisting_fields` to `true` (defaults to disabled, or `false`). Currently we only support use of either `use_text_tags` or `use_preexisting_fields` parameter, not both.. [optional] if omitted the server will use the default value of False  # noqa: E501
         """
@@ -363,6 +368,7 @@ class UnclaimedDraftCreateRequest(ModelNormal):
         self._configuration = _configuration
         self._visited_composed_classes = _visited_composed_classes + (self.__class__,)
 
+        self.type = type
         for var_name, var_value in kwargs.items():
             if var_name not in self.attribute_map and \
                         self._configuration is not None and \
