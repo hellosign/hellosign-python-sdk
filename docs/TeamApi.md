@@ -59,6 +59,7 @@ with ApiClient(configuration) as api_client:
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | `team_add_member_request` | [**TeamAddMemberRequest**](TeamAddMemberRequest.md) |  |  |
+| `team_id` | **str** | The id of the team. | [optional] |
 
 ### Return type
 

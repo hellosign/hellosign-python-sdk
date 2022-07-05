@@ -57,6 +57,7 @@ class TeamApi(object):
             params_map={
                 'all': [
                     'team_add_member_request',
+                    'team_id',
                 ],
                 'required': [
                     'team_add_member_request',
@@ -76,11 +77,15 @@ class TeamApi(object):
                 'openapi_types': {
                     'team_add_member_request':
                         (TeamAddMemberRequest,),
+                    'team_id':
+                        (str,),
                 },
                 'attribute_map': {
+                    'team_id': 'team_id',
                 },
                 'location_map': {
                     'team_add_member_request': 'body',
+                    'team_id': 'query',
                 },
                 'collection_format_map': {
                 }
@@ -363,6 +368,7 @@ class TeamApi(object):
             team_add_member_request (TeamAddMemberRequest):
 
         Keyword Args:
+            team_id (str): The id of the team.. [optional]
             _return_http_data_only (bool): response data without head status
                 code and headers. Default is True.
             _preload_content (bool): if False, the urllib3.HTTPResponse object
