@@ -18,19 +18,17 @@ jobs:
         run: |
           if [ -z ${{ inputs.branch_name }} ]
           then
-            export BRANCH_NAME=oas-release
-            echo "::set-env name=BRANCH_NAME::$BRANCH_NAME"
+            echo "branch_name=oas-release" >> $GITHUB_ENV
           else
-            export BRANCH_NAME=${{ inputs.branch_name }}
-            echo "::set-env name=BRANCH_NAME::$BRANCH_NAME"
+            echo "branch_name=${{ inputs.branch_name }}" >> $GITHUB_ENV
           fi
       - uses: actions/checkout@v3
         with:
           submodules: recursive
           fetch-depth: '0'
       - run: |
-          git submodule set-branch --branch $BRANCH_NAME oas
+          git submodule set-branch --branch ${{ env.branch_name }} oas
           git submodule update --init --recursive --remote
-          cd oas && git fetch origin && git checkout $BRANCH_NAME
+          cd oas && git fetch origin && git checkout ${{ env.branch_name }}
           cd ../
           ./build
