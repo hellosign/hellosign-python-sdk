@@ -1,5 +1,6 @@
 name: github-actions
 on:
+  push:
   workflow_dispatch:
     branches:
       - openapi
@@ -13,15 +14,23 @@ jobs:
   run-build:
     runs-on: ubuntu-latest
     steps:
-      - name: echo branch name
-        run: echo running on OAS branch ${{ inputs.branch_name }}
+      - name: set branch name variable
+        run: |
+          if [ -z ${{ inputs.branch_name }} ]
+          then
+            export BRANCH_NAME=oas-release
+            echo "::set-env name=BRANCH_NAME::$BRANCH_NAME"
+          else
+            export BRANCH_NAME=${{ inputs.branch_name }}
+            echo "::set-env name=BRANCH_NAME::$BRANCH_NAME"
+          fi
       - uses: actions/checkout@v3
         with:
           submodules: recursive
           fetch-depth: '0'
       - run: |
-          git submodule set-branch --branch ${{ inputs.branch_name }} oas
+          git submodule set-branch --branch $BRANCH_NAME oas
           git submodule update --init --recursive --remote
-          cd oas && git fetch origin && git checkout ${{ inputs.branch_name }}
+          cd oas && git fetch origin && git checkout $BRANCH_NAME
           cd ../
           ./build
