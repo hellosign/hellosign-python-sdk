@@ -8,7 +8,10 @@ All URIs are relative to *https://api.hellosign.com/v3*
 |[```team_create```](TeamApi.md#team_create) | ```POST /team/create``` | Create Team|
 |[```team_delete```](TeamApi.md#team_delete) | ```DELETE /team/destroy``` | Delete Team|
 |[```team_get```](TeamApi.md#team_get) | ```GET /team``` | Get Team|
+|[```team_info```](TeamApi.md#team_info) | ```GET /team/info``` | Get Team Info|
+|[```team_members```](TeamApi.md#team_members) | ```GET /team/members/{team_id}``` | List Team Members|
 |[```team_remove_member```](TeamApi.md#team_remove_member) | ```POST /team/remove_member``` | Remove User from Team|
+|[```team_sub_teams```](TeamApi.md#team_sub_teams) | ```GET /team/sub_teams/{team_id}``` | List Sub Teams|
 |[```team_update```](TeamApi.md#team_update) | ```PUT /team``` | Update Team|
 
 
@@ -285,6 +288,144 @@ This endpoint does not need any parameter.
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# ```team_info```
+> ```TeamGetInfoResponse team_info()```
+
+Get Team Info
+
+Provides information about a team.
+
+### Example
+
+* Basic Authentication (api_key):
+* Bearer (JWT) Authentication (oauth2):
+
+```python
+from pprint import pprint
+
+from hellosign_sdk import \
+    ApiClient, ApiException, Configuration, apis
+
+configuration = Configuration(
+    # Configure HTTP basic authorization: api_key
+    username="YOUR_API_KEY",
+
+    # or, configure Bearer (JWT) authorization: oauth2
+    # access_token="YOUR_ACCESS_TOKEN",
+)
+
+with ApiClient(configuration) as api_client:
+    api = apis.TeamApi(api_client)
+
+    try:
+        response = api.team_info()
+        pprint(response)
+    except ApiException as e:
+        print("Exception when calling HelloSign API: %s\n" % e)
+
+```
+
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| `team_id` | **str** | The id of the team. | [optional] |
+
+### Return type
+
+[**TeamGetInfoResponse**](TeamGetInfoResponse.md)
+
+### Authorization
+
+[api_key](../README.md#api_key), [oauth2](../README.md#oauth2)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | successful operation |  -  |
+**4XX** | failed_operation |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# ```team_members```
+> ```TeamMembersResponse team_members(team_id)```
+
+List Team Members
+
+Provides a paginated list of members (and their roles) that belong to a given team.
+
+### Example
+
+* Basic Authentication (api_key):
+* Bearer (JWT) Authentication (oauth2):
+
+```python
+from pprint import pprint
+
+from hellosign_sdk import \
+    ApiClient, ApiException, Configuration, apis
+
+configuration = Configuration(
+    # Configure HTTP basic authorization: api_key
+    username="YOUR_API_KEY",
+
+    # or, configure Bearer (JWT) authorization: oauth2
+    # access_token="YOUR_ACCESS_TOKEN",
+)
+
+with ApiClient(configuration) as api_client:
+    api = apis.TeamApi(api_client)
+
+    team_id = "4fea99bfcf2b26bfccf6cea3e127fb8bb74d8d9c"
+
+    try:
+        response = api.team_members(team_id)
+        pprint(response)
+    except ApiException as e:
+        print("Exception when calling HelloSign API: %s\n" % e)
+
+```
+
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| `team_id` | **str** | The id of the team that a member list is being requested from. |  |
+| `page` | **int** | Which page number of the team member list to return. Defaults to `1`. | [optional][default to 1] |
+| `page_size` | **int** | Number of objects to be returned per page. Must be between `1` and `100`. Default is `20`. | [optional][default to 20] |
+
+### Return type
+
+[**TeamMembersResponse**](TeamMembersResponse.md)
+
+### Authorization
+
+[api_key](../README.md#api_key), [oauth2](../README.md#oauth2)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | successful operation |  -  |
+**4XX** | failed_operation |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # ```team_remove_member```
 > ```TeamGetResponse team_remove_member(team_remove_member_request)```
 
@@ -345,6 +486,77 @@ with ApiClient(configuration) as api_client:
 ### HTTP request headers
 
  - **Content-Type**: application/json
+ - **Accept**: application/json
+
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | successful operation |  -  |
+**4XX** | failed_operation |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# ```team_sub_teams```
+> ```TeamSubTeamsResponse team_sub_teams(team_id)```
+
+List Sub Teams
+
+Provides a paginated list of sub teams that belong to a given team.
+
+### Example
+
+* Basic Authentication (api_key):
+* Bearer (JWT) Authentication (oauth2):
+
+```python
+from pprint import pprint
+
+from hellosign_sdk import \
+    ApiClient, ApiException, Configuration, apis
+
+configuration = Configuration(
+    # Configure HTTP basic authorization: api_key
+    username="YOUR_API_KEY",
+
+    # or, configure Bearer (JWT) authorization: oauth2
+    # access_token="YOUR_ACCESS_TOKEN",
+)
+
+with ApiClient(configuration) as api_client:
+    api = apis.TeamApi(api_client)
+
+    team_id = "4fea99bfcf2b26bfccf6cea3e127fb8bb74d8d9c"
+
+    try:
+        response = api.team_sub_teams(team_id)
+        pprint(response)
+    except ApiException as e:
+        print("Exception when calling HelloSign API: %s\n" % e)
+
+```
+
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| `team_id` | **str** | The id of the parent Team. |  |
+| `page` | **int** | Which page number of the SubTeam List to return. Defaults to `1`. | [optional][default to 1] |
+| `page_size` | **int** | Number of objects to be returned per page. Must be between `1` and `100`. Default is `20`. | [optional][default to 20] |
+
+### Return type
+
+[**TeamSubTeamsResponse**](TeamSubTeamsResponse.md)
+
+### Authorization
+
+[api_key](../README.md#api_key), [oauth2](../README.md#oauth2)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
  - **Accept**: application/json
 
 
