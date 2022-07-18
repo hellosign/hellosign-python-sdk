@@ -11,7 +11,7 @@
 | `requester_email_address` | ```str``` |  The email address of the initiator of the SignatureRequest.  |  |
 | `title` | ```str``` |  The title the specified Account uses for the SignatureRequest.  |  |
 | `original_title` | ```str``` |  Default Label for account.  |  |
-| `subject` | ```str``` |  The subject in the email that was initially sent to the signers.  |  |
+| `subject` | ```str, none_type``` |  The subject in the email that was initially sent to the signers.  |  |
 | `message` | ```str, none_type``` |  The custom message in the email that was initially sent to the signers.  |  |
 | `metadata` | [```{str: (bool, date, datetime, dict, float, int, list, str, none_type)}```](.md) |  The metadata attached to the signature request.  |  |
 | `created_at` | ```int``` |  Time the signature request was created.  |  |

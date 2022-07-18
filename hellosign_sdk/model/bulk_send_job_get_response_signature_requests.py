@@ -101,7 +101,7 @@ class BulkSendJobGetResponseSignatureRequests(ModelComposed):
             'requester_email_address': (str,),  # noqa: E501
             'title': (str,),  # noqa: E501
             'original_title': (str,),  # noqa: E501
-            'subject': (str,),  # noqa: E501
+            'subject': (str, none_type,),  # noqa: E501
             'message': (str, none_type,),  # noqa: E501
             'metadata': ({str: (bool, date, datetime, dict, float, int, list, str, none_type)},),  # noqa: E501
             'created_at': (int,),  # noqa: E501
@@ -196,7 +196,7 @@ class BulkSendJobGetResponseSignatureRequests(ModelComposed):
             requester_email_address (str): The email address of the initiator of the SignatureRequest.. [optional]  # noqa: E501
             title (str): The title the specified Account uses for the SignatureRequest.. [optional]  # noqa: E501
             original_title (str): Default Label for account.. [optional]  # noqa: E501
-            subject (str): The subject in the email that was initially sent to the signers.. [optional]  # noqa: E501
+            subject (str, none_type): The subject in the email that was initially sent to the signers.. [optional]  # noqa: E501
             message (str, none_type): The custom message in the email that was initially sent to the signers.. [optional]  # noqa: E501
             metadata ({str: (bool, date, datetime, dict, float, int, list, str, none_type)}): The metadata attached to the signature request.. [optional]  # noqa: E501
             created_at (int): Time the signature request was created.. [optional]  # noqa: E501
@@ -318,7 +318,7 @@ class BulkSendJobGetResponseSignatureRequests(ModelComposed):
             requester_email_address (str): The email address of the initiator of the SignatureRequest.. [optional]  # noqa: E501
             title (str): The title the specified Account uses for the SignatureRequest.. [optional]  # noqa: E501
             original_title (str): Default Label for account.. [optional]  # noqa: E501
-            subject (str): The subject in the email that was initially sent to the signers.. [optional]  # noqa: E501
+            subject (str, none_type): The subject in the email that was initially sent to the signers.. [optional]  # noqa: E501
             message (str, none_type): The custom message in the email that was initially sent to the signers.. [optional]  # noqa: E501
             metadata ({str: (bool, date, datetime, dict, float, int, list, str, none_type)}): The metadata attached to the signature request.. [optional]  # noqa: E501
             created_at (int): Time the signature request was created.. [optional]  # noqa: E501
