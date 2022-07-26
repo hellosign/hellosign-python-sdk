@@ -776,6 +776,9 @@ class Endpoint(object):
                     if len(remove_files):
                         for param in body:
                             param_value_full = (param, json.dumps(body[param]))
+                            # do not change non-JSON values
+                            if not '{' in param_value_full[1] and not '[' in param_value_full[1]:
+                                param_value_full = (param, body[param])
                             params['form'].append(param_value_full)
                     else:
                         params['body'] = param_value
