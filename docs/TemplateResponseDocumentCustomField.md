@@ -20,7 +20,7 @@
 | `is_multiline` | ```bool, none_type``` |  Whether this form field is multiline text.  |  |
 | `original_font_size` | ```int, none_type``` |  Original font size used in this form field&#39;s text.  |  |
 | `font_family` | ```str, none_type``` |  Font family used in this form field&#39;s text.  |  |
-| `named_form_fields` | [```{str: (bool, date, datetime, dict, float, int, list, str, none_type)}, none_type```](.md) |  _t__TemplateResponseDocumentCustomField::NAMED_FORM_FIELDS  |  |
+| `named_form_fields` | [```{str: (bool, date, datetime, dict, float, int, list, str, none_type)}, none_type```](.md) |  Deprecated. Use `form_fields` inside the [documents](https://developers.hellosign.com/api/reference/operation/templateGet/#!c&#x3D;200&amp;path&#x3D;template/documents&amp;t&#x3D;response) array instead.  |  |
 | `reusable_form_id` | ```str, none_type``` |    |  |
 
 

@@ -192,7 +192,7 @@ class TemplateResponse(ModelNormal):
             cc_roles ([TemplateResponseCCRole]): An array of the designated CC roles that must be specified when sending a SignatureRequest using this Template.. [optional]  # noqa: E501
             documents ([TemplateResponseDocument]): An array describing each document associated with this Template. Includes form field data for each document.. [optional]  # noqa: E501
             custom_fields ([TemplateResponseCustomField], none_type): An array of Custom Field objects.. [optional]  # noqa: E501
-            named_form_fields ([TemplateResponseNamedFormField], none_type): Use \"form_fields\" under the \"documents\" array instead.. [optional]  # noqa: E501
+            named_form_fields ([TemplateResponseNamedFormField], none_type): Deprecated. Use `form_fields` inside the [documents](https://developers.hellosign.com/api/reference/operation/templateGet/#!c=200&path=template/documents&t=response) array instead.. [optional]  # noqa: E501
             accounts ([TemplateResponseAccount], none_type): An array of the Accounts that can use this Template.. [optional]  # noqa: E501
         """
 
@@ -288,7 +288,7 @@ class TemplateResponse(ModelNormal):
             cc_roles ([TemplateResponseCCRole]): An array of the designated CC roles that must be specified when sending a SignatureRequest using this Template.. [optional]  # noqa: E501
             documents ([TemplateResponseDocument]): An array describing each document associated with this Template. Includes form field data for each document.. [optional]  # noqa: E501
             custom_fields ([TemplateResponseCustomField], none_type): An array of Custom Field objects.. [optional]  # noqa: E501
-            named_form_fields ([TemplateResponseNamedFormField], none_type): Use \"form_fields\" under the \"documents\" array instead.. [optional]  # noqa: E501
+            named_form_fields ([TemplateResponseNamedFormField], none_type): Deprecated. Use `form_fields` inside the [documents](https://developers.hellosign.com/api/reference/operation/templateGet/#!c=200&path=template/documents&t=response) array instead.. [optional]  # noqa: E501
             accounts ([TemplateResponseAccount], none_type): An array of the Accounts that can use this Template.. [optional]  # noqa: E501
         """
 

@@ -181,7 +181,7 @@ class SignatureRequestResponseData(ModelNormal):
             signature_id (str): The ID of the signature to which this response is linked.. [optional]  # noqa: E501
             name (str): The name of the form field.. [optional]  # noqa: E501
             required (bool): A boolean value denoting if this field is required.. [optional]  # noqa: E501
-            type (str): TEST DESCRIPTION. [optional]  # noqa: E501
+            type (str): [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -267,7 +267,7 @@ class SignatureRequestResponseData(ModelNormal):
             signature_id (str): The ID of the signature to which this response is linked.. [optional]  # noqa: E501
             name (str): The name of the form field.. [optional]  # noqa: E501
             required (bool): A boolean value denoting if this field is required.. [optional]  # noqa: E501
-            type (str): TEST DESCRIPTION. [optional]  # noqa: E501
+            type (str): [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)

@@ -919,7 +919,7 @@ class TemplateApi(object):
     ):
         """Get Template  # noqa: E501
 
-        Returns the Template specified by the `id` parameter.  # noqa: E501
+        Returns the Template specified by the `template_id` parameter.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 

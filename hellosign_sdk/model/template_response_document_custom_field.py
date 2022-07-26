@@ -189,7 +189,7 @@ class TemplateResponseDocumentCustomField(ModelNormal):
             is_multiline (bool, none_type): Whether this form field is multiline text.. [optional]  # noqa: E501
             original_font_size (int, none_type): Original font size used in this form field's text.. [optional]  # noqa: E501
             font_family (str, none_type): Font family used in this form field's text.. [optional]  # noqa: E501
-            named_form_fields ({str: (bool, date, datetime, dict, float, int, list, str, none_type)}, none_type): _t__TemplateResponseDocumentCustomField::NAMED_FORM_FIELDS. [optional]  # noqa: E501
+            named_form_fields ({str: (bool, date, datetime, dict, float, int, list, str, none_type)}, none_type): Deprecated. Use `form_fields` inside the [documents](https://developers.hellosign.com/api/reference/operation/templateGet/#!c=200&path=template/documents&t=response) array instead.. [optional]  # noqa: E501
             reusable_form_id (str, none_type): [optional]  # noqa: E501
         """
 
@@ -286,7 +286,7 @@ class TemplateResponseDocumentCustomField(ModelNormal):
             is_multiline (bool, none_type): Whether this form field is multiline text.. [optional]  # noqa: E501
             original_font_size (int, none_type): Original font size used in this form field's text.. [optional]  # noqa: E501
             font_family (str, none_type): Font family used in this form field's text.. [optional]  # noqa: E501
-            named_form_fields ({str: (bool, date, datetime, dict, float, int, list, str, none_type)}, none_type): _t__TemplateResponseDocumentCustomField::NAMED_FORM_FIELDS. [optional]  # noqa: E501
+            named_form_fields ({str: (bool, date, datetime, dict, float, int, list, str, none_type)}, none_type): Deprecated. Use `form_fields` inside the [documents](https://developers.hellosign.com/api/reference/operation/templateGet/#!c=200&path=template/documents&t=response) array instead.. [optional]  # noqa: E501
             reusable_form_id (str, none_type): [optional]  # noqa: E501
         """
 
