@@ -59,30 +59,12 @@ this command.
 
 Python >=3.7
 
-### easy_install
-
-Install using `easy_install`:
-
-```shell
-easy_install hellosign-python-sdk
-```
-
 ### pip
 
 Install using `pip`:
 
 ```shell
-pip install hellosign-python-sdk
-```
-
-### Repo
-
-Install from code:
-
-```shell
-git clone https://github.com/HelloSign/hellosign-python-sdk.git
-cd hellosign-python-sdk
-python setup.py install --user
+pip install git+https://github.com/hellosign/hellosign-python-sdk.git@openapi
 ```
 
 Then import the package:
