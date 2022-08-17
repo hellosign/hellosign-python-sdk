@@ -770,6 +770,9 @@ class Endpoint(object):
                                         remove_files.append(oas_name)
                                         i += 1
 
+                    # remove duplicates
+                    remove_files = list(set(remove_files))
+
                     for remove in remove_files:
                         body.pop(remove)
 
