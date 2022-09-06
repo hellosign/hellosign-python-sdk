@@ -31,8 +31,8 @@ from hellosign_sdk.exceptions import ApiAttributeError
 
 
 def lazy_import():
-    from hellosign_sdk.model.signature_request_response_data import SignatureRequestResponseData
-    globals()['SignatureRequestResponseData'] = SignatureRequestResponseData
+    from hellosign_sdk.model.signature_request_response_data_base import SignatureRequestResponseDataBase
+    globals()['SignatureRequestResponseDataBase'] = SignatureRequestResponseDataBase
 
 
 class SignatureRequestResponseDataValueCheckboxMerge(ModelComposed):

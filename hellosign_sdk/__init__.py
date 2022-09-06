@@ -11,7 +11,7 @@
 """
 
 
-__version__ = "1.0.0"
+__version__ = "6.0.0-beta"
 
 # import ApiClient
 from hellosign_sdk.api_client import ApiClient

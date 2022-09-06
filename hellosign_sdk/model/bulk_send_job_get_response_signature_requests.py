@@ -34,12 +34,12 @@ def lazy_import():
     from hellosign_sdk.model.signature_request_response import SignatureRequestResponse
     from hellosign_sdk.model.signature_request_response_attachment import SignatureRequestResponseAttachment
     from hellosign_sdk.model.signature_request_response_custom_field_base import SignatureRequestResponseCustomFieldBase
-    from hellosign_sdk.model.signature_request_response_data import SignatureRequestResponseData
+    from hellosign_sdk.model.signature_request_response_data_base import SignatureRequestResponseDataBase
     from hellosign_sdk.model.signature_request_response_signatures import SignatureRequestResponseSignatures
     globals()['SignatureRequestResponse'] = SignatureRequestResponse
     globals()['SignatureRequestResponseAttachment'] = SignatureRequestResponseAttachment
     globals()['SignatureRequestResponseCustomFieldBase'] = SignatureRequestResponseCustomFieldBase
-    globals()['SignatureRequestResponseData'] = SignatureRequestResponseData
+    globals()['SignatureRequestResponseDataBase'] = SignatureRequestResponseDataBase
     globals()['SignatureRequestResponseSignatures'] = SignatureRequestResponseSignatures
 
 
@@ -116,7 +116,7 @@ class BulkSendJobGetResponseSignatureRequests(ModelComposed):
             'template_ids': ([str], none_type,),  # noqa: E501
             'custom_fields': ([SignatureRequestResponseCustomFieldBase], none_type,),  # noqa: E501
             'attachments': ([SignatureRequestResponseAttachment], none_type,),  # noqa: E501
-            'response_data': ([SignatureRequestResponseData], none_type,),  # noqa: E501
+            'response_data': ([SignatureRequestResponseDataBase], none_type,),  # noqa: E501
             'signatures': ([SignatureRequestResponseSignatures],),  # noqa: E501
             'bulk_send_job_id': (str,),  # noqa: E501
         }
@@ -211,7 +211,7 @@ class BulkSendJobGetResponseSignatureRequests(ModelComposed):
             template_ids ([str], none_type): Templates IDs used in this SignatureRequest (if any).. [optional]  # noqa: E501
             custom_fields ([SignatureRequestResponseCustomFieldBase], none_type): An array of Custom Field objects containing the name and type of each custom field.  * Text Field uses `SignatureRequestResponseCustomFieldText` * Checkbox Field uses `SignatureRequestResponseCustomFieldCheckbox`. [optional]  # noqa: E501
             attachments ([SignatureRequestResponseAttachment], none_type): Signer attachments.. [optional]  # noqa: E501
-            response_data ([SignatureRequestResponseData], none_type): An array of form field objects containing the name, value, and type of each textbox or checkmark field filled in by the signers.. [optional]  # noqa: E501
+            response_data ([SignatureRequestResponseDataBase], none_type): An array of form field objects containing the name, value, and type of each textbox or checkmark field filled in by the signers.. [optional]  # noqa: E501
             signatures ([SignatureRequestResponseSignatures]): An array of signature objects, 1 for each signer.. [optional]  # noqa: E501
             bulk_send_job_id (str): The id of the BulkSendJob.. [optional]  # noqa: E501
         """
@@ -333,7 +333,7 @@ class BulkSendJobGetResponseSignatureRequests(ModelComposed):
             template_ids ([str], none_type): Templates IDs used in this SignatureRequest (if any).. [optional]  # noqa: E501
             custom_fields ([SignatureRequestResponseCustomFieldBase], none_type): An array of Custom Field objects containing the name and type of each custom field.  * Text Field uses `SignatureRequestResponseCustomFieldText` * Checkbox Field uses `SignatureRequestResponseCustomFieldCheckbox`. [optional]  # noqa: E501
             attachments ([SignatureRequestResponseAttachment], none_type): Signer attachments.. [optional]  # noqa: E501
-            response_data ([SignatureRequestResponseData], none_type): An array of form field objects containing the name, value, and type of each textbox or checkmark field filled in by the signers.. [optional]  # noqa: E501
+            response_data ([SignatureRequestResponseDataBase], none_type): An array of form field objects containing the name, value, and type of each textbox or checkmark field filled in by the signers.. [optional]  # noqa: E501
             signatures ([SignatureRequestResponseSignatures]): An array of signature objects, 1 for each signer.. [optional]  # noqa: E501
             bulk_send_job_id (str): The id of the BulkSendJob.. [optional]  # noqa: E501
         """

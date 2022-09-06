@@ -56,6 +56,12 @@ class TeamAddMemberRequest(ModelNormal):
     """
 
     allowed_values = {
+        ('role',): {
+            'MEMBER': "Member",
+            'DEVELOPER': "Developer",
+            'TEAM_MANAGER': "Team Manager",
+            'ADMIN': "Admin",
+        },
     }
 
     validations = {
@@ -84,6 +90,7 @@ class TeamAddMemberRequest(ModelNormal):
         return {
             'account_id': (str,),  # noqa: E501
             'email_address': (str,),  # noqa: E501
+            'role': (str,),  # noqa: E501
         }
 
     @cached_property
@@ -94,6 +101,7 @@ class TeamAddMemberRequest(ModelNormal):
     attribute_map = {
         'account_id': 'account_id',  # noqa: E501
         'email_address': 'email_address',  # noqa: E501
+        'role': 'role',  # noqa: E501
     }
 
     read_only_vars = {
@@ -139,6 +147,7 @@ class TeamAddMemberRequest(ModelNormal):
                                 _visited_composed_classes = (Animal,)
             account_id (str): `account_id` or `email_address` is required. If both are provided, the account id prevails.   Account id of the user to invite to your Team.. [optional]  # noqa: E501
             email_address (str): `account_id` or `email_address` is required, If both are provided, the account id prevails.   Email address of the user to invite to your Team.. [optional]  # noqa: E501
+            role (str): A role member will take in a new Team.  **Note**: This parameter is used only if `team_id` is provided.. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -222,6 +231,7 @@ class TeamAddMemberRequest(ModelNormal):
                                 _visited_composed_classes = (Animal,)
             account_id (str): `account_id` or `email_address` is required. If both are provided, the account id prevails.   Account id of the user to invite to your Team.. [optional]  # noqa: E501
             email_address (str): `account_id` or `email_address` is required, If both are provided, the account id prevails.   Email address of the user to invite to your Team.. [optional]  # noqa: E501
+            role (str): A role member will take in a new Team.  **Note**: This parameter is used only if `team_id` is provided.. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)

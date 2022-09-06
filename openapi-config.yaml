@@ -4,6 +4,7 @@ additionalProperties:
   generatorLanguageVersion: ">=3.7"
   packageName: hellosign_sdk
   projectName: hellosign-python-sdk
+  packageVersion: 6.0.0-beta
   sortModelPropertiesByRequiredFlag: true
   legacyDiscriminatorBehavior: true
 files:
