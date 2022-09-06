@@ -119,6 +119,7 @@ class SignatureRequestCreateEmbeddedWithTemplateRequest(ModelNormal):
             'subject': (str,),  # noqa: E501
             'test_mode': (bool,),  # noqa: E501
             'title': (str,),  # noqa: E501
+            'populate_auto_fill_fields': (bool,),  # noqa: E501
         }
 
     @cached_property
@@ -141,6 +142,7 @@ class SignatureRequestCreateEmbeddedWithTemplateRequest(ModelNormal):
         'subject': 'subject',  # noqa: E501
         'test_mode': 'test_mode',  # noqa: E501
         'title': 'title',  # noqa: E501
+        'populate_auto_fill_fields': 'populate_auto_fill_fields',  # noqa: E501
     }
 
     read_only_vars = {
@@ -200,6 +202,7 @@ class SignatureRequestCreateEmbeddedWithTemplateRequest(ModelNormal):
             subject (str): The subject in the email that will be sent to the signers.. [optional]  # noqa: E501
             test_mode (bool): Whether this is a test, the signature request will not be legally binding if set to `true`. Defaults to `false`.. [optional] if omitted the server will use the default value of False  # noqa: E501
             title (str): The title you want to assign to the SignatureRequest.. [optional]  # noqa: E501
+            populate_auto_fill_fields (bool): Controls whether [auto fill fields](https://faq.hellosign.com/hc/en-us/articles/360051467511-Auto-Fill-Fields) can automatically populate a signer's information during signing.    ⚠️ **Note** ⚠️: Keep your signer's information safe by ensuring that the _signer on your signature request is the intended party_ before using this feature.. [optional] if omitted the server will use the default value of False  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -300,6 +303,7 @@ class SignatureRequestCreateEmbeddedWithTemplateRequest(ModelNormal):
             subject (str): The subject in the email that will be sent to the signers.. [optional]  # noqa: E501
             test_mode (bool): Whether this is a test, the signature request will not be legally binding if set to `true`. Defaults to `false`.. [optional] if omitted the server will use the default value of False  # noqa: E501
             title (str): The title you want to assign to the SignatureRequest.. [optional]  # noqa: E501
+            populate_auto_fill_fields (bool): Controls whether [auto fill fields](https://faq.hellosign.com/hc/en-us/articles/360051467511-Auto-Fill-Fields) can automatically populate a signer's information during signing.    ⚠️ **Note** ⚠️: Keep your signer's information safe by ensuring that the _signer on your signature request is the intended party_ before using this feature.. [optional] if omitted the server will use the default value of False  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)

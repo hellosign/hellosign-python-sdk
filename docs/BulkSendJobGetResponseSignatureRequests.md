@@ -26,7 +26,7 @@
 | `template_ids` | ```[str], none_type``` |  Templates IDs used in this SignatureRequest (if any).  |  |
 | `custom_fields` | [```[SignatureRequestResponseCustomFieldBase], none_type```](SignatureRequestResponseCustomFieldBase.md) |  An array of Custom Field objects containing the name and type of each custom field.<br><br>* Text Field uses `SignatureRequestResponseCustomFieldText`<br>* Checkbox Field uses `SignatureRequestResponseCustomFieldCheckbox`  |  |
 | `attachments` | [```[SignatureRequestResponseAttachment], none_type```](SignatureRequestResponseAttachment.md) |  Signer attachments.  |  |
-| `response_data` | [```[SignatureRequestResponseData], none_type```](SignatureRequestResponseData.md) |  An array of form field objects containing the name, value, and type of each textbox or checkmark field filled in by the signers.  |  |
+| `response_data` | [```[SignatureRequestResponseDataBase], none_type```](SignatureRequestResponseDataBase.md) |  An array of form field objects containing the name, value, and type of each textbox or checkmark field filled in by the signers.  |  |
 | `signatures` | [```[SignatureRequestResponseSignatures]```](SignatureRequestResponseSignatures.md) |  An array of signature objects, 1 for each signer.  |  |
 | `bulk_send_job_id` | ```str``` |  The id of the BulkSendJob.  |  |
 
