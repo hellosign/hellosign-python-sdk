@@ -64,7 +64,13 @@ Python >=3.7
 Install using `pip`:
 
 ```shell
-python3 pipenv install hellosign-python-sdk==6.0.0b0
+python3 pipenv install hellosign-python-sdk==6.0.0-beta
+```
+
+Alternatively:
+
+```shell
+pip install git+https://github.com/hellosign/hellosign-python-sdk.git@openapi
 ```
 
 Then import the package:
