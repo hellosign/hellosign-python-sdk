@@ -73,11 +73,8 @@ class TestTemplateApi(unittest.TestCase):
         )
         expected = deserialize(response_data, f'models.{response_class}')
 
-        result = self.api.template_files(
-            template_id=template_id,
-            file_type=file_type,
-            get_url=get_url,
-            get_data_uri=get_data_uri
+        result = self.api.template_files_as_file_url(
+            template_id=template_id
         )
 
         self.assertEqual(result.__class__.__name__, response_class)

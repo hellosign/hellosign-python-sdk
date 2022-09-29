@@ -108,11 +108,8 @@ class TestSignatureRequestApi(unittest.TestCase):
         )
         expected = deserialize(response_data, f'models.{response_class}')
 
-        result = self.api.signature_request_files(
-            signature_request_id=signature_request_id,
-            file_type=file_type,
-            get_url=get_url,
-            get_data_uri=get_data_uri
+        result = self.api.signature_request_files_as_file_url(
+            signature_request_id=signature_request_id
         )
 
         self.assertEqual(result.__class__.__name__, response_class)
