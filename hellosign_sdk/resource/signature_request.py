@@ -69,7 +69,8 @@ class SignatureRequest(Resource):
             the name, value, and type of each textbox or checkmark field filled
             in by the signers
 
-            api_id (str): The unique ID for this field signature_id (str): The ID of the signature to which this response is linked
+            api_id (str): The unique ID for this field
+            signature_id (str): The ID of the signature to which this response is linked
             name (str): The name of the form field
             value (str): The value of the form field
             type (str): The type of this form field
