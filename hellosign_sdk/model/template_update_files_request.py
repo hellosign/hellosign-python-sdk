@@ -1,7 +1,7 @@
 """
-    HelloSign API
+    Dropbox Sign API
 
-    HelloSign v3 API  # noqa: E501
+    Dropbox Sign v3 API  # noqa: E501
 
     The version of the OpenAPI document: 3.0.0
     Contact: apisupport@hellosign.com
@@ -153,7 +153,7 @@ class TemplateUpdateFilesRequest(ModelNormal):
                                 _visited_composed_classes = (Animal,)
             client_id (str): Client id of the app you're using to update this template.. [optional]  # noqa: E501
             file ([file_type]): Use `file[]` to indicate the uploaded file(s) to use for the template.  This endpoint requires either **file** or **file_url[]**, but not both.. [optional]  # noqa: E501
-            file_url ([str]): Use `file_url[]` to have HelloSign download the file(s) to use for the template.  This endpoint requires either **file** or **file_url[]**, but not both.. [optional]  # noqa: E501
+            file_url ([str]): Use `file_url[]` to have Dropbox Sign download the file(s) to use for the template.  This endpoint requires either **file** or **file_url[]**, but not both.. [optional]  # noqa: E501
             message (str): The new default template email message.. [optional]  # noqa: E501
             subject (str): The new default template email subject.. [optional]  # noqa: E501
             test_mode (bool): Whether this is a test, the signature request created from this draft will not be legally binding if set to `true`. Defaults to `false`.. [optional] if omitted the server will use the default value of False  # noqa: E501
@@ -240,7 +240,7 @@ class TemplateUpdateFilesRequest(ModelNormal):
                                 _visited_composed_classes = (Animal,)
             client_id (str): Client id of the app you're using to update this template.. [optional]  # noqa: E501
             file ([file_type]): Use `file[]` to indicate the uploaded file(s) to use for the template.  This endpoint requires either **file** or **file_url[]**, but not both.. [optional]  # noqa: E501
-            file_url ([str]): Use `file_url[]` to have HelloSign download the file(s) to use for the template.  This endpoint requires either **file** or **file_url[]**, but not both.. [optional]  # noqa: E501
+            file_url ([str]): Use `file_url[]` to have Dropbox Sign download the file(s) to use for the template.  This endpoint requires either **file** or **file_url[]**, but not both.. [optional]  # noqa: E501
             message (str): The new default template email message.. [optional]  # noqa: E501
             subject (str): The new default template email subject.. [optional]  # noqa: E501
             test_mode (bool): Whether this is a test, the signature request created from this draft will not be legally binding if set to `true`. Defaults to `false`.. [optional] if omitted the server will use the default value of False  # noqa: E501

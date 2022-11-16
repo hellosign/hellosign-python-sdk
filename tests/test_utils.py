@@ -7,7 +7,7 @@ from hellosign_sdk import ApiClient, apis, models
 
 
 def get_base_path():
-    return os.path.dirname(os.path.abspath(__file__)) + f'/../oas/test_fixtures'
+    return os.path.dirname(os.path.abspath(__file__)) + f'/../test_fixtures'
 
 
 def get_fixture_data(filename):

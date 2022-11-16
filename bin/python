@@ -8,7 +8,7 @@ ROOT_DIR="${DIR}/.."
 WORKINGDIR="/app/python"
 
 docker run --rm \
+  -v "${ROOT_DIR}:${WORKINGDIR}" \
   -v "hellosign-sdk-pip-cache:/usr/local/lib/python3.10" \
-  -v "${PWD}:${WORKINGDIR}" \
   -w "${WORKINGDIR}" \
   python:3.10-buster "$@"

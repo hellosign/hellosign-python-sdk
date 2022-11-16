@@ -1,7 +1,7 @@
 """
-    HelloSign API
+    Dropbox Sign API
 
-    HelloSign v3 API  # noqa: E501
+    Dropbox Sign v3 API  # noqa: E501
 
     The version of the OpenAPI document: 3.0.0
     Contact: apisupport@hellosign.com
@@ -98,6 +98,7 @@ class SignatureRequestResponseSignatures(ModelNormal):
             'sms_phone_number': (str, none_type,),  # noqa: E501
             'reassigned_by': (str, none_type,),  # noqa: E501
             'reassignment_reason': (str, none_type,),  # noqa: E501
+            'reassigned_from': (str, none_type,),  # noqa: E501
             'error': (str, none_type,),  # noqa: E501
         }
 
@@ -123,6 +124,7 @@ class SignatureRequestResponseSignatures(ModelNormal):
         'sms_phone_number': 'sms_phone_number',  # noqa: E501
         'reassigned_by': 'reassigned_by',  # noqa: E501
         'reassignment_reason': 'reassignment_reason',  # noqa: E501
+        'reassigned_from': 'reassigned_from',  # noqa: E501
         'error': 'error',  # noqa: E501
     }
 
@@ -183,6 +185,7 @@ class SignatureRequestResponseSignatures(ModelNormal):
             sms_phone_number (str, none_type): The SMS phone number used for authentication or signature request delivery.. [optional]  # noqa: E501
             reassigned_by (str, none_type): Email address of original signer who reassigned to this signer.. [optional]  # noqa: E501
             reassignment_reason (str, none_type): Reason provided by original signer who reassigned to this signer.. [optional]  # noqa: E501
+            reassigned_from (str, none_type): Previous signature identifier.. [optional]  # noqa: E501
             error (str, none_type): Error message pertaining to this signer, or null.. [optional]  # noqa: E501
         """
 
@@ -281,6 +284,7 @@ class SignatureRequestResponseSignatures(ModelNormal):
             sms_phone_number (str, none_type): The SMS phone number used for authentication or signature request delivery.. [optional]  # noqa: E501
             reassigned_by (str, none_type): Email address of original signer who reassigned to this signer.. [optional]  # noqa: E501
             reassignment_reason (str, none_type): Reason provided by original signer who reassigned to this signer.. [optional]  # noqa: E501
+            reassigned_from (str, none_type): Previous signature identifier.. [optional]  # noqa: E501
             error (str, none_type): Error message pertaining to this signer, or null.. [optional]  # noqa: E501
         """
 

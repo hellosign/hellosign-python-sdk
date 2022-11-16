@@ -1,7 +1,7 @@
 """
-    HelloSign API
+    Dropbox Sign API
 
-    HelloSign v3 API  # noqa: E501
+    Dropbox Sign v3 API  # noqa: E501
 
     The version of the OpenAPI document: 3.0.0
     Contact: apisupport@hellosign.com
@@ -229,8 +229,8 @@ class UnclaimedDraftCreateEmbeddedWithTemplateRequest(ModelNormal):
             custom_fields ([SubCustomField]): An array defining values and options for custom fields. Required when a custom field exists in the Template.. [optional]  # noqa: E501
             editor_options (SubEditorOptions): [optional]  # noqa: E501
             field_options (SubFieldOptions): [optional]  # noqa: E501
-            file ([file_type]): Use `file[]` to append additional files to the signature request being created from the template. HelloSign will parse the files for [text tags](https://app.hellosign.com/api/textTagsWalkthrough) and append it to the signature request. Text tags for signers not on the template(s) will be ignored.  **file** or **file_url[]** is required, but not both.. [optional]  # noqa: E501
-            file_url ([str]): Use file_url[] to append additional files to the signature request being created from the template. HelloSign will download the file, then parse it for [text tags](https://app.hellosign.com/api/textTagsWalkthrough), and append to the signature request. Text tags for signers not on the template(s) will be ignored.  **file** or **file_url[]** is required, but not both.. [optional]  # noqa: E501
+            file ([file_type]): Use `file[]` to append additional files to the signature request being created from the template. Dropbox Sign will parse the files for [text tags](https://app.hellosign.com/api/textTagsWalkthrough) and append it to the signature request. Text tags for signers not on the template(s) will be ignored.  **file** or **file_url[]** is required, but not both.. [optional]  # noqa: E501
+            file_url ([str]): Use file_url[] to append additional files to the signature request being created from the template. Dropbox Sign will download the file, then parse it for [text tags](https://app.hellosign.com/api/textTagsWalkthrough), and append to the signature request. Text tags for signers not on the template(s) will be ignored.  **file** or **file_url[]** is required, but not both.. [optional]  # noqa: E501
             force_signer_roles (bool): Provide users the ability to review/edit the template signer roles.. [optional] if omitted the server will use the default value of False  # noqa: E501
             force_subject_message (bool): Provide users the ability to review/edit the template subject and message.. [optional] if omitted the server will use the default value of False  # noqa: E501
             hold_request (bool): The request from this draft will not automatically send to signers post-claim if set to 1. Requester must [release](/api/reference/operation/signatureRequestReleaseHold/) the request from hold when ready to send. Defaults to `false`.. [optional] if omitted the server will use the default value of False  # noqa: E501
@@ -248,7 +248,7 @@ class UnclaimedDraftCreateEmbeddedWithTemplateRequest(ModelNormal):
             subject (str): The subject in the email that will be sent to the signers.. [optional]  # noqa: E501
             test_mode (bool): Whether this is a test, the signature request created from this draft will not be legally binding if set to `true`. Defaults to `false`.. [optional] if omitted the server will use the default value of False  # noqa: E501
             title (str): The title you want to assign to the SignatureRequest.. [optional]  # noqa: E501
-            populate_auto_fill_fields (bool): Controls whether [auto fill fields](https://faq.hellosign.com/hc/en-us/articles/360051467511-Auto-Fill-Fields) can automatically populate a signer's information during signing.    ⚠️ **Note** ⚠️: Keep your signer's information safe by ensuring that the _signer on your signature request is the intended party_ before using this feature.. [optional] if omitted the server will use the default value of False  # noqa: E501
+            populate_auto_fill_fields (bool): Controls whether [auto fill fields](https://faq.hellosign.com/hc/en-us/articles/360051467511-Auto-Fill-Fields) can automatically populate a signer's information during signing.  ⚠️ **Note** ⚠️: Keep your signer's information safe by ensuring that the _signer on your signature request is the intended party_ before using this feature.. [optional] if omitted the server will use the default value of False  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -344,8 +344,8 @@ class UnclaimedDraftCreateEmbeddedWithTemplateRequest(ModelNormal):
             custom_fields ([SubCustomField]): An array defining values and options for custom fields. Required when a custom field exists in the Template.. [optional]  # noqa: E501
             editor_options (SubEditorOptions): [optional]  # noqa: E501
             field_options (SubFieldOptions): [optional]  # noqa: E501
-            file ([file_type]): Use `file[]` to append additional files to the signature request being created from the template. HelloSign will parse the files for [text tags](https://app.hellosign.com/api/textTagsWalkthrough) and append it to the signature request. Text tags for signers not on the template(s) will be ignored.  **file** or **file_url[]** is required, but not both.. [optional]  # noqa: E501
-            file_url ([str]): Use file_url[] to append additional files to the signature request being created from the template. HelloSign will download the file, then parse it for [text tags](https://app.hellosign.com/api/textTagsWalkthrough), and append to the signature request. Text tags for signers not on the template(s) will be ignored.  **file** or **file_url[]** is required, but not both.. [optional]  # noqa: E501
+            file ([file_type]): Use `file[]` to append additional files to the signature request being created from the template. Dropbox Sign will parse the files for [text tags](https://app.hellosign.com/api/textTagsWalkthrough) and append it to the signature request. Text tags for signers not on the template(s) will be ignored.  **file** or **file_url[]** is required, but not both.. [optional]  # noqa: E501
+            file_url ([str]): Use file_url[] to append additional files to the signature request being created from the template. Dropbox Sign will download the file, then parse it for [text tags](https://app.hellosign.com/api/textTagsWalkthrough), and append to the signature request. Text tags for signers not on the template(s) will be ignored.  **file** or **file_url[]** is required, but not both.. [optional]  # noqa: E501
             force_signer_roles (bool): Provide users the ability to review/edit the template signer roles.. [optional] if omitted the server will use the default value of False  # noqa: E501
             force_subject_message (bool): Provide users the ability to review/edit the template subject and message.. [optional] if omitted the server will use the default value of False  # noqa: E501
             hold_request (bool): The request from this draft will not automatically send to signers post-claim if set to 1. Requester must [release](/api/reference/operation/signatureRequestReleaseHold/) the request from hold when ready to send. Defaults to `false`.. [optional] if omitted the server will use the default value of False  # noqa: E501
@@ -363,7 +363,7 @@ class UnclaimedDraftCreateEmbeddedWithTemplateRequest(ModelNormal):
             subject (str): The subject in the email that will be sent to the signers.. [optional]  # noqa: E501
             test_mode (bool): Whether this is a test, the signature request created from this draft will not be legally binding if set to `true`. Defaults to `false`.. [optional] if omitted the server will use the default value of False  # noqa: E501
             title (str): The title you want to assign to the SignatureRequest.. [optional]  # noqa: E501
-            populate_auto_fill_fields (bool): Controls whether [auto fill fields](https://faq.hellosign.com/hc/en-us/articles/360051467511-Auto-Fill-Fields) can automatically populate a signer's information during signing.    ⚠️ **Note** ⚠️: Keep your signer's information safe by ensuring that the _signer on your signature request is the intended party_ before using this feature.. [optional] if omitted the server will use the default value of False  # noqa: E501
+            populate_auto_fill_fields (bool): Controls whether [auto fill fields](https://faq.hellosign.com/hc/en-us/articles/360051467511-Auto-Fill-Fields) can automatically populate a signer's information during signing.  ⚠️ **Note** ⚠️: Keep your signer's information safe by ensuring that the _signer on your signature request is the intended party_ before using this feature.. [optional] if omitted the server will use the default value of False  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)

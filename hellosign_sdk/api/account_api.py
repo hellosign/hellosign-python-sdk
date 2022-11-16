@@ -1,7 +1,7 @@
 """
-    HelloSign API
+    Dropbox Sign API
 
-    HelloSign v3 API  # noqa: E501
+    Dropbox Sign v3 API  # noqa: E501
 
     The version of the OpenAPI document: 3.0.0
     Contact: apisupport@hellosign.com
@@ -111,6 +111,7 @@ class AccountApi(object):
             params_map={
                 'all': [
                     'account_id',
+                    'email_address',
                 ],
                 'required': [],
                 'nullable': [
@@ -128,12 +129,16 @@ class AccountApi(object):
                 'openapi_types': {
                     'account_id':
                         (str,),
+                    'email_address':
+                        (str,),
                 },
                 'attribute_map': {
                     'account_id': 'account_id',
+                    'email_address': 'email_address',
                 },
                 'location_map': {
                     'account_id': 'query',
+                    'email_address': 'query',
                 },
                 'collection_format_map': {
                 }
@@ -260,7 +265,7 @@ class AccountApi(object):
     ):
         """Create Account  # noqa: E501
 
-        Creates a new HelloSign Account that is associated with the specified `email_address`.  # noqa: E501
+        Creates a new Dropbox Sign Account that is associated with the specified `email_address`.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -368,7 +373,8 @@ class AccountApi(object):
 
 
         Keyword Args:
-            account_id (str): The ID of the Account. [optional]
+            account_id (str): `account_id` or `email_address` is required. If both are provided, the account id prevails.   The ID of the Account.. [optional]
+            email_address (str): `account_id` or `email_address` is required, If both are provided, the account id prevails.   The email address of the Account.. [optional]
             _return_http_data_only (bool): response data without head status
                 code and headers. Default is True.
             _preload_content (bool): if False, the urllib3.HTTPResponse object
@@ -556,7 +562,7 @@ class AccountApi(object):
     ):
         """Verify Account  # noqa: E501
 
-        Verifies whether an HelloSign Account exists for the given email address.  # noqa: E501
+        Verifies whether an Dropbox Sign Account exists for the given email address.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 

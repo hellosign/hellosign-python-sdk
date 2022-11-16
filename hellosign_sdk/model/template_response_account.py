@@ -1,7 +1,7 @@
 """
-    HelloSign API
+    Dropbox Sign API
 
-    HelloSign v3 API  # noqa: E501
+    Dropbox Sign v3 API  # noqa: E501
 
     The version of the OpenAPI document: 3.0.0
     Contact: apisupport@hellosign.com
@@ -154,7 +154,7 @@ class TemplateResponseAccount(ModelNormal):
             account_id (str): The id of the Account.. [optional]  # noqa: E501
             email_address (str): The email address associated with the Account.. [optional]  # noqa: E501
             is_locked (bool): Returns `true` if the user has been locked out of their account by a team admin.. [optional]  # noqa: E501
-            is_paid_hs (bool): Returns `true` if the user has a paid HelloSign account.. [optional]  # noqa: E501
+            is_paid_hs (bool): Returns `true` if the user has a paid Dropbox Sign account.. [optional]  # noqa: E501
             is_paid_hf (bool): Returns `true` if the user has a paid HelloFax account.. [optional]  # noqa: E501
             quotas (TemplateResponseAccountQuota): [optional]  # noqa: E501
         """
@@ -241,7 +241,7 @@ class TemplateResponseAccount(ModelNormal):
             account_id (str): The id of the Account.. [optional]  # noqa: E501
             email_address (str): The email address associated with the Account.. [optional]  # noqa: E501
             is_locked (bool): Returns `true` if the user has been locked out of their account by a team admin.. [optional]  # noqa: E501
-            is_paid_hs (bool): Returns `true` if the user has a paid HelloSign account.. [optional]  # noqa: E501
+            is_paid_hs (bool): Returns `true` if the user has a paid Dropbox Sign account.. [optional]  # noqa: E501
             is_paid_hf (bool): Returns `true` if the user has a paid HelloFax account.. [optional]  # noqa: E501
             quotas (TemplateResponseAccountQuota): [optional]  # noqa: E501
         """

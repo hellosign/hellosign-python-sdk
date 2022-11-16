@@ -1,9 +1,9 @@
 # flake8: noqa
 
 """
-    HelloSign API
+    Dropbox Sign API
 
-    HelloSign v3 API  # noqa: E501
+    Dropbox Sign v3 API  # noqa: E501
 
     The version of the OpenAPI document: 3.0.0
     Contact: apisupport@hellosign.com
@@ -11,7 +11,7 @@
 """
 
 
-__version__ = "6.0.0-beta"
+__version__ = "6.0.0-beta22.22"
 
 # import ApiClient
 from hellosign_sdk.api_client import ApiClient

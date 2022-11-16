@@ -1,7 +1,7 @@
 """
-    HelloSign API
+    Dropbox Sign API
 
-    HelloSign v3 API  # noqa: E501
+    Dropbox Sign v3 API  # noqa: E501
 
     The version of the OpenAPI document: 3.0.0
     Contact: apisupport@hellosign.com
@@ -85,6 +85,7 @@ class SignatureRequestUpdateRequest(ModelNormal):
             'signature_id': (str,),  # noqa: E501
             'email_address': (str,),  # noqa: E501
             'name': (str,),  # noqa: E501
+            'expires_at': (int, none_type,),  # noqa: E501
         }
 
     @cached_property
@@ -96,6 +97,7 @@ class SignatureRequestUpdateRequest(ModelNormal):
         'signature_id': 'signature_id',  # noqa: E501
         'email_address': 'email_address',  # noqa: E501
         'name': 'name',  # noqa: E501
+        'expires_at': 'expires_at',  # noqa: E501
     }
 
     read_only_vars = {
@@ -144,6 +146,7 @@ class SignatureRequestUpdateRequest(ModelNormal):
                                 _visited_composed_classes = (Animal,)
             email_address (str): The new email address for the recipient.  **NOTE**: Optional if `name` is provided.. [optional]  # noqa: E501
             name (str): The new name for the recipient.  **NOTE**: Optional if `email_address` is provided.. [optional]  # noqa: E501
+            expires_at (int, none_type): The new time when the signature request will expire. Unsigned signatures will be moved to the expired status, and no longer signable.. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -231,6 +234,7 @@ class SignatureRequestUpdateRequest(ModelNormal):
                                 _visited_composed_classes = (Animal,)
             email_address (str): The new email address for the recipient.  **NOTE**: Optional if `name` is provided.. [optional]  # noqa: E501
             name (str): The new name for the recipient.  **NOTE**: Optional if `email_address` is provided.. [optional]  # noqa: E501
+            expires_at (int, none_type): The new time when the signature request will expire. Unsigned signatures will be moved to the expired status, and no longer signable.. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)

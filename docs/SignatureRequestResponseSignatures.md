@@ -22,6 +22,7 @@ An array of signature objects, 1 for each signer.
 | `sms_phone_number` | ```str, none_type``` |  The SMS phone number used for authentication or signature request delivery.  |  |
 | `reassigned_by` | ```str, none_type``` |  Email address of original signer who reassigned to this signer.  |  |
 | `reassignment_reason` | ```str, none_type``` |  Reason provided by original signer who reassigned to this signer.  |  |
+| `reassigned_from` | ```str, none_type``` |  Previous signature identifier.  |  |
 | `error` | ```str, none_type``` |  Error message pertaining to this signer, or null.  |  |
 
 
