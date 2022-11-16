@@ -46,6 +46,7 @@ from hellosign_sdk.model.event_callback_api_app_request_payload import EventCall
 from hellosign_sdk.model.event_callback_request_event import EventCallbackRequestEvent
 from hellosign_sdk.model.event_callback_request_event_metadata import EventCallbackRequestEventMetadata
 from hellosign_sdk.model.file_response import FileResponse
+from hellosign_sdk.model.file_response_data_uri import FileResponseDataUri
 from hellosign_sdk.model.list_info_response import ListInfoResponse
 from hellosign_sdk.model.o_auth_token_generate_request import OAuthTokenGenerateRequest
 from hellosign_sdk.model.o_auth_token_refresh_request import OAuthTokenRefreshRequest
@@ -120,6 +121,8 @@ from hellosign_sdk.model.team_create_request import TeamCreateRequest
 from hellosign_sdk.model.team_get_info_response import TeamGetInfoResponse
 from hellosign_sdk.model.team_get_response import TeamGetResponse
 from hellosign_sdk.model.team_info_response import TeamInfoResponse
+from hellosign_sdk.model.team_invite_response import TeamInviteResponse
+from hellosign_sdk.model.team_invites_response import TeamInvitesResponse
 from hellosign_sdk.model.team_member_response import TeamMemberResponse
 from hellosign_sdk.model.team_members_response import TeamMembersResponse
 from hellosign_sdk.model.team_parent_response import TeamParentResponse

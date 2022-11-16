@@ -1,7 +1,7 @@
 """
-    HelloSign API
+    Dropbox Sign API
 
-    HelloSign v3 API  # noqa: E501
+    Dropbox Sign v3 API  # noqa: E501
 
     The version of the OpenAPI document: 3.0.0
     Contact: apisupport@hellosign.com
@@ -136,6 +136,7 @@ class SignatureRequestSendRequest(ModelNormal):
             'test_mode': (bool,),  # noqa: E501
             'title': (str,),  # noqa: E501
             'use_text_tags': (bool,),  # noqa: E501
+            'expires_at': (int, none_type,),  # noqa: E501
         }
 
     @cached_property
@@ -167,6 +168,7 @@ class SignatureRequestSendRequest(ModelNormal):
         'test_mode': 'test_mode',  # noqa: E501
         'title': 'title',  # noqa: E501
         'use_text_tags': 'use_text_tags',  # noqa: E501
+        'expires_at': 'expires_at',  # noqa: E501
     }
 
     read_only_vars = {
@@ -214,13 +216,13 @@ class SignatureRequestSendRequest(ModelNormal):
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
             file ([file_type]): Use `file[]` to indicate the uploaded file(s) to send for signature.  This endpoint requires either **file** or **file_url[]**, but not both.. [optional]  # noqa: E501
-            file_url ([str]): Use `file_url[]` to have HelloSign download the file(s) to send for signature.  This endpoint requires either **file** or **file_url[]**, but not both.. [optional]  # noqa: E501
+            file_url ([str]): Use `file_url[]` to have Dropbox Sign download the file(s) to send for signature.  This endpoint requires either **file** or **file_url[]**, but not both.. [optional]  # noqa: E501
             allow_decline (bool): Allows signers to decline to sign a document if `true`. Defaults to `false`.. [optional] if omitted the server will use the default value of False  # noqa: E501
             allow_reassign (bool): Allows signers to reassign their signature requests to other signers if set to `true`. Defaults to `false`.  **Note**: Only available for Premium plan and higher.. [optional] if omitted the server will use the default value of False  # noqa: E501
             attachments ([SubAttachment]): A list describing the attachments. [optional]  # noqa: E501
             cc_email_addresses ([str]): The email addresses that should be CCed.. [optional]  # noqa: E501
             client_id (str): The client id of the API App you want to associate with this request. Used to apply the branding and callback url defined for the app.. [optional]  # noqa: E501
-            custom_fields ([SubCustomField]): When used together with merge fields, `custom_fields` allows users to add pre-filled data to their signature requests.  Pre-filled data can be used with \"send-once\" signature requests by adding merge fields with `form_fields_per_document` or [Text Tags](https://app.hellosign.com/api/textTagsWalkthrough#TextTagIntro) while passing values back with `custom_fields` together in one API call.  For using pre-filled on repeatable signature requests, merge fields are added to templates in the HelloSign UI or by calling [/template/create_embedded_draft](/api/reference/operation/templateCreateEmbeddedDraft) and then passing `custom_fields` on subsequent signature requests referencing that template.. [optional]  # noqa: E501
+            custom_fields ([SubCustomField]): When used together with merge fields, `custom_fields` allows users to add pre-filled data to their signature requests.  Pre-filled data can be used with \"send-once\" signature requests by adding merge fields with `form_fields_per_document` or [Text Tags](https://app.hellosign.com/api/textTagsWalkthrough#TextTagIntro) while passing values back with `custom_fields` together in one API call.  For using pre-filled on repeatable signature requests, merge fields are added to templates in the Dropbox Sign UI or by calling [/template/create_embedded_draft](/api/reference/operation/templateCreateEmbeddedDraft) and then passing `custom_fields` on subsequent signature requests referencing that template.. [optional]  # noqa: E501
             field_options (SubFieldOptions): [optional]  # noqa: E501
             form_field_groups ([SubFormFieldGroup]): Group information for fields defined in `form_fields_per_document`. String-indexed JSON array with `group_label` and `requirement` keys. `form_fields_per_document` must contain fields referencing a group defined in `form_field_groups`.. [optional]  # noqa: E501
             form_field_rules ([SubFormFieldRule]): Conditional Logic rules for fields defined in `form_fields_per_document`.. [optional]  # noqa: E501
@@ -235,6 +237,7 @@ class SignatureRequestSendRequest(ModelNormal):
             test_mode (bool): Whether this is a test, the signature request will not be legally binding if set to `true`. Defaults to `false`.. [optional] if omitted the server will use the default value of False  # noqa: E501
             title (str): The title you want to assign to the SignatureRequest.. [optional]  # noqa: E501
             use_text_tags (bool): Send with a value of `true` if you wish to enable [Text Tags](https://app.hellosign.com/api/textTagsWalkthrough#TextTagIntro) parsing in your document. Defaults to disabled, or `false`.. [optional] if omitted the server will use the default value of False  # noqa: E501
+            expires_at (int, none_type): When the signature request will expire. Unsigned signatures will be moved to the expired status, and no longer signable.. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -321,13 +324,13 @@ class SignatureRequestSendRequest(ModelNormal):
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
             file ([file_type]): Use `file[]` to indicate the uploaded file(s) to send for signature.  This endpoint requires either **file** or **file_url[]**, but not both.. [optional]  # noqa: E501
-            file_url ([str]): Use `file_url[]` to have HelloSign download the file(s) to send for signature.  This endpoint requires either **file** or **file_url[]**, but not both.. [optional]  # noqa: E501
+            file_url ([str]): Use `file_url[]` to have Dropbox Sign download the file(s) to send for signature.  This endpoint requires either **file** or **file_url[]**, but not both.. [optional]  # noqa: E501
             allow_decline (bool): Allows signers to decline to sign a document if `true`. Defaults to `false`.. [optional] if omitted the server will use the default value of False  # noqa: E501
             allow_reassign (bool): Allows signers to reassign their signature requests to other signers if set to `true`. Defaults to `false`.  **Note**: Only available for Premium plan and higher.. [optional] if omitted the server will use the default value of False  # noqa: E501
             attachments ([SubAttachment]): A list describing the attachments. [optional]  # noqa: E501
             cc_email_addresses ([str]): The email addresses that should be CCed.. [optional]  # noqa: E501
             client_id (str): The client id of the API App you want to associate with this request. Used to apply the branding and callback url defined for the app.. [optional]  # noqa: E501
-            custom_fields ([SubCustomField]): When used together with merge fields, `custom_fields` allows users to add pre-filled data to their signature requests.  Pre-filled data can be used with \"send-once\" signature requests by adding merge fields with `form_fields_per_document` or [Text Tags](https://app.hellosign.com/api/textTagsWalkthrough#TextTagIntro) while passing values back with `custom_fields` together in one API call.  For using pre-filled on repeatable signature requests, merge fields are added to templates in the HelloSign UI or by calling [/template/create_embedded_draft](/api/reference/operation/templateCreateEmbeddedDraft) and then passing `custom_fields` on subsequent signature requests referencing that template.. [optional]  # noqa: E501
+            custom_fields ([SubCustomField]): When used together with merge fields, `custom_fields` allows users to add pre-filled data to their signature requests.  Pre-filled data can be used with \"send-once\" signature requests by adding merge fields with `form_fields_per_document` or [Text Tags](https://app.hellosign.com/api/textTagsWalkthrough#TextTagIntro) while passing values back with `custom_fields` together in one API call.  For using pre-filled on repeatable signature requests, merge fields are added to templates in the Dropbox Sign UI or by calling [/template/create_embedded_draft](/api/reference/operation/templateCreateEmbeddedDraft) and then passing `custom_fields` on subsequent signature requests referencing that template.. [optional]  # noqa: E501
             field_options (SubFieldOptions): [optional]  # noqa: E501
             form_field_groups ([SubFormFieldGroup]): Group information for fields defined in `form_fields_per_document`. String-indexed JSON array with `group_label` and `requirement` keys. `form_fields_per_document` must contain fields referencing a group defined in `form_field_groups`.. [optional]  # noqa: E501
             form_field_rules ([SubFormFieldRule]): Conditional Logic rules for fields defined in `form_fields_per_document`.. [optional]  # noqa: E501
@@ -342,6 +345,7 @@ class SignatureRequestSendRequest(ModelNormal):
             test_mode (bool): Whether this is a test, the signature request will not be legally binding if set to `true`. Defaults to `false`.. [optional] if omitted the server will use the default value of False  # noqa: E501
             title (str): The title you want to assign to the SignatureRequest.. [optional]  # noqa: E501
             use_text_tags (bool): Send with a value of `true` if you wish to enable [Text Tags](https://app.hellosign.com/api/textTagsWalkthrough#TextTagIntro) parsing in your document. Defaults to disabled, or `false`.. [optional] if omitted the server will use the default value of False  # noqa: E501
+            expires_at (int, none_type): When the signature request will expire. Unsigned signatures will be moved to the expired status, and no longer signable.. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)

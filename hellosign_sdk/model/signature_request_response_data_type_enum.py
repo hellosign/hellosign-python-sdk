@@ -1,7 +1,7 @@
 """
-    HelloSign API
+    Dropbox Sign API
 
-    HelloSign v3 API  # noqa: E501
+    Dropbox Sign v3 API  # noqa: E501
 
     The version of the OpenAPI document: 3.0.0
     Contact: apisupport@hellosign.com

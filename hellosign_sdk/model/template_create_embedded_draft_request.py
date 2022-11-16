@@ -1,7 +1,7 @@
 """
-    HelloSign API
+    Dropbox Sign API
 
-    HelloSign v3 API  # noqa: E501
+    Dropbox Sign v3 API  # noqa: E501
 
     The version of the OpenAPI document: 3.0.0
     Contact: apisupport@hellosign.com
@@ -215,7 +215,7 @@ class TemplateCreateEmbeddedDraftRequest(ModelNormal):
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
             file ([file_type]): Use `file[]` to indicate the uploaded file(s) to send for signature.  This endpoint requires either **file** or **file_url[]**, but not both.. [optional]  # noqa: E501
-            file_url ([str]): Use `file_url[]` to have HelloSign download the file(s) to send for signature.  This endpoint requires either **file** or **file_url[]**, but not both.. [optional]  # noqa: E501
+            file_url ([str]): Use `file_url[]` to have Dropbox Sign download the file(s) to send for signature.  This endpoint requires either **file** or **file_url[]**, but not both.. [optional]  # noqa: E501
             allow_ccs (bool): This allows the requester to specify whether the user is allowed to provide email addresses to CC when creating a template.. [optional] if omitted the server will use the default value of True  # noqa: E501
             allow_reassign (bool): Allows signers to reassign their signature requests to other signers if set to `true`. Defaults to `false`.  **Note**: Only available for Premium plan and higher.. [optional] if omitted the server will use the default value of False  # noqa: E501
             attachments ([SubAttachment]): A list describing the attachments. [optional]  # noqa: E501
@@ -324,7 +324,7 @@ class TemplateCreateEmbeddedDraftRequest(ModelNormal):
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
             file ([file_type]): Use `file[]` to indicate the uploaded file(s) to send for signature.  This endpoint requires either **file** or **file_url[]**, but not both.. [optional]  # noqa: E501
-            file_url ([str]): Use `file_url[]` to have HelloSign download the file(s) to send for signature.  This endpoint requires either **file** or **file_url[]**, but not both.. [optional]  # noqa: E501
+            file_url ([str]): Use `file_url[]` to have Dropbox Sign download the file(s) to send for signature.  This endpoint requires either **file** or **file_url[]**, but not both.. [optional]  # noqa: E501
             allow_ccs (bool): This allows the requester to specify whether the user is allowed to provide email addresses to CC when creating a template.. [optional] if omitted the server will use the default value of True  # noqa: E501
             allow_reassign (bool): Allows signers to reassign their signature requests to other signers if set to `true`. Defaults to `false`.  **Note**: Only available for Premium plan and higher.. [optional] if omitted the server will use the default value of False  # noqa: E501
             attachments ([SubAttachment]): A list describing the attachments. [optional]  # noqa: E501

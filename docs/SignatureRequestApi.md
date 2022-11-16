@@ -10,6 +10,8 @@ All URIs are relative to *https://api.hellosign.com/v3*
 |[```signature_request_create_embedded```](SignatureRequestApi.md#signature_request_create_embedded) | ```POST /signature_request/create_embedded``` | Create Embedded Signature Request|
 |[```signature_request_create_embedded_with_template```](SignatureRequestApi.md#signature_request_create_embedded_with_template) | ```POST /signature_request/create_embedded_with_template``` | Create Embedded Signature Request with Template|
 |[```signature_request_files```](SignatureRequestApi.md#signature_request_files) | ```GET /signature_request/files/{signature_request_id}``` | Download Files|
+|[```signature_request_files_as_data_uri```](SignatureRequestApi.md#signature_request_files_as_data_uri) | ```GET /signature_request/files_as_data_uri/{signature_request_id}``` | Download Files as Data Uri|
+|[```signature_request_files_as_file_url```](SignatureRequestApi.md#signature_request_files_as_file_url) | ```GET /signature_request/files_as_file_url/{signature_request_id}``` | Download Files as File Url|
 |[```signature_request_get```](SignatureRequestApi.md#signature_request_get) | ```GET /signature_request/{signature_request_id}``` | Get Signature Request|
 |[```signature_request_list```](SignatureRequestApi.md#signature_request_list) | ```GET /signature_request/list``` | List Signature Requests|
 |[```signature_request_release_hold```](SignatureRequestApi.md#signature_request_release_hold) | ```POST /signature_request/release_hold/{signature_request_id}``` | Release On-Hold Signature Request|
@@ -25,7 +27,7 @@ All URIs are relative to *https://api.hellosign.com/v3*
 
 Embedded Bulk Send with Template
 
-Creates BulkSendJob which sends up to 250 SignatureRequests in bulk based off of the provided Template(s) specified with the `template_ids` parameter to be signed in an embedded iFrame. These embedded signature requests can only be signed in embedded iFrames whereas normal signature requests can only be signed on HelloSign.  **NOTE**: Only available for Standard plan and higher.
+Creates BulkSendJob which sends up to 250 SignatureRequests in bulk based off of the provided Template(s) specified with the `template_ids` parameter to be signed in an embedded iFrame. These embedded signature requests can only be signed in embedded iFrames whereas normal signature requests can only be signed on Dropbox Sign.  **NOTE**: Only available for Standard plan and higher.
 
 ### Example
 
@@ -324,7 +326,7 @@ void (empty response body)
 
 Create Embedded Signature Request
 
-Creates a new SignatureRequest with the submitted documents to be signed in an embedded iFrame. If form_fields_per_document is not specified, a signature page will be affixed where all signers will be required to add their signature, signifying their agreement to all contained documents. <u>Note</u> that embedded signature requests can only be signed in embedded iFrames whereas normal signature requests can only be signed on HelloSign.
+Creates a new SignatureRequest with the submitted documents to be signed in an embedded iFrame. If form_fields_per_document is not specified, a signature page will be affixed where all signers will be required to add their signature, signifying their agreement to all contained documents. <u>Note</u> that embedded signature requests can only be signed in embedded iFrames whereas normal signature requests can only be signed on Dropbox Sign.
 
 ### Example
 
@@ -423,7 +425,7 @@ with ApiClient(configuration) as api_client:
 
 Create Embedded Signature Request with Template
 
-Creates a new SignatureRequest based on the given Template(s) to be signed in an embedded iFrame. <u>Note</u> that embedded signature requests can only be signed in embedded iFrames whereas normal signature requests can only be signed on HelloSign.
+Creates a new SignatureRequest based on the given Template(s) to be signed in an embedded iFrame. <u>Note</u> that embedded signature requests can only be signed in embedded iFrames whereas normal signature requests can only be signed on Dropbox Sign.
 
 ### Example
 
@@ -510,11 +512,11 @@ with ApiClient(configuration) as api_client:
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # ```signature_request_files```
-> ```FileResponse signature_request_files(signature_request_id)```
+> ```file_type signature_request_files(signature_request_id)```
 
 Download Files
 
-Obtain a copy of the current documents specified by the `signature_request_id` parameter.  Returns a PDF or ZIP file, or if `get_url` is set, a JSON object with a url to the file (PDFs only). If `get_data_uri` is set, a JSON object with a `data_uri` representing the base64 encoded file (PDFs only) is returned.  If the files are currently being prepared, a status code of `409` will be returned instead.
+Obtain a copy of the current documents specified by the `signature_request_id` parameter. Returns a PDF or ZIP file.   If the files are currently being prepared, a status code of `409` will be returned instead.
 
 ### Example
 
@@ -555,8 +557,144 @@ with ApiClient(configuration) as api_client:
 | ---- | ---- | ----------- | ----- |
 | `signature_request_id` | **str** | The id of the SignatureRequest to retrieve. |  |
 | `file_type` | **str** | Set to `pdf` for a single merged document or `zip` for a collection of individual documents. | [optional][default to &quot;pdf&quot;] |
-| `get_url` | **bool** | If `true`, the response will contain a url link to the file instead. Links are only available for PDFs and have a TTL of 3 days. | [optional][default to False] |
-| `get_data_uri` | **bool** | If `true`, the response will contain the file as base64 encoded string. Base64 encoding is only available for PDFs. | [optional][default to False] |
+
+### Return type
+
+**file_type**
+
+### Authorization
+
+[api_key](../README.md#api_key), [oauth2](../README.md#oauth2)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/pdf, application/zip, application/json
+
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | successful operation |  * X-RateLimit-Limit -  <br>  * X-RateLimit-Remaining -  <br>  * X-Ratelimit-Reset -  <br>  |
+**4XX** | failed_operation |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# ```signature_request_files_as_data_uri```
+> ```FileResponseDataUri signature_request_files_as_data_uri(signature_request_id)```
+
+Download Files as Data Uri
+
+Obtain a copy of the current documents specified by the `signature_request_id` parameter. Returns a JSON object with a `data_uri` representing the base64 encoded file (PDFs only).   If the files are currently being prepared, a status code of `409` will be returned instead.
+
+### Example
+
+* Basic Authentication (api_key):
+* Bearer (JWT) Authentication (oauth2):
+
+```python
+from pprint import pprint
+
+from hellosign_sdk import \
+    ApiClient, ApiException, Configuration, apis
+
+configuration = Configuration(
+    # Configure HTTP basic authorization: api_key
+    username="YOUR_API_KEY",
+
+    # or, configure Bearer (JWT) authorization: oauth2
+    # access_token="YOUR_ACCESS_TOKEN",
+)
+
+with ApiClient(configuration) as api_client:
+    api = apis.SignatureRequestApi(api_client)
+
+    signature_request_id = "fa5c8a0b0f492d768749333ad6fcc214c111e967"
+
+    try:
+        response = api.signature_request_files_as_data_uri(signature_request_id)
+        pprint(response)
+    except ApiException as e:
+        print("Exception when calling HelloSign API: %s\n" % e)
+
+```
+
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| `signature_request_id` | **str** | The id of the SignatureRequest to retrieve. |  |
+
+### Return type
+
+[**FileResponseDataUri**](FileResponseDataUri.md)
+
+### Authorization
+
+[api_key](../README.md#api_key), [oauth2](../README.md#oauth2)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | successful operation |  * X-RateLimit-Limit -  <br>  * X-RateLimit-Remaining -  <br>  * X-Ratelimit-Reset -  <br>  |
+**4XX** | failed_operation |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# ```signature_request_files_as_file_url```
+> ```FileResponse signature_request_files_as_file_url(signature_request_id)```
+
+Download Files as File Url
+
+Obtain a copy of the current documents specified by the `signature_request_id` parameter. Returns a JSON object with a url to the file (PDFs only).   If the files are currently being prepared, a status code of `409` will be returned instead.
+
+### Example
+
+* Basic Authentication (api_key):
+* Bearer (JWT) Authentication (oauth2):
+
+```python
+from pprint import pprint
+
+from hellosign_sdk import \
+    ApiClient, ApiException, Configuration, apis
+
+configuration = Configuration(
+    # Configure HTTP basic authorization: api_key
+    username="YOUR_API_KEY",
+
+    # or, configure Bearer (JWT) authorization: oauth2
+    # access_token="YOUR_ACCESS_TOKEN",
+)
+
+with ApiClient(configuration) as api_client:
+    api = apis.SignatureRequestApi(api_client)
+
+    signature_request_id = "fa5c8a0b0f492d768749333ad6fcc214c111e967"
+
+    try:
+        response = api.signature_request_files_as_file_url(signature_request_id)
+        pprint(response)
+    except ApiException as e:
+        print("Exception when calling HelloSign API: %s\n" % e)
+
+```
+
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| `signature_request_id` | **str** | The id of the SignatureRequest to retrieve. |  |
 
 ### Return type
 

@@ -1,6 +1,6 @@
 # hellosign-python-sdk
 
-HelloSign v3 API
+Dropbox Sign v3 API
 
 ## ⚠ This package is not yet ready for production use ⚠
 
@@ -13,21 +13,9 @@ guaranteed nor implied!
 
 ## Contributing
 
-### Submodule
-
-This repo uses the [hellosign/openapi](https://github.com/hellosign/openapi) repo
-as a submodule for its OAS source. When you first clone this repo you must also
-instantiate the submodule by running the following:
-
-```shell
-git submodule init
-git submodule update
-```
-
-### Changes to the OAS
-
-You must make OAS changes in the `oas/openapi.yaml` file within the
-[hellosign/openapi](https://github.com/hellosign/openapi) submodule.
+This repo is no longer accepting new issues or Pull Requests. All issues or
+Pull Requests *must* be opened against the
+[hellosign/hellosign-openapi](https://github.com/hellosign/hellosign-openapi) repo!
 
 ### Changes to the SDK code
 
@@ -64,7 +52,7 @@ Python >=3.7
 Install using `pip`:
 
 ```shell
-python3 pipenv install hellosign-python-sdk==6.0.0-beta
+python3 pipenv install hellosign-python-sdk==6.0.0-beta22.22
 ```
 
 Alternatively:
@@ -141,6 +129,8 @@ All URIs are relative to *https://api.hellosign.com/v3*
 ```SignatureRequestApi``` | [```signature_request_create_embedded```](docs/SignatureRequestApi.md#signature_request_create_embedded) | ```POST /signature_request/create_embedded``` | Create Embedded Signature Request|
 ```SignatureRequestApi``` | [```signature_request_create_embedded_with_template```](docs/SignatureRequestApi.md#signature_request_create_embedded_with_template) | ```POST /signature_request/create_embedded_with_template``` | Create Embedded Signature Request with Template|
 ```SignatureRequestApi``` | [```signature_request_files```](docs/SignatureRequestApi.md#signature_request_files) | ```GET /signature_request/files/{signature_request_id}``` | Download Files|
+```SignatureRequestApi``` | [```signature_request_files_as_data_uri```](docs/SignatureRequestApi.md#signature_request_files_as_data_uri) | ```GET /signature_request/files_as_data_uri/{signature_request_id}``` | Download Files as Data Uri|
+```SignatureRequestApi``` | [```signature_request_files_as_file_url```](docs/SignatureRequestApi.md#signature_request_files_as_file_url) | ```GET /signature_request/files_as_file_url/{signature_request_id}``` | Download Files as File Url|
 ```SignatureRequestApi``` | [```signature_request_get```](docs/SignatureRequestApi.md#signature_request_get) | ```GET /signature_request/{signature_request_id}``` | Get Signature Request|
 ```SignatureRequestApi``` | [```signature_request_list```](docs/SignatureRequestApi.md#signature_request_list) | ```GET /signature_request/list``` | List Signature Requests|
 ```SignatureRequestApi``` | [```signature_request_release_hold```](docs/SignatureRequestApi.md#signature_request_release_hold) | ```POST /signature_request/release_hold/{signature_request_id}``` | Release On-Hold Signature Request|
@@ -154,6 +144,7 @@ All URIs are relative to *https://api.hellosign.com/v3*
 ```TeamApi``` | [```team_delete```](docs/TeamApi.md#team_delete) | ```DELETE /team/destroy``` | Delete Team|
 ```TeamApi``` | [```team_get```](docs/TeamApi.md#team_get) | ```GET /team``` | Get Team|
 ```TeamApi``` | [```team_info```](docs/TeamApi.md#team_info) | ```GET /team/info``` | Get Team Info|
+```TeamApi``` | [```team_invites```](docs/TeamApi.md#team_invites) | ```GET /team/invites``` | List Team Invites|
 ```TeamApi``` | [```team_members```](docs/TeamApi.md#team_members) | ```GET /team/members/{team_id}``` | List Team Members|
 ```TeamApi``` | [```team_remove_member```](docs/TeamApi.md#team_remove_member) | ```POST /team/remove_member``` | Remove User from Team|
 ```TeamApi``` | [```team_sub_teams```](docs/TeamApi.md#team_sub_teams) | ```GET /team/sub_teams/{team_id}``` | List Sub Teams|
@@ -162,6 +153,8 @@ All URIs are relative to *https://api.hellosign.com/v3*
 ```TemplateApi``` | [```template_create_embedded_draft```](docs/TemplateApi.md#template_create_embedded_draft) | ```POST /template/create_embedded_draft``` | Create Embedded Template Draft|
 ```TemplateApi``` | [```template_delete```](docs/TemplateApi.md#template_delete) | ```POST /template/delete/{template_id}``` | Delete Template|
 ```TemplateApi``` | [```template_files```](docs/TemplateApi.md#template_files) | ```GET /template/files/{template_id}``` | Get Template Files|
+```TemplateApi``` | [```template_files_as_data_uri```](docs/TemplateApi.md#template_files_as_data_uri) | ```GET /template/files_as_data_uri/{template_id}``` | Get Template Files as Data Uri|
+```TemplateApi``` | [```template_files_as_file_url```](docs/TemplateApi.md#template_files_as_file_url) | ```GET /template/files_as_file_url/{template_id}``` | Get Template Files as File Url|
 ```TemplateApi``` | [```template_get```](docs/TemplateApi.md#template_get) | ```GET /template/{template_id}``` | Get Template|
 ```TemplateApi``` | [```template_list```](docs/TemplateApi.md#template_list) | ```GET /template/list``` | List Templates|
 ```TemplateApi``` | [```template_remove_user```](docs/TemplateApi.md#template_remove_user) | ```POST /template/remove_user/{template_id}``` | Remove User from Template|
@@ -211,6 +204,7 @@ All URIs are relative to *https://api.hellosign.com/v3*
  - [EventCallbackRequestEvent](docs/EventCallbackRequestEvent.md)
  - [EventCallbackRequestEventMetadata](docs/EventCallbackRequestEventMetadata.md)
  - [FileResponse](docs/FileResponse.md)
+ - [FileResponseDataUri](docs/FileResponseDataUri.md)
  - [ListInfoResponse](docs/ListInfoResponse.md)
  - [OAuthTokenGenerateRequest](docs/OAuthTokenGenerateRequest.md)
  - [OAuthTokenRefreshRequest](docs/OAuthTokenRefreshRequest.md)
@@ -285,6 +279,8 @@ All URIs are relative to *https://api.hellosign.com/v3*
  - [TeamGetInfoResponse](docs/TeamGetInfoResponse.md)
  - [TeamGetResponse](docs/TeamGetResponse.md)
  - [TeamInfoResponse](docs/TeamInfoResponse.md)
+ - [TeamInviteResponse](docs/TeamInviteResponse.md)
+ - [TeamInvitesResponse](docs/TeamInvitesResponse.md)
  - [TeamMemberResponse](docs/TeamMemberResponse.md)
  - [TeamMembersResponse](docs/TeamMembersResponse.md)
  - [TeamParentResponse](docs/TeamParentResponse.md)
@@ -369,6 +365,6 @@ from hellosign_sdk.models import *
 This Python package is automatically generated by the [OpenAPI Generator](https://openapi-generator.tech) project:
 
 - API version: 3.0.0
-- Package version: 6.0.0-beta
+- Package version: 6.0.0-beta22.22
 - Build package: org.openapitools.codegen.languages.PythonClientCodegen
 

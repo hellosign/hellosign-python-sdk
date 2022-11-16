@@ -59,29 +59,7 @@ class TestTemplateApi(unittest.TestCase):
         self.skipTest('skipping test_template_delete')
 
     def test_template_files(self):
-        template_id = 'f57db65d3f933b5316d398057a36176831451a35'
-        file_type = 'pdf'
-        get_url = False
-        get_data_uri = False
-
-        response_class = 'FileResponse'
-        response_data = get_fixture_data(response_class)['default']
-
-        self.mock_pool.expect_request(
-            content_type='application/json',
-            response=response_data
-        )
-        expected = deserialize(response_data, f'models.{response_class}')
-
-        result = self.api.template_files(
-            template_id=template_id,
-            file_type=file_type,
-            get_url=get_url,
-            get_data_uri=get_data_uri
-        )
-
-        self.assertEqual(result.__class__.__name__, response_class)
-        self.assertEqual(result, expected)
+        self.skipTest('skipping test_template_files')
 
     def test_template_get(self):
         template_id = 'f57db65d3f933b5316d398057a36176831451a35'

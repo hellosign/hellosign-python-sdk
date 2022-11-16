@@ -1,7 +1,7 @@
 """
-    HelloSign API
+    Dropbox Sign API
 
-    HelloSign v3 API  # noqa: E501
+    Dropbox Sign v3 API  # noqa: E501
 
     The version of the OpenAPI document: 3.0.0
     Contact: apisupport@hellosign.com
@@ -103,6 +103,7 @@ class SignatureRequestResponse(ModelNormal):
             'message': (str, none_type,),  # noqa: E501
             'metadata': ({str: (bool, date, datetime, dict, float, int, list, str, none_type)},),  # noqa: E501
             'created_at': (int,),  # noqa: E501
+            'expires_at': (int,),  # noqa: E501
             'is_complete': (bool,),  # noqa: E501
             'is_declined': (bool,),  # noqa: E501
             'has_error': (bool,),  # noqa: E501
@@ -133,6 +134,7 @@ class SignatureRequestResponse(ModelNormal):
         'message': 'message',  # noqa: E501
         'metadata': 'metadata',  # noqa: E501
         'created_at': 'created_at',  # noqa: E501
+        'expires_at': 'expires_at',  # noqa: E501
         'is_complete': 'is_complete',  # noqa: E501
         'is_declined': 'is_declined',  # noqa: E501
         'has_error': 'has_error',  # noqa: E501
@@ -198,11 +200,12 @@ class SignatureRequestResponse(ModelNormal):
             message (str, none_type): The custom message in the email that was initially sent to the signers.. [optional]  # noqa: E501
             metadata ({str: (bool, date, datetime, dict, float, int, list, str, none_type)}): The metadata attached to the signature request.. [optional]  # noqa: E501
             created_at (int): Time the signature request was created.. [optional]  # noqa: E501
+            expires_at (int): The time when the signature request will expire pending signatures.. [optional]  # noqa: E501
             is_complete (bool): Whether or not the SignatureRequest has been fully executed by all signers.. [optional]  # noqa: E501
             is_declined (bool): Whether or not the SignatureRequest has been declined by a signer.. [optional]  # noqa: E501
             has_error (bool): Whether or not an error occurred (either during the creation of the SignatureRequest or during one of the signings).. [optional]  # noqa: E501
             files_url (str): The URL where a copy of the request's documents can be downloaded.. [optional]  # noqa: E501
-            signing_url (str, none_type): The URL where a signer, after authenticating, can sign the documents. This should only be used by users with existing HelloSign accounts as they will be required to log in before signing.. [optional]  # noqa: E501
+            signing_url (str, none_type): The URL where a signer, after authenticating, can sign the documents. This should only be used by users with existing Dropbox Sign accounts as they will be required to log in before signing.. [optional]  # noqa: E501
             details_url (str): The URL where the requester and the signers can view the current status of the SignatureRequest.. [optional]  # noqa: E501
             cc_email_addresses ([str]): A list of email addresses that were CCed on the SignatureRequest. They will receive a copy of the final PDF once all the signers have signed.. [optional]  # noqa: E501
             signing_redirect_url (str, none_type): The URL you want the signer redirected to after they successfully sign.. [optional]  # noqa: E501
@@ -301,11 +304,12 @@ class SignatureRequestResponse(ModelNormal):
             message (str, none_type): The custom message in the email that was initially sent to the signers.. [optional]  # noqa: E501
             metadata ({str: (bool, date, datetime, dict, float, int, list, str, none_type)}): The metadata attached to the signature request.. [optional]  # noqa: E501
             created_at (int): Time the signature request was created.. [optional]  # noqa: E501
+            expires_at (int): The time when the signature request will expire pending signatures.. [optional]  # noqa: E501
             is_complete (bool): Whether or not the SignatureRequest has been fully executed by all signers.. [optional]  # noqa: E501
             is_declined (bool): Whether or not the SignatureRequest has been declined by a signer.. [optional]  # noqa: E501
             has_error (bool): Whether or not an error occurred (either during the creation of the SignatureRequest or during one of the signings).. [optional]  # noqa: E501
             files_url (str): The URL where a copy of the request's documents can be downloaded.. [optional]  # noqa: E501
-            signing_url (str, none_type): The URL where a signer, after authenticating, can sign the documents. This should only be used by users with existing HelloSign accounts as they will be required to log in before signing.. [optional]  # noqa: E501
+            signing_url (str, none_type): The URL where a signer, after authenticating, can sign the documents. This should only be used by users with existing Dropbox Sign accounts as they will be required to log in before signing.. [optional]  # noqa: E501
             details_url (str): The URL where the requester and the signers can view the current status of the SignatureRequest.. [optional]  # noqa: E501
             cc_email_addresses ([str]): A list of email addresses that were CCed on the SignatureRequest. They will receive a copy of the final PDF once all the signers have signed.. [optional]  # noqa: E501
             signing_redirect_url (str, none_type): The URL you want the signer redirected to after they successfully sign.. [optional]  # noqa: E501

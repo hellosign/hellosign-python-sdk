@@ -15,7 +15,7 @@ All URIs are relative to *https://api.hellosign.com/v3*
 
 Create Account
 
-Creates a new HelloSign Account that is associated with the specified `email_address`.
+Creates a new Dropbox Sign Account that is associated with the specified `email_address`.
 
 ### Example
 
@@ -123,7 +123,8 @@ with ApiClient(configuration) as api_client:
 
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
-| `account_id` | **str** | The ID of the Account | [optional] |
+| `account_id` | **str** | `account_id` or `email_address` is required. If both are provided, the account id prevails.   The ID of the Account. | [optional] |
+| `email_address` | **str** | `account_id` or `email_address` is required, If both are provided, the account id prevails.   The email address of the Account. | [optional] |
 
 ### Return type
 
@@ -224,7 +225,7 @@ with ApiClient(configuration) as api_client:
 
 Verify Account
 
-Verifies whether an HelloSign Account exists for the given email address.
+Verifies whether an Dropbox Sign Account exists for the given email address.
 
 ### Example
 

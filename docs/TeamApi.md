@@ -9,6 +9,7 @@ All URIs are relative to *https://api.hellosign.com/v3*
 |[```team_delete```](TeamApi.md#team_delete) | ```DELETE /team/destroy``` | Delete Team|
 |[```team_get```](TeamApi.md#team_get) | ```GET /team``` | Get Team|
 |[```team_info```](TeamApi.md#team_info) | ```GET /team/info``` | Get Team Info|
+|[```team_invites```](TeamApi.md#team_invites) | ```GET /team/invites``` | List Team Invites|
 |[```team_members```](TeamApi.md#team_members) | ```GET /team/members/{team_id}``` | List Team Members|
 |[```team_remove_member```](TeamApi.md#team_remove_member) | ```POST /team/remove_member``` | Remove User from Team|
 |[```team_sub_teams```](TeamApi.md#team_sub_teams) | ```GET /team/sub_teams/{team_id}``` | List Sub Teams|
@@ -20,7 +21,7 @@ All URIs are relative to *https://api.hellosign.com/v3*
 
 Add User to Team
 
-Invites a user (specified using the `email_address` parameter) to your Team. If the user does not currently have a HelloSign Account, a new one will be created for them. If a user is already a part of another Team, a `team_invite_failed` error will be returned.
+Invites a user (specified using the `email_address` parameter) to your Team. If the user does not currently have a Dropbox Sign Account, a new one will be created for them. If a user is already a part of another Team, a `team_invite_failed` error will be returned.
 
 ### Example
 
@@ -335,6 +336,75 @@ with ApiClient(configuration) as api_client:
 ### Return type
 
 [**TeamGetInfoResponse**](TeamGetInfoResponse.md)
+
+### Authorization
+
+[api_key](../README.md#api_key), [oauth2](../README.md#oauth2)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | successful operation |  * X-RateLimit-Limit -  <br>  * X-RateLimit-Remaining -  <br>  * X-Ratelimit-Reset -  <br>  |
+**4XX** | failed_operation |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# ```team_invites```
+> ```TeamInvitesResponse team_invites()```
+
+List Team Invites
+
+Provides a list of team invites (and their roles).
+
+### Example
+
+* Basic Authentication (api_key):
+* Bearer (JWT) Authentication (oauth2):
+
+```python
+from pprint import pprint
+
+from hellosign_sdk import \
+    ApiClient, ApiException, Configuration, apis
+
+configuration = Configuration(
+    # Configure HTTP basic authorization: api_key
+    username="YOUR_API_KEY",
+
+    # or, configure Bearer (JWT) authorization: oauth2
+    # access_token="YOUR_ACCESS_TOKEN",
+)
+
+with ApiClient(configuration) as api_client:
+    api = apis.TeamApi(api_client)
+
+    email_address = "user@hellosign.com"
+
+    try:
+        response = api.team_invites(email_address)
+        pprint(response)
+    except ApiException as e:
+        print("Exception when calling HelloSign API: %s\n" % e)
+
+```
+
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| `email_address` | **str** | The email address for which to display the team invites. | [optional] |
+
+### Return type
+
+[**TeamInvitesResponse**](TeamInvitesResponse.md)
 
 ### Authorization
 

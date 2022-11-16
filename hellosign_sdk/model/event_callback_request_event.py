@@ -1,7 +1,7 @@
 """
-    HelloSign API
+    Dropbox Sign API
 
-    HelloSign v3 API  # noqa: E501
+    Dropbox Sign v3 API  # noqa: E501
 
     The version of the OpenAPI document: 3.0.0
     Contact: apisupport@hellosign.com
@@ -79,6 +79,7 @@ class EventCallbackRequestEvent(ModelNormal):
             'SIGNATURE_REQUEST_REASSIGNED': "signature_request_reassigned",
             'SIGNATURE_REQUEST_INVALID': "signature_request_invalid",
             'SIGNATURE_REQUEST_PREPARED': "signature_request_prepared",
+            'SIGNATURE_REQUEST_EXPIRED': "signature_request_expired",
             'TEMPLATE_CREATED': "template_created",
             'TEMPLATE_ERROR': "template_error",
         },

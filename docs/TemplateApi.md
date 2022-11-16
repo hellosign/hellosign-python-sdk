@@ -8,6 +8,8 @@ All URIs are relative to *https://api.hellosign.com/v3*
 |[```template_create_embedded_draft```](TemplateApi.md#template_create_embedded_draft) | ```POST /template/create_embedded_draft``` | Create Embedded Template Draft|
 |[```template_delete```](TemplateApi.md#template_delete) | ```POST /template/delete/{template_id}``` | Delete Template|
 |[```template_files```](TemplateApi.md#template_files) | ```GET /template/files/{template_id}``` | Get Template Files|
+|[```template_files_as_data_uri```](TemplateApi.md#template_files_as_data_uri) | ```GET /template/files_as_data_uri/{template_id}``` | Get Template Files as Data Uri|
+|[```template_files_as_file_url```](TemplateApi.md#template_files_as_file_url) | ```GET /template/files_as_file_url/{template_id}``` | Get Template Files as File Url|
 |[```template_get```](TemplateApi.md#template_get) | ```GET /template/{template_id}``` | Get Template|
 |[```template_list```](TemplateApi.md#template_list) | ```GET /template/list``` | List Templates|
 |[```template_remove_user```](TemplateApi.md#template_remove_user) | ```POST /template/remove_user/{template_id}``` | Remove User from Template|
@@ -262,11 +264,11 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # ```template_files```
-> ```FileResponse template_files(template_id)```
+> ```file_type template_files(template_id)```
 
 Get Template Files
 
-Obtain a copy of the current documents specified by the `template_id` parameter.  Returns a PDF or ZIP file, or if `get_url` is set, a JSON object with a url to the file (PDFs only). If `get_data_uri` is set, a JSON object with a `data_uri` representing the base64 encoded file (PDFs only) is returned.  If the files are currently being prepared, a status code of `409` will be returned instead. In this case please wait for the `template_created` callback event.
+Obtain a copy of the current documents specified by the `template_id` parameter. Returns a PDF or ZIP file.  If the files are currently being prepared, a status code of `409` will be returned instead. In this case please wait for the `template_created` callback event.
 
 ### Example
 
@@ -307,8 +309,144 @@ with ApiClient(configuration) as api_client:
 | ---- | ---- | ----------- | ----- |
 | `template_id` | **str** | The id of the template files to retrieve. |  |
 | `file_type` | **str** | Set to `pdf` for a single merged document or `zip` for a collection of individual documents. | [optional] |
-| `get_url` | **bool** | If `true`, the response will contain a url link to the file instead. Links are only available for PDFs and have a TTL of 3 days. | [optional][default to False] |
-| `get_data_uri` | **bool** | If `true`, the response will contain the file as base64 encoded string. Base64 encoding is only available for PDFs. | [optional][default to False] |
+
+### Return type
+
+**file_type**
+
+### Authorization
+
+[api_key](../README.md#api_key), [oauth2](../README.md#oauth2)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/pdf, application/zip, application/json
+
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | successful operation |  * X-RateLimit-Limit -  <br>  * X-RateLimit-Remaining -  <br>  * X-Ratelimit-Reset -  <br>  |
+**4XX** | failed_operation |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# ```template_files_as_data_uri```
+> ```FileResponseDataUri template_files_as_data_uri(template_id)```
+
+Get Template Files as Data Uri
+
+Obtain a copy of the current documents specified by the `template_id` parameter. Returns a JSON object with a `data_uri` representing the base64 encoded file (PDFs only).   If the files are currently being prepared, a status code of `409` will be returned instead. In this case please wait for the `template_created` callback event.
+
+### Example
+
+* Basic Authentication (api_key):
+* Bearer (JWT) Authentication (oauth2):
+
+```python
+from pprint import pprint
+
+from hellosign_sdk import \
+    ApiClient, ApiException, Configuration, apis
+
+configuration = Configuration(
+    # Configure HTTP basic authorization: api_key
+    username="YOUR_API_KEY",
+
+    # or, configure Bearer (JWT) authorization: oauth2
+    # access_token="YOUR_ACCESS_TOKEN",
+)
+
+with ApiClient(configuration) as api_client:
+    api = apis.TemplateApi(api_client)
+
+    template_id = "5de8179668f2033afac48da1868d0093bf133266"
+
+    try:
+        response = api.template_files_as_data_uri(template_id)
+        pprint(response)
+    except ApiException as e:
+        print("Exception when calling HelloSign API: %s\n" % e)
+
+```
+
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| `template_id` | **str** | The id of the template files to retrieve. |  |
+
+### Return type
+
+[**FileResponseDataUri**](FileResponseDataUri.md)
+
+### Authorization
+
+[api_key](../README.md#api_key), [oauth2](../README.md#oauth2)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | successful operation |  * X-RateLimit-Limit -  <br>  * X-RateLimit-Remaining -  <br>  * X-Ratelimit-Reset -  <br>  |
+**4XX** | failed_operation |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# ```template_files_as_file_url```
+> ```FileResponse template_files_as_file_url(template_id)```
+
+Get Template Files as File Url
+
+Obtain a copy of the current documents specified by the `template_id` parameter. Returns a JSON object with a url to the file (PDFs only).   If the files are currently being prepared, a status code of `409` will be returned instead. In this case please wait for the `template_created` callback event.
+
+### Example
+
+* Basic Authentication (api_key):
+* Bearer (JWT) Authentication (oauth2):
+
+```python
+from pprint import pprint
+
+from hellosign_sdk import \
+    ApiClient, ApiException, Configuration, apis
+
+configuration = Configuration(
+    # Configure HTTP basic authorization: api_key
+    username="YOUR_API_KEY",
+
+    # or, configure Bearer (JWT) authorization: oauth2
+    # access_token="YOUR_ACCESS_TOKEN",
+)
+
+with ApiClient(configuration) as api_client:
+    api = apis.TemplateApi(api_client)
+
+    template_id = "5de8179668f2033afac48da1868d0093bf133266"
+
+    try:
+        response = api.template_files_as_file_url(template_id)
+        pprint(response)
+    except ApiException as e:
+        print("Exception when calling HelloSign API: %s\n" % e)
+
+```
+
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| `template_id` | **str** | The id of the template files to retrieve. |  |
 
 ### Return type
 

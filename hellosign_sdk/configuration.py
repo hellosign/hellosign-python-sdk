@@ -1,7 +1,7 @@
 """
-    HelloSign API
+    Dropbox Sign API
 
-    HelloSign v3 API  # noqa: E501
+    Dropbox Sign v3 API  # noqa: E501
 
     The version of the OpenAPI document: 3.0.0
     Contact: apisupport@hellosign.com
@@ -413,7 +413,7 @@ conf = hellosign_sdk.Configuration(
                "OS: {env}\n"\
                "Python Version: {pyversion}\n"\
                "Version of the API: 3.0.0\n"\
-               "SDK Package Version: 6.0.0-beta".\
+               "SDK Package Version: 6.0.0-beta22.22".\
                format(env=sys.platform, pyversion=sys.version)
 
     def get_host_settings(self):
