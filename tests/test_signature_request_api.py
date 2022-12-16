@@ -1,7 +1,7 @@
 import unittest
 
 from hellosign_sdk import ApiClient, Configuration, apis
-from test_utils import get_fixture_data, MockPoolManager, deserialize
+from test_utils import get_fixture_data, MockPoolManager, deserialize, get_base_path
 
 
 class TestSignatureRequestApi(unittest.TestCase):
@@ -27,6 +27,7 @@ class TestSignatureRequestApi(unittest.TestCase):
         )
         expected = deserialize(response_data, f'models.{response_class}')
         obj = deserialize(request_data, f'models.{request_class}')
+        obj.signer_file = open(f'{get_base_path()}/bulk-send-sample.csv', 'rb')
 
         result = self.api.signature_request_bulk_create_embedded_with_template(obj)
 
@@ -47,6 +48,7 @@ class TestSignatureRequestApi(unittest.TestCase):
         )
         expected = deserialize(response_data, f'models.{response_class}')
         obj = deserialize(request_data, f'models.{request_class}')
+        obj.signer_file = open(f'{get_base_path()}/bulk-send-sample.csv', 'rb')
 
         result = self.api.signature_request_bulk_send_with_template(obj)
 
@@ -67,6 +69,7 @@ class TestSignatureRequestApi(unittest.TestCase):
         )
         expected = deserialize(response_data, f'models.{response_class}')
         obj = deserialize(request_data, f'models.{request_class}')
+        obj.file = [open(f'{get_base_path()}/pdf-sample.pdf', 'rb')]
 
         result = self.api.signature_request_create_embedded(obj)
 
@@ -87,6 +90,7 @@ class TestSignatureRequestApi(unittest.TestCase):
         )
         expected = deserialize(response_data, f'models.{response_class}')
         obj = deserialize(request_data, f'models.{request_class}')
+        obj.file = [open(f'{get_base_path()}/pdf-sample.pdf', 'rb')]
 
         result = self.api.signature_request_create_embedded_with_template(obj)
 
@@ -186,6 +190,7 @@ class TestSignatureRequestApi(unittest.TestCase):
         )
         expected = deserialize(response_data, f'models.{response_class}')
         obj = deserialize(request_data, f'models.{request_class}')
+        obj.file = [open(f'{get_base_path()}/pdf-sample.pdf', 'rb')]
 
         result = self.api.signature_request_send(obj)
 
@@ -194,7 +199,7 @@ class TestSignatureRequestApi(unittest.TestCase):
 
     def test_no_file_forces_application_json(self):
         request_class = 'SignatureRequestSendRequest'
-        request_data = get_fixture_data(request_class)['with_file_url']
+        request_data = get_fixture_data(request_class)['default']
 
         response_class = 'SignatureRequestGetResponse'
         response_data = get_fixture_data(response_class)['default']

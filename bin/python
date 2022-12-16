@@ -3,12 +3,13 @@
 # Warning: You should run this from rootless Docker (or Podman, or other)
 
 set -e
+
 DIR=$(cd `dirname $0` && pwd)
 ROOT_DIR="${DIR}/.."
-WORKINGDIR="/app/python"
+WORKING_DIR="/app/python"
 
 docker run --rm \
-  -v "${ROOT_DIR}:${WORKINGDIR}" \
+  -v "${ROOT_DIR}:${WORKING_DIR}" \
   -v "hellosign-sdk-pip-cache:/usr/local/lib/python3.10" \
-  -w "${WORKINGDIR}" \
+  -w "${WORKING_DIR}" \
   python:3.10-buster "$@"

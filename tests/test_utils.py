@@ -1,7 +1,6 @@
 import os
 import json
 import urllib3
-from metadict import MetaDict
 
 from hellosign_sdk import ApiClient, apis, models
 
@@ -20,12 +19,12 @@ def get_fixture_data(filename):
     return fixture_data
 
 
-def deserialize(data, type):
+def deserialize(data, response_type):
     api_client = ApiClient()
 
     return api_client.deserialize(
-        response=MetaDict({'data': json.dumps(data)}),
-        response_type=[eval(type)],
+        response=type('obj_dict', (object,), {'data': json.dumps(data)}),
+        response_type=[eval(response_type)],
         _check_type=True,
     )
 

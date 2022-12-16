@@ -16,7 +16,7 @@ with ApiClient(configuration) as api_client:
 
     data = models.UnclaimedDraftCreateEmbeddedRequest(
         client_id="ec64a202072370a737edf4a0eb7f4437",
-        file_url=["https://app.hellosign.com/docs/example_signature_request.pdf"],
+        file=[open("example_signature_request.pdf", "rb")],
         requester_email_address="jack@hellosign.com",
         test_mode=True,
     )

@@ -111,7 +111,7 @@ with ApiClient(configuration) as api_client:
     api = apis.AccountApi(api_client)
 
     try:
-        response = api.account_get()
+        response = api.account_get(email_address="jack@example.com")
         pprint(response)
     except ApiException as e:
         print("Exception when calling HelloSign API: %s\n" % e)
@@ -123,8 +123,8 @@ with ApiClient(configuration) as api_client:
 
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
-| `account_id` | **str** | `account_id` or `email_address` is required. If both are provided, the account id prevails.   The ID of the Account. | [optional] |
-| `email_address` | **str** | `account_id` or `email_address` is required, If both are provided, the account id prevails.   The email address of the Account. | [optional] |
+| `account_id` | **str** | `account_id` or `email_address` is required. If both are provided, the account id prevails.  The ID of the Account. | [optional] |
+| `email_address` | **str** | `account_id` or `email_address` is required, If both are provided, the account id prevails.  The email address of the Account. | [optional] |
 
 ### Return type
 

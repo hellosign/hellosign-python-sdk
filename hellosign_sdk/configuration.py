@@ -413,7 +413,7 @@ conf = hellosign_sdk.Configuration(
                "OS: {env}\n"\
                "Python Version: {pyversion}\n"\
                "Version of the API: 3.0.0\n"\
-               "SDK Package Version: 6.0.0-beta22.23".\
+               "SDK Package Version: 6.0.0-beta22.24".\
                format(env=sys.platform, pyversion=sys.version)
 
     def get_host_settings(self):

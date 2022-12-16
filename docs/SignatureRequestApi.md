@@ -377,7 +377,7 @@ with ApiClient(configuration) as api_client:
         message="Please sign this NDA and then we can discuss more. Let me know if you have any questions.",
         signers=[signer_1, signer_2],
         cc_email_addresses=["lawyer@hellosign.com", "lawyer@example.com"],
-        file_url=["https://app.hellosign.com/docs/example_signature_request.pdf"],
+        file=[open("example_signature_request.pdf", "rb")],
         signing_options=signing_options,
         test_mode=True,
     )
@@ -516,7 +516,7 @@ with ApiClient(configuration) as api_client:
 
 Download Files
 
-Obtain a copy of the current documents specified by the `signature_request_id` parameter. Returns a PDF or ZIP file.   If the files are currently being prepared, a status code of `409` will be returned instead.
+Obtain a copy of the current documents specified by the `signature_request_id` parameter. Returns a PDF or ZIP file.  If the files are currently being prepared, a status code of `409` will be returned instead.
 
 ### Example
 
@@ -543,8 +543,8 @@ with ApiClient(configuration) as api_client:
     signature_request_id = "fa5c8a0b0f492d768749333ad6fcc214c111e967"
 
     try:
-        response = api.signature_request_files(signature_request_id)
-        pprint(response)
+        response = api.signature_request_files(signature_request_id, file_type="pdf")
+        open('file_response.pdf', 'wb').write(response.read())
     except ApiException as e:
         print("Exception when calling HelloSign API: %s\n" % e)
 
@@ -586,7 +586,7 @@ with ApiClient(configuration) as api_client:
 
 Download Files as Data Uri
 
-Obtain a copy of the current documents specified by the `signature_request_id` parameter. Returns a JSON object with a `data_uri` representing the base64 encoded file (PDFs only).   If the files are currently being prepared, a status code of `409` will be returned instead.
+Obtain a copy of the current documents specified by the `signature_request_id` parameter. Returns a JSON object with a `data_uri` representing the base64 encoded file (PDFs only).  If the files are currently being prepared, a status code of `409` will be returned instead.
 
 ### Example
 
@@ -655,7 +655,7 @@ with ApiClient(configuration) as api_client:
 
 Download Files as File Url
 
-Obtain a copy of the current documents specified by the `signature_request_id` parameter. Returns a JSON object with a url to the file (PDFs only).   If the files are currently being prepared, a status code of `409` will be returned instead.
+Obtain a copy of the current documents specified by the `signature_request_id` parameter. Returns a JSON object with a url to the file (PDFs only).  If the files are currently being prepared, a status code of `409` will be returned instead.
 
 ### Example
 
@@ -1137,7 +1137,7 @@ with ApiClient(configuration) as api_client:
             "lawyer@hellosign.com",
             "lawyer@example.com",
         ],
-        file_url=["https://app.hellosign.com/docs/example_signature_request.pdf"],
+        file=[open("example_signature_request.pdf", "rb")],
         metadata={
             "custom_id": 1234,
             "custom_text": "NDA #9",

@@ -40,7 +40,7 @@ with ApiClient(configuration) as api_client:
 
     data = models.TemplateCreateEmbeddedDraftRequest(
         client_id="37dee8d8440c66d54cfa05d92c160882",
-        file_url=["https://app.hellosign.com/docs/example_signature_request.pdf"],
+        file=[open("example_signature_request.pdf", "rb")],
         title="Test Template",
         subject="Please sign this document",
         message="For your approval",
