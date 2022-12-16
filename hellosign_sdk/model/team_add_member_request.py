@@ -145,8 +145,8 @@ class TeamAddMemberRequest(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            account_id (str): `account_id` or `email_address` is required. If both are provided, the account id prevails.   Account id of the user to invite to your Team.. [optional]  # noqa: E501
-            email_address (str): `account_id` or `email_address` is required, If both are provided, the account id prevails.   Email address of the user to invite to your Team.. [optional]  # noqa: E501
+            account_id (str): `account_id` or `email_address` is required. If both are provided, the account id prevails.  Account id of the user to invite to your Team.. [optional]  # noqa: E501
+            email_address (str): `account_id` or `email_address` is required, If both are provided, the account id prevails.  Email address of the user to invite to your Team.. [optional]  # noqa: E501
             role (str): A role member will take in a new Team.  **Note**: This parameter is used only if `team_id` is provided.. [optional]  # noqa: E501
         """
 
@@ -229,8 +229,8 @@ class TeamAddMemberRequest(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            account_id (str): `account_id` or `email_address` is required. If both are provided, the account id prevails.   Account id of the user to invite to your Team.. [optional]  # noqa: E501
-            email_address (str): `account_id` or `email_address` is required, If both are provided, the account id prevails.   Email address of the user to invite to your Team.. [optional]  # noqa: E501
+            account_id (str): `account_id` or `email_address` is required. If both are provided, the account id prevails.  Account id of the user to invite to your Team.. [optional]  # noqa: E501
+            email_address (str): `account_id` or `email_address` is required, If both are provided, the account id prevails.  Email address of the user to invite to your Team.. [optional]  # noqa: E501
             role (str): A role member will take in a new Team.  **Note**: This parameter is used only if `team_id` is provided.. [optional]  # noqa: E501
         """
 

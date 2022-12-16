@@ -68,7 +68,7 @@ class TestAccountApi(unittest.TestCase):
         )
         expected = deserialize(response_data, f'models.{response_class}')
 
-        result = self.api.account_get()
+        result = self.api.account_get(email_address="jack@example.com")
 
         self.assertEqual(result.__class__.__name__, response_class)
         self.assertEqual(result, expected)

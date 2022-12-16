@@ -1,7 +1,7 @@
 import unittest
 
 from hellosign_sdk import ApiClient, Configuration, apis
-from test_utils import get_fixture_data, MockPoolManager, deserialize
+from test_utils import get_fixture_data, MockPoolManager, deserialize, get_base_path
 
 
 class TestTemplateApi(unittest.TestCase):
@@ -49,6 +49,7 @@ class TestTemplateApi(unittest.TestCase):
         )
         expected = deserialize(response_data, f'models.{response_class}')
         obj = deserialize(request_data, f'models.{request_class}')
+        obj.file = [open(f'{get_base_path()}/pdf-sample.pdf', 'rb')]
 
         result = self.api.template_create_embedded_draft(obj)
 
@@ -117,7 +118,7 @@ class TestTemplateApi(unittest.TestCase):
         self.assertEqual(result.__class__.__name__, response_class)
         self.assertEqual(result, expected)
 
-    def test_template_remove_user(self):
+    def test_template_update_files(self):
         template_id = '21f920ec2b7f4b6bb64d3ed79f26303843046536'
 
         request_class = 'TemplateUpdateFilesRequest'
@@ -133,6 +134,7 @@ class TestTemplateApi(unittest.TestCase):
         )
         expected = deserialize(response_data, f'models.{response_class}')
         obj = deserialize(request_data, f'models.{request_class}')
+        obj.file = [open(f'{get_base_path()}/pdf-sample.pdf', 'rb')]
 
         result = self.api.template_update_files(template_id, obj)
 

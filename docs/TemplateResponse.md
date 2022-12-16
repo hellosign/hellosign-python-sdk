@@ -13,7 +13,7 @@ Contains information about the templates you and your team have created.
 | `is_embedded` | ```bool, none_type``` |  `true` if this template was created using an embedded flow, `false` if it was created on our website.  |  |
 | `is_creator` | ```bool, none_type``` |  `true` if you are the owner of this template, `false` if it&#39;s been shared with you by a team member.  |  |
 | `can_edit` | ```bool, none_type``` |  Indicates whether edit rights have been granted to you by the owner (always `true` if that&#39;s you).  |  |
-| `is_locked` | ```bool, none_type``` |  Indicates whether the template is locked.  If `true`, then the template was created outside your quota and can only be used in `test_mode`.  If `false`, then the template is within your quota and can be used to create signature requests.  |  |
+| `is_locked` | ```bool, none_type``` |  Indicates whether the template is locked. If `true`, then the template was created outside your quota and can only be used in `test_mode`. If `false`, then the template is within your quota and can be used to create signature requests.  |  |
 | `metadata` | [```{str: (bool, date, datetime, dict, float, int, list, str, none_type)}```](.md) |  The metadata attached to the template.  |  |
 | `signer_roles` | [```[TemplateResponseSignerRole]```](TemplateResponseSignerRole.md) |  An array of the designated signer roles that must be specified when sending a SignatureRequest using this Template.  |  |
 | `cc_roles` | [```[TemplateResponseCCRole]```](TemplateResponseCCRole.md) |  An array of the designated CC roles that must be specified when sending a SignatureRequest using this Template.  |  |

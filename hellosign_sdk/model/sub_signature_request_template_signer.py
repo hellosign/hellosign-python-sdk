@@ -160,7 +160,7 @@ class SubSignatureRequestTemplateSigner(ModelNormal):
                                 _visited_composed_classes = (Animal,)
             pin (str): The 4- to 12-character access code that will secure this signer's signature page.. [optional]  # noqa: E501
             sms_phone_number (str): An E.164 formatted phone number.  **Note**: Not available in test mode and requires a Standard plan or higher.. [optional]  # noqa: E501
-            sms_phone_number_type (str): Specifies the feature used with the `sms_phone_number`. Default `authentication`.  If `authentication`, signer is sent a verification code via SMS that is required to access the document.  If `delivery`, the completed signature request is delivered via SMS (_and_ email).. [optional]  # noqa: E501
+            sms_phone_number_type (str): Specifies the feature used with the `sms_phone_number`. Default `authentication`.  If `authentication`, signer is sent a verification code via SMS that is required to access the document.  If `delivery`, a link to complete the signature request is delivered via SMS (_and_ email).. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -252,7 +252,7 @@ class SubSignatureRequestTemplateSigner(ModelNormal):
                                 _visited_composed_classes = (Animal,)
             pin (str): The 4- to 12-character access code that will secure this signer's signature page.. [optional]  # noqa: E501
             sms_phone_number (str): An E.164 formatted phone number.  **Note**: Not available in test mode and requires a Standard plan or higher.. [optional]  # noqa: E501
-            sms_phone_number_type (str): Specifies the feature used with the `sms_phone_number`. Default `authentication`.  If `authentication`, signer is sent a verification code via SMS that is required to access the document.  If `delivery`, the completed signature request is delivered via SMS (_and_ email).. [optional]  # noqa: E501
+            sms_phone_number_type (str): Specifies the feature used with the `sms_phone_number`. Default `authentication`.  If `authentication`, signer is sent a verification code via SMS that is required to access the document.  If `delivery`, a link to complete the signature request is delivered via SMS (_and_ email).. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)

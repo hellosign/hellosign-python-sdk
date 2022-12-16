@@ -36,10 +36,7 @@ docs/EmbeddedSignUrlResponse.md
 docs/EmbeddedSignUrlResponseEmbedded.md
 docs/ErrorResponse.md
 docs/ErrorResponseError.md
-docs/EventCallbackAccountRequest.md
-docs/EventCallbackAccountRequestPayload.md
-docs/EventCallbackApiAppRequest.md
-docs/EventCallbackApiAppRequestPayload.md
+docs/EventCallbackRequest.md
 docs/EventCallbackRequestEvent.md
 docs/EventCallbackRequestEventMetadata.md
 docs/FileResponse.md
@@ -212,10 +209,7 @@ hellosign_sdk/model/embedded_sign_url_response.py
 hellosign_sdk/model/embedded_sign_url_response_embedded.py
 hellosign_sdk/model/error_response.py
 hellosign_sdk/model/error_response_error.py
-hellosign_sdk/model/event_callback_account_request.py
-hellosign_sdk/model/event_callback_account_request_payload.py
-hellosign_sdk/model/event_callback_api_app_request.py
-hellosign_sdk/model/event_callback_api_app_request_payload.py
+hellosign_sdk/model/event_callback_request.py
 hellosign_sdk/model/event_callback_request_event.py
 hellosign_sdk/model/event_callback_request_event_metadata.py
 hellosign_sdk/model/file_response.py

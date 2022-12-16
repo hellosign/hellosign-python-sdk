@@ -41,7 +41,7 @@ with ApiClient(configuration) as api_client:
         message="Please sign this NDA and then we can discuss more. Let me know if you have any questions.",
         signers=[signer_1, signer_2],
         cc_email_addresses=["lawyer@hellosign.com", "lawyer@example.com"],
-        file_url=["https://app.hellosign.com/docs/example_signature_request.pdf"],
+        file=[open("example_signature_request.pdf", "rb")],
         signing_options=signing_options,
         test_mode=True,
     )

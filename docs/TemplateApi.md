@@ -145,7 +145,7 @@ with ApiClient(configuration) as api_client:
 
     data = models.TemplateCreateEmbeddedDraftRequest(
         client_id="37dee8d8440c66d54cfa05d92c160882",
-        file_url=["https://app.hellosign.com/docs/example_signature_request.pdf"],
+        file=[open("example_signature_request.pdf", "rb")],
         title="Test Template",
         subject="Please sign this document",
         message="For your approval",
@@ -295,8 +295,8 @@ with ApiClient(configuration) as api_client:
     template_id = "5de8179668f2033afac48da1868d0093bf133266"
 
     try:
-        response = api.template_files(template_id)
-        pprint(response)
+        response = api.template_files(template_id, file_type="pdf")
+        open('file_response.pdf', 'wb').write(response.read())
     except ApiException as e:
         print("Exception when calling HelloSign API: %s\n" % e)
 
@@ -338,7 +338,7 @@ with ApiClient(configuration) as api_client:
 
 Get Template Files as Data Uri
 
-Obtain a copy of the current documents specified by the `template_id` parameter. Returns a JSON object with a `data_uri` representing the base64 encoded file (PDFs only).   If the files are currently being prepared, a status code of `409` will be returned instead. In this case please wait for the `template_created` callback event.
+Obtain a copy of the current documents specified by the `template_id` parameter. Returns a JSON object with a `data_uri` representing the base64 encoded file (PDFs only).  If the files are currently being prepared, a status code of `409` will be returned instead. In this case please wait for the `template_created` callback event.
 
 ### Example
 
@@ -407,7 +407,7 @@ with ApiClient(configuration) as api_client:
 
 Get Template Files as File Url
 
-Obtain a copy of the current documents specified by the `template_id` parameter. Returns a JSON object with a url to the file (PDFs only).   If the files are currently being prepared, a status code of `409` will be returned instead. In this case please wait for the `template_created` callback event.
+Obtain a copy of the current documents specified by the `template_id` parameter. Returns a JSON object with a url to the file (PDFs only).  If the files are currently being prepared, a status code of `409` will be returned instead. In this case please wait for the `template_created` callback event.
 
 ### Example
 
@@ -718,7 +718,7 @@ with ApiClient(configuration) as api_client:
     api = apis.TemplateApi(api_client)
 
     data = models.TemplateUpdateFilesRequest(
-        file_url=["https://app.hellosign.com/docs/example_signature_request.pdf"],
+        file=[open("example_signature_request.pdf", "rb")],
     )
 
     template_id = "5de8179668f2033afac48da1868d0093bf133266"

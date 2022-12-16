@@ -11,7 +11,6 @@
 
 import re  # noqa: F401
 import sys  # noqa: F401
-from metadict import MetaDict
 
 from hellosign_sdk.api_client import ApiClient, ApiException, Endpoint as _Endpoint
 from hellosign_sdk.model_utils import (  # noqa: F401
@@ -1014,7 +1013,7 @@ class SignatureRequestApi(object):
         except ApiException as e:
             if e.status == 200:
                 e.body = self.api_client.deserialize(
-                    response=MetaDict({'data': e.body}),
+                    response=type('obj_dict', (object,), {'data': e.body}),
                     response_type=[BulkSendJobSendResponse],
                     _check_type=True,
                 )
@@ -1026,7 +1025,7 @@ class SignatureRequestApi(object):
 
             if range_code_left <= e.status <= range_code_right:
                 e.body = self.api_client.deserialize(
-                    response=MetaDict({'data': e.body}),
+                    response=type('obj_dict', (object,), {'data': e.body}),
                     response_type=[ErrorResponse],
                     _check_type=True,
                 )
@@ -1114,7 +1113,7 @@ class SignatureRequestApi(object):
         except ApiException as e:
             if e.status == 200:
                 e.body = self.api_client.deserialize(
-                    response=MetaDict({'data': e.body}),
+                    response=type('obj_dict', (object,), {'data': e.body}),
                     response_type=[BulkSendJobSendResponse],
                     _check_type=True,
                 )
@@ -1126,7 +1125,7 @@ class SignatureRequestApi(object):
 
             if range_code_left <= e.status <= range_code_right:
                 e.body = self.api_client.deserialize(
-                    response=MetaDict({'data': e.body}),
+                    response=type('obj_dict', (object,), {'data': e.body}),
                     response_type=[ErrorResponse],
                     _check_type=True,
                 )
@@ -1292,7 +1291,7 @@ class SignatureRequestApi(object):
         except ApiException as e:
             if e.status == 200:
                 e.body = self.api_client.deserialize(
-                    response=MetaDict({'data': e.body}),
+                    response=type('obj_dict', (object,), {'data': e.body}),
                     response_type=[SignatureRequestGetResponse],
                     _check_type=True,
                 )
@@ -1304,7 +1303,7 @@ class SignatureRequestApi(object):
 
             if range_code_left <= e.status <= range_code_right:
                 e.body = self.api_client.deserialize(
-                    response=MetaDict({'data': e.body}),
+                    response=type('obj_dict', (object,), {'data': e.body}),
                     response_type=[ErrorResponse],
                     _check_type=True,
                 )
@@ -1392,7 +1391,7 @@ class SignatureRequestApi(object):
         except ApiException as e:
             if e.status == 200:
                 e.body = self.api_client.deserialize(
-                    response=MetaDict({'data': e.body}),
+                    response=type('obj_dict', (object,), {'data': e.body}),
                     response_type=[SignatureRequestGetResponse],
                     _check_type=True,
                 )
@@ -1404,7 +1403,7 @@ class SignatureRequestApi(object):
 
             if range_code_left <= e.status <= range_code_right:
                 e.body = self.api_client.deserialize(
-                    response=MetaDict({'data': e.body}),
+                    response=type('obj_dict', (object,), {'data': e.body}),
                     response_type=[ErrorResponse],
                     _check_type=True,
                 )
@@ -1418,7 +1417,7 @@ class SignatureRequestApi(object):
     ):
         """Download Files  # noqa: E501
 
-        Obtain a copy of the current documents specified by the `signature_request_id` parameter. Returns a PDF or ZIP file.   If the files are currently being prepared, a status code of `409` will be returned instead.  # noqa: E501
+        Obtain a copy of the current documents specified by the `signature_request_id` parameter. Returns a PDF or ZIP file.  If the files are currently being prepared, a status code of `409` will be returned instead.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -1493,7 +1492,7 @@ class SignatureRequestApi(object):
         except ApiException as e:
             if e.status == 200:
                 e.body = self.api_client.deserialize(
-                    response=MetaDict({'data': e.body}),
+                    response=type('obj_dict', (object,), {'data': e.body}),
                     response_type=[file_type],
                     _check_type=True,
                 )
@@ -1505,7 +1504,7 @@ class SignatureRequestApi(object):
 
             if range_code_left <= e.status <= range_code_right:
                 e.body = self.api_client.deserialize(
-                    response=MetaDict({'data': e.body}),
+                    response=type('obj_dict', (object,), {'data': e.body}),
                     response_type=[ErrorResponse],
                     _check_type=True,
                 )
@@ -1519,7 +1518,7 @@ class SignatureRequestApi(object):
     ):
         """Download Files as Data Uri  # noqa: E501
 
-        Obtain a copy of the current documents specified by the `signature_request_id` parameter. Returns a JSON object with a `data_uri` representing the base64 encoded file (PDFs only).   If the files are currently being prepared, a status code of `409` will be returned instead.  # noqa: E501
+        Obtain a copy of the current documents specified by the `signature_request_id` parameter. Returns a JSON object with a `data_uri` representing the base64 encoded file (PDFs only).  If the files are currently being prepared, a status code of `409` will be returned instead.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -1593,7 +1592,7 @@ class SignatureRequestApi(object):
         except ApiException as e:
             if e.status == 200:
                 e.body = self.api_client.deserialize(
-                    response=MetaDict({'data': e.body}),
+                    response=type('obj_dict', (object,), {'data': e.body}),
                     response_type=[FileResponseDataUri],
                     _check_type=True,
                 )
@@ -1605,7 +1604,7 @@ class SignatureRequestApi(object):
 
             if range_code_left <= e.status <= range_code_right:
                 e.body = self.api_client.deserialize(
-                    response=MetaDict({'data': e.body}),
+                    response=type('obj_dict', (object,), {'data': e.body}),
                     response_type=[ErrorResponse],
                     _check_type=True,
                 )
@@ -1619,7 +1618,7 @@ class SignatureRequestApi(object):
     ):
         """Download Files as File Url  # noqa: E501
 
-        Obtain a copy of the current documents specified by the `signature_request_id` parameter. Returns a JSON object with a url to the file (PDFs only).   If the files are currently being prepared, a status code of `409` will be returned instead.  # noqa: E501
+        Obtain a copy of the current documents specified by the `signature_request_id` parameter. Returns a JSON object with a url to the file (PDFs only).  If the files are currently being prepared, a status code of `409` will be returned instead.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -1693,7 +1692,7 @@ class SignatureRequestApi(object):
         except ApiException as e:
             if e.status == 200:
                 e.body = self.api_client.deserialize(
-                    response=MetaDict({'data': e.body}),
+                    response=type('obj_dict', (object,), {'data': e.body}),
                     response_type=[FileResponse],
                     _check_type=True,
                 )
@@ -1705,7 +1704,7 @@ class SignatureRequestApi(object):
 
             if range_code_left <= e.status <= range_code_right:
                 e.body = self.api_client.deserialize(
-                    response=MetaDict({'data': e.body}),
+                    response=type('obj_dict', (object,), {'data': e.body}),
                     response_type=[ErrorResponse],
                     _check_type=True,
                 )
@@ -1793,7 +1792,7 @@ class SignatureRequestApi(object):
         except ApiException as e:
             if e.status == 200:
                 e.body = self.api_client.deserialize(
-                    response=MetaDict({'data': e.body}),
+                    response=type('obj_dict', (object,), {'data': e.body}),
                     response_type=[SignatureRequestGetResponse],
                     _check_type=True,
                 )
@@ -1805,7 +1804,7 @@ class SignatureRequestApi(object):
 
             if range_code_left <= e.status <= range_code_right:
                 e.body = self.api_client.deserialize(
-                    response=MetaDict({'data': e.body}),
+                    response=type('obj_dict', (object,), {'data': e.body}),
                     response_type=[ErrorResponse],
                     _check_type=True,
                 )
@@ -1892,7 +1891,7 @@ class SignatureRequestApi(object):
         except ApiException as e:
             if e.status == 200:
                 e.body = self.api_client.deserialize(
-                    response=MetaDict({'data': e.body}),
+                    response=type('obj_dict', (object,), {'data': e.body}),
                     response_type=[SignatureRequestListResponse],
                     _check_type=True,
                 )
@@ -1904,7 +1903,7 @@ class SignatureRequestApi(object):
 
             if range_code_left <= e.status <= range_code_right:
                 e.body = self.api_client.deserialize(
-                    response=MetaDict({'data': e.body}),
+                    response=type('obj_dict', (object,), {'data': e.body}),
                     response_type=[ErrorResponse],
                     _check_type=True,
                 )
@@ -1992,7 +1991,7 @@ class SignatureRequestApi(object):
         except ApiException as e:
             if e.status == 200:
                 e.body = self.api_client.deserialize(
-                    response=MetaDict({'data': e.body}),
+                    response=type('obj_dict', (object,), {'data': e.body}),
                     response_type=[SignatureRequestGetResponse],
                     _check_type=True,
                 )
@@ -2004,7 +2003,7 @@ class SignatureRequestApi(object):
 
             if range_code_left <= e.status <= range_code_right:
                 e.body = self.api_client.deserialize(
-                    response=MetaDict({'data': e.body}),
+                    response=type('obj_dict', (object,), {'data': e.body}),
                     response_type=[ErrorResponse],
                     _check_type=True,
                 )
@@ -2096,7 +2095,7 @@ class SignatureRequestApi(object):
         except ApiException as e:
             if e.status == 200:
                 e.body = self.api_client.deserialize(
-                    response=MetaDict({'data': e.body}),
+                    response=type('obj_dict', (object,), {'data': e.body}),
                     response_type=[SignatureRequestGetResponse],
                     _check_type=True,
                 )
@@ -2108,7 +2107,7 @@ class SignatureRequestApi(object):
 
             if range_code_left <= e.status <= range_code_right:
                 e.body = self.api_client.deserialize(
-                    response=MetaDict({'data': e.body}),
+                    response=type('obj_dict', (object,), {'data': e.body}),
                     response_type=[ErrorResponse],
                     _check_type=True,
                 )
@@ -2274,7 +2273,7 @@ class SignatureRequestApi(object):
         except ApiException as e:
             if e.status == 200:
                 e.body = self.api_client.deserialize(
-                    response=MetaDict({'data': e.body}),
+                    response=type('obj_dict', (object,), {'data': e.body}),
                     response_type=[SignatureRequestGetResponse],
                     _check_type=True,
                 )
@@ -2286,7 +2285,7 @@ class SignatureRequestApi(object):
 
             if range_code_left <= e.status <= range_code_right:
                 e.body = self.api_client.deserialize(
-                    response=MetaDict({'data': e.body}),
+                    response=type('obj_dict', (object,), {'data': e.body}),
                     response_type=[ErrorResponse],
                     _check_type=True,
                 )
@@ -2374,7 +2373,7 @@ class SignatureRequestApi(object):
         except ApiException as e:
             if e.status == 200:
                 e.body = self.api_client.deserialize(
-                    response=MetaDict({'data': e.body}),
+                    response=type('obj_dict', (object,), {'data': e.body}),
                     response_type=[SignatureRequestGetResponse],
                     _check_type=True,
                 )
@@ -2386,7 +2385,7 @@ class SignatureRequestApi(object):
 
             if range_code_left <= e.status <= range_code_right:
                 e.body = self.api_client.deserialize(
-                    response=MetaDict({'data': e.body}),
+                    response=type('obj_dict', (object,), {'data': e.body}),
                     response_type=[ErrorResponse],
                     _check_type=True,
                 )
@@ -2478,7 +2477,7 @@ class SignatureRequestApi(object):
         except ApiException as e:
             if e.status == 200:
                 e.body = self.api_client.deserialize(
-                    response=MetaDict({'data': e.body}),
+                    response=type('obj_dict', (object,), {'data': e.body}),
                     response_type=[SignatureRequestGetResponse],
                     _check_type=True,
                 )
@@ -2490,7 +2489,7 @@ class SignatureRequestApi(object):
 
             if range_code_left <= e.status <= range_code_right:
                 e.body = self.api_client.deserialize(
-                    response=MetaDict({'data': e.body}),
+                    response=type('obj_dict', (object,), {'data': e.body}),
                     response_type=[ErrorResponse],
                     _check_type=True,
                 )

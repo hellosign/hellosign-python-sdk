@@ -15,7 +15,7 @@ with ApiClient(configuration) as api_client:
     api = apis.TemplateApi(api_client)
 
     data = models.TemplateUpdateFilesRequest(
-        file_url=["https://app.hellosign.com/docs/example_signature_request.pdf"],
+        file=[open("example_signature_request.pdf", "rb")],
     )
 
     template_id = "5de8179668f2033afac48da1868d0093bf133266"

@@ -12,7 +12,7 @@
 from setuptools import setup, find_packages  # noqa: H301
 
 NAME = "hellosign-python-sdk"
-VERSION = "6.0.0-beta22.23"
+VERSION = "6.0.0-beta22.24"
 # To install the library, run the following
 #
 # python setup.py install
@@ -23,7 +23,6 @@ VERSION = "6.0.0-beta22.23"
 REQUIRES = [
   "urllib3 >= 1.25.3",
   "python-dateutil",
-  "metadict",
 ]
 
 setup(

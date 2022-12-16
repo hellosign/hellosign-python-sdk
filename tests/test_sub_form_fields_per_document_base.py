@@ -1,6 +1,5 @@
 import json
 import unittest
-from metadict import MetaDict
 
 from hellosign_sdk import ApiClient, Configuration, models
 from hellosign_sdk.models import SignatureRequestSendRequest
@@ -21,7 +20,7 @@ class TestSubFormFieldsPerDocumentBase(unittest.TestCase):
             }
 
             obj = api_client.deserialize(
-                response=MetaDict({'data': json.dumps(payload)}),
+                response=type('obj_dict', (object,), {'data': json.dumps(payload)}),
                 response_type=[SignatureRequestSendRequest],
                 _check_type=True,
             )
